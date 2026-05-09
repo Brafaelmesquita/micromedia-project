@@ -1,0 +1,18 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+.env
+
+# raw data
+data/raw/
+
+# processed data
+data/processed/
+
+# Power BI
+*.pbix
+
+# OS
+.DS_Store
+Thumbs.db
