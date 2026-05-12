@@ -20,13 +20,22 @@ Output: data/processed/master_sites_unified.csv
 
 import pandas as pd
 import os
+import time
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
+#Define and create the output directory if it doesn't exist
+PROCESSED_SITES_DIR = os.path.join(BASE_DIR, "..", "data", "processed", "sites")
+os.makedirs(PROCESSED_SITES_DIR, exist_ok=True)
+
+#Input Paths
 MASTER_XLSX    = os.path.join(BASE_DIR, "..", "data", "raw", "sites", "Master Site List.xlsx")
 LOCOMIZER_XLSX = os.path.join(BASE_DIR, "..", "data", "raw", "sites", "Locomizer Master V3 - Azimuth.xlsx")
 POWERBI_CSV    = os.path.join(BASE_DIR, "..", "data", "raw", "sites", "MasterList-PowerBI Template.csv")
-OUTPUT_CSV     = os.path.join(BASE_DIR, "..", "data", "processed", "master_sites_unified.csv")
+
+#Output Paths
+OUTPUT_CSV     = os.path.join(PROCESSED_SITES_DIR, "master_sites_unified.csv")
+AUDIT_PATH     = os.path.join(PROCESSED_SITES_DIR, "pbi_audit_report.xlsx")
 
 paths_to_verify = {
     "Master XLSX": MASTER_XLSX,
@@ -324,7 +333,7 @@ missing_labels_df = base[base["_merge_labels"] == "left_only"].copy()
 # 2. Sites in PowerBI Template that do NOT exist in the Master Base
 orphaned_labels_df = df_display_labels[df_display_labels["Display ID"].isin(orphaned_in_pbi)].copy()
 
-AUDIT_PATH = os.path.join(BASE_DIR, "..", "data", "processed", "pbi_audit_report.xlsx")
+AUDIT_PATH = os.path.join(BASE_DIR, "..", "data", "processed","sites", "pbi_audit_report.xlsx")
 with pd.ExcelWriter(AUDIT_PATH) as writer:
     missing_labels_df.to_excel(writer, sheet_name="Master_Missing_Labels", index=False)
     orphaned_labels_df.to_excel(writer, sheet_name="PBI_Orphans_Not_In_Master", index=False)
