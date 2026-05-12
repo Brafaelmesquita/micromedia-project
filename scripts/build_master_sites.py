@@ -443,8 +443,8 @@ print(f"    END  : {base.columns[-3:].tolist()}")
 print(f"\n[SHAPE] Final Dimensions: {base.shape[0]} rows x {base.shape[1]} columns.")
 print(f"{'='*60}\n")
 
-#%%
-base
+# #%%
+# base
 
 # %% ---------------------------------------------------------------------------
 # Boolean / flag columns: inspection & safe normalisation
@@ -549,3 +549,7 @@ else:
 
 print(f"{'='*60}\n")
 print("Process finished with success.")
+
+# %%
+base
+# %%
