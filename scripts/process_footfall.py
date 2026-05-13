@@ -2,22 +2,22 @@
 process_footfall.py
 ===================
 Reads monthly Footfall CSV exports from Locomizer and produces, for EACH
-input file, two clean output files:
+input file, one clean output file:
 
-  <original_name>_totals.<ext>
-       Rows where HOUR = 25, MOVEMENT_MODALITY = 'ALL', VISITATION_MODALITY = 'ALL'
-       → one summary row per screen per day; used for KPIs and trend analysis.
-
-  <original_name>_hourly.<ext>
-       All remaining rows (specific hours, specific modalities).
-       → granular data for Busiest Times charts and modality breakdowns.
+  <original_name>_detail.<ext>
+       All rows EXCEPT HOUR = 25 AND MOVEMENT_MODALITY = 'ALL'
+                               AND VISITATION_MODALITY = 'ALL'.
+       → granular data for all Busiest Times charts, modality breakdowns,
+         and KPI calculations in Power BI.
+       → all-day total rows (HOUR = 25) are excluded because Power BI
+         aggregates the granular rows directly, avoiding redundancy.
 
   Example:
     IN  → 03_Mar25_Micromedia_Footfall.csv
-    OUT → 03_Mar25_Micromedia_Footfall_totals.parquet
-          03_Mar25_Micromedia_Footfall_hourly.parquet
+    OUT → 03_Mar25_Micromedia_Footfall_detail.parquet
 
 Transformations applied to every file:
+  • HOUR = 25 / ALL / ALL rows stripped before export (handled by Power BI).
   • DAY + MONTH + YEAR merged into a single DATE column (date only, no time).
   • Explicit column dtypes on load — avoids pandas type inference, cuts
     memory usage by ~40% and speeds up read_csv on large files.
@@ -30,13 +30,13 @@ Output format:
   Set OUTPUT_FORMAT = "csv"     for Excel / legacy compatibility.
 
 Power BI tip (Parquet):
-  Use "Get Data → Folder" in Power BI and point it at OUTPUT_DIR.
+  Use "Get Data → Folder" in Power BI and point it at OUTPUT_DETAIL_DIR.
   Power BI auto-combines all Parquet files that share the same schema,
   so adding a new month requires zero changes to the .pbix file.
 
-Data cleaning rule applied (per project spec):
-  Totals filter → HOUR == 25  AND  MOVEMENT_MODALITY == 'ALL'
-                              AND  VISITATION_MODALITY == 'ALL'
+Row exclusion rule (per project spec):
+  Excluded → HOUR == 25  AND  MOVEMENT_MODALITY == 'ALL'
+                          AND  VISITATION_MODALITY == 'ALL'
   Note: schema spec says 'All' but real Locomizer exports use 'ALL'.
   Verified against 03_Mar25_Micromedia_Footfall.csv.
 
@@ -60,20 +60,19 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # ── Folders ────────────────────────────────────────────────────────────────────
 INPUT_DIR         = os.path.join(BASE_DIR, "..", "data", "raw", "footfall")
 OUTPUT_DIR        = os.path.join(BASE_DIR, "..", "data", "processed", "footfall")
-OUTPUT_TOTALS_DIR = os.path.join(OUTPUT_DIR, "totals")
-OUTPUT_HOURLY_DIR = os.path.join(OUTPUT_DIR, "hourly")
-os.makedirs(OUTPUT_TOTALS_DIR, exist_ok=True)
-os.makedirs(OUTPUT_HOURLY_DIR, exist_ok=True)
+OUTPUT_DETAIL_DIR = os.path.join(OUTPUT_DIR, "detail")
+os.makedirs(OUTPUT_DETAIL_DIR, exist_ok=True)
 
 # ── Output format ─────────────────────────────────────────────────────────────
 # "parquet" → recommended for Power BI (smaller, faster, type-safe)
 # "csv"     → Excel / legacy compatibility
 OUTPUT_FORMAT = "parquet"
 
-# ── Filter constants (change here if Locomizer ever changes casing) ───────────
+# ── Exclusion filter constants (rows matching ALL THREE are dropped) ───────────
+# Change here if Locomizer ever changes casing.
 HOUR_TOTAL     = 25      # Locomizer sentinel: all-day total row
-MODALITY_ALL   = "ALL"   # MOVEMENT_MODALITY value for the totals filter
-VISITATION_ALL = "ALL"   # VISITATION_MODALITY value for the totals filter
+MODALITY_ALL   = "ALL"   # MOVEMENT_MODALITY value of the all-day row
+VISITATION_ALL = "ALL"   # VISITATION_MODALITY value of the all-day row
 
 # ── Optimised dtypes for read_csv ─────────────────────────────────────────────
 # Specifying dtypes skips pandas type-inference, which is the biggest single
@@ -115,7 +114,7 @@ DTYPE_MAP = {
 # ── Expected columns (derived from DTYPE_MAP keys) ────────────────────────────
 EXPECTED_COLUMNS = list(DTYPE_MAP.keys())
 
-# ── Logical column order for both output files ────────────────────────────────
+# ── Logical column order for the output file ──────────────────────────────────
 COLS_ORDER = [
     "CODE", "DISPLAY NAME",                          # Identifiers
     "DATE", "HOUR",                                  # Time (DATE = date only, no timestamp)
@@ -191,27 +190,24 @@ def apply_column_order(df, label):
     return df
 
 
-def export_pair(df_totals, df_hourly, stem, fmt):
+def export_file(df_detail, stem, fmt):
     """
-    Export totals and hourly DataFrames using 'stem' as the base file name.
+    Export the detail DataFrame using 'stem' as the base file name.
     fmt: "parquet" or "csv"
-    Returns (path_totals, path_hourly).
+    Returns path_detail.
     """
     ext         = ".parquet" if fmt == "parquet" else ".csv"
-    path_totals = os.path.join(OUTPUT_TOTALS_DIR, f"{stem}_totals{ext}")
-    path_hourly = os.path.join(OUTPUT_HOURLY_DIR, f"{stem}_hourly{ext}")
+    path_detail = os.path.join(OUTPUT_DETAIL_DIR, f"{stem}_detail{ext}")
 
     if fmt == "parquet":
         # pyarrow preserves dtypes and date columns exactly as-is.
         # Power BI reads the DATE column as a clean Date (no time).
-        df_totals.to_parquet(path_totals, index=False, engine="pyarrow")
-        df_hourly.to_parquet(path_hourly, index=False, engine="pyarrow")
+        df_detail.to_parquet(path_detail, index=False, engine="pyarrow")
     else:
         # utf-8-sig BOM ensures the CSV opens correctly in Excel on Windows
-        df_totals.to_csv(path_totals, index=False, encoding="utf-8-sig")
-        df_hourly.to_csv(path_hourly, index=False, encoding="utf-8-sig")
+        df_detail.to_csv(path_detail, index=False, encoding="utf-8-sig")
 
-    return path_totals, path_hourly
+    return path_detail
 
 
 def file_info(path):
@@ -247,7 +243,7 @@ print(f"{'='*56}\n")
 # %% ---------------------------------------------------------------------------
 # Step 2 — Per-file processing loop
 # ---------------------------------------------------------------------------
-# Each file is loaded, validated, transformed, split, and exported independently.
+# Each file is loaded, validated, transformed, filtered, and exported independently.
 # Benefits of per-file processing:
 #   • Only one month sits in RAM at a time → lower peak memory usage.
 #   • A single corrupt/missing file does not block the others.
@@ -281,7 +277,7 @@ for filepath in footfall_files:
     print(f"  [SCHEMA]")
     validate_schema(df, filename)
 
-    # Null check on columns used in the totals filter
+    # Null check on key filter columns
     key_cols  = ["CODE", "HOUR", "MOVEMENT_MODALITY", "VISITATION_MODALITY",
                  "DAY", "MONTH", "YEAR"]
     null_hits = {c: int(df[c].isna().sum()) for c in key_cols if c in df.columns}
@@ -292,9 +288,8 @@ for filepath in footfall_files:
         print(f"  [NULLS]  No nulls in key filter columns. ✅")
 
     # ── 2c: Build DATE column (date-only, no timestamp) ───────────────────────
-    nat_before = df[["DAY", "MONTH", "YEAR"]].isna().any(axis=1).sum()
     df = build_date_column(df)
-    nat_after  = df["DATE"].isna().sum()
+    nat_after = df["DATE"].isna().sum()
 
     sample_dates = [str(d) for d in df["DATE"].dropna().unique()[:3]]
     print(f"  [DATE]   DATE column built (date only). "
@@ -303,61 +298,46 @@ for filepath in footfall_files:
     if nat_after > 0:
         print(f"  ⚠️  WARNING: {nat_after} rows have an invalid DATE (will appear as NaT).")
 
-    # ── 2d: Split totals vs. hourly ────────────────────────────────────────────
-    totals_mask = (
+    # ── 2d: Exclude all-day total rows ────────────────────────────────────────
+    # Rows where HOUR=25 AND MOVEMENT_MODALITY=ALL AND VISITATION_MODALITY=ALL
+    # are Locomizer's pre-computed all-day summaries. They are excluded here
+    # because Power BI aggregates the granular detail rows directly.
+    exclusion_mask = (
         (df["HOUR"]                == HOUR_TOTAL)     &
         (df["MOVEMENT_MODALITY"]   == MODALITY_ALL)   &
         (df["VISITATION_MODALITY"] == VISITATION_ALL)
     )
 
-    df_totals = df[totals_mask].reset_index(drop=True)
-    df_hourly = df[~totals_mask].reset_index(drop=True)
-    del df   # free the original DataFrame; outputs are now independent copies
+    rows_excluded = int(exclusion_mask.sum())
+    df_detail     = df[~exclusion_mask].reset_index(drop=True)
+    del df   # free the original DataFrame
 
-    split_sum   = len(df_totals) + len(df_hourly)
-    split_check = "PASS" if split_sum == rows_raw else "FAIL"
-    print(f"  [SPLIT]  {rows_raw:>8,} total  →  "
-          f"{len(df_totals):>6,} totals  +  {len(df_hourly):>7,} hourly  [{split_check}]")
-
-    if len(df_totals) == 0:
-        print(f"  ⚠️  WARNING: totals split is empty — check HOUR_TOTAL / MODALITY_ALL constants.")
-    else:
-        # Sanity assertions: totals must contain exactly the three filter values
-        assert set(df_totals["HOUR"].unique())                == {HOUR_TOTAL},     \
-            "Unexpected HOUR in totals!"
-        assert set(df_totals["MOVEMENT_MODALITY"].unique())   == {MODALITY_ALL},   \
-            "Unexpected MOVEMENT_MODALITY in totals!"
-        assert set(df_totals["VISITATION_MODALITY"].unique()) == {VISITATION_ALL}, \
-            "Unexpected VISITATION_MODALITY in totals!"
-        print(f"  [VERIFY] Filter values in totals confirmed. ✅")
+    print(f"  [FILTER] {rows_raw:>8,} raw rows  →  "
+          f"{rows_excluded:>6,} excluded (HOUR=25/ALL/ALL)  →  "
+          f"{len(df_detail):>7,} kept  ✅")
 
     # ── 2e: Column reordering ──────────────────────────────────────────────────
-    df_totals = apply_column_order(df_totals, "TOTALS")
-    df_hourly = apply_column_order(df_hourly, "HOURLY")
+    df_detail = apply_column_order(df_detail, "DETAIL")
 
-    # ── 2f: Export pair ────────────────────────────────────────────────────────
+    # ── 2f: Export ────────────────────────────────────────────────────────────
     try:
-        path_totals, path_hourly = export_pair(df_totals, df_hourly, stem, OUTPUT_FORMAT)
+        path_detail  = export_file(df_detail, stem, OUTPUT_FORMAT)
+        size_d, _    = file_info(path_detail)
+        elapsed      = time.time() - t_start
 
-        size_t, mod_t = file_info(path_totals)
-        size_h, mod_h = file_info(path_hourly)
-        elapsed       = time.time() - t_start
-
-        print(f"  [EXPORT] Totals → {os.path.basename(path_totals):<55} ({size_t:>7,.1f} KB)")
-        print(f"           Hourly → {os.path.basename(path_hourly):<55} ({size_h:>7,.1f} KB)")
+        print(f"  [EXPORT] {os.path.basename(path_detail):<60} ({size_d:>7,.1f} KB)")
         print(f"  [TIME]   {elapsed:.1f}s")
 
         global_summary.append({
             "file":           filename,
             "status":         "OK",
             "rows_raw":       rows_raw,
-            "rows_totals":    len(df_totals),
-            "rows_hourly":    len(df_hourly),
-            "date_min":       str(df_totals["DATE"].min()) if len(df_totals) > 0 else "N/A",
-            "date_max":       str(df_totals["DATE"].max()) if len(df_totals) > 0 else "N/A",
-            "screens":        df_totals["CODE"].nunique() if len(df_totals) > 0 else 0,
-            "size_totals_kb": round(size_t, 1),
-            "size_hourly_kb": round(size_h, 1),
+            "rows_excluded":  rows_excluded,
+            "rows_detail":    len(df_detail),
+            "date_min":       str(df_detail["DATE"].min()),
+            "date_max":       str(df_detail["DATE"].max()),
+            "screens":        df_detail["CODE"].nunique(),
+            "size_detail_kb": round(size_d, 1),
             "elapsed_s":      round(elapsed, 1),
         })
 
@@ -374,41 +354,33 @@ for filepath in footfall_files:
 # One-glance report across all processed files.
 
 print(f"{'='*20} GLOBAL SUMMARY {'='*20}")
-print(f"\n  {'FILE':<46} {'STATUS':<8}  {'RAW':>8}  {'TOTALS':>7}  {'HOURLY':>8}  {'DATE RANGE':<23}  {'SCRNS':>5}  {'TIME':>5}")
-print(f"  {'-'*46} {'-'*8}  {'-'*8}  {'-'*7}  {'-'*8}  {'-'*23}  {'-'*5}  {'-'*5}")
+print(f"\n  {'FILE':<46} {'STATUS':<8}  {'RAW':>8}  {'EXCLUDED':>8}  {'DETAIL':>8}  {'DATE RANGE':<23}  {'SCRNS':>5}  {'TIME':>5}")
+print(f"  {'-'*46} {'-'*8}  {'-'*8}  {'-'*8}  {'-'*8}  {'-'*23}  {'-'*5}  {'-'*5}")
 
-total_raw    = 0
-total_totals = 0
-total_hourly = 0
-ok_count     = 0
+total_raw      = 0
+total_excluded = 0
+total_detail   = 0
+ok_count       = 0
 
 for s in global_summary:
     if s["status"] == "OK":
-        ok_count     += 1
-        total_raw    += s["rows_raw"]
-        total_totals += s["rows_totals"]
-        total_hourly += s["rows_hourly"]
-        date_range    = f"{s['date_min']} → {s['date_max']}"
+        ok_count       += 1
+        total_raw      += s["rows_raw"]
+        total_excluded += s["rows_excluded"]
+        total_detail   += s["rows_detail"]
+        date_range      = f"{s['date_min']} → {s['date_max']}"
         print(f"  {s['file']:<46} {'✅ OK':<8}  {s['rows_raw']:>8,}  "
-              f"{s['rows_totals']:>7,}  {s['rows_hourly']:>8,}  "
+              f"{s['rows_excluded']:>8,}  {s['rows_detail']:>8,}  "
               f"{date_range:<23}  {s['screens']:>5,}  {s['elapsed_s']:>4.1f}s")
     else:
         err = s.get("error", "")
         print(f"  {s['file']:<46} ❌ {s['status']:<8}  {err}")
 
 print(f"  {'─'*120}")
-print(f"  {'TOTAL':<46} {'':>8}  {total_raw:>8,}  {total_totals:>7,}  {total_hourly:>8,}")
-print(f"\n  Files OK          : {ok_count} / {len(footfall_files)}")
-print(f"  Totals folder     : {OUTPUT_TOTALS_DIR}\n"
-        f"  Hourly folder     : {OUTPUT_HOURLY_DIR}")
-print(f"  Output format     : {OUTPUT_FORMAT.upper()}")
+print(f"  {'TOTAL':<46} {'':>8}  {total_raw:>8,}  {total_excluded:>8,}  {total_detail:>8,}")
+print(f"\n  Files OK      : {ok_count} / {len(footfall_files)}")
+print(f"  Detail folder : {OUTPUT_DETAIL_DIR}")
+print(f"  Output format : {OUTPUT_FORMAT.upper()}")
 print(f"{'='*56}")
 print("Process finished.")
-# %%
-import pandas as pd
-
-df = pd.read_parquet(r"C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed\footfall\totals\01_Jan25_Micromedia_Footfall_totals.parquet")
-
-print(df.shape)
-df.head(10)
 # %%
