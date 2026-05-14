@@ -4,17 +4,14 @@ process_footfall.py
 Reads monthly Footfall CSV exports from Locomizer and produces, for EACH
 input file, one clean output file:
 
-  <original_name>_detail.<ext>
-       All rows EXCEPT HOUR = 25 AND MOVEMENT_MODALITY = 'ALL'
-                               AND VISITATION_MODALITY = 'ALL'.
-       → granular data for all Busiest Times charts, modality breakdowns,
-         and KPI calculations in Power BI.
-       → all-day total rows (HOUR = 25) are excluded because Power BI
-         aggregates the granular rows directly, avoiding redundancy.
+  <original_name>.<ext>
+       All rows except HOUR = 25 (all-day totals are excluded — Power BI
+       handles aggregations directly from the hourly granular data).
 
   Example:
     IN  → 03_Mar25_Micromedia_Footfall.csv
-    OUT → 03_Mar25_Micromedia_Footfall_detail.parquet
+    OUT → 03_Mar25_Micromedia_Footfall.parquet
+
 
 Transformations applied to every file:
   • HOUR = 25 / ALL / ALL rows stripped before export (handled by Power BI).
@@ -34,11 +31,21 @@ Power BI tip (Parquet):
   Power BI auto-combines all Parquet files that share the same schema,
   so adding a new month requires zero changes to the .pbix file.
 
-Row exclusion rule (per project spec):
-  Excluded → HOUR == 25  AND  MOVEMENT_MODALITY == 'ALL'
-                          AND  VISITATION_MODALITY == 'ALL'
-  Note: schema spec says 'All' but real Locomizer exports use 'ALL'.
-  Verified against 03_Mar25_Micromedia_Footfall.csv.
+Data cleaning rules applied:
+  • HOUR == 25                               removed — all-day total sentinel rows;
+                                             Power BI handles aggregations from hourly data.
+  • MOVEMENT=ALL AND VISITATION=ALL          removed — grand total row; redundant.
+  • MOVEMENT=ALL AND VISITATION ≠ ALL        KEPT — these are the only rows that carry
+                                             RESIDENTS / WORKERS / TRANSIENT segmentation.
+                                             Removing MOVEMENT=ALL entirely would erase
+                                             all visitation analysis capability.
+  • Individual MOVEMENT + VISITATION=ALL     KEPT — movement mode breakdown.
+
+  Data structure (verified against real data):
+    Individual movements (CAR_CITY etc.) → only appear with VISITATION=ALL
+    MOVEMENT=ALL                          → appears with ALL + RESIDENTS + WORKERS + TRANSIENT
+    → Two orthogonal analyses share the same table; filter by VISITATION='ALL' for movement
+      analysis, filter by MOVEMENT='ALL' for visitation analysis. No double-counting.
 
 Usage:
   python process_footfall.py
@@ -58,21 +65,23 @@ import pandas as pd
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ── Folders ────────────────────────────────────────────────────────────────────
-INPUT_DIR         = os.path.join(BASE_DIR, "..", "data", "raw", "footfall")
-OUTPUT_DIR        = os.path.join(BASE_DIR, "..", "data", "processed", "footfall")
-OUTPUT_DETAIL_DIR = os.path.join(OUTPUT_DIR, "detail")
-os.makedirs(OUTPUT_DETAIL_DIR, exist_ok=True)
+INPUT_DIR  = os.path.join(BASE_DIR, "..", "data", "raw", "footfall")
+OUTPUT_DIR = os.path.join(BASE_DIR, "..", "data", "processed", "footfall")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
 
 # ── Output format ─────────────────────────────────────────────────────────────
 # "parquet" → recommended for Power BI (smaller, faster, type-safe)
 # "csv"     → Excel / legacy compatibility
 OUTPUT_FORMAT = "parquet"
 
-# ── Exclusion filter constants (rows matching ALL THREE are dropped) ───────────
-# Change here if Locomizer ever changes casing.
-HOUR_TOTAL     = 25      # Locomizer sentinel: all-day total row
-MODALITY_ALL   = "ALL"   # MOVEMENT_MODALITY value of the all-day row
-VISITATION_ALL = "ALL"   # VISITATION_MODALITY value of the all-day row
+# ── Filter constants ─────────────────────────────────────────────────────────
+HOUR_TOTAL     = 25    # Locomizer sentinel: all-day total row → removed
+MODALITY_ALL   = "ALL" # Used to identify the grand total combination to remove:
+VISITATION_ALL = "ALL" #   MOVEMENT=ALL + VISITATION=ALL → redundant grand total → removed
+                       #   MOVEMENT=ALL + VISITATION≠ALL → KEPT (visitation segmentation)
+                       #   Individual MOVEMENT + VISITATION=ALL → KEPT (movement breakdown)
+
 
 # ── Optimised dtypes for read_csv ─────────────────────────────────────────────
 # Specifying dtypes skips pandas type-inference, which is the biggest single
@@ -82,14 +91,11 @@ VISITATION_ALL = "ALL"   # VISITATION_MODALITY value of the all-day row
 #   int32  → count columns (values stay well below 2 billion)
 #   float32→ all ratio/extrapolation columns (halves memory vs float64;
 #             precision is more than sufficient for audience percentages)
-#   category → low-cardinality strings (5 movement types, 4 visitation types,
-#               ~243 screen names) — speeds up groupby/filter significantly
+#   category → low-cardinality strings (5 movement types, 4 visitation types)
+#             — speeds up groupby/filter significantly
 DTYPE_MAP = {
     "CODE":                                           str,
-    "DISPLAY NAME":                                   "category",
     "RADIUS":                                         "int16",
-    "LATITUDE":                                       "float32",
-    "LONGITUDE":                                      "float32",
     "HOUR":                                           "int8",
     "DAY":                                            "int8",
     "MONTH":                                          "int8",
@@ -116,9 +122,9 @@ EXPECTED_COLUMNS = list(DTYPE_MAP.keys())
 
 # ── Logical column order for the output file ──────────────────────────────────
 COLS_ORDER = [
-    "CODE", "DISPLAY NAME",                          # Identifiers
+    "CODE",                                          # Identifier
     "DATE", "HOUR",                                  # Time (DATE = date only, no timestamp)
-    "RADIUS", "LATITUDE", "LONGITUDE",               # Geography
+    "RADIUS",                                        # Geography
     "MOVEMENT_MODALITY", "VISITATION_MODALITY",      # Segment filters
     "NUMBER_OF_USERS", "NUMBER_OF_SIGNALS",          # Raw panel metrics
     "DWELL_TIME", "REACH",
@@ -190,24 +196,26 @@ def apply_column_order(df, label):
     return df
 
 
-def export_file(df_detail, stem, fmt):
+def export_file(df, stem, fmt):
     """
-    Export the detail DataFrame using 'stem' as the base file name.
+    Export a single DataFrame using 'stem' as the base file name.
     fmt: "parquet" or "csv"
-    Returns path_detail.
+    Returns the output path.
     """
-    ext         = ".parquet" if fmt == "parquet" else ".csv"
-    path_detail = os.path.join(OUTPUT_DETAIL_DIR, f"{stem}_detail{ext}")
+    ext  = ".parquet" if fmt == "parquet" else ".csv"
+    path = os.path.join(OUTPUT_DIR, f"{stem}{ext}")
+
 
     if fmt == "parquet":
         # pyarrow preserves dtypes and date columns exactly as-is.
         # Power BI reads the DATE column as a clean Date (no time).
-        df_detail.to_parquet(path_detail, index=False, engine="pyarrow")
+        df.to_parquet(path, index=False, engine="pyarrow")
     else:
         # utf-8-sig BOM ensures the CSV opens correctly in Excel on Windows
-        df_detail.to_csv(path_detail, index=False, encoding="utf-8-sig")
+        df.to_csv(path, index=False, encoding="utf-8-sig")
 
-    return path_detail
+    return path
+
 
 
 def file_info(path):
@@ -262,7 +270,7 @@ for filepath in footfall_files:
     # Pass DTYPE_MAP at load time so pandas skips the type-inference scan.
     # Unknown columns (not in DTYPE_MAP) use default inference — safe fallback.
     try:
-        df = pd.read_csv(filepath, dtype=DTYPE_MAP)
+        df = pd.read_csv(filepath, dtype=DTYPE_MAP, usecols=EXPECTED_COLUMNS)
     except Exception as e:
         print(f"  ❌ LOAD FAILED: {e}")
         global_summary.append({"file": filename, "status": "LOAD ERROR", "error": str(e)})
@@ -298,47 +306,55 @@ for filepath in footfall_files:
     if nat_after > 0:
         print(f"  ⚠️  WARNING: {nat_after} rows have an invalid DATE (will appear as NaT).")
 
-    # ── 2d: Exclude all-day total rows ────────────────────────────────────────
-    # Rows where HOUR=25 AND MOVEMENT_MODALITY=ALL AND VISITATION_MODALITY=ALL
-    # are Locomizer's pre-computed all-day summaries. They are excluded here
-    # because Power BI aggregates the granular detail rows directly.
-    exclusion_mask = (
-        (df["HOUR"]                == HOUR_TOTAL)     &
-        (df["MOVEMENT_MODALITY"]   == MODALITY_ALL)   &
-        (df["VISITATION_MODALITY"] == VISITATION_ALL)
+    # ── 2d: Remove redundant aggregation rows ─────────────────────────────────
+    # Removed:
+    #   • HOUR=25                          → all-day sentinel; Power BI aggregates.
+    #   • MOVEMENT=ALL + VISITATION=ALL    → grand total; derivable in Power BI.
+    #
+    # Kept:
+    #   • Individual MOVEMENT + VISITATION=ALL  → movement mode breakdown.
+    #   • MOVEMENT=ALL + VISITATION≠ALL         → visitation segmentation
+    #                                             (RESIDENTS / WORKERS / TRANSIENT).
+    #     ⚠️  These rows ONLY exist when MOVEMENT=ALL. Removing MOVEMENT=ALL
+    #     entirely would silently erase all visitation analysis capability.
+    rows_before = len(df)
+
+    filter_mask = (
+        (df["HOUR"] != HOUR_TOTAL) &
+        ~((df["MOVEMENT_MODALITY"] == MODALITY_ALL) & (df["VISITATION_MODALITY"] == VISITATION_ALL))
+
     )
-
-    rows_excluded = int(exclusion_mask.sum())
-    df_detail     = df[~exclusion_mask].reset_index(drop=True)
-    del df   # free the original DataFrame
-
-    print(f"  [FILTER] {rows_raw:>8,} raw rows  →  "
-          f"{rows_excluded:>6,} excluded (HOUR=25/ALL/ALL)  →  "
-          f"{len(df_detail):>7,} kept  ✅")
+    df = df[filter_mask].reset_index(drop=True)
+    rows_removed = rows_before - len(df)
+    pct_removed  = rows_removed / rows_before * 100
+    print(f"  [FILTER] Removed {rows_removed:,} rows ({pct_removed:.1f}%) "
+          f"→ {len(df):,} rows remaining")
+    print(f"           MOVEMENT values  : {sorted(df['MOVEMENT_MODALITY'].unique().tolist())}")
+    print(f"           VISITATION values: {sorted(df['VISITATION_MODALITY'].unique().tolist())}")
 
     # ── 2e: Column reordering ──────────────────────────────────────────────────
-    df_detail = apply_column_order(df_detail, "DETAIL")
+    df = apply_column_order(df, "OUTPUT")
 
-    # ── 2f: Export ────────────────────────────────────────────────────────────
+    # ── 2f: Export single file ─────────────────────────────────────────────────
     try:
-        path_detail  = export_file(df_detail, stem, OUTPUT_FORMAT)
-        size_d, _    = file_info(path_detail)
-        elapsed      = time.time() - t_start
+        path    = export_file(df, stem, OUTPUT_FORMAT)
+        size_kb = file_info(path)[0]
+        elapsed = time.time() - t_start
 
-        print(f"  [EXPORT] {os.path.basename(path_detail):<60} ({size_d:>7,.1f} KB)")
+        print(f"  [EXPORT] → {os.path.basename(path):<55} ({size_kb:>7,.1f} KB)")
         print(f"  [TIME]   {elapsed:.1f}s")
 
         global_summary.append({
-            "file":           filename,
-            "status":         "OK",
-            "rows_raw":       rows_raw,
-            "rows_excluded":  rows_excluded,
-            "rows_detail":    len(df_detail),
-            "date_min":       str(df_detail["DATE"].min()),
-            "date_max":       str(df_detail["DATE"].max()),
-            "screens":        df_detail["CODE"].nunique(),
-            "size_detail_kb": round(size_d, 1),
-            "elapsed_s":      round(elapsed, 1),
+            "file":      filename,
+            "status":    "OK",
+            "rows_raw":  rows_raw,
+            "rows_out":  len(df),
+            "removed":   rows_removed,
+            "date_min":  str(df["DATE"].min()),
+            "date_max":  str(df["DATE"].max()),
+            "screens":   df["CODE"].nunique(),
+            "size_kb":   round(size_kb, 1),
+            "elapsed_s": round(elapsed, 1),
         })
 
     except Exception as e:
@@ -354,33 +370,32 @@ for filepath in footfall_files:
 # One-glance report across all processed files.
 
 print(f"{'='*20} GLOBAL SUMMARY {'='*20}")
-print(f"\n  {'FILE':<46} {'STATUS':<8}  {'RAW':>8}  {'EXCLUDED':>8}  {'DETAIL':>8}  {'DATE RANGE':<23}  {'SCRNS':>5}  {'TIME':>5}")
+print(f"\n  {'FILE':<46} {'STATUS':<8}  {'RAW':>8}  {'OUTPUT':>8}  {'REMOVED':>8}  {'DATE RANGE':<23}  {'SCRNS':>5}  {'TIME':>5}")
 print(f"  {'-'*46} {'-'*8}  {'-'*8}  {'-'*8}  {'-'*8}  {'-'*23}  {'-'*5}  {'-'*5}")
 
-total_raw      = 0
-total_excluded = 0
-total_detail   = 0
-ok_count       = 0
+total_raw  = 0
+total_out  = 0
+ok_count   = 0
 
 for s in global_summary:
     if s["status"] == "OK":
-        ok_count       += 1
-        total_raw      += s["rows_raw"]
-        total_excluded += s["rows_excluded"]
-        total_detail   += s["rows_detail"]
-        date_range      = f"{s['date_min']} → {s['date_max']}"
+        ok_count   += 1
+        total_raw  += s["rows_raw"]
+        total_out  += s["rows_out"]
+        date_range  = f"{s['date_min']} → {s['date_max']}"
         print(f"  {s['file']:<46} {'✅ OK':<8}  {s['rows_raw']:>8,}  "
-              f"{s['rows_excluded']:>8,}  {s['rows_detail']:>8,}  "
+              f"{s['rows_out']:>8,}  {s['removed']:>8,}  "
+
               f"{date_range:<23}  {s['screens']:>5,}  {s['elapsed_s']:>4.1f}s")
     else:
         err = s.get("error", "")
         print(f"  {s['file']:<46} ❌ {s['status']:<8}  {err}")
 
 print(f"  {'─'*120}")
-print(f"  {'TOTAL':<46} {'':>8}  {total_raw:>8,}  {total_excluded:>8,}  {total_detail:>8,}")
+print(f"  {'TOTAL':<46} {'':>8}  {total_raw:>8,}  {total_out:>8,}")
 print(f"\n  Files OK      : {ok_count} / {len(footfall_files)}")
-print(f"  Detail folder : {OUTPUT_DETAIL_DIR}")
+print(f"  Output folder : {OUTPUT_DIR}")
 print(f"  Output format : {OUTPUT_FORMAT.upper()}")
 print(f"{'='*56}")
 print("Process finished.")
-# %%
+
