@@ -2,7 +2,7 @@
 process_footfall.py
 ===================
 Reads monthly Footfall CSV exports from Locomizer and produces, for EACH
-input file, two clean output files:
+input file, one clean output file:
 
   <original_name>.<ext>
        All rows except HOUR = 25 (all-day totals are excluded — Power BI
@@ -12,7 +12,9 @@ input file, two clean output files:
     IN  → 03_Mar25_Micromedia_Footfall.csv
     OUT → 03_Mar25_Micromedia_Footfall.parquet
 
+
 Transformations applied to every file:
+  • HOUR = 25 / ALL / ALL rows stripped before export (handled by Power BI).
   • DAY + MONTH + YEAR merged into a single DATE column (date only, no time).
   • Explicit column dtypes on load — avoids pandas type inference, cuts
     memory usage by ~40% and speeds up read_csv on large files.
@@ -25,7 +27,7 @@ Output format:
   Set OUTPUT_FORMAT = "csv"     for Excel / legacy compatibility.
 
 Power BI tip (Parquet):
-  Use "Get Data → Folder" in Power BI and point it at OUTPUT_DIR.
+  Use "Get Data → Folder" in Power BI and point it at OUTPUT_DETAIL_DIR.
   Power BI auto-combines all Parquet files that share the same schema,
   so adding a new month requires zero changes to the .pbix file.
 
@@ -67,6 +69,7 @@ INPUT_DIR  = os.path.join(BASE_DIR, "..", "data", "raw", "footfall")
 OUTPUT_DIR = os.path.join(BASE_DIR, "..", "data", "processed", "footfall")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
+
 # ── Output format ─────────────────────────────────────────────────────────────
 # "parquet" → recommended for Power BI (smaller, faster, type-safe)
 # "csv"     → Excel / legacy compatibility
@@ -78,6 +81,7 @@ MODALITY_ALL   = "ALL" # Used to identify the grand total combination to remove:
 VISITATION_ALL = "ALL" #   MOVEMENT=ALL + VISITATION=ALL → redundant grand total → removed
                        #   MOVEMENT=ALL + VISITATION≠ALL → KEPT (visitation segmentation)
                        #   Individual MOVEMENT + VISITATION=ALL → KEPT (movement breakdown)
+
 
 # ── Optimised dtypes for read_csv ─────────────────────────────────────────────
 # Specifying dtypes skips pandas type-inference, which is the biggest single
@@ -116,7 +120,7 @@ DTYPE_MAP = {
 # ── Expected columns (derived from DTYPE_MAP keys) ────────────────────────────
 EXPECTED_COLUMNS = list(DTYPE_MAP.keys())
 
-# ── Logical column order for both output files ────────────────────────────────
+# ── Logical column order for the output file ──────────────────────────────────
 COLS_ORDER = [
     "CODE",                                          # Identifier
     "DATE", "HOUR",                                  # Time (DATE = date only, no timestamp)
@@ -201,6 +205,7 @@ def export_file(df, stem, fmt):
     ext  = ".parquet" if fmt == "parquet" else ".csv"
     path = os.path.join(OUTPUT_DIR, f"{stem}{ext}")
 
+
     if fmt == "parquet":
         # pyarrow preserves dtypes and date columns exactly as-is.
         # Power BI reads the DATE column as a clean Date (no time).
@@ -210,6 +215,7 @@ def export_file(df, stem, fmt):
         df.to_csv(path, index=False, encoding="utf-8-sig")
 
     return path
+
 
 
 def file_info(path):
@@ -245,7 +251,7 @@ print(f"{'='*56}\n")
 # %% ---------------------------------------------------------------------------
 # Step 2 — Per-file processing loop
 # ---------------------------------------------------------------------------
-# Each file is loaded, validated, transformed, split, and exported independently.
+# Each file is loaded, validated, transformed, filtered, and exported independently.
 # Benefits of per-file processing:
 #   • Only one month sits in RAM at a time → lower peak memory usage.
 #   • A single corrupt/missing file does not block the others.
@@ -279,7 +285,7 @@ for filepath in footfall_files:
     print(f"  [SCHEMA]")
     validate_schema(df, filename)
 
-    # Null check on columns used in the totals filter
+    # Null check on key filter columns
     key_cols  = ["CODE", "HOUR", "MOVEMENT_MODALITY", "VISITATION_MODALITY",
                  "DAY", "MONTH", "YEAR"]
     null_hits = {c: int(df[c].isna().sum()) for c in key_cols if c in df.columns}
@@ -290,9 +296,8 @@ for filepath in footfall_files:
         print(f"  [NULLS]  No nulls in key filter columns. ✅")
 
     # ── 2c: Build DATE column (date-only, no timestamp) ───────────────────────
-    nat_before = df[["DAY", "MONTH", "YEAR"]].isna().any(axis=1).sum()
     df = build_date_column(df)
-    nat_after  = df["DATE"].isna().sum()
+    nat_after = df["DATE"].isna().sum()
 
     sample_dates = [str(d) for d in df["DATE"].dropna().unique()[:3]]
     print(f"  [DATE]   DATE column built (date only). "
@@ -317,9 +322,9 @@ for filepath in footfall_files:
     filter_mask = (
         (df["HOUR"] != HOUR_TOTAL) &
         ~((df["MOVEMENT_MODALITY"] == MODALITY_ALL) & (df["VISITATION_MODALITY"] == VISITATION_ALL))
+
     )
     df = df[filter_mask].reset_index(drop=True)
-
     rows_removed = rows_before - len(df)
     pct_removed  = rows_removed / rows_before * 100
     print(f"  [FILTER] Removed {rows_removed:,} rows ({pct_removed:.1f}%) "
@@ -380,6 +385,7 @@ for s in global_summary:
         date_range  = f"{s['date_min']} → {s['date_max']}"
         print(f"  {s['file']:<46} {'✅ OK':<8}  {s['rows_raw']:>8,}  "
               f"{s['rows_out']:>8,}  {s['removed']:>8,}  "
+
               f"{date_range:<23}  {s['screens']:>5,}  {s['elapsed_s']:>4.1f}s")
     else:
         err = s.get("error", "")
@@ -392,3 +398,4 @@ print(f"  Output folder : {OUTPUT_DIR}")
 print(f"  Output format : {OUTPUT_FORMAT.upper()}")
 print(f"{'='*56}")
 print("Process finished.")
+
