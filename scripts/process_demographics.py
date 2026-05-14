@@ -14,9 +14,18 @@ input file, one clean output file:
     OUT -> 12_Dec2024_Micromedia_Demographics_clean.parquet
 
 Transformations applied to every file:
-  * MM_ID extracted from DISPLAY NAME (first 5 characters = Micromedia site ID).
-    DISPLAY NAME column is then dropped -- the site list is the single source of
-    truth for name, address, and coordinates.
+  * CODE extracted from DISPLAY NAME (first 5 characters = Micromedia site ID).
+    DISPLAY NAME column is then dropped -- the site list is the single source
+    of truth for name, address, and coordinates.
+    NOTE: this column was previously named MM_ID. It was renamed to CODE in
+    v1.5.0 so the three fact tables (Footfall, Demographics, Brand Affinity)
+    share the same join-key name -- single relationship in the Power BI data
+    model, no per-table renaming required.
+  * MOVEMENT_MODALITY values normalised to Title Case ('PEDESTRIANS' ->
+    'Pedestrians', 'NON_PEDESTRIANS' -> 'Non_Pedestrians'). Brand Affinity
+    already uses Title Case; Footfall and Demographics arrive UPPERCASE.
+    Without normalisation, a single Power BI slicer cannot filter all three
+    fact tables simultaneously.
   * LATITUDE / LONGITUDE dropped -- sourced from the master site list to avoid
     duplication and stale coordinate data in the analytics layer.
   * Zero-data rows removed -- rows where all reach values are 0 are placeholder
@@ -57,6 +66,22 @@ Usage:
   Drop new monthly CSVs into INPUT_DIR and re-run -- no code changes needed.
 
 Version history:
+  v1.5.0  2026-05-14  Power BI cross-dataset alignment:
+                      (1) MM_ID column renamed to CODE so all three fact
+                          tables (Footfall, Demographics, Brand Affinity)
+                          share the same join-key name. One relationship to
+                          Master Sites per fact table; no per-table column
+                          remapping in the data model.
+                      (2) MOVEMENT_MODALITY values normalised to Title Case
+                          ('PEDESTRIANS' -> 'Pedestrians', 'NON_PEDESTRIANS'
+                          -> 'Non_Pedestrians'). Aligns with Brand Affinity
+                          (already Title Case) and the updated Footfall
+                          pipeline. A single Power BI slicer can now drive
+                          all three datasets.
+                      (3) Internal constants renamed for clarity:
+                          MM_ID_LENGTH -> CODE_LENGTH,
+                          MM_ID_PATTERN -> CODE_PATTERN,
+                          extract_mm_id() -> extract_code().
   v1.4.0  2025-05-13  Two new steps:
                       (1) Zero-row filter: drop rows where all reach data = 0
                           (placeholder rows emitted by Locomizer when panel is
@@ -98,7 +123,7 @@ import glob
 
 import pandas as pd
 
-__version__ = "1.4.0"
+__version__ = "1.5.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -114,7 +139,7 @@ os.makedirs(OUTPUT_CLEAN_DIR, exist_ok=True)
 OUTPUT_FORMAT = "parquet"
 
 # -- Columns to drop before export ---------------------------------------------
-# LATITUDE / LONGITUDE are redundant -- the master site list (joined on MM_ID)
+# LATITUDE / LONGITUDE are redundant -- the master site list (joined on CODE)
 # is the authoritative source for screen coordinates.
 COLS_DROP = ["LATITUDE", "LONGITUDE"]
 
@@ -152,19 +177,21 @@ COLS_REDUNDANT = [
     "T1_1AGETT_REACH",
 ]
 
-# -- MM_ID extraction ----------------------------------------------------------
+# -- CODE extraction -----------------------------------------------------------
 # Locomizer formats DISPLAY NAME as "<5-digit-ID> - <Screen Name>".
-# We extract the first 5 characters as MM_ID (the Micromedia Custom ID / CODE)
-# and discard the rest.  The full name is available in the site list via MM_ID.
-MM_ID_LENGTH = 5
+# We extract the first 5 characters as CODE (the Micromedia site identifier)
+# and discard the rest. The full name is available in the site list via CODE.
+# NOTE: This column was named MM_ID prior to v1.5.0. It is now CODE to match
+# the Footfall and Brand Affinity fact tables -- one join-key name everywhere.
+CODE_LENGTH = 5
 
-# -- MM_ID validation pattern --------------------------------------------------
-# Valid MM_IDs are exactly 5 numeric digits (e.g. "50001").
+# -- CODE validation pattern ---------------------------------------------------
+# Valid CODEs are exactly 5 numeric digits (e.g. "50001").
 # Screens whose DISPLAY NAME does not start with 5 digits (e.g.
-# "Dorset St. - Red Parrott - Drumcondra") produce invalid MM_IDs that will
+# "Dorset St. - Red Parrott - Drumcondra") produce invalid CODEs that will
 # NOT join to the site list. These are flagged in the log -- no automatic fix
 # is possible without the master site list.
-MM_ID_PATTERN = r"^\d{5}$"
+CODE_PATTERN = r"^\d{5}$"
 
 # -- Zero-row filter -----------------------------------------------------------
 # Locomizer emits placeholder rows (all reach values = 0) for screen/hour/
@@ -185,7 +212,7 @@ ZERO_ROW_THRESHOLD = 0.01   # sum of all male age reach cols below this -> drop
 #               precision is more than sufficient for audience percentages)
 #   category -> low-cardinality strings (3 movement types, ~243 screen names)
 DTYPE_MAP_BASE = {
-    "DISPLAY NAME":      str,       # processed -> MM_ID then dropped
+    "DISPLAY NAME":      str,       # processed -> CODE then dropped
     "LATITUDE":          "float32", # dropped after load
     "LONGITUDE":         "float32", # dropped after load
     "RADIUS":            "int16",
@@ -202,6 +229,14 @@ REACH_DTYPE = "float32"
 
 # -- Expected non-demographic base columns (for schema validation) --------------
 EXPECTED_BASE_COLUMNS = list(DTYPE_MAP_BASE.keys())
+
+# -- Modality columns to normalise to Title Case ------------------------------
+# Locomizer's Demographics export uses UPPERCASE for MOVEMENT_MODALITY
+# ('ALL', 'PEDESTRIANS', 'NON_PEDESTRIANS'). Brand Affinity uses Title Case
+# ('All', 'Pedestrians', 'Non_Pedestrians'). We standardise to Title Case so a
+# single Power BI slicer drives all three fact tables. Demographics has no
+# VISITATION_MODALITY column (by design -- see schema notes above).
+MODALITY_COLS = ["MOVEMENT_MODALITY"]
 
 
 # %% ---------------------------------------------------------------------------
@@ -256,16 +291,56 @@ def validate_schema(df, filename):
     return missing, extra
 
 
-def extract_mm_id(df):
+def extract_code(df):
     """
-    Extract the first MM_ID_LENGTH characters from DISPLAY NAME as MM_ID.
+    Extract the first CODE_LENGTH characters from DISPLAY NAME as CODE.
     Drop DISPLAY NAME afterwards -- the full screen name lives in the site list.
 
     Example:
-        "50001 - Tower Records - Dawson Street" -> MM_ID = "50001"
+        "50001 - Tower Records - Dawson Street" -> CODE = "50001"
+
+    NOTE: this function was named extract_mm_id() before v1.5.0. The output
+    column is now named CODE (was MM_ID) so all three fact tables share the
+    same join-key name.
     """
-    df["MM_ID"] = df["DISPLAY NAME"].str[:MM_ID_LENGTH].str.strip()
+    df["CODE"] = df["DISPLAY NAME"].str[:CODE_LENGTH].str.strip()
     df.drop(columns=["DISPLAY NAME"], inplace=True)
+    return df
+
+
+def standardize_modality_casing(df, columns):
+    """
+    Normalise modality column values to Title Case for cross-dataset
+    consistency in Power BI. Locomizer's three exports use mixed casing:
+
+      Footfall       -> UPPERCASE ('PEDESTRIANS', 'ALL', 'WORKERS', ...)
+      Demographics   -> UPPERCASE ('ALL', 'PEDESTRIANS', 'NON_PEDESTRIANS')
+      Brand Affinity -> Title Case ('Pedestrians', 'All', ...)
+
+    Without normalisation, a single Power BI slicer on Movement Modality
+    cannot filter all three fact tables simultaneously because the string
+    values do not match across tables -- the slicer would silently return
+    empty for two of the three datasets.
+
+    Title Case is chosen because:
+      * Brand Affinity already uses it (minimal change to that pipeline).
+      * str.title() handles underscored compound words correctly
+        ('NON_PEDESTRIANS' -> 'Non_Pedestrians').
+      * Reads cleanly in chart labels and slicer UI.
+
+    Idempotent: re-applying to already-Title-Cased values is a no-op.
+    Uses .cat.rename_categories() so the categorical dtype is preserved
+    (no string array reallocation).
+    """
+    for col in columns:
+        if col not in df.columns:
+            continue
+        if isinstance(df[col].dtype, pd.CategoricalDtype):
+            df[col] = df[col].cat.rename_categories(
+                {c: c.title() for c in df[col].cat.categories}
+            )
+        else:
+            df[col] = df[col].astype(str).str.title().astype("category")
     return df
 
 
@@ -309,15 +384,15 @@ def drop_columns(df, cols):
 def build_column_order(df):
     """
     Return df with columns in a logical order:
-      MM_ID -> time -> segment -> all reach columns -> SOURCE_FILE.
+      CODE -> time -> segment -> all reach columns -> SOURCE_FILE.
     Any unexpected columns are appended at the end.
     """
     priority = [
-        "MM_ID",             # identifier (joins to site list)
+        "CODE",              # identifier (joins to site list — was MM_ID pre-v1.5.0)
         "YEAR_MONTH",        # time period (YYYY-MM)
         "HOUR",              # time of day (0-23)
         "RADIUS",            # viewshed radius
-        "MOVEMENT_MODALITY", # segment filter (ALL / PEDESTRIANS / NON_PEDESTRIANS)
+        "MOVEMENT_MODALITY", # segment filter (All / Pedestrians / Non_Pedestrians)
     ]
 
     # Collect demographic reach groups in schema order
@@ -439,35 +514,42 @@ for filepath in demographics_files:
     else:
         print(f"  [NULLS]  No nulls in key columns. OK")
 
-    # -- 2c: Extract MM_ID from DISPLAY NAME -----------------------------------
+    # -- 2c: Extract CODE from DISPLAY NAME ------------------------------------
     # Capture invalid DISPLAY NAMEs before the column is dropped.
     invalid_display_names = (
         df["DISPLAY NAME"][
-            ~df["DISPLAY NAME"].str[:MM_ID_LENGTH].str.strip().str.match(MM_ID_PATTERN)
+            ~df["DISPLAY NAME"].str[:CODE_LENGTH].str.strip().str.match(CODE_PATTERN)
         ].unique().tolist()
     )
     sample_display = df["DISPLAY NAME"].iloc[0] if len(df) > 0 else ""
-    df = extract_mm_id(df)
-    sample_mm_id = df["MM_ID"].iloc[0] if len(df) > 0 else ""
-    print(f"  [MM_ID]  Extracted from DISPLAY NAME "
-          f"('{sample_display}' -> '{sample_mm_id}'). "
-          f"Unique screens: {df['MM_ID'].nunique()}")
+    df = extract_code(df)
+    sample_code = df["CODE"].iloc[0] if len(df) > 0 else ""
+    print(f"  [CODE]   Extracted from DISPLAY NAME "
+          f"('{sample_display}' -> '{sample_code}'). "
+          f"Unique screens: {df['CODE'].nunique()}")
 
-    # MM_ID validation -- flag screens that won't join to the site list
+    # CODE validation -- flag screens that won't join to the site list
     if invalid_display_names:
-        invalid_count = df[~df["MM_ID"].str.match(MM_ID_PATTERN)]["MM_ID"].nunique()
-        print(f"  WARNING  {invalid_count} screen(s) with INVALID MM_ID (will NOT join to site list):")
+        invalid_count = df[~df["CODE"].str.match(CODE_PATTERN)]["CODE"].nunique()
+        print(f"  WARNING  {invalid_count} screen(s) with INVALID CODE (will NOT join to site list):")
         for name in invalid_display_names:
-            extracted = name[:MM_ID_LENGTH].strip()
-            print(f"       DISPLAY NAME: '{name}'  ->  MM_ID: '{extracted}'")
+            extracted = name[:CODE_LENGTH].strip()
+            print(f"       DISPLAY NAME: '{name}'  ->  CODE: '{extracted}'")
         print(f"       Action required: map these screens manually to their 5-digit site codes.")
     else:
-        print(f"  [MM_ID]  All MM_IDs are valid 5-digit codes. OK")
+        print(f"  [CODE]   All CODEs are valid 5-digit codes. OK")
 
-    # -- 2d: Drop LATITUDE / LONGITUDE -----------------------------------------
+    # -- 2d: Normalise modality casing (UPPERCASE -> Title Case) ---------------
+    # Aligns Demographics with Brand Affinity (already Title Case) and the
+    # updated Footfall pipeline so a single Power BI slicer can drive all
+    # three fact tables. Idempotent -- safe to re-run.
+    df = standardize_modality_casing(df, MODALITY_COLS)
+    print(f"  [CASE]   MOVEMENT_MODALITY: {sorted(df['MOVEMENT_MODALITY'].unique().tolist())}")
+
+    # -- 2e: Drop LATITUDE / LONGITUDE -----------------------------------------
     df = drop_columns(df, COLS_DROP)
 
-    # -- 2e: Filter out zero-data rows -----------------------------------------
+    # -- 2f: Filter out zero-data rows -----------------------------------------
     # Rows where all reach values = 0 are placeholder rows emitted by Locomizer
     # when the panel size is too small to produce reliable data. They carry no
     # audience information and would distort Power BI averages if kept.
@@ -480,23 +562,23 @@ for filepath in demographics_files:
     print(f"  [FILTER] {rows_zero:,} zero-data rows removed "
           f"({rows_zero / rows_raw * 100:.1f}% of raw)  ->  {len(df):,} rows remain.")
 
-    # -- 2f: Drop all redundant _T_ summary columns (37 total) -----------------
+    # -- 2g: Drop all redundant _T_ summary columns (37 total) -----------------
     # Includes gender totals (AGETM, AGETF), per-band age totals (AGE{band}T),
     # and grand total (AGETT). All verified as exact M+F sums (max diff = 0.0).
     df = drop_columns(df, COLS_REDUNDANT)
 
-    # -- 2g: Build YEAR_MONTH period column ------------------------------------
+    # -- 2h: Build YEAR_MONTH period column ------------------------------------
     df = build_year_month_column(df)
     sample_ym = df["YEAR_MONTH"].iloc[0] if len(df) > 0 else ""
     unique_ym  = sorted(df["YEAR_MONTH"].unique().tolist())
     print(f"  [PERIOD] YEAR_MONTH column built. "
           f"Periods in file: {unique_ym}  |  Sample: '{sample_ym}'")
 
-    # -- 2h: Column reordering -------------------------------------------------
+    # -- 2i: Column reordering -------------------------------------------------
     df = build_column_order(df)
     print(f"  [ORDER]  Columns reordered. Final width: {len(df.columns)} columns.")
 
-    # -- 2i: Export ------------------------------------------------------------
+    # -- 2j: Export ------------------------------------------------------------
     try:
         path_clean = export_file(df, stem, OUTPUT_FORMAT)
         size_kb, _ = file_info(path_clean)
@@ -511,7 +593,7 @@ for filepath in demographics_files:
             "rows_raw":    rows_raw,
             "rows_zero":   rows_zero,
             "rows_clean":  len(df),
-            "screens":     df["MM_ID"].nunique(),
+            "screens":     df["CODE"].nunique(),
             "invalid_ids": len(invalid_display_names),
             "periods":     ", ".join(unique_ym),
             "size_kb":     round(size_kb, 1),
