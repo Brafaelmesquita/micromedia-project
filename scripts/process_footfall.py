@@ -14,7 +14,8 @@ input file, one clean output file:
 
 
 Transformations applied to every file:
-  • HOUR = 25 / ALL / ALL rows stripped before export (handled by Power BI).
+  • HOUR = 25 rows removed (all-day sentinel totals — Power BI aggregates from hourly data).
+  • MOVEMENT=ALL + VISITATION=ALL rows removed (grand total — causes double-counting in Power BI).
   • DAY + MONTH + YEAR merged into a single DATE column (date only, no time).
   • Explicit column dtypes on load — avoids pandas type inference, cuts
     memory usage by ~40% and speeds up read_csv on large files.
@@ -27,9 +28,23 @@ Output format:
   Set OUTPUT_FORMAT = "csv"     for Excel / legacy compatibility.
 
 Power BI tip (Parquet):
-  Use "Get Data → Folder" in Power BI and point it at OUTPUT_DETAIL_DIR.
+  Use "Get Data → Folder" in Power BI and point it at OUTPUT_DIR.
   Power BI auto-combines all Parquet files that share the same schema,
   so adding a new month requires zero changes to the .pbix file.
+
+Power BI data model note:
+  DISPLAY NAME, LATITUDE, and LONGITUDE are intentionally excluded from this
+  table. They are stored in the Master Sites dimension table and joined to this
+  fact table via CODE (5-digit screen identifier). This follows a star schema:
+
+      Master Sites (dimension) ──── CODE ────► Footfall (fact)
+                                         also ► Demographics (fact)
+                                         also ► Brand Affinity (fact)
+
+  Power BI relationships to configure:
+    Master Sites[CODE] → Footfall[CODE]          (many-to-one)
+    Master Sites[CODE] → Demographics[CODE]      (many-to-one)
+    Master Sites[CODE] → Brand Affinity[CODE]    (many-to-one)
 
 Data cleaning rules applied:
   • HOUR == 25                               removed — all-day total sentinel rows;
@@ -398,4 +413,3 @@ print(f"  Output folder : {OUTPUT_DIR}")
 print(f"  Output format : {OUTPUT_FORMAT.upper()}")
 print(f"{'='*56}")
 print("Process finished.")
-
