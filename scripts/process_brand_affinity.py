@@ -17,6 +17,16 @@ Transformations applied to every file:
   * DISPLAY NAME dropped -- CODE is already a clean 5-digit integer ID in
     Brand Affinity exports (unlike Demographics, no extraction needed).
     Screen names/addresses live in the master site list (joined on CODE).
+  * CODE converted from int32 -> str BEFORE export. The int32 type is used
+    during processing for the 5-digit range sanity check; the export uses
+    str so that all three fact tables (Footfall, Demographics, Brand
+    Affinity) share the same join-key dtype in the Power BI data model.
+  * MOVEMENT_MODALITY and VISITATION_MODALITY normalised to Title Case.
+    Brand Affinity already exports in Title Case, so this step is a no-op
+    in practice; it is included for defensive consistency with the
+    Footfall and Demographics pipelines (which DO need the conversion)
+    and so a future Locomizer schema change would not break the dashboard
+    silently.
   * TIME_INTERVAL_DESCRIPTION dropped -- it is a perfect 1-to-1 derivation
     of TIME_INTERVAL (1 -> "00.00-00.59", 2 -> "01.00-01.59", ..., 24 ->
     "23.00-23.59"). Power BI can rebuild the label from HOUR if needed.
@@ -85,6 +95,20 @@ Usage:
   Drop new monthly CSVs into INPUT_DIR and re-run -- no code changes needed.
 
 Version history:
+  v1.2.0  2026-05-14  Power BI cross-dataset alignment:
+                      (1) CODE column converted from int32 -> str before export.
+                          The int32 type is preserved during the sanity check
+                          (5-digit range validation). All three fact tables
+                          (Footfall, Demographics, Brand Affinity) now share
+                          the same join-key dtype, simplifying the Power BI
+                          relationship configuration.
+                      (2) MOVEMENT_MODALITY and VISITATION_MODALITY casing
+                          normalised to Title Case. Brand Affinity already
+                          exports in Title Case, so the step is a no-op on
+                          current data; included for defensive consistency
+                          with the Footfall and Demographics pipelines (which
+                          DO need the conversion) and so a future Locomizer
+                          schema change cannot break the dashboard silently.
   v1.1.0  2025-05-14  Two improvements from post-delivery audit:
                       (1) IS_DEFAULT column added (int8: 1 = MOVEMENT='All' AND
                           VISITATION='All', 0 = segment view). Gives Power BI a
@@ -127,7 +151,7 @@ import glob
 
 import pandas as pd
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -223,6 +247,14 @@ DTYPE_MAP = {
 # -- Expected columns (for schema validation) ----------------------------------
 EXPECTED_COLUMNS = list(DTYPE_MAP.keys())
 
+# -- Modality columns to normalise to Title Case ------------------------------
+# Brand Affinity already exports in Title Case, so this is a no-op on current
+# data. Included for defensive consistency with the Footfall and Demographics
+# pipelines (which DO need the conversion -- they arrive UPPERCASE) and so
+# that a future Locomizer schema change cannot silently desynchronise the
+# three fact tables and break cross-table slicers in Power BI.
+MODALITY_COLS = ["MOVEMENT_MODALITY", "VISITATION_MODALITY"]
+
 
 # %% ---------------------------------------------------------------------------
 # Helper functions
@@ -248,6 +280,44 @@ def validate_schema(df, filename):
         print(f"  [INFO] {len(extra)} extra column(s) found (kept): {sorted(extra)}")
 
     return missing, extra
+
+
+def standardize_modality_casing(df, columns):
+    """
+    Normalise modality column values to Title Case for cross-dataset
+    consistency in Power BI. Locomizer's three exports use mixed casing:
+
+      Footfall       -> UPPERCASE ('PEDESTRIANS', 'ALL', 'WORKERS', ...)
+      Demographics   -> UPPERCASE ('ALL', 'PEDESTRIANS', 'NON_PEDESTRIANS')
+      Brand Affinity -> Title Case ('Pedestrians', 'All', ...)
+
+    Brand Affinity already arrives in Title Case so this function is a no-op
+    on current data. It is kept here as a defensive measure: if Locomizer
+    ever flips the Brand Affinity casing in a future export, the three
+    fact tables would silently desynchronise and a single Power BI slicer
+    would no longer filter all three simultaneously. Running this function
+    unconditionally guarantees the output schema regardless of input casing.
+
+    Title Case is chosen because:
+      * Brand Affinity already uses it (no behaviour change on current data).
+      * str.title() handles underscored compound words correctly
+        ('NON_PEDESTRIANS' -> 'Non_Pedestrians').
+      * Reads cleanly in chart labels and slicer UI.
+
+    Idempotent: re-applying to already-Title-Cased values is a no-op.
+    Uses .cat.rename_categories() so the categorical dtype is preserved
+    (no string array reallocation).
+    """
+    for col in columns:
+        if col not in df.columns:
+            continue
+        if isinstance(df[col].dtype, pd.CategoricalDtype):
+            df[col] = df[col].cat.rename_categories(
+                {c: c.title() for c in df[col].cat.categories}
+            )
+        else:
+            df[col] = df[col].astype(str).str.title().astype("category")
+    return df
 
 
 def build_hour_column(df):
@@ -476,23 +546,32 @@ for filepath in brand_affinity_files:
     else:
         print(f"  [CODE]   All {df['CODE'].nunique()} CODEs are valid 5-digit integers. OK")
 
-    # -- 2e: Drop redundant columns (DISPLAY NAME, descriptions, constants) ----
+    # -- 2e: Normalise modality casing (defensive — already Title Case) --------
+    # Brand Affinity arrives in Title Case so this is a no-op on current data.
+    # Run unconditionally for defensive consistency with the Footfall and
+    # Demographics pipelines and to guard against a future Locomizer schema
+    # change desynchronising the three fact tables (see helper docstring).
+    df = standardize_modality_casing(df, MODALITY_COLS)
+    print(f"  [CASE]   MOVEMENT_MODALITY  : {sorted(df['MOVEMENT_MODALITY'].unique().tolist())}")
+    print(f"           VISITATION_MODALITY: {sorted(df['VISITATION_MODALITY'].unique().tolist())}")
+
+    # -- 2f: Drop redundant columns (DISPLAY NAME, descriptions, constants) ----
     df = drop_columns(df, COLS_DROP)
 
-    # -- 2f: Convert TIME_INTERVAL (1-24) -> HOUR (0-23) -----------------------
+    # -- 2g: Convert TIME_INTERVAL (1-24) -> HOUR (0-23) -----------------------
     df = build_hour_column(df)
     hour_min, hour_max = int(df["HOUR"].min()), int(df["HOUR"].max())
     print(f"  [HOUR]   TIME_INTERVAL -> HOUR conversion done. "
           f"Range: {hour_min}..{hour_max} (expected 0..23)")
 
-    # -- 2g: Build YEAR_MONTH period column ------------------------------------
+    # -- 2h: Build YEAR_MONTH period column ------------------------------------
     df = build_year_month_column(df)
     sample_ym = df["YEAR_MONTH"].iloc[0] if len(df) > 0 else ""
     unique_ym = sorted(df["YEAR_MONTH"].unique().tolist())
     print(f"  [PERIOD] YEAR_MONTH column built. "
           f"Periods in file: {unique_ym}  |  Sample: '{sample_ym}'")
 
-    # -- 2h: Filter zero-data rows ---------------------------------------------
+    # -- 2i: Filter zero-data rows ---------------------------------------------
     # Rows where INDEX, DWELL_TIME and PROPORTION are all zero simultaneously
     # are Locomizer placeholders (panel too small). We now ASSERT that all three
     # metrics agree before filtering -- if a future export breaks this assumption,
@@ -524,7 +603,7 @@ for filepath in brand_affinity_files:
     else:
         print(f"  [SCREENS] All {len(screens_after)} screens retained at least one row. OK")
 
-    # -- 2i: Add IS_DEFAULT helper column --------------------------------------
+    # -- 2j: Add IS_DEFAULT helper column --------------------------------------
     # IS_DEFAULT = 1 marks rows where MOVEMENT_MODALITY='All' AND
     # VISITATION_MODALITY='All'. This is the "overall audience" view --
     # the correct default for most Power BI affinity visuals.
@@ -547,18 +626,28 @@ for filepath in brand_affinity_files:
     print(f"  [IS_DEFAULT] {n_default:,} rows = IS_DEFAULT=1 "
           f"({n_default / len(df) * 100:.1f}% = overall audience view)")
 
-    # -- 2j: Report modality combinations and categories (sanity) --------------
+    # -- 2k: Report modality combinations and categories (sanity) --------------
     mov_vis = (df.groupby(["MOVEMENT_MODALITY", "VISITATION_MODALITY"], observed=True)
                  .size().reset_index(name="n"))
     print(f"  [SHAPE]  {len(mov_vis)} modality combos x "
           f"{df['BRAND_AFFINITY_CATEGORY_NAME'].nunique()} categories x "
           f"{df['CODE'].nunique()} screens")
 
-    # -- 2k: Column reordering -------------------------------------------------
+    # -- 2l: Column reordering -------------------------------------------------
     df = build_column_order(df)
     print(f"  [ORDER]  Columns reordered. Final width: {len(df.columns)} columns.")
 
-    # -- 2l: Export ------------------------------------------------------------
+    # -- 2m: Convert CODE int32 -> str (final dtype for Power BI join) ---------
+    # Brand Affinity loads CODE as int32 so the 5-digit range sanity check in
+    # step 2d works on a numeric type. Just before export, we convert to str
+    # so the published Parquet has the same join-key dtype as Footfall (str)
+    # and Demographics (str) -- one consistent column type across all three
+    # fact tables means a single relationship-type setting in the Power BI
+    # data model. Done last to keep the dtype lean during all in-memory work.
+    df["CODE"] = df["CODE"].astype(str)
+    print(f"  [CODE]   Converted int32 -> str. Sample: '{df['CODE'].iloc[0]}'")
+
+    # -- 2n: Export ------------------------------------------------------------
     try:
         path_clean = export_file(df, stem, OUTPUT_FORMAT)
         size_kb, _ = file_info(path_clean)
