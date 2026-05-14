@@ -16,6 +16,11 @@ input file, one clean output file:
 Transformations applied to every file:
   • HOUR = 25 / ALL / ALL rows stripped before export (handled by Power BI).
   • DAY + MONTH + YEAR merged into a single DATE column (date only, no time).
+  • MOVEMENT_MODALITY and VISITATION_MODALITY values normalised to Title
+    Case ('PEDESTRIANS' → 'Pedestrians', 'CAR_CITY' → 'Car_City', etc.) so
+    a single Power BI slicer can drive Footfall, Demographics and Brand
+    Affinity simultaneously. Without this, Locomizer's mixed casing across
+    the three exports breaks cross-table filtering silently.
   • Explicit column dtypes on load — avoids pandas type inference, cuts
     memory usage by ~40% and speeds up read_csv on large files.
   • Low-cardinality string columns stored as 'category' — faster groupby /
@@ -76,11 +81,21 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 OUTPUT_FORMAT = "parquet"
 
 # ── Filter constants ─────────────────────────────────────────────────────────
+# The filter is applied AFTER modality casing standardisation, so values are
+# already in Title Case at this point ('All', not 'ALL').
 HOUR_TOTAL     = 25    # Locomizer sentinel: all-day total row → removed
-MODALITY_ALL   = "ALL" # Used to identify the grand total combination to remove:
-VISITATION_ALL = "ALL" #   MOVEMENT=ALL + VISITATION=ALL → redundant grand total → removed
-                       #   MOVEMENT=ALL + VISITATION≠ALL → KEPT (visitation segmentation)
-                       #   Individual MOVEMENT + VISITATION=ALL → KEPT (movement breakdown)
+MODALITY_ALL   = "All" # Used to identify the grand total combination to remove:
+VISITATION_ALL = "All" #   MOVEMENT=All + VISITATION=All → redundant grand total → removed
+                       #   MOVEMENT=All + VISITATION≠All → KEPT (visitation segmentation)
+                       #   Individual MOVEMENT + VISITATION=All → KEPT (movement breakdown)
+
+# ── Modality columns to normalise to Title Case ──────────────────────────────
+# Locomizer's Footfall export uses UPPERCASE for these columns
+# ('PEDESTRIANS', 'ALL', 'WORKERS', ...). Brand Affinity uses Title Case
+# ('Pedestrians', 'All', ...). Demographics also uses UPPERCASE. We standardise
+# all three datasets to Title Case here so a single Power BI slicer drives
+# every fact table at once.
+MODALITY_COLS = ["MOVEMENT_MODALITY", "VISITATION_MODALITY"]
 
 
 # ── Optimised dtypes for read_csv ─────────────────────────────────────────────
@@ -162,6 +177,42 @@ def validate_schema(df, filename):
         print(f"  [INFO] {len(extra)} extra column(s) found (kept): {sorted(extra)}")
 
     return missing, extra
+
+
+def standardize_modality_casing(df, columns):
+    """
+    Normalise modality column values to Title Case for cross-dataset
+    consistency in Power BI. Locomizer's three exports use mixed casing:
+
+      Footfall       → UPPERCASE ('PEDESTRIANS', 'ALL', 'WORKERS', ...)
+      Demographics   → UPPERCASE ('ALL', 'PEDESTRIANS', 'NON_PEDESTRIANS')
+      Brand Affinity → Title Case ('Pedestrians', 'All', ...)
+
+    Without normalisation, a single Power BI slicer on Movement/Visitation
+    Modality cannot filter all three fact tables simultaneously because the
+    string values do not match across tables — the slicer would silently
+    return empty for two of the three datasets.
+
+    Title Case is chosen because:
+      • Brand Affinity already uses it (minimal change to that pipeline).
+      • str.title() handles underscored compound words correctly
+        ('CAR_CITY' → 'Car_City', 'NON_PEDESTRIANS' → 'Non_Pedestrians').
+      • Reads cleanly in chart labels and slicer UI.
+
+    Idempotent: re-applying to already-Title-Cased values is a no-op.
+    Uses .cat.rename_categories() so the categorical dtype is preserved
+    (no string array reallocation).
+    """
+    for col in columns:
+        if col not in df.columns:
+            continue
+        if isinstance(df[col].dtype, pd.CategoricalDtype):
+            df[col] = df[col].cat.rename_categories(
+                {c: c.title() for c in df[col].cat.categories}
+            )
+        else:
+            df[col] = df[col].astype(str).str.title().astype("category")
+    return df
 
 
 def build_date_column(df):
@@ -306,16 +357,24 @@ for filepath in footfall_files:
     if nat_after > 0:
         print(f"  ⚠️  WARNING: {nat_after} rows have an invalid DATE (will appear as NaT).")
 
-    # ── 2d: Remove redundant aggregation rows ─────────────────────────────────
+    # ── 2d: Normalise modality casing (UPPERCASE → Title Case) ────────────────
+    # Required BEFORE the aggregation-row filter below, because the filter now
+    # matches on Title Case 'All' (post-normalisation). Also required for
+    # cross-dataset alignment in Power BI (see helper docstring).
+    df = standardize_modality_casing(df, MODALITY_COLS)
+    print(f"  [CASE]   MOVEMENT_MODALITY  : {sorted(df['MOVEMENT_MODALITY'].unique().tolist())}")
+    print(f"           VISITATION_MODALITY: {sorted(df['VISITATION_MODALITY'].unique().tolist())}")
+
+    # ── 2e: Remove redundant aggregation rows ─────────────────────────────────
     # Removed:
     #   • HOUR=25                          → all-day sentinel; Power BI aggregates.
-    #   • MOVEMENT=ALL + VISITATION=ALL    → grand total; derivable in Power BI.
+    #   • MOVEMENT=All + VISITATION=All    → grand total; derivable in Power BI.
     #
     # Kept:
-    #   • Individual MOVEMENT + VISITATION=ALL  → movement mode breakdown.
-    #   • MOVEMENT=ALL + VISITATION≠ALL         → visitation segmentation
-    #                                             (RESIDENTS / WORKERS / TRANSIENT).
-    #     ⚠️  These rows ONLY exist when MOVEMENT=ALL. Removing MOVEMENT=ALL
+    #   • Individual MOVEMENT + VISITATION=All  → movement mode breakdown.
+    #   • MOVEMENT=All + VISITATION≠All         → visitation segmentation
+    #                                             (Residents / Workers / Transient).
+    #     ⚠️  These rows ONLY exist when MOVEMENT=All. Removing MOVEMENT=All
     #     entirely would silently erase all visitation analysis capability.
     rows_before = len(df)
 
@@ -329,13 +388,11 @@ for filepath in footfall_files:
     pct_removed  = rows_removed / rows_before * 100
     print(f"  [FILTER] Removed {rows_removed:,} rows ({pct_removed:.1f}%) "
           f"→ {len(df):,} rows remaining")
-    print(f"           MOVEMENT values  : {sorted(df['MOVEMENT_MODALITY'].unique().tolist())}")
-    print(f"           VISITATION values: {sorted(df['VISITATION_MODALITY'].unique().tolist())}")
 
-    # ── 2e: Column reordering ──────────────────────────────────────────────────
+    # ── 2f: Column reordering ──────────────────────────────────────────────────
     df = apply_column_order(df, "OUTPUT")
 
-    # ── 2f: Export single file ─────────────────────────────────────────────────
+    # ── 2g: Export single file ─────────────────────────────────────────────────
     try:
         path    = export_file(df, stem, OUTPUT_FORMAT)
         size_kb = file_info(path)[0]
@@ -398,4 +455,3 @@ print(f"  Output folder : {OUTPUT_DIR}")
 print(f"  Output format : {OUTPUT_FORMAT.upper()}")
 print(f"{'='*56}")
 print("Process finished.")
-
