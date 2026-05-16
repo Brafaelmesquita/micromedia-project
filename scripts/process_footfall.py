@@ -15,17 +15,71 @@ input file, one clean output file:
 
 Transformations applied to every file:
   • HOUR = 25 rows removed (all-day sentinel totals — Power BI aggregates from hourly data).
-  • MOVEMENT=ALL + VISITATION=ALL rows removed (grand total — causes double-counting in Power BI).
   • DAY + MONTH + YEAR merged into a single DATE column (date only, no time).
   • MOVEMENT_MODALITY and VISITATION_MODALITY values normalised to Title
     Case ('PEDESTRIANS' → 'Pedestrians', 'CAR_CITY' → 'Car_City', etc.) so
     a single Power BI slicer can drive Footfall, Demographics and Brand
     Affinity simultaneously. Without this, Locomizer's mixed casing across
     the three exports breaks cross-table filtering silently.
+  • IS_GRAND_TOTAL flag (int8, 0/1) added — marks the (All, All) row that
+    contains the true unique-user count for each (CODE, DATE, HOUR) cell.
+    Power BI measures use this flag to pick the correct denominator (see
+    "Measure usage" below).
   • Explicit column dtypes on load — avoids pandas type inference, cuts
     memory usage by ~40% and speeds up read_csv on large files.
   • Low-cardinality string columns stored as 'category' — faster groupby /
     filter in pandas and smaller file size in Parquet.
+
+═══════════════════════════════════════════════════════════════════════════════
+⚠️  v3.0 BREAKING CHANGE — (All, All) rows are now KEPT, not removed
+═══════════════════════════════════════════════════════════════════════════════
+Versions ≤ 2.x removed every row where MOVEMENT='All' AND VISITATION='All',
+on the documented assumption that this row was the exact arithmetic sum of
+its modality decompositions and therefore redundant.
+
+Empirical verification against Feb 2025 data (screen 50004) disproved that
+assumption for both raw-panel and extrapolated metrics:
+
+   For NUMBER_OF_USERS (panel-level), the equality (All,All) = Σ segments
+   holds in only 10.9% of (day, hour) cells. In 89.1% of cells the sum of
+   movement segments STRICTLY EXCEEDS (All, All), because Locomizer's
+   classification is not mutually exclusive within an hour: the same
+   panellist can appear in both PEDESTRIANS and CAR_CITY rows (e.g. they
+   parked, then walked). Visitation segments behave the same way
+   (Resident ∩ Transient overlap).
+
+   For EXTRAPOLATED_NUMBER_OF_USERS, the (All,All) row was 41% LOWER
+   than the movement-segment sum and 49% lower than the visitation-
+   segment sum. Every previous PaS / Total-Population KPI built on
+   segment-summation was therefore inflated by ~40-50%.
+
+Consequence: the (All, All) row is the ONLY source of a deduplicated
+unique-user count. Removing it silently corrupted every audience-volume
+KPI in the dashboard. v3.0 preserves the row and exposes it via the new
+IS_GRAND_TOTAL flag.
+
+Measure usage in Power BI after v3.0:
+
+   ✅ Unique audience volume       — filter IS_GRAND_TOTAL = 1
+                                     (covers PaS, Total Population KPI cards,
+                                      daily trend line, screen ranking)
+
+   ✅ Movement-mode breakdown      — filter IS_GRAND_TOTAL = 0
+                                     AND VISITATION_MODALITY = 'All'
+                                     (movement-share donut, etc.)
+
+   ✅ Visitation-type breakdown    — filter IS_GRAND_TOTAL = 0
+                                     AND MOVEMENT_MODALITY  = 'All'
+                                     (Residents/Workers/Transient donut)
+
+   ⚠️ When using segment breakdowns for percentages they are reliable; the
+      absolute values overcount by 40-50% due to user multi-classification.
+      Always normalise to share-of-total when displaying segment volumes.
+
+   ❌ DO NOT use a naked SUM over the whole table without an IS_GRAND_TOTAL
+      filter — that triple-counts (grand-total row + movement segments +
+      visitation segments).
+═══════════════════════════════════════════════════════════════════════════════
 
 Output format:
   Set OUTPUT_FORMAT = "parquet" for Power BI (recommended — 10-20x faster
@@ -54,22 +108,30 @@ Power BI data model note:
 Data cleaning rules applied:
   • HOUR == 25                               removed — all-day total sentinel rows;
                                              Power BI handles aggregations from hourly data.
-  • MOVEMENT=ALL AND VISITATION=ALL          removed — grand total row; redundant.
-  • MOVEMENT=ALL AND VISITATION ≠ ALL        KEPT — these are the only rows that carry
+  • MOVEMENT=All AND VISITATION=All          KEPT (v3.0+) — true unique-user count;
+                                             flagged via IS_GRAND_TOTAL = 1.
+  • MOVEMENT=All AND VISITATION ≠ All        KEPT — these are the only rows that carry
                                              RESIDENTS / WORKERS / TRANSIENT segmentation.
-                                             Removing MOVEMENT=ALL entirely would erase
-                                             all visitation analysis capability.
-  • Individual MOVEMENT + VISITATION=ALL     KEPT — movement mode breakdown.
+  • Individual MOVEMENT + VISITATION=All     KEPT — movement mode breakdown.
 
   Data structure (verified against real data):
     Individual movements (CAR_CITY etc.) → only appear with VISITATION=ALL
     MOVEMENT=ALL                          → appears with ALL + RESIDENTS + WORKERS + TRANSIENT
-    → Two orthogonal analyses share the same table; filter by VISITATION='ALL' for movement
-      analysis, filter by MOVEMENT='ALL' for visitation analysis. No double-counting.
+    → Three orthogonal slices share the same table; use IS_GRAND_TOTAL to disambiguate.
 
 Usage:
   python process_footfall.py
   Drop new monthly CSVs into INPUT_DIR and re-run — no code changes needed.
+
+Changelog:
+  v3.0.0  2026-05-16  BREAKING: stop removing (All, All) rows; add IS_GRAND_TOTAL
+                      flag column. Documented over-counting findings (89% of
+                      hourly cells violate the A=B=C equality the previous
+                      cleaning rule assumed). See module docstring for details.
+                      Downstream DAX measures must be updated — see
+                      "Measure usage in Power BI after v3.0" above.
+  v2.0.0  2026-05    Title-Case modality normalisation for cross-dataset alignment.
+  v1.x.x              Initial pipeline.
 """
 
 # %% ---------------------------------------------------------------------------
@@ -81,6 +143,8 @@ import time
 import glob
 
 import pandas as pd
+
+__version__ = "3.0.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -96,13 +160,12 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 OUTPUT_FORMAT = "parquet"
 
 # ── Filter constants ─────────────────────────────────────────────────────────
-# The filter is applied AFTER modality casing standardisation, so values are
-# already in Title Case at this point ('All', not 'ALL').
+# Applied AFTER modality casing standardisation, so values are in Title Case.
 HOUR_TOTAL     = 25    # Locomizer sentinel: all-day total row → removed
-MODALITY_ALL   = "All" # Used to identify the grand total combination to remove:
-VISITATION_ALL = "All" #   MOVEMENT=All + VISITATION=All → redundant grand total → removed
-                       #   MOVEMENT=All + VISITATION≠All → KEPT (visitation segmentation)
-                       #   Individual MOVEMENT + VISITATION=All → KEPT (movement breakdown)
+MODALITY_ALL   = "All" # Used to identify and FLAG (not remove) the grand-total row:
+VISITATION_ALL = "All" #   MOVEMENT=All + VISITATION=All  → IS_GRAND_TOTAL = 1  (KEPT v3.0+)
+                       #   MOVEMENT=All + VISITATION≠All → IS_GRAND_TOTAL = 0  (visitation segments)
+                       #   Individual MOVEMENT + VISITATION=All → IS_GRAND_TOTAL = 0  (movement segments)
 
 # ── Modality columns to normalise to Title Case ──────────────────────────────
 # Locomizer's Footfall export uses UPPERCASE for these columns
@@ -151,11 +214,14 @@ DTYPE_MAP = {
 EXPECTED_COLUMNS = list(DTYPE_MAP.keys())
 
 # ── Logical column order for the output file ──────────────────────────────────
+# IS_GRAND_TOTAL sits right next to the modality columns it derives from,
+# so anyone inspecting the parquet sees the semantic relationship at a glance.
 COLS_ORDER = [
     "CODE",                                          # Identifier
     "DATE", "HOUR",                                  # Time (DATE = date only, no timestamp)
     "RADIUS",                                        # Geography
     "MOVEMENT_MODALITY", "VISITATION_MODALITY",      # Segment filters
+    "IS_GRAND_TOTAL",                                # (v3.0) flag: 1 = unique-user grand total
     "NUMBER_OF_USERS", "NUMBER_OF_SIGNALS",          # Raw panel metrics
     "DWELL_TIME", "REACH",
     "EXTRAPOLATED_NUMBER_OF_USERS", "EXTRAPOLATED_NUMBER_OF_SIGNALS",
@@ -249,6 +315,31 @@ def build_date_column(df):
     return df
 
 
+def add_grand_total_flag(df):
+    """
+    Add the IS_GRAND_TOTAL int8 column.
+
+    Rationale (full evidence in the module docstring): the (All, All) row is
+    the only source of a true deduplicated unique-user count, because
+    Locomizer's modality classifications overlap within an hour (a panellist
+    can be counted as both PEDESTRIAN and CAR_CITY in the same hour, and as
+    both WORKER and TRANSIENT). Summing the segment rows overcounts unique
+    users by 40-50% on extrapolated metrics. The flag exposes this row
+    explicitly so Power BI measures can pick the right slice with a single
+    boolean filter instead of a compound (movement = 'All' AND visitation =
+    'All') condition.
+
+    Power BI usage:
+        Unique-user measures        → filter IS_GRAND_TOTAL = 1
+        Segment-breakdown measures  → filter IS_GRAND_TOTAL = 0
+    """
+    df["IS_GRAND_TOTAL"] = (
+        (df["MOVEMENT_MODALITY"] == MODALITY_ALL) &
+        (df["VISITATION_MODALITY"] == VISITATION_ALL)
+    ).astype("int8")
+    return df
+
+
 def apply_column_order(df, label):
     """Reorder columns to COLS_ORDER; append any unexpected extras at the end."""
     ordered  = [c for c in COLS_ORDER if c in df.columns]
@@ -296,7 +387,7 @@ def file_info(path):
 # Scan INPUT_DIR for CSVs whose name contains 'footfall' (case-insensitive).
 # Sorted alphabetically so monthly files process in chronological order.
 
-print(f"{'='*20} FILE DISCOVERY {'='*20}")
+print(f"{'='*20} FILE DISCOVERY (process_footfall v{__version__}) {'='*20}")
 print(f"[DIR]    Scanning : {INPUT_DIR}")
 print(f"[FORMAT] Output   : {OUTPUT_FORMAT.upper()}")
 
@@ -373,41 +464,36 @@ for filepath in footfall_files:
         print(f"  ⚠️  WARNING: {nat_after} rows have an invalid DATE (will appear as NaT).")
 
     # ── 2d: Normalise modality casing (UPPERCASE → Title Case) ────────────────
-    # Required BEFORE the aggregation-row filter below, because the filter now
-    # matches on Title Case 'All' (post-normalisation). Also required for
-    # cross-dataset alignment in Power BI (see helper docstring).
+    # Required BEFORE the IS_GRAND_TOTAL flag is computed below, because the
+    # flag matches on Title Case 'All'. Also required for cross-dataset
+    # alignment in Power BI (see helper docstring).
     df = standardize_modality_casing(df, MODALITY_COLS)
     print(f"  [CASE]   MOVEMENT_MODALITY  : {sorted(df['MOVEMENT_MODALITY'].unique().tolist())}")
     print(f"           VISITATION_MODALITY: {sorted(df['VISITATION_MODALITY'].unique().tolist())}")
 
-    # ── 2e: Remove redundant aggregation rows ─────────────────────────────────
-    # Removed:
-    #   • HOUR=25                          → all-day sentinel; Power BI aggregates.
-    #   • MOVEMENT=All + VISITATION=All    → grand total; derivable in Power BI.
-    #
-    # Kept:
-    #   • Individual MOVEMENT + VISITATION=All  → movement mode breakdown.
-    #   • MOVEMENT=All + VISITATION≠All         → visitation segmentation
-    #                                             (Residents / Workers / Transient).
-    #     ⚠️  These rows ONLY exist when MOVEMENT=All. Removing MOVEMENT=All
-    #     entirely would silently erase all visitation analysis capability.
+    # ── 2e: Add IS_GRAND_TOTAL flag (v3.0) ────────────────────────────────────
+    # Replaces the previous "remove (All, All) row" rule. The row is now KEPT
+    # and flagged so Power BI measures can select the right slice explicitly.
+    df = add_grand_total_flag(df)
+    n_grand = int(df["IS_GRAND_TOTAL"].sum())
+    print(f"  [FLAG]   IS_GRAND_TOTAL added — {n_grand:,} rows flagged "
+          f"({n_grand/len(df)*100:.1f}% of file).")
+
+    # ── 2f: Remove HOUR=25 sentinel rows ──────────────────────────────────────
+    # The only filter that survives in v3.0. (All, All) rows are no longer
+    # removed — they are the true unique-user count and are kept under the
+    # IS_GRAND_TOTAL=1 flag.
     rows_before = len(df)
-
-    filter_mask = (
-        (df["HOUR"] != HOUR_TOTAL) &
-        ~((df["MOVEMENT_MODALITY"] == MODALITY_ALL) & (df["VISITATION_MODALITY"] == VISITATION_ALL))
-
-    )
-    df = df[filter_mask].reset_index(drop=True)
+    df = df[df["HOUR"] != HOUR_TOTAL].reset_index(drop=True)
     rows_removed = rows_before - len(df)
     pct_removed  = rows_removed / rows_before * 100
-    print(f"  [FILTER] Removed {rows_removed:,} rows ({pct_removed:.1f}%) "
+    print(f"  [FILTER] Removed {rows_removed:,} HOUR=25 rows ({pct_removed:.1f}%) "
           f"→ {len(df):,} rows remaining")
 
-    # ── 2f: Column reordering ──────────────────────────────────────────────────
+    # ── 2g: Column reordering ──────────────────────────────────────────────────
     df = apply_column_order(df, "OUTPUT")
 
-    # ── 2g: Export single file ─────────────────────────────────────────────────
+    # ── 2h: Export single file ─────────────────────────────────────────────────
     try:
         path    = export_file(df, stem, OUTPUT_FORMAT)
         size_kb = file_info(path)[0]
@@ -417,16 +503,17 @@ for filepath in footfall_files:
         print(f"  [TIME]   {elapsed:.1f}s")
 
         global_summary.append({
-            "file":      filename,
-            "status":    "OK",
-            "rows_raw":  rows_raw,
-            "rows_out":  len(df),
-            "removed":   rows_removed,
-            "date_min":  str(df["DATE"].min()),
-            "date_max":  str(df["DATE"].max()),
-            "screens":   df["CODE"].nunique(),
-            "size_kb":   round(size_kb, 1),
-            "elapsed_s": round(elapsed, 1),
+            "file":       filename,
+            "status":     "OK",
+            "rows_raw":   rows_raw,
+            "rows_out":   len(df),
+            "removed":    rows_removed,
+            "grand_rows": n_grand,
+            "date_min":   str(df["DATE"].min()),
+            "date_max":   str(df["DATE"].max()),
+            "screens":    df["CODE"].nunique(),
+            "size_kb":    round(size_kb, 1),
+            "elapsed_s":  round(elapsed, 1),
         })
 
     except Exception as e:
@@ -442,8 +529,8 @@ for filepath in footfall_files:
 # One-glance report across all processed files.
 
 print(f"{'='*20} GLOBAL SUMMARY {'='*20}")
-print(f"\n  {'FILE':<46} {'STATUS':<8}  {'RAW':>8}  {'OUTPUT':>8}  {'REMOVED':>8}  {'DATE RANGE':<23}  {'SCRNS':>5}  {'TIME':>5}")
-print(f"  {'-'*46} {'-'*8}  {'-'*8}  {'-'*8}  {'-'*8}  {'-'*23}  {'-'*5}  {'-'*5}")
+print(f"\n  {'FILE':<46} {'STATUS':<8}  {'RAW':>8}  {'OUTPUT':>8}  {'H=25 REM':>9}  {'GRAND':>7}  {'DATE RANGE':<23}  {'SCRNS':>5}  {'TIME':>5}")
+print(f"  {'-'*46} {'-'*8}  {'-'*8}  {'-'*8}  {'-'*9}  {'-'*7}  {'-'*23}  {'-'*5}  {'-'*5}")
 
 total_raw  = 0
 total_out  = 0
@@ -456,17 +543,17 @@ for s in global_summary:
         total_out  += s["rows_out"]
         date_range  = f"{s['date_min']} → {s['date_max']}"
         print(f"  {s['file']:<46} {'✅ OK':<8}  {s['rows_raw']:>8,}  "
-              f"{s['rows_out']:>8,}  {s['removed']:>8,}  "
-
+              f"{s['rows_out']:>8,}  {s['removed']:>9,}  {s['grand_rows']:>7,}  "
               f"{date_range:<23}  {s['screens']:>5,}  {s['elapsed_s']:>4.1f}s")
     else:
         err = s.get("error", "")
         print(f"  {s['file']:<46} ❌ {s['status']:<8}  {err}")
 
-print(f"  {'─'*120}")
+print(f"  {'─'*130}")
 print(f"  {'TOTAL':<46} {'':>8}  {total_raw:>8,}  {total_out:>8,}")
 print(f"\n  Files OK      : {ok_count} / {len(footfall_files)}")
 print(f"  Output folder : {OUTPUT_DIR}")
 print(f"  Output format : {OUTPUT_FORMAT.upper()}")
+print(f"  Script version: {__version__}")
 print(f"{'='*56}")
 print("Process finished.")
