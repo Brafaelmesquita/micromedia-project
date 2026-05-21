@@ -2,115 +2,105 @@
 process_demographics.py
 =======================
 Reads monthly Demographics CSV exports from Locomizer and produces, for EACH
-input file, one clean output file:
+input file, TWO clean output files:
 
   <original_name>_clean.<ext>
-       All rows with demographic reach values, fully cleaned and typed.
+       All rows with demographic reach values, fully cleaned and typed (WIDE
+       format -- one column per age*gender slot).
        -> granular hourly data per screen and movement modality, ready for
          Power BI demographic charts (age/gender, social grade, consumer segments).
+
+  <original_name>_age_long.<ext>
+       Same data restricted to the age/gender breakdown, reshaped into LONG
+       format (one row per CODE x YEAR_MONTH x HOUR x MODALITY x AGE_BRACKET
+       x GENDER). Granular 1-year and 5-year age columns are aggregated into
+       7 marketing-friendly buckets.
+       -> ready for Power BI Matrix visuals with AGE_BRACKET on the column
+         axis. See docs/powerbi_demographics_heatmap_setup.md.
 
   Example:
     IN  -> 12_Dec2024_Micromedia_Demographics.csv
     OUT -> 12_Dec2024_Micromedia_Demographics_clean.parquet
+           12_Dec2024_Micromedia_Demographics_age_long.parquet
 
-Transformations applied to every file:
+Transformations applied to every file (wide cleaning, unchanged from v1.5.0):
   * CODE extracted from DISPLAY NAME (first 5 characters = Micromedia site ID).
     DISPLAY NAME column is then dropped -- the site list is the single source
     of truth for name, address, and coordinates.
-    NOTE: this column was previously named MM_ID. It was renamed to CODE in
-    v1.5.0 so the three fact tables (Footfall, Demographics, Brand Affinity)
-    share the same join-key name -- single relationship in the Power BI data
-    model, no per-table renaming required.
   * MOVEMENT_MODALITY values normalised to Title Case ('PEDESTRIANS' ->
-    'Pedestrians', 'NON_PEDESTRIANS' -> 'Non_Pedestrians'). Brand Affinity
-    already uses Title Case; Footfall and Demographics arrive UPPERCASE.
-    Without normalisation, a single Power BI slicer cannot filter all three
-    fact tables simultaneously.
-  * LATITUDE / LONGITUDE dropped -- sourced from the master site list to avoid
-    duplication and stale coordinate data in the analytics layer.
-  * Zero-data rows removed -- rows where all reach values are 0 are placeholder
-    rows emitted by Locomizer when the panel is too small. They carry no audience
-    information and distort Power BI averages if kept.
-  * YEAR_MONTH period column built from MONTH + YEAR (no DAY in demographics
-    exports) -- stored as "YYYY-MM" string for clean display in Power BI slicers.
-    MONTH and YEAR integer columns are dropped after YEAR_MONTH is built -- the
-    period information is fully captured in YEAR_MONTH and duplication is avoided.
-  * Explicit column dtypes on load -- avoids pandas type inference, cuts memory
-    usage significantly and speeds up read_csv on wide files (142 columns).
-  * Low-cardinality string columns stored as 'category' -- faster groupby /
-    filter in pandas and smaller file size in Parquet.
+    'Pedestrians', 'NON_PEDESTRIANS' -> 'Non_Pedestrians').
+  * LATITUDE / LONGITUDE dropped -- sourced from the master site list.
+  * Zero-data rows removed -- placeholder rows where all reach values are 0.
+  * YEAR_MONTH period column built from MONTH + YEAR -- stored as "YYYY-MM"
+    string for clean display in Power BI slicers. MONTH and YEAR dropped.
+  * Explicit column dtypes on load -- avoids pandas type inference.
+  * Low-cardinality string columns stored as 'category'.
+
+Long-format export (NEW in v1.6.0):
+  * All T1_1AGE*M_REACH and T1_1AGE*F_REACH columns unpivoted to rows.
+  * Each source column mapped to one of 7 brackets via AGE_BRACKET_MAP
+    (Under 18, 18-24, 25-34, 35-44, 45-54, 55-64, 65+).
+  * REACH_PCT summed within each bracket (multiple source columns -> 1 row).
+  * AGE_BRACKET stored as ORDERED categorical so Power BI sorts the column
+    axis correctly without a separate sort-by column.
+  * Output schema: CODE, YEAR_MONTH, HOUR, RADIUS, MOVEMENT_MODALITY,
+                    AGE_BRACKET, GENDER, REACH_PCT, SOURCE_FILE.
 
 Output format:
-  Set OUTPUT_FORMAT = "parquet" for Power BI (recommended -- 10-20x faster
-  load, 3-5x smaller files, data types preserved automatically).
+  Set OUTPUT_FORMAT = "parquet" for Power BI (recommended).
   Set OUTPUT_FORMAT = "csv"     for Excel / legacy compatibility.
 
 Power BI tip (Parquet):
-  Use "Get Data -> Folder" in Power BI and point it at OUTPUT_CLEAN_DIR.
-  Power BI auto-combines all Parquet files that share the same schema,
-  so adding a new month requires zero changes to the .pbix file.
+  Use "Get Data -> Folder" in Power BI and point it at OUTPUT_AGE_LONG_DIR
+  for the heatmap page; point it at OUTPUT_CLEAN_DIR for analyses that need
+  the full granular columns (specific years of age, social grade, consumer
+  segments). Power BI auto-combines all Parquet files that share the same
+  schema, so adding a new month requires zero changes to the .pbix file.
 
-Schema notes:
-  HOUR              -> 0-23 (no sentinel row 25 as in Footfall; all rows are hourly).
-  MOVEMENT_MODALITY -> ALL | PEDESTRIANS | NON_PEDESTRIANS.
-                      IMPORTANT: each modality row is an INDEPENDENT demographic
-                      profile where all reach columns sum to 100%. ALL is a
-                      weighted profile of the combined audience -- NOT the arithmetic
-                      sum of PEDESTRIANS + NON_PEDESTRIANS. Use MOVEMENT_MODALITY
-                      as a filter/slicer, never aggregate across modalities.
-  All T1_*, T9_*, T13_*, T14_* columns -> percentage values (0-100),
-  stored as float32.
+Schema notes (wide format):
+  HOUR              -> 0-23 (no sentinel row 25 as in Footfall).
+  MOVEMENT_MODALITY -> All | Pedestrians | Non_Pedestrians.
+                      Each modality row is an INDEPENDENT 100% profile --
+                      never aggregate across modalities.
+  All T1_*, T9_*, T13_*, T14_* columns -> percentage values (0-100), float32.
 
 Usage:
   python process_demographics.py
   Drop new monthly CSVs into INPUT_DIR and re-run -- no code changes needed.
 
 Version history:
+  v1.6.0  2026-05-21  NEW: age-long format export for Power BI Matrix.
+                      (1) Added AGE_BRACKET_MAP (35 -> 7 mapping) and
+                          AGE_BRACKET_ORDER constants. Brackets chosen to
+                          match OOH ad-targeting conventions and the heatmap
+                          page in the dashboard (Under 18, 18-24, 25-34,
+                          35-44, 45-54, 55-64, 65+). Under-18 grouped because
+                          minors are not addressable OOH targets. 65+ folds
+                          five sparse 5-yr bands together.
+                      (2) Added build_age_long_format() helper -- unpivots all
+                          T1_1AGE*M_REACH / T1_1AGE*F_REACH columns, maps each
+                          to a bracket, sums REACH_PCT within bracket.
+                      (3) Added OUTPUT_AGE_LONG_DIR. New step 2k exports the
+                          long-format Parquet alongside the wide _clean file.
+                          Original wide export is unchanged for backwards
+                          compatibility with existing analyses.
+                      (4) AGE_BRACKET stored as ordered Categorical so Power
+                          BI sorts the column axis correctly without needing
+                          a 'Sort by column' configuration.
+                      (5) Global summary updated to report long-format row
+                          count and file size per input file.
+                      Validation: schema-drift guard raises ValueError if
+                      Locomizer adds an age column the map does not cover.
   v1.5.0  2026-05-14  Power BI cross-dataset alignment:
-                      (1) MM_ID column renamed to CODE so all three fact
-                          tables (Footfall, Demographics, Brand Affinity)
-                          share the same join-key name. One relationship to
-                          Master Sites per fact table; no per-table column
-                          remapping in the data model.
-                      (2) MOVEMENT_MODALITY values normalised to Title Case
-                          ('PEDESTRIANS' -> 'Pedestrians', 'NON_PEDESTRIANS'
-                          -> 'Non_Pedestrians'). Aligns with Brand Affinity
-                          (already Title Case) and the updated Footfall
-                          pipeline. A single Power BI slicer can now drive
-                          all three datasets.
-                      (3) Internal constants renamed for clarity:
-                          MM_ID_LENGTH -> CODE_LENGTH,
-                          MM_ID_PATTERN -> CODE_PATTERN,
-                          extract_mm_id() -> extract_code().
-  v1.4.0  2025-05-13  Two new steps:
-                      (1) Zero-row filter: drop rows where all reach data = 0
-                          (placeholder rows emitted by Locomizer when panel is
-                          too small). Removes 947 rows / 5.3% in Dec 2024 and
-                          2,162 rows / 12.0% in Mar 2026.
-                      (2) MM_ID validation: flag screens whose DISPLAY NAME does
-                          not start with a 5-digit code -- these will not join to
-                          the site list and require manual resolution.
-                      Global summary updated to report raw / zero / clean row
-                      counts and invalid MM_ID count per file.
-  v1.3.0  2025-05-13  Drop all 35 _T_ age-total columns -- verified as exact
-                      sums of their _M_ + _F_ counterparts (max diff = 0.0)
-                      across all rows in both exports. Includes T1_1AGETT_REACH
-                      (previously kept as sentinel; now confirmed redundant and
-                      removed). Grand-total integrity check removed from
-                      validate_schema accordingly. Final width: 103 columns.
-  v1.2.0  2025-05-13  Drop T1_1AGETM_REACH and T1_1AGETF_REACH -- verified as
-                      exact sums (max diff = 0.0) of their 34 respective age
-                      group columns across all rows in Dec 2024 and Mar 2026
-                      exports. Redundant; Power BI can derive via SUM() if needed.
-  v1.1.0  2025-05-13  Drop YEAR and MONTH after YEAR_MONTH is built to avoid
-                      redundant columns. Add MOVEMENT_MODALITY semantic note
-                      (ALL != PED + NON_PED; each row is an independent 100%
-                      profile -- verified against Dec 2024 export).
-  v1.0.0  2025-05-13  Initial release -- based on process_footfall.py.
-                      Transformations applied:
-                        * MM_ID extracted from DISPLAY NAME (first 5 digits)
-                        * LATITUDE / LONGITUDE dropped (sourced from site list)
-                        * YEAR_MONTH period column built from MONTH + YEAR
+                      (1) MM_ID renamed to CODE so all three fact tables
+                          share the same join-key name.
+                      (2) MOVEMENT_MODALITY values normalised to Title Case.
+                      (3) Internal constants renamed for clarity.
+  v1.4.0  2025-05-13  Zero-row filter and MM_ID validation.
+  v1.3.0  2025-05-13  Drop all 35 _T_ age-total columns (verified redundant).
+  v1.2.0  2025-05-13  Drop T1_1AGETM_REACH and T1_1AGETF_REACH (redundant).
+  v1.1.0  2025-05-13  Drop YEAR and MONTH after YEAR_MONTH is built.
+  v1.0.0  2025-05-13  Initial release.
 """
 
 # %% ---------------------------------------------------------------------------
@@ -123,15 +113,17 @@ import glob
 
 import pandas as pd
 
-__version__ = "1.5.0"
+__version__ = "1.6.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # -- Folders -------------------------------------------------------------------
-INPUT_DIR        = os.path.join(BASE_DIR, "..", "data", "raw", "demographics")
-OUTPUT_DIR       = os.path.join(BASE_DIR, "..", "data", "processed", "demographics")
-OUTPUT_CLEAN_DIR = os.path.join(OUTPUT_DIR, "clean")
-os.makedirs(OUTPUT_CLEAN_DIR, exist_ok=True)
+INPUT_DIR           = os.path.join(BASE_DIR, "..", "data", "raw", "demographics")
+OUTPUT_DIR          = os.path.join(BASE_DIR, "..", "data", "processed", "demographics")
+OUTPUT_CLEAN_DIR    = os.path.join(OUTPUT_DIR, "clean")
+OUTPUT_AGE_LONG_DIR = os.path.join(OUTPUT_DIR, "age_long")
+os.makedirs(OUTPUT_CLEAN_DIR,    exist_ok=True)
+os.makedirs(OUTPUT_AGE_LONG_DIR, exist_ok=True)
 
 # -- Output format -------------------------------------------------------------
 # "parquet" -> recommended for Power BI (smaller, faster, type-safe)
@@ -152,12 +144,10 @@ COLS_DROP = ["LATITUDE", "LONGITUDE"]
 #   T1_1AGETF_REACH = sum of all 34 individual female age columns (_F_REACH)
 #
 # Group 2 -- per-band age totals and grand total (v1.3.0):
-#   T1_1AGE{band}T_REACH = _M_ + _F_ for every age band (individual years 0-19,
-#                           5-yr bands 20-24 ... 80-84, 85+, and grand total)
+#   T1_1AGE{band}T_REACH = _M_ + _F_ for every age band.
 #
 # Removing all 37 avoids double-counting in Power BI and reduces file width
-# by 37 columns. Any total can be recreated as a DAX measure (e.g.
-# [Age 25-29 Total] = [T1_1AGE25_29M_REACH] + [T1_1AGE25_29F_REACH]).
+# by 37 columns. Any total can be recreated as a DAX measure.
 COLS_REDUNDANT = [
     # Gender totals
     "T1_1AGETM_REACH", "T1_1AGETF_REACH",
@@ -179,42 +169,23 @@ COLS_REDUNDANT = [
 
 # -- CODE extraction -----------------------------------------------------------
 # Locomizer formats DISPLAY NAME as "<5-digit-ID> - <Screen Name>".
-# We extract the first 5 characters as CODE (the Micromedia site identifier)
-# and discard the rest. The full name is available in the site list via CODE.
-# NOTE: This column was named MM_ID prior to v1.5.0. It is now CODE to match
-# the Footfall and Brand Affinity fact tables -- one join-key name everywhere.
+# We extract the first 5 characters as CODE (the Micromedia site identifier).
 CODE_LENGTH = 5
 
 # -- CODE validation pattern ---------------------------------------------------
 # Valid CODEs are exactly 5 numeric digits (e.g. "50001").
-# Screens whose DISPLAY NAME does not start with 5 digits (e.g.
-# "Dorset St. - Red Parrott - Drumcondra") produce invalid CODEs that will
-# NOT join to the site list. These are flagged in the log -- no automatic fix
-# is possible without the master site list.
 CODE_PATTERN = r"^\d{5}$"
 
 # -- Zero-row filter -----------------------------------------------------------
-# Locomizer emits placeholder rows (all reach values = 0) for screen/hour/
-# modality combinations where the panel was too small to generate reliable data.
-# Verified in Dec 2024 (947 rows, 5.3%) and Mar 2026 (2,162 rows, 12.0%):
-#   * Every column in T1_*M_REACH AND T1_*F_REACH is 0.0
-#   * T9_, T13_, T14_ groups are also entirely 0.0 on those same rows
+# Locomizer placeholder rows (all reach values = 0) -- panel was too small.
 # Detection: sum of all T1_*M_REACH columns < threshold -> row is empty.
-# Using the M columns is sufficient because M and F are always both zero together.
-ZERO_ROW_THRESHOLD = 0.01   # sum of all male age reach cols below this -> drop
+ZERO_ROW_THRESHOLD = 0.01
 
 # -- Explicit dtype overrides for non-demographic columns ----------------------
-# Specifying dtypes skips pandas type-inference on load -- biggest speed-up
-# for wide CSVs. Rules:
-#   int8     -> HOUR, MONTH (max 31/23, fits -128..127)
-#   int16    -> YEAR, RADIUS
-#   float32  -> all reach percentage columns (halves memory vs float64;
-#               precision is more than sufficient for audience percentages)
-#   category -> low-cardinality strings (3 movement types, ~243 screen names)
 DTYPE_MAP_BASE = {
-    "DISPLAY NAME":      str,       # processed -> CODE then dropped
-    "LATITUDE":          "float32", # dropped after load
-    "LONGITUDE":         "float32", # dropped after load
+    "DISPLAY NAME":      str,
+    "LATITUDE":          "float32",
+    "LONGITUDE":         "float32",
     "RADIUS":            "int16",
     "MONTH":             "int8",
     "HOUR":              "int8",
@@ -222,21 +193,57 @@ DTYPE_MAP_BASE = {
     "MOVEMENT_MODALITY": "category",
 }
 
-# All T1_*, T9_*, T13_*, T14_* reach columns are float32.
-# They are discovered dynamically from each file header to avoid listing
-# all 134 column names here (see _build_full_dtype_map()).
 REACH_DTYPE = "float32"
 
-# -- Expected non-demographic base columns (for schema validation) --------------
 EXPECTED_BASE_COLUMNS = list(DTYPE_MAP_BASE.keys())
 
-# -- Modality columns to normalise to Title Case ------------------------------
-# Locomizer's Demographics export uses UPPERCASE for MOVEMENT_MODALITY
-# ('ALL', 'PEDESTRIANS', 'NON_PEDESTRIANS'). Brand Affinity uses Title Case
-# ('All', 'Pedestrians', 'Non_Pedestrians'). We standardise to Title Case so a
-# single Power BI slicer drives all three fact tables. Demographics has no
-# VISITATION_MODALITY column (by design -- see schema notes above).
 MODALITY_COLS = ["MOVEMENT_MODALITY"]
+
+
+# -- Age-bracket mapping for long-format export (NEW in v1.6.0) ----------------
+# Maps each granular age-prefix in the source CSV (the column name minus its
+# 'M_REACH' / 'F_REACH' suffix) to one of 7 marketing-friendly brackets used
+# on the Power BI heatmap's column axis.
+#
+# Why these specific brackets:
+#   * Match the standard OOH/Out-of-Home media planning convention.
+#   * Under 18 grouped -- minors are NOT addressable for OOH ad targeting,
+#     so subdividing ages 0-17 adds no analytical value but multiplies the
+#     row count of the long file by 7x.
+#   * 65+ folds five 5-yr bands together -- panel data is sparse beyond 65,
+#     and most OOH campaigns treat 65+ as a single segment.
+#
+# Schema-drift guard: if Locomizer ever ships an age column with a prefix
+# not in this map, build_age_long_format() raises ValueError. Adding the
+# new prefix here is then the only required change.
+AGE_BRACKET_MAP = {
+    # Under 18 -- ages 0 through 17 (individual year columns)
+    "T1_1AGE0":  "Under 18", "T1_1AGE1":  "Under 18", "T1_1AGE2":  "Under 18",
+    "T1_1AGE3":  "Under 18", "T1_1AGE4":  "Under 18", "T1_1AGE5":  "Under 18",
+    "T1_1AGE6":  "Under 18", "T1_1AGE7":  "Under 18", "T1_1AGE8":  "Under 18",
+    "T1_1AGE9":  "Under 18", "T1_1AGE10": "Under 18", "T1_1AGE11": "Under 18",
+    "T1_1AGE12": "Under 18", "T1_1AGE13": "Under 18", "T1_1AGE14": "Under 18",
+    "T1_1AGE15": "Under 18", "T1_1AGE16": "Under 18", "T1_1AGE17": "Under 18",
+    # 18-24 -- ages 18, 19 (individual years) + 5-yr band 20-24
+    "T1_1AGE18": "18-24", "T1_1AGE19": "18-24", "T1_1AGE20_24": "18-24",
+    # 25-34 -- two 5-yr bands
+    "T1_1AGE25_29": "25-34", "T1_1AGE30_34": "25-34",
+    # 35-44 -- two 5-yr bands
+    "T1_1AGE35_39": "35-44", "T1_1AGE40_44": "35-44",
+    # 45-54 -- two 5-yr bands
+    "T1_1AGE45_49": "45-54", "T1_1AGE50_54": "45-54",
+    # 55-64 -- two 5-yr bands
+    "T1_1AGE55_59": "55-64", "T1_1AGE60_64": "55-64",
+    # 65+ -- five 5-yr bands collapsed (sparse data beyond 65)
+    "T1_1AGE65_69": "65+", "T1_1AGE70_74": "65+", "T1_1AGE75_79": "65+",
+    "T1_1AGE80_84": "65+", "T1_1AGEGE_85": "65+",
+}
+
+# Bracket display order for Power BI Matrix column axis. Stored as ordered
+# Categorical in the output so Power BI sorts the column axis automatically.
+AGE_BRACKET_ORDER = [
+    "Under 18", "18-24", "25-34", "35-44", "45-54", "55-64", "65+",
+]
 
 
 # %% ---------------------------------------------------------------------------
@@ -247,11 +254,9 @@ def _build_full_dtype_map(filepath):
     """
     Read only the header row (nrows=0) to discover all column names, then
     merge DTYPE_MAP_BASE with float32 for every demographic reach column.
-    This avoids hardcoding all 134 reach column names while still giving
-    pandas explicit dtypes at load time.
     """
     header = pd.read_csv(filepath, nrows=0)
-    dtype_map = dict(DTYPE_MAP_BASE)  # start with base overrides
+    dtype_map = dict(DTYPE_MAP_BASE)
     for col in header.columns:
         if col not in dtype_map:
             dtype_map[col] = REACH_DTYPE
@@ -259,18 +264,12 @@ def _build_full_dtype_map(filepath):
 
 
 def validate_schema(df, filename):
-    """
-    Check that all expected non-demographic base columns are present.
-    Missing base columns are flagged with a warning; extra columns noted but kept.
-    Also checks that at least one T1_ reach column is present.
-    Returns (missing_cols, extra_cols).
-    """
+    """Check that all expected non-demographic base columns are present."""
     actual   = set(df.columns)
     expected = set(EXPECTED_BASE_COLUMNS)
     missing  = expected - actual
     extra    = actual - expected - {"SOURCE_FILE"}
 
-    # Check at least some demographic reach columns exist
     reach_cols = [c for c in df.columns if c.startswith(("T1_", "T9_", "T13_", "T14_"))]
 
     if not missing:
@@ -292,46 +291,14 @@ def validate_schema(df, filename):
 
 
 def extract_code(df):
-    """
-    Extract the first CODE_LENGTH characters from DISPLAY NAME as CODE.
-    Drop DISPLAY NAME afterwards -- the full screen name lives in the site list.
-
-    Example:
-        "50001 - Tower Records - Dawson Street" -> CODE = "50001"
-
-    NOTE: this function was named extract_mm_id() before v1.5.0. The output
-    column is now named CODE (was MM_ID) so all three fact tables share the
-    same join-key name.
-    """
+    """Extract the first CODE_LENGTH characters from DISPLAY NAME as CODE."""
     df["CODE"] = df["DISPLAY NAME"].str[:CODE_LENGTH].str.strip()
     df.drop(columns=["DISPLAY NAME"], inplace=True)
     return df
 
 
 def standardize_modality_casing(df, columns):
-    """
-    Normalise modality column values to Title Case for cross-dataset
-    consistency in Power BI. Locomizer's three exports use mixed casing:
-
-      Footfall       -> UPPERCASE ('PEDESTRIANS', 'ALL', 'WORKERS', ...)
-      Demographics   -> UPPERCASE ('ALL', 'PEDESTRIANS', 'NON_PEDESTRIANS')
-      Brand Affinity -> Title Case ('Pedestrians', 'All', ...)
-
-    Without normalisation, a single Power BI slicer on Movement Modality
-    cannot filter all three fact tables simultaneously because the string
-    values do not match across tables -- the slicer would silently return
-    empty for two of the three datasets.
-
-    Title Case is chosen because:
-      * Brand Affinity already uses it (minimal change to that pipeline).
-      * str.title() handles underscored compound words correctly
-        ('NON_PEDESTRIANS' -> 'Non_Pedestrians').
-      * Reads cleanly in chart labels and slicer UI.
-
-    Idempotent: re-applying to already-Title-Cased values is a no-op.
-    Uses .cat.rename_categories() so the categorical dtype is preserved
-    (no string array reallocation).
-    """
+    """Normalise modality column values to Title Case for cross-dataset consistency."""
     for col in columns:
         if col not in df.columns:
             continue
@@ -345,21 +312,7 @@ def standardize_modality_casing(df, columns):
 
 
 def build_year_month_column(df):
-    """
-    Build a YEAR_MONTH string column (format "YYYY-MM") from the MONTH and YEAR
-    integer columns.  Demographics exports do not include a DAY field, so a full
-    calendar date cannot be constructed.
-
-    "YYYY-MM" is chosen over a Period dtype because Power BI reads it as a plain
-    text slicer without needing calendar table configuration.
-
-    Note on naming: YEAR_MONTH is intentionally kept distinct from the DATE
-    column used in Footfall (which is YYYY-MM-DD).  Naming both DATE would create
-    a type mismatch in the Power BI data model (date vs text).
-
-    MONTH and YEAR are dropped after YEAR_MONTH is built -- the period information
-    is fully captured in YEAR_MONTH and duplication serves no purpose.
-    """
+    """Build a YEAR_MONTH string column (format "YYYY-MM") from MONTH and YEAR."""
     df["YEAR_MONTH"] = (
         df["YEAR"].astype(str)
         + "-"
@@ -382,20 +335,15 @@ def drop_columns(df, cols):
 
 
 def build_column_order(df):
-    """
-    Return df with columns in a logical order:
-      CODE -> time -> segment -> all reach columns -> SOURCE_FILE.
-    Any unexpected columns are appended at the end.
-    """
+    """Return df with columns in a logical order."""
     priority = [
-        "CODE",              # identifier (joins to site list — was MM_ID pre-v1.5.0)
-        "YEAR_MONTH",        # time period (YYYY-MM)
-        "HOUR",              # time of day (0-23)
-        "RADIUS",            # viewshed radius
-        "MOVEMENT_MODALITY", # segment filter (All / Pedestrians / Non_Pedestrians)
+        "CODE",
+        "YEAR_MONTH",
+        "HOUR",
+        "RADIUS",
+        "MOVEMENT_MODALITY",
     ]
 
-    # Collect demographic reach groups in schema order
     reach_groups = ["T1_", "T9_", "T13_", "T14_"]
     reach_cols   = []
     for prefix in reach_groups:
@@ -409,7 +357,6 @@ def build_column_order(df):
         + [c for c in tail   if c in df.columns]
     )
 
-    # Append any column not yet captured
     already = set(ordered)
     extras  = [c for c in df.columns if c not in already]
     if extras:
@@ -419,8 +366,125 @@ def build_column_order(df):
     return df[ordered]
 
 
+def build_age_long_format(df_wide):
+    """
+    Unpivot the wide age/gender reach columns into long format ready for Power
+    BI Matrix visuals.
+
+    Power BI's Matrix needs ONE column on its column axis -- it cannot put 14
+    separate columns (7 brackets x 2 genders) as side-by-side axis entries
+    when each is a different field. The wide format works for KPIs and DAX
+    measures but not for a visual that wants `AGE_BRACKET` on the column axis
+    and `GENDER` as a filter or secondary group.
+
+    What this function does:
+      1. Melts all T1_1AGE*M_REACH and T1_1AGE*F_REACH columns to long format.
+      2. Maps each granular age column to one of 7 buckets via AGE_BRACKET_MAP.
+      3. Sums REACH_PCT within each bucket (multiple source columns -> one row).
+         Example: REACH for "Under 18" is the sum of ages 0..17 for that
+         (CODE, HOUR, YEAR_MONTH, MODALITY, GENDER).
+      4. Stores AGE_BRACKET as ORDERED Categorical so Power BI sorts the
+         column axis correctly without a sort-by-column setup.
+
+    Output schema (one row per CODE x YEAR_MONTH x HOUR x MODALITY x BRACKET x GENDER):
+      CODE                 str
+      YEAR_MONTH           str
+      HOUR                 int8 (0-23)
+      RADIUS               int16
+      MOVEMENT_MODALITY    category (All / Pedestrians / Non_Pedestrians)
+      AGE_BRACKET          ordered category (Under 18, 18-24, ..., 65+)
+      GENDER               category (M / F)
+      REACH_PCT            float32 (0-100)
+      SOURCE_FILE          str
+
+    Note: This is a SEPARATE export. The wide _clean.parquet still ships
+    unchanged for backwards compatibility and for analyses that need granular
+    columns (specific-year-of-age targeting, social grade, consumer segments).
+
+    Raises ValueError if any age column prefix is not in AGE_BRACKET_MAP --
+    signals that Locomizer added a new age bracket to the schema.
+    """
+    id_cols = ["CODE", "YEAR_MONTH", "HOUR", "RADIUS",
+               "MOVEMENT_MODALITY", "SOURCE_FILE"]
+
+    # Sanity-check id columns are all present
+    missing_ids = [c for c in id_cols if c not in df_wide.columns]
+    if missing_ids:
+        raise ValueError(
+            f"Long-format export requires these columns in the wide DataFrame: "
+            f"{missing_ids}. Did the wide cleaning steps run?"
+        )
+
+    # Identify M and F age columns (the _T_ columns were already dropped earlier)
+    m_cols = [c for c in df_wide.columns
+              if c.startswith("T1_1AGE") and c.endswith("M_REACH")]
+    f_cols = [c for c in df_wide.columns
+              if c.startswith("T1_1AGE") and c.endswith("F_REACH")]
+
+    if not m_cols or not f_cols:
+        raise ValueError(
+            "No T1_1AGE*M_REACH / T1_1AGE*F_REACH columns found. The long-format "
+            "export requires the wide cleaning steps to have run first."
+        )
+
+    def _melt_one_gender(cols, gender):
+        sub = df_wide[id_cols + cols].melt(
+            id_vars=id_cols,
+            var_name="AGE_COL",
+            value_name="REACH_PCT",
+        )
+        suffix = f"{gender}_REACH"
+        sub["AGE_PREFIX"] = sub["AGE_COL"].str.removesuffix(suffix)
+        sub["GENDER"] = gender
+        sub.drop(columns=["AGE_COL"], inplace=True)
+        return sub
+
+    df_m = _melt_one_gender(m_cols, "M")
+    df_f = _melt_one_gender(f_cols, "F")
+    df_long = pd.concat([df_m, df_f], ignore_index=True)
+
+    # Map granular column prefixes to 7-bucket brackets
+    df_long["AGE_BRACKET"] = df_long["AGE_PREFIX"].map(AGE_BRACKET_MAP)
+
+    # Schema-drift guard: any column not in the map is an error, not a warning
+    unmapped = df_long[df_long["AGE_BRACKET"].isna()]["AGE_PREFIX"].unique().tolist()
+    if unmapped:
+        raise ValueError(
+            f"{len(unmapped)} age column prefix(es) not in AGE_BRACKET_MAP -- "
+            f"Locomizer schema may have changed. Add these prefixes to the map: "
+            f"{sorted(unmapped)}"
+        )
+
+    df_long.drop(columns=["AGE_PREFIX"], inplace=True)
+
+    # Sum percentages within each bracket (e.g. ages 0..17 -> "Under 18")
+    df_long = df_long.groupby(
+        id_cols + ["AGE_BRACKET", "GENDER"],
+        as_index=False,
+        observed=True,
+    )["REACH_PCT"].sum()
+
+    # Optimise dtypes for Parquet / Power BI
+    df_long["AGE_BRACKET"] = pd.Categorical(
+        df_long["AGE_BRACKET"],
+        categories=AGE_BRACKET_ORDER,
+        ordered=True,
+    )
+    df_long["GENDER"]    = df_long["GENDER"].astype("category")
+    df_long["REACH_PCT"] = df_long["REACH_PCT"].astype("float32")
+
+    # Final column order
+    df_long = df_long[[
+        "CODE", "YEAR_MONTH", "HOUR", "RADIUS",
+        "MOVEMENT_MODALITY", "AGE_BRACKET", "GENDER",
+        "REACH_PCT", "SOURCE_FILE",
+    ]]
+
+    return df_long
+
+
 def export_file(df_clean, stem, fmt):
-    """Write the cleaned DataFrame to OUTPUT_CLEAN_DIR in the requested format."""
+    """Write the cleaned WIDE DataFrame to OUTPUT_CLEAN_DIR."""
     ext        = "parquet" if fmt == "parquet" else "csv"
     name_clean = f"{stem}_clean.{ext}"
     path_clean = os.path.join(OUTPUT_CLEAN_DIR, name_clean)
@@ -433,6 +497,20 @@ def export_file(df_clean, stem, fmt):
     return path_clean
 
 
+def export_age_long_file(df_long, stem, fmt):
+    """Write the LONG-format age DataFrame to OUTPUT_AGE_LONG_DIR."""
+    ext       = "parquet" if fmt == "parquet" else "csv"
+    name_long = f"{stem}_age_long.{ext}"
+    path_long = os.path.join(OUTPUT_AGE_LONG_DIR, name_long)
+
+    if fmt == "parquet":
+        df_long.to_parquet(path_long, index=False)
+    else:
+        df_long.to_csv(path_long, index=False, encoding="utf-8-sig")
+
+    return path_long
+
+
 def file_info(path):
     """Return (size_kb, last_modified_str) for a file."""
     stats = os.stat(path)
@@ -442,8 +520,6 @@ def file_info(path):
 # %% ---------------------------------------------------------------------------
 # Step 1 -- Discover input files
 # ---------------------------------------------------------------------------
-# Scan INPUT_DIR for CSVs whose name contains 'demograph' (case-insensitive).
-# Sorted alphabetically so monthly files process in chronological order.
 
 print(f"{'='*20} FILE DISCOVERY {'='*20}")
 print(f"[DIR]    Scanning : {INPUT_DIR}")
@@ -469,13 +545,8 @@ print(f"{'='*56}\n")
 # %% ---------------------------------------------------------------------------
 # Step 2 -- Per-file processing loop
 # ---------------------------------------------------------------------------
-# Each file is loaded, validated, transformed, and exported independently.
-# Benefits:
-#   * Only one month sits in RAM at a time -> lower peak memory on wide files.
-#   * A single corrupt/missing file does not block the others.
-#   * New months can be added to the folder without re-processing old ones.
 
-global_summary = []   # collects one dict per file for the final report
+global_summary = []
 
 for filepath in demographics_files:
     filename = os.path.basename(filepath)
@@ -484,21 +555,18 @@ for filepath in demographics_files:
     print(f"{'='*20} PROCESSING: {filename} {'='*20}")
     t_start = time.time()
 
-    # -- 2a: Build full dtype map from file header, then load ------------------
+    # -- 2a: Load with explicit dtypes -----------------------------------------
     try:
         dtype_map = _build_full_dtype_map(filepath)
         df = pd.read_csv(filepath, dtype=dtype_map)
-        # Copy immediately to defragment the wide DataFrame (142 columns).
-        # Without this, subsequent column adds/drops trigger pandas
-        # PerformanceWarning on highly fragmented frames.
-        df = df.copy()
+        df = df.copy()  # defragment after wide load (142 columns)
     except Exception as e:
         print(f"  ERROR LOAD FAILED: {e}")
         global_summary.append({"file": filename, "status": "LOAD ERROR", "error": str(e)})
         print()
         continue
 
-    df["SOURCE_FILE"] = filename   # audit trail
+    df["SOURCE_FILE"] = filename
     rows_raw = len(df)
     print(f"  [LOAD]   {rows_raw:>10,} rows x {len(df.columns)} columns")
 
@@ -506,7 +574,6 @@ for filepath in demographics_files:
     print(f"  [SCHEMA]")
     validate_schema(df, filename)
 
-    # Null check on key columns (must run before MONTH/YEAR are dropped)
     key_cols  = ["DISPLAY NAME", "HOUR", "MONTH", "YEAR", "MOVEMENT_MODALITY"]
     null_hits = {c: int(df[c].isna().sum()) for c in key_cols if c in df.columns}
     if any(v > 0 for v in null_hits.values()):
@@ -515,7 +582,6 @@ for filepath in demographics_files:
         print(f"  [NULLS]  No nulls in key columns. OK")
 
     # -- 2c: Extract CODE from DISPLAY NAME ------------------------------------
-    # Capture invalid DISPLAY NAMEs before the column is dropped.
     invalid_display_names = (
         df["DISPLAY NAME"][
             ~df["DISPLAY NAME"].str[:CODE_LENGTH].str.strip().str.match(CODE_PATTERN)
@@ -528,7 +594,6 @@ for filepath in demographics_files:
           f"('{sample_display}' -> '{sample_code}'). "
           f"Unique screens: {df['CODE'].nunique()}")
 
-    # CODE validation -- flag screens that won't join to the site list
     if invalid_display_names:
         invalid_count = df[~df["CODE"].str.match(CODE_PATTERN)]["CODE"].nunique()
         print(f"  WARNING  {invalid_count} screen(s) with INVALID CODE (will NOT join to site list):")
@@ -539,10 +604,7 @@ for filepath in demographics_files:
     else:
         print(f"  [CODE]   All CODEs are valid 5-digit codes. OK")
 
-    # -- 2d: Normalise modality casing (UPPERCASE -> Title Case) ---------------
-    # Aligns Demographics with Brand Affinity (already Title Case) and the
-    # updated Footfall pipeline so a single Power BI slicer can drive all
-    # three fact tables. Idempotent -- safe to re-run.
+    # -- 2d: Normalise modality casing -----------------------------------------
     df = standardize_modality_casing(df, MODALITY_COLS)
     print(f"  [CASE]   MOVEMENT_MODALITY: {sorted(df['MOVEMENT_MODALITY'].unique().tolist())}")
 
@@ -550,11 +612,6 @@ for filepath in demographics_files:
     df = drop_columns(df, COLS_DROP)
 
     # -- 2f: Filter out zero-data rows -----------------------------------------
-    # Rows where all reach values = 0 are placeholder rows emitted by Locomizer
-    # when the panel size is too small to produce reliable data. They carry no
-    # audience information and would distort Power BI averages if kept.
-    # Detection: sum of all T1_*M_REACH columns below ZERO_ROW_THRESHOLD.
-    # (M and F are always both zero on the same rows -- using M alone is enough.)
     m_cols    = [c for c in df.columns if c.startswith("T1_1AGE") and c.endswith("M_REACH")]
     zero_mask = df[m_cols].sum(axis=1) < ZERO_ROW_THRESHOLD
     rows_zero = int(zero_mask.sum())
@@ -563,8 +620,6 @@ for filepath in demographics_files:
           f"({rows_zero / rows_raw * 100:.1f}% of raw)  ->  {len(df):,} rows remain.")
 
     # -- 2g: Drop all redundant _T_ summary columns (37 total) -----------------
-    # Includes gender totals (AGETM, AGETF), per-band age totals (AGE{band}T),
-    # and grand total (AGETT). All verified as exact M+F sums (max diff = 0.0).
     df = drop_columns(df, COLS_REDUNDANT)
 
     # -- 2h: Build YEAR_MONTH period column ------------------------------------
@@ -578,33 +633,72 @@ for filepath in demographics_files:
     df = build_column_order(df)
     print(f"  [ORDER]  Columns reordered. Final width: {len(df.columns)} columns.")
 
-    # -- 2j: Export ------------------------------------------------------------
+    # -- 2j: Export WIDE _clean file -------------------------------------------
+    path_clean = None
+    size_kb_clean = 0
     try:
         path_clean = export_file(df, stem, OUTPUT_FORMAT)
-        size_kb, _ = file_info(path_clean)
-        elapsed    = time.time() - t_start
-
-        print(f"  [EXPORT] {os.path.basename(path_clean):<65} ({size_kb:>7,.1f} KB)")
-        print(f"  [TIME]   {elapsed:.1f}s")
-
-        global_summary.append({
-            "file":        filename,
-            "status":      "OK",
-            "rows_raw":    rows_raw,
-            "rows_zero":   rows_zero,
-            "rows_clean":  len(df),
-            "screens":     df["CODE"].nunique(),
-            "invalid_ids": len(invalid_display_names),
-            "periods":     ", ".join(unique_ym),
-            "size_kb":     round(size_kb, 1),
-            "elapsed_s":   round(elapsed, 1),
-        })
-
+        size_kb_clean, _ = file_info(path_clean)
+        print(f"  [EXPORT] {os.path.basename(path_clean):<65} ({size_kb_clean:>7,.1f} KB)")
     except Exception as e:
-        print(f"  ERROR EXPORT FAILED: {e}")
+        print(f"  ERROR EXPORT (wide) FAILED: {e}")
         global_summary.append({"file": filename, "status": "EXPORT ERROR", "error": str(e)})
+        print()
+        continue
 
-    print()   # blank line between files
+    # -- 2k: Build and export LONG-format age file (NEW in v1.6.0) -------------
+    # Generates the second output file used by Power BI Matrix visuals.
+    # See docs/powerbi_demographics_heatmap_setup.md for the consuming pages.
+    rows_long      = 0
+    size_kb_long   = 0
+    path_long      = None
+    try:
+        df_age_long = build_age_long_format(df)
+        path_long   = export_age_long_file(df_age_long, stem, OUTPUT_FORMAT)
+        size_kb_long, _ = file_info(path_long)
+        rows_long       = len(df_age_long)
+
+        # Sanity numbers: per (CODE, HOUR, YEAR_MONTH, MODALITY) we expect
+        # 7 brackets * 2 genders = 14 rows. Useful as a one-glance check.
+        modalities = df_age_long["MOVEMENT_MODALITY"].nunique()
+        screens    = df_age_long["CODE"].nunique()
+        hours      = df_age_long["HOUR"].nunique()
+        periods    = df_age_long["YEAR_MONTH"].nunique()
+        expected   = screens * hours * periods * modalities * 7 * 2
+        match_flag = "OK" if rows_long <= expected else "WARN"
+
+        print(f"  [LONG]   {os.path.basename(path_long):<65} ({size_kb_long:>7,.1f} KB)")
+        print(f"           {rows_long:>10,} rows  "
+              f"({screens} screens x {hours} hours x {periods} periods x "
+              f"{modalities} modalities x 7 brackets x 2 genders, "
+              f"upper bound {expected:,}) -- {match_flag}")
+    except Exception as e:
+        print(f"  ERROR EXPORT (long) FAILED: {e}")
+        global_summary.append({
+            "file": filename, "status": "LONG EXPORT ERROR", "error": str(e),
+        })
+        print()
+        continue
+
+    elapsed = time.time() - t_start
+    print(f"  [TIME]   {elapsed:.1f}s")
+
+    global_summary.append({
+        "file":         filename,
+        "status":       "OK",
+        "rows_raw":     rows_raw,
+        "rows_zero":    rows_zero,
+        "rows_clean":   len(df),
+        "rows_long":    rows_long,
+        "screens":      df["CODE"].nunique(),
+        "invalid_ids":  len(invalid_display_names),
+        "periods":      ", ".join(unique_ym),
+        "size_kb":      round(size_kb_clean, 1),
+        "size_kb_long": round(size_kb_long, 1),
+        "elapsed_s":    round(elapsed, 1),
+    })
+
+    print()
 
 
 # %% ---------------------------------------------------------------------------
@@ -613,13 +707,14 @@ for filepath in demographics_files:
 
 print(f"{'='*20} GLOBAL SUMMARY {'='*20}")
 print(f"\n  {'FILE':<50} {'STATUS':<8}  {'RAW':>7}  {'ZERO':>6}  {'CLEAN':>7}  "
-      f"{'INV_ID':>6}  {'SCRNS':>5}  {'PERIOD':<8}  {'KB':>7}  {'TIME':>5}")
+      f"{'LONG':>8}  {'INV_ID':>6}  {'SCRNS':>5}  {'KB-W':>6}  {'KB-L':>6}  {'TIME':>5}")
 print(f"  {'-'*50} {'-'*8}  {'-'*7}  {'-'*6}  {'-'*7}  "
-      f"{'-'*6}  {'-'*5}  {'-'*8}  {'-'*7}  {'-'*5}")
+      f"{'-'*8}  {'-'*6}  {'-'*5}  {'-'*6}  {'-'*6}  {'-'*5}")
 
 total_raw   = 0
 total_zero  = 0
 total_clean = 0
+total_long  = 0
 ok_count    = 0
 
 for s in global_summary:
@@ -628,22 +723,25 @@ for s in global_summary:
         total_raw   += s["rows_raw"]
         total_zero  += s["rows_zero"]
         total_clean += s["rows_clean"]
-        inv_flag     = f"WARN {s['invalid_ids']}" if s["invalid_ids"] > 0 else "OK   0"
+        total_long  += s["rows_long"]
+        inv_flag     = f"W{s['invalid_ids']}" if s["invalid_ids"] > 0 else "OK"
         print(
             f"  {s['file']:<50} {'OK':<8}  {s['rows_raw']:>7,}  "
-            f"{s['rows_zero']:>6,}  {s['rows_clean']:>7,}  {inv_flag:>6}  "
-            f"{s['screens']:>5,}  {s['periods']:<8}  "
-            f"{s['size_kb']:>7,.1f}  {s['elapsed_s']:>4.1f}s"
+            f"{s['rows_zero']:>6,}  {s['rows_clean']:>7,}  {s['rows_long']:>8,}  "
+            f"{inv_flag:>6}  {s['screens']:>5,}  "
+            f"{s['size_kb']:>6,.1f}  {s['size_kb_long']:>6,.1f}  {s['elapsed_s']:>4.1f}s"
         )
     else:
         err = s.get("error", "")
         print(f"  {s['file']:<50} ERROR {s['status']:<8}  {err}")
 
-print(f"  {'─'*120}")
-print(f"  {'TOTAL':<50} {'':>8}  {total_raw:>7,}  {total_zero:>6,}  {total_clean:>7,}")
-print(f"\n  Files OK      : {ok_count} / {len(demographics_files)}")
-print(f"  Clean folder  : {OUTPUT_CLEAN_DIR}")
-print(f"  Output format : {OUTPUT_FORMAT.upper()}")
+print(f"  {'-'*125}")
+print(f"  {'TOTAL':<50} {'':>8}  {total_raw:>7,}  {total_zero:>6,}  "
+      f"{total_clean:>7,}  {total_long:>8,}")
+print(f"\n  Files OK         : {ok_count} / {len(demographics_files)}")
+print(f"  Clean folder     : {OUTPUT_CLEAN_DIR}")
+print(f"  Age-long folder  : {OUTPUT_AGE_LONG_DIR}")
+print(f"  Output format    : {OUTPUT_FORMAT.upper()}")
 print(f"{'='*56}")
 print("Process finished.")
 # %%
