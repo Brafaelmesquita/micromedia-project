@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "MM_Dashbard__Final"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "8bb7e8e5-b71f-4ad3-9df9-0ead0ec0bae9"
+  }
+}

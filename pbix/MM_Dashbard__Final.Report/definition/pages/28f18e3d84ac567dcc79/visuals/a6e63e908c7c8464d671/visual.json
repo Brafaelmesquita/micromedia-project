@@ -1,0 +1,57 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "a6e63e908c7c8464d671",
+  "position": {
+    "x": 238.33333333333334,
+    "y": 80,
+    "z": 5000,
+    "height": 220,
+    "width": 300,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Demographics_AgeLong"
+                    }
+                  },
+                  "Property": "AGE_BRACKET"
+                }
+              },
+              "queryRef": "Demographics_AgeLong.AGE_BRACKET",
+              "nativeQueryRef": "AGE_BRACKET",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Age Audience (Daily Unique)"
+                }
+              },
+              "queryRef": "_Measures.Age Audience (Daily Unique)",
+              "nativeQueryRef": "Age Audience (Daily Unique)"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

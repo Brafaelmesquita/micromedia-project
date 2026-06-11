@@ -1,0 +1,313 @@
+table Master_Sites
+	lineageTag: 4d5627e5-be5e-47c0-a6a5-4eb1fc479c48
+
+	column 'MM ID'
+		dataType: string
+		lineageTag: 1ac69c17-553e-412b-b912-43f7ab874fd3
+		summarizeBy: none
+		sourceColumn: MM ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NEW MM ID'
+		dataType: string
+		lineageTag: 50c01220-89e0-48a6-8064-96f71a97eced
+		summarizeBy: none
+		sourceColumn: NEW MM ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Xibo ID_loco'
+		dataType: int64
+		formatString: 0
+		lineageTag: 26383a7f-f4ff-4e2f-b12a-242cfc513901
+		summarizeBy: sum
+		sourceColumn: Xibo ID_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Display Name'
+		dataType: string
+		lineageTag: 9d52306c-a3f7-4ecf-8674-704c5eedeea8
+		summarizeBy: none
+		sourceColumn: Display Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Address
+		dataType: string
+		lineageTag: 303b09f1-5a76-4dd0-bb95-47bc544acea5
+		summarizeBy: none
+		sourceColumn: Address
+
+		annotation SummarizationSetBy = Automatic
+
+	column County
+		dataType: string
+		lineageTag: 083526cb-59aa-4dc4-8fa8-cb9266f8c250
+		summarizeBy: none
+		sourceColumn: County
+
+		annotation SummarizationSetBy = Automatic
+
+	column Postcode
+		dataType: string
+		lineageTag: 33918d83-2548-4ef0-a757-f1713984fbcb
+		summarizeBy: none
+		sourceColumn: Postcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column City_loco
+		dataType: string
+		lineageTag: 50c0f5a2-2804-4677-9900-9c5b4336eb13
+		summarizeBy: none
+		sourceColumn: City_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Postal Code_loco'
+		dataType: string
+		lineageTag: d3c1c351-3512-45eb-90a8-234f4949e1b6
+		summarizeBy: none
+		sourceColumn: Postal Code_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column Latitude_loco
+		dataType: double
+		lineageTag: 92373487-8057-4148-8e3d-d73ef1928ce4
+		summarizeBy: sum
+		sourceColumn: Latitude_loco
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Longitude_loco
+		dataType: double
+		lineageTag: f64c5e46-5575-483a-81ed-4c568563ea71
+		summarizeBy: sum
+		sourceColumn: Longitude_loco
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column azimuth_loco
+		dataType: double
+		lineageTag: 93ecfd2b-db06-4dde-87f2-5c81aae5ee90
+		summarizeBy: sum
+		sourceColumn: azimuth_loco
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Network
+		dataType: string
+		lineageTag: 936c2975-d94c-4e56-ad94-f086af8d5990
+		summarizeBy: none
+		sourceColumn: Network
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Display Type_loco'
+		dataType: string
+		lineageTag: da7414e8-b5a4-4eba-b597-4bebebeaf52d
+		summarizeBy: none
+		sourceColumn: Display Type_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Display Facing'
+		dataType: string
+		lineageTag: 71ea47b9-1501-4008-9fd9-98aa849b24ee
+		summarizeBy: none
+		sourceColumn: Display Facing
+
+		annotation SummarizationSetBy = Automatic
+
+	column Orientation_loco
+		dataType: string
+		lineageTag: 01470b9d-7e3f-4001-83a0-eeed96e494db
+		summarizeBy: none
+		sourceColumn: Orientation_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Screen Size_loco'
+		dataType: string
+		lineageTag: ab5f8248-ea21-41b5-9d9e-6551811538bd
+		summarizeBy: none
+		sourceColumn: Screen Size_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column Resolution_loco
+		dataType: string
+		lineageTag: e9142c12-c89c-4e56-a435-078be7dc5763
+		summarizeBy: none
+		sourceColumn: Resolution_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'slot.w_loco'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f5c20a3-cd73-40e1-b8d8-fa485572c7da
+		summarizeBy: sum
+		sourceColumn: slot.w_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'slot.h_loco'
+		dataType: int64
+		formatString: 0
+		lineageTag: 060da72d-fcf1-4438-a8f9-b765f359d36a
+		summarizeBy: sum
+		sourceColumn: slot.h_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'viewing.angle.FROM_loco'
+		dataType: int64
+		formatString: 0
+		lineageTag: e029f189-c99f-4b34-a117-610954d0e064
+		summarizeBy: sum
+		sourceColumn: viewing.angle.FROM_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'viewing.angle.TO_loco'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8e114a15-02fa-47cf-b424-fc90bd1be398
+		summarizeBy: sum
+		sourceColumn: viewing.angle.TO_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'viewing.radius_loco'
+		dataType: int64
+		formatString: 0
+		lineageTag: cb1b68e5-286e-4dc1-b2bf-2621301034cf
+		summarizeBy: sum
+		sourceColumn: viewing.radius_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'asset.name_loco'
+		dataType: string
+		lineageTag: d48db31a-f9e3-49a6-ae14-aa7b323cae59
+		summarizeBy: none
+		sourceColumn: asset.name_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'asset.setting_loco'
+		dataType: string
+		lineageTag: 8f6be129-a921-48b3-8ec7-7bb1d9ff0c2d
+		summarizeBy: none
+		sourceColumn: asset.setting_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'venue.name_loco'
+		dataType: string
+		lineageTag: c3373974-e4ee-4f99-b004-9f671cbd27e7
+		summarizeBy: none
+		sourceColumn: venue.name_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_active
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a21bb90-f67e-4e8c-8f36-949052334912
+		summarizeBy: sum
+		sourceColumn: is_active
+
+		annotation SummarizationSetBy = Automatic
+
+	column Owner_loco
+		dataType: string
+		lineageTag: 2a3e24a4-5cb7-48a3-9bd8-be51307e5ada
+		summarizeBy: none
+		sourceColumn: Owner_loco
+
+		annotation SummarizationSetBy = Automatic
+
+	column PROOH
+		dataType: int64
+		formatString: 0
+		lineageTag: 1b7a1396-e5a3-4fd5-abfd-04f6c05eb2d1
+		summarizeBy: sum
+		sourceColumn: PROOH
+
+		annotation SummarizationSetBy = Automatic
+
+	column On-Trade
+		dataType: int64
+		formatString: 0
+		lineageTag: 6777d483-d68f-4ba1-9e17-21c82fe92f78
+		summarizeBy: sum
+		sourceColumn: On-Trade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Restaurant
+		dataType: string
+		lineageTag: 7ccc0454-cb95-4640-a11c-929803617634
+		summarizeBy: none
+		sourceColumn: Restaurant
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Alcohol App.'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9b00e82c-0227-45bd-90d0-edb97bfde15d
+		summarizeBy: sum
+		sourceColumn: Alcohol App.
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Diageo - Approved'
+		dataType: int64
+		formatString: 0
+		lineageTag: 34976963-2e09-40e0-81c2-a377f37f9da9
+		summarizeBy: sum
+		sourceColumn: Diageo - Approved
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sum Campaigns 2025_pbi'
+		dataType: int64
+		formatString: 0
+		lineageTag: f80cef0f-f03d-4a18-bb51-67d5a6d0982c
+		summarizeBy: sum
+		sourceColumn: Sum Campaigns 2025_pbi
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Master_Sites = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\MicroMedia_Dashboard\data\master_sites"),
+				    #"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),
+				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File", each #"Transform File"([Content])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File"}),
+				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File", Table.ColumnNames(#"Transform File"(#"Sample File"))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Source.Name", type text}, {"MM ID", Int64.Type}, {"NEW MM ID", Int64.Type}, {"Xibo ID_loco", Int64.Type}, {"Display Name", type text}, {"Address", type text}, {"County", type text}, {"Postcode", type text}, {"City_loco", type text}, {"Postal Code_loco", type text}, {"Latitude_loco", type number}, {"Longitude_loco", type number}, {"azimuth_loco", type number}, {"Network", type text}, {"Display Type_loco", type text}, {"Display Facing", type text}, {"Orientation_loco", type text}, {"Screen Size_loco", type text}, {"Resolution_loco", type text}, {"slot.w_loco", Int64.Type}, {"slot.h_loco", Int64.Type}, {"viewing.angle.FROM_loco", Int64.Type}, {"viewing.angle.TO_loco", Int64.Type}, {"viewing.radius_loco", Int64.Type}, {"asset.name_loco", type text}, {"asset.setting_loco", type text}, {"venue.name_loco", type text}, {"is_active", Int64.Type}, {"Owner_loco", type text}, {"PROOH", Int64.Type}, {"On-Trade", Int64.Type}, {"Restaurant", type text}, {"Alcohol App.", Int64.Type}, {"Diageo - Approved", Int64.Type}, {"Sum Campaigns 2025_pbi", Int64.Type}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Source.Name"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"MM ID", type text}, {"NEW MM ID", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

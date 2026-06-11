@@ -1,0 +1,72 @@
+relationship 26bd2553-a14b-76b3-1cac-f08e644958f5
+	fromColumn: Footfall.CODE
+	toColumn: Master_Sites.'MM ID'
+
+relationship 2bcad28d-6276-fd5f-803e-8acb2f7d025c
+	fromColumn: Demographics.CODE
+	toColumn: Master_Sites.'MM ID'
+
+relationship 0cb2b336-8b35-62a1-d4cc-185cd6b506f2
+	fromColumn: Demographics_AgeLong.CODE
+	toColumn: Master_Sites.'MM ID'
+
+relationship bcd1ab04-59f6-1f3a-91a6-c2c15874cca3
+	fromColumn: Brand_Affinity.CODE
+	toColumn: Master_Sites.'MM ID'
+
+relationship 538cfbe2-fcbd-e1c5-59f4-d3d5d6171c0d
+	fromColumn: Footfall.DATE
+	toColumn: Calendar.Date
+
+relationship c9895705-569b-132b-0866-f062c07f6fdc
+	fromColumn: Footfall.HOUR
+	toColumn: dim_Hour.Hour
+
+relationship 2cba07a3-9782-7822-03b7-918063d27dd0
+	fromColumn: Demographics.HOUR
+	toColumn: dim_Hour.Hour
+
+relationship b3fca337-112f-3ec4-cf1f-75109b07948f
+	fromColumn: Demographics_AgeLong.HOUR
+	toColumn: dim_Hour.Hour
+
+relationship 0fb5a6e5-c4a2-59ac-032e-cd3c100272ee
+	fromColumn: Brand_Affinity.HOUR
+	toColumn: dim_Hour.Hour
+
+relationship 2d32af80-80da-f99e-97f7-20da211ba170
+	fromColumn: Demographics.MOVEMENT_MODALITY
+	toColumn: dim_Movement.MovementModality
+
+relationship 562058fd-1137-6599-e741-1dc6b7f2bdda
+	fromColumn: Demographics_AgeLong.MOVEMENT_MODALITY
+	toColumn: dim_Movement.MovementModality
+
+relationship 9b837818-59e2-2bd2-a285-1525475d9e4d
+	fromColumn: Brand_Affinity.MOVEMENT_MODALITY
+	toColumn: dim_Movement.MovementModality
+
+relationship d30b569e-6f8f-68de-6649-975028d55089
+	fromColumn: Footfall.MOVEMENT_GROUP
+	toColumn: dim_Movement.MovementModality
+
+relationship ebceb768-15ae-5cfd-ac97-f5d0ffade1b2
+	fromColumn: Footfall.VISITATION_MODALITY
+	toColumn: dim_Visitation.VisitationModality
+
+relationship ae6c5f95-2c4a-62b7-c709-b7e3ecbddb88
+	fromColumn: Brand_Affinity.VISITATION_MODALITY
+	toColumn: dim_Visitation.VisitationModality
+
+relationship e23b7756-f2d6-3f99-f511-bd01efcdf03d
+	fromColumn: Demographics_ClassLong.CODE
+	toColumn: Master_Sites.'MM ID'
+
+relationship dda7e79c-7eec-fb72-9599-b460c440c3bd
+	fromColumn: Demographics_ClassLong.MOVEMENT_MODALITY
+	toColumn: dim_Movement.MovementModality
+
+relationship 6897aeeb-04a7-af9c-6998-a6556a1b61d0
+	fromColumn: Demographics_ClassLong.HOUR
+	toColumn: dim_Hour.Hour
+

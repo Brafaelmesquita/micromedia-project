@@ -1,0 +1,237 @@
+table Footfall
+	lineageTag: b5eb4c56-2446-4b05-bd95-3919b641ae2c
+
+	column CODE
+		dataType: string
+		lineageTag: 874a2d76-ed94-43f8-819a-53a581c20628
+		summarizeBy: none
+		sourceColumn: CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column DATE
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 67d7e8bd-fefa-4a1f-8223-9e57daded170
+		summarizeBy: none
+		sourceColumn: DATE
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column HOUR
+		dataType: int64
+		formatString: 0
+		lineageTag: c1893700-4c3a-4471-9854-1188b7b84706
+		summarizeBy: none
+		sourceColumn: HOUR
+
+		annotation SummarizationSetBy = Automatic
+
+	column RADIUS
+		dataType: int64
+		formatString: 0
+		lineageTag: bd988472-b9c4-499e-b4ef-96c8fd77155d
+		summarizeBy: sum
+		sourceColumn: RADIUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOVEMENT_MODALITY
+		dataType: string
+		lineageTag: 5f52d7cf-0435-4d1d-b191-aa795ebb95e8
+		summarizeBy: none
+		sourceColumn: MOVEMENT_MODALITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column VISITATION_MODALITY
+		dataType: string
+		lineageTag: 3c28d0e6-d234-4fed-9945-5d8d8257f449
+		summarizeBy: none
+		sourceColumn: VISITATION_MODALITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_GRAND_TOTAL
+		dataType: int64
+		formatString: 0
+		lineageTag: 8186fb6b-090f-4be2-8d33-c7e3c747689d
+		summarizeBy: sum
+		sourceColumn: IS_GRAND_TOTAL
+
+		annotation SummarizationSetBy = Automatic
+
+	column NUMBER_OF_USERS
+		dataType: int64
+		formatString: 0
+		lineageTag: 741e0f7b-b3db-4879-83c5-289d31c1f307
+		summarizeBy: sum
+		sourceColumn: NUMBER_OF_USERS
+
+		annotation SummarizationSetBy = Automatic
+
+	column NUMBER_OF_SIGNALS
+		dataType: int64
+		formatString: 0
+		lineageTag: 2585bb6b-d9b6-455e-9d55-e475f083b164
+		summarizeBy: sum
+		sourceColumn: NUMBER_OF_SIGNALS
+
+		annotation SummarizationSetBy = Automatic
+
+	column DWELL_TIME
+		dataType: double
+		lineageTag: 87216144-d72c-4398-bd14-60b06659523d
+		summarizeBy: sum
+		sourceColumn: DWELL_TIME
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column REACH
+		dataType: double
+		lineageTag: 388a25fd-7d9c-4c3d-8b24-0135e4d83ae2
+		summarizeBy: sum
+		sourceColumn: REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EXTRAPOLATED_NUMBER_OF_USERS
+		dataType: double
+		lineageTag: 3b360845-f361-41b8-b48c-c0b2063a1f1b
+		summarizeBy: sum
+		sourceColumn: EXTRAPOLATED_NUMBER_OF_USERS
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EXTRAPOLATED_NUMBER_OF_SIGNALS
+		dataType: double
+		lineageTag: 47351b4f-6988-4fff-aa4f-fb0c05c8e8d2
+		summarizeBy: sum
+		sourceColumn: EXTRAPOLATED_NUMBER_OF_SIGNALS
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EXTRAPOLATED_USERS_2
+		dataType: double
+		lineageTag: 70dba9b1-ad38-43fe-9848-3ced1d7c0631
+		summarizeBy: sum
+		sourceColumn: EXTRAPOLATED_USERS_2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EXTRAPOLATED_SIGNALS_2
+		dataType: double
+		lineageTag: 4015e8a6-139f-49e2-87ac-85e63160358a
+		summarizeBy: sum
+		sourceColumn: EXTRAPOLATED_SIGNALS_2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column NUMBER_OF_EYE_CONTACTS
+		dataType: int64
+		formatString: 0
+		lineageTag: 3726d9b3-6461-424b-8f81-2e70736892b6
+		summarizeBy: sum
+		sourceColumn: NUMBER_OF_EYE_CONTACTS
+
+		annotation SummarizationSetBy = Automatic
+
+	column NUMBER_OF_EYE_CONTACTS_WEIGHTED
+		dataType: int64
+		formatString: 0
+		lineageTag: 5dc6eb18-e9fb-48cc-b07c-d69d05bcb348
+		summarizeBy: sum
+		sourceColumn: NUMBER_OF_EYE_CONTACTS_WEIGHTED
+
+		annotation SummarizationSetBy = Automatic
+
+	column EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS
+		dataType: double
+		lineageTag: a2739cec-295b-493e-bc7b-99ab95b01cc2
+		summarizeBy: sum
+		sourceColumn: EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED
+		dataType: double
+		lineageTag: 136f8b96-0aee-444e-8e9c-01d3e798e8e8
+		summarizeBy: sum
+		sourceColumn: EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED_2
+		dataType: double
+		lineageTag: 6db202ed-30e4-4d65-ac04-7d92df738713
+		summarizeBy: sum
+		sourceColumn: EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED_2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SOURCE_FILE
+		dataType: string
+		lineageTag: a5244f57-2695-4516-8130-44fe8cb55482
+		summarizeBy: none
+		sourceColumn: SOURCE_FILE
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOVEMENT_GROUP
+		dataType: string
+		lineageTag: cc1d0065-f8d9-4838-839e-938dd40d4a81
+		summarizeBy: none
+		sourceColumn: MOVEMENT_GROUP
+
+		annotation SummarizationSetBy = Automatic
+
+	column YEAR_MONTH = FORMAT ( Footfall[DATE], "YYYY-MM" )
+		lineageTag: 44c88a57-2157-4bbe-a4d0-dc0c62818f82
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Footfall = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\MicroMedia_Dashboard\data\footfall"),
+				    #"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),
+				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File (2)", each #"Transform File (2)"([Content])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File (2)"}),
+				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (2)", Table.ColumnNames(#"Transform File (2)"(#"Sample File (2)"))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Source.Name", type text}, {"CODE", Int64.Type}, {"DATE", type date}, {"HOUR", Int64.Type}, {"RADIUS", Int64.Type}, {"MOVEMENT_MODALITY", type text}, {"VISITATION_MODALITY", type text}, {"IS_GRAND_TOTAL", Int64.Type}, {"NUMBER_OF_USERS", Int64.Type}, {"NUMBER_OF_SIGNALS", Int64.Type}, {"DWELL_TIME", type number}, {"REACH", type number}, {"EXTRAPOLATED_NUMBER_OF_USERS", type number}, {"EXTRAPOLATED_NUMBER_OF_SIGNALS", type number}, {"EXTRAPOLATED_USERS_2", type number}, {"EXTRAPOLATED_SIGNALS_2", type number}, {"NUMBER_OF_EYE_CONTACTS", Int64.Type}, {"NUMBER_OF_EYE_CONTACTS_WEIGHTED", Int64.Type}, {"EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS", type number}, {"EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED", type number}, {"EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED_2", type number}, {"SOURCE_FILE", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Source.Name"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"CODE", type text}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type1", "MOVEMENT_GROUP", each if [MOVEMENT_MODALITY] = "All" then "All"
+				else if [MOVEMENT_MODALITY] = "Pedestrians" then "Pedestrians"
+				else "Non_Pedestrians"),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Added Custom",{{"MOVEMENT_GROUP", type text}})
+				in
+				    #"Changed Type2"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

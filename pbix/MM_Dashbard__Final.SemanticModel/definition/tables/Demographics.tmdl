@@ -1,0 +1,1043 @@
+table Demographics
+	lineageTag: 1f571d25-c141-4e94-8029-0697236b1976
+
+	column CODE
+		dataType: string
+		lineageTag: bbae1d98-8d3a-4dbc-999a-45c4b16ed892
+		summarizeBy: none
+		sourceColumn: CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column YEAR_MONTH
+		dataType: string
+		lineageTag: 16d8d83c-fbeb-4820-b0d8-12ef4d03304d
+		summarizeBy: none
+		sourceColumn: YEAR_MONTH
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOUR
+		dataType: int64
+		formatString: 0
+		lineageTag: c89c955b-7f36-4679-880a-789c5d9890d1
+		summarizeBy: none
+		sourceColumn: HOUR
+
+		annotation SummarizationSetBy = Automatic
+
+	column RADIUS
+		dataType: int64
+		formatString: 0
+		lineageTag: ce37792c-873c-4058-b74c-19b28ee6f8e3
+		summarizeBy: sum
+		sourceColumn: RADIUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOVEMENT_MODALITY
+		dataType: string
+		lineageTag: cff294ab-942f-457d-b57c-864eeee83014
+		summarizeBy: none
+		sourceColumn: MOVEMENT_MODALITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column T1_1AGE0M_REACH
+		dataType: double
+		lineageTag: 27a31950-f697-4fc5-a486-47fd6c15c87a
+		summarizeBy: sum
+		sourceColumn: T1_1AGE0M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE1M_REACH
+		dataType: double
+		lineageTag: d731c459-13dc-45fd-95e8-07858a87e44e
+		summarizeBy: sum
+		sourceColumn: T1_1AGE1M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE2M_REACH
+		dataType: double
+		lineageTag: 1c3a4000-785d-474b-a915-e9e026e723c8
+		summarizeBy: sum
+		sourceColumn: T1_1AGE2M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE3M_REACH
+		dataType: double
+		lineageTag: 66cdb457-2605-4f71-b53e-29a5afcc71ce
+		summarizeBy: sum
+		sourceColumn: T1_1AGE3M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE4M_REACH
+		dataType: double
+		lineageTag: 28170c9c-2956-4fe7-baf3-8ee461017f45
+		summarizeBy: sum
+		sourceColumn: T1_1AGE4M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE5M_REACH
+		dataType: double
+		lineageTag: 007e1963-693e-468d-a34d-4f04f569d4d1
+		summarizeBy: sum
+		sourceColumn: T1_1AGE5M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE6M_REACH
+		dataType: double
+		lineageTag: 8994ff9a-3ece-47e6-a61b-cde66812cd78
+		summarizeBy: sum
+		sourceColumn: T1_1AGE6M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE7M_REACH
+		dataType: double
+		lineageTag: cdcf78e8-e05e-45ad-84c8-d2884f34f379
+		summarizeBy: sum
+		sourceColumn: T1_1AGE7M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE8M_REACH
+		dataType: double
+		lineageTag: 53106d3c-1e1d-4894-9b60-fc4d54182729
+		summarizeBy: sum
+		sourceColumn: T1_1AGE8M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE9M_REACH
+		dataType: double
+		lineageTag: aca73b3f-dab4-44db-ab12-983d7751f5e0
+		summarizeBy: sum
+		sourceColumn: T1_1AGE9M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE10M_REACH
+		dataType: double
+		lineageTag: afb6ca12-6b74-4c0e-a948-17cc35d82310
+		summarizeBy: sum
+		sourceColumn: T1_1AGE10M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE11M_REACH
+		dataType: double
+		lineageTag: 743a7578-6a71-436d-a223-3f875ae25d3b
+		summarizeBy: sum
+		sourceColumn: T1_1AGE11M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE12M_REACH
+		dataType: double
+		lineageTag: f3dec5f0-3f42-47e2-bddf-0bc1612c098f
+		summarizeBy: sum
+		sourceColumn: T1_1AGE12M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE13M_REACH
+		dataType: double
+		lineageTag: 90a70b65-2db3-411b-929e-2e472b840ea9
+		summarizeBy: sum
+		sourceColumn: T1_1AGE13M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE14M_REACH
+		dataType: double
+		lineageTag: ff321b62-fb2d-4cd2-ba17-4bb8a37ac7af
+		summarizeBy: sum
+		sourceColumn: T1_1AGE14M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE15M_REACH
+		dataType: double
+		lineageTag: a068a36e-eb85-453a-8118-690b6f99c73f
+		summarizeBy: sum
+		sourceColumn: T1_1AGE15M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE16M_REACH
+		dataType: double
+		lineageTag: 6012f209-8c2b-40ab-a11d-416b15626125
+		summarizeBy: sum
+		sourceColumn: T1_1AGE16M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE17M_REACH
+		dataType: double
+		lineageTag: 1299783a-495e-4780-b6d2-92a97016a27d
+		summarizeBy: sum
+		sourceColumn: T1_1AGE17M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE18M_REACH
+		dataType: double
+		lineageTag: 4a2cbfcb-8bb3-4ee1-b7dc-1a90194ebd36
+		summarizeBy: sum
+		sourceColumn: T1_1AGE18M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE19M_REACH
+		dataType: double
+		lineageTag: 8dbf07ec-a4d3-4f60-8da6-870f83b32440
+		summarizeBy: sum
+		sourceColumn: T1_1AGE19M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE20_24M_REACH
+		dataType: double
+		lineageTag: 27fc081a-e936-46d4-a518-996e8812260a
+		summarizeBy: sum
+		sourceColumn: T1_1AGE20_24M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE25_29M_REACH
+		dataType: double
+		lineageTag: 0a2954c2-c262-4014-b306-36c1bc2af7eb
+		summarizeBy: sum
+		sourceColumn: T1_1AGE25_29M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE30_34M_REACH
+		dataType: double
+		lineageTag: 1d5a3986-549e-4404-bfe0-f6a36d6c403d
+		summarizeBy: sum
+		sourceColumn: T1_1AGE30_34M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE35_39M_REACH
+		dataType: double
+		lineageTag: 67c02940-4e9c-4bb0-80f7-f82182dde499
+		summarizeBy: sum
+		sourceColumn: T1_1AGE35_39M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE40_44M_REACH
+		dataType: double
+		lineageTag: 9d4c460c-41f4-493d-b19d-683adf0b5b34
+		summarizeBy: sum
+		sourceColumn: T1_1AGE40_44M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE45_49M_REACH
+		dataType: double
+		lineageTag: 9fde3175-b4f6-4565-88ac-d05cf56f0e9b
+		summarizeBy: sum
+		sourceColumn: T1_1AGE45_49M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE50_54M_REACH
+		dataType: double
+		lineageTag: 555de6f2-07c2-40a9-821a-d9a2f891079f
+		summarizeBy: sum
+		sourceColumn: T1_1AGE50_54M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE55_59M_REACH
+		dataType: double
+		lineageTag: d9e22eec-dd03-41ad-b3f5-fbc73a1189af
+		summarizeBy: sum
+		sourceColumn: T1_1AGE55_59M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE60_64M_REACH
+		dataType: double
+		lineageTag: 1281194a-7cae-400e-adec-409fe568afde
+		summarizeBy: sum
+		sourceColumn: T1_1AGE60_64M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE65_69M_REACH
+		dataType: double
+		lineageTag: 6a18f200-aaca-49aa-9063-00474a418da2
+		summarizeBy: sum
+		sourceColumn: T1_1AGE65_69M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE70_74M_REACH
+		dataType: double
+		lineageTag: 1fbd24fa-ae49-417a-a59d-74f134378f1c
+		summarizeBy: sum
+		sourceColumn: T1_1AGE70_74M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE75_79M_REACH
+		dataType: double
+		lineageTag: 94cd8822-408e-4aeb-ae61-d560d60b848a
+		summarizeBy: sum
+		sourceColumn: T1_1AGE75_79M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE80_84M_REACH
+		dataType: double
+		lineageTag: 24c5147d-a302-4817-a1ce-773faca59818
+		summarizeBy: sum
+		sourceColumn: T1_1AGE80_84M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGEGE_85M_REACH
+		dataType: double
+		lineageTag: 1c22629d-2398-4c5a-89fd-62303081507f
+		summarizeBy: sum
+		sourceColumn: T1_1AGEGE_85M_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE0F_REACH
+		dataType: double
+		lineageTag: 93af4a2c-3660-411d-987f-d2c537a78f14
+		summarizeBy: sum
+		sourceColumn: T1_1AGE0F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE1F_REACH
+		dataType: double
+		lineageTag: 3ebc475a-ecc0-4757-b8b1-1ee9fe8fb37d
+		summarizeBy: sum
+		sourceColumn: T1_1AGE1F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE2F_REACH
+		dataType: double
+		lineageTag: efe84fc1-c551-4fb9-bfc0-6ed3f1c1fbcc
+		summarizeBy: sum
+		sourceColumn: T1_1AGE2F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE3F_REACH
+		dataType: double
+		lineageTag: e2de74a2-933c-4dd2-ba7b-5e7149a1c656
+		summarizeBy: sum
+		sourceColumn: T1_1AGE3F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE4F_REACH
+		dataType: double
+		lineageTag: 7ea3a492-7c5b-4028-86b8-7094306d797c
+		summarizeBy: sum
+		sourceColumn: T1_1AGE4F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE5F_REACH
+		dataType: double
+		lineageTag: 1f029b6f-8ace-4901-91c7-fba728021370
+		summarizeBy: sum
+		sourceColumn: T1_1AGE5F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE6F_REACH
+		dataType: double
+		lineageTag: bc704cc2-8def-4615-8094-5d2face2d3ec
+		summarizeBy: sum
+		sourceColumn: T1_1AGE6F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE7F_REACH
+		dataType: double
+		lineageTag: 7c348a49-cb13-4580-9d57-53bbad44047a
+		summarizeBy: sum
+		sourceColumn: T1_1AGE7F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE8F_REACH
+		dataType: double
+		lineageTag: 37190542-3eff-40fd-8ce4-54fb97042d6a
+		summarizeBy: sum
+		sourceColumn: T1_1AGE8F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE9F_REACH
+		dataType: double
+		lineageTag: aa2a32a4-7a88-4bf4-bc19-8026d08a4977
+		summarizeBy: sum
+		sourceColumn: T1_1AGE9F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE10F_REACH
+		dataType: double
+		lineageTag: c6e1944f-9c74-4f05-95a8-360a6ee177ac
+		summarizeBy: sum
+		sourceColumn: T1_1AGE10F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE11F_REACH
+		dataType: double
+		lineageTag: 10593eae-4eb8-4c6e-bb8d-77f342003a66
+		summarizeBy: sum
+		sourceColumn: T1_1AGE11F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE12F_REACH
+		dataType: double
+		lineageTag: 03ff7186-fb21-456a-9752-9458de8884c7
+		summarizeBy: sum
+		sourceColumn: T1_1AGE12F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE13F_REACH
+		dataType: double
+		lineageTag: 1b5d4fa9-5d86-462e-aab1-355597cd2f25
+		summarizeBy: sum
+		sourceColumn: T1_1AGE13F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE14F_REACH
+		dataType: double
+		lineageTag: 2db32357-9c76-4c72-8f81-13c87e46c637
+		summarizeBy: sum
+		sourceColumn: T1_1AGE14F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE15F_REACH
+		dataType: double
+		lineageTag: 9a9bd98b-37c9-42c6-8083-bd2c06623ce7
+		summarizeBy: sum
+		sourceColumn: T1_1AGE15F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE16F_REACH
+		dataType: double
+		lineageTag: ab42d8b2-22e4-4935-ad09-5e533500759f
+		summarizeBy: sum
+		sourceColumn: T1_1AGE16F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE17F_REACH
+		dataType: double
+		lineageTag: 184ec6f8-4979-4f9e-9959-8740fc4b12a1
+		summarizeBy: sum
+		sourceColumn: T1_1AGE17F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE18F_REACH
+		dataType: double
+		lineageTag: ad2fda2e-0338-48a6-8430-651f6395d741
+		summarizeBy: sum
+		sourceColumn: T1_1AGE18F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE19F_REACH
+		dataType: double
+		lineageTag: 5be94f50-fa2c-4e70-bd09-06bb2a96f12f
+		summarizeBy: sum
+		sourceColumn: T1_1AGE19F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE20_24F_REACH
+		dataType: double
+		lineageTag: f2bc8eb9-312b-4cc3-88ec-aee50feb9a52
+		summarizeBy: sum
+		sourceColumn: T1_1AGE20_24F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE25_29F_REACH
+		dataType: double
+		lineageTag: 33b38472-4ba3-4fc8-af83-25236aaa77f3
+		summarizeBy: sum
+		sourceColumn: T1_1AGE25_29F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE30_34F_REACH
+		dataType: double
+		lineageTag: 730cd6ca-bd61-40b3-8b83-4ec414298e08
+		summarizeBy: sum
+		sourceColumn: T1_1AGE30_34F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE35_39F_REACH
+		dataType: double
+		lineageTag: e02a2b51-22cc-4afd-9f43-f01052d7be65
+		summarizeBy: sum
+		sourceColumn: T1_1AGE35_39F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE40_44F_REACH
+		dataType: double
+		lineageTag: ee178ab9-2021-4505-9877-88de6b95b3ed
+		summarizeBy: sum
+		sourceColumn: T1_1AGE40_44F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE45_49F_REACH
+		dataType: double
+		lineageTag: 05f6abb0-954d-45b2-ae79-ce15cd762adc
+		summarizeBy: sum
+		sourceColumn: T1_1AGE45_49F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE50_54F_REACH
+		dataType: double
+		lineageTag: 43e56a0d-e596-4865-a1d9-7fbddaa15e95
+		summarizeBy: sum
+		sourceColumn: T1_1AGE50_54F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE55_59F_REACH
+		dataType: double
+		lineageTag: 7532e783-069e-4efd-a95b-17bd687cc1f6
+		summarizeBy: sum
+		sourceColumn: T1_1AGE55_59F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE60_64F_REACH
+		dataType: double
+		lineageTag: e2d9568d-a32b-4970-a820-a423512005e5
+		summarizeBy: sum
+		sourceColumn: T1_1AGE60_64F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE65_69F_REACH
+		dataType: double
+		lineageTag: 71bc6047-fd77-4fcb-92b3-4b38b7daaf82
+		summarizeBy: sum
+		sourceColumn: T1_1AGE65_69F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE70_74F_REACH
+		dataType: double
+		lineageTag: f5213fd6-17af-4c09-8c86-3f31d8c5d202
+		summarizeBy: sum
+		sourceColumn: T1_1AGE70_74F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE75_79F_REACH
+		dataType: double
+		lineageTag: 48d15c17-0241-4cfb-b94a-369c7d26767e
+		summarizeBy: sum
+		sourceColumn: T1_1AGE75_79F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGE80_84F_REACH
+		dataType: double
+		lineageTag: 62513c02-3e26-4703-994e-590b6fe3c9c0
+		summarizeBy: sum
+		sourceColumn: T1_1AGE80_84F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T1_1AGEGE_85F_REACH
+		dataType: double
+		lineageTag: 7a501a75-da4f-484c-b31c-e62a8f08efcb
+		summarizeBy: sum
+		sourceColumn: T1_1AGEGE_85F_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T9_2_PA_REACH
+		dataType: double
+		lineageTag: 74df957b-5eae-49ee-a316-3706b73f912a
+		summarizeBy: sum
+		sourceColumn: T9_2_PA_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T9_2_PB_REACH
+		dataType: double
+		lineageTag: 737781ee-541e-4124-96ed-1433074d5647
+		summarizeBy: sum
+		sourceColumn: T9_2_PB_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T9_2_PC_REACH
+		dataType: double
+		lineageTag: a72b1fcf-49c4-44b4-af98-c19ca8803702
+		summarizeBy: sum
+		sourceColumn: T9_2_PC_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T9_2_PD_REACH
+		dataType: double
+		lineageTag: ef2f13d4-4170-47f9-aef5-c922ca277420
+		summarizeBy: sum
+		sourceColumn: T9_2_PD_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T9_2_PE_REACH
+		dataType: double
+		lineageTag: 8e01f7fb-b314-4785-a030-fb95d951d490
+		summarizeBy: sum
+		sourceColumn: T9_2_PE_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T9_2_PF_REACH
+		dataType: double
+		lineageTag: 9071f3fc-3adb-414d-8ab3-6cb8a098e6fe
+		summarizeBy: sum
+		sourceColumn: T9_2_PF_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T9_2_PG_REACH
+		dataType: double
+		lineageTag: 99680c61-7efd-4d66-b0ee-55ce7a7eddbc
+		summarizeBy: sum
+		sourceColumn: T9_2_PG_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T9_2_PH_REACH
+		dataType: double
+		lineageTag: 79d5d0db-ed35-471b-9436-7dd03716be48
+		summarizeBy: sum
+		sourceColumn: T9_2_PH_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T9_2_PI_REACH
+		dataType: double
+		lineageTag: 9db6b78e-431d-4f75-b5ce-11ec058dacc9
+		summarizeBy: sum
+		sourceColumn: T9_2_PI_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T9_2_PJ_REACH
+		dataType: double
+		lineageTag: 536ccb1f-9892-4944-a824-53c3bb2b88f3
+		summarizeBy: sum
+		sourceColumn: T9_2_PJ_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T9_2_PZ_REACH
+		dataType: double
+		lineageTag: 91efffa9-4a77-4d0d-93e8-04d20151f79b
+		summarizeBy: sum
+		sourceColumn: T9_2_PZ_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T13_1_MDSOT_REACH
+		dataType: double
+		lineageTag: 4fde0a8a-1761-4e2c-9ce9-a01ba4f833fc
+		summarizeBy: sum
+		sourceColumn: T13_1_MDSOT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T13_1_POT_REACH
+		dataType: double
+		lineageTag: 3c29afcf-dbc4-487d-aff1-cde330a3be76
+		summarizeBy: sum
+		sourceColumn: T13_1_POT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T13_1_APTOT_REACH
+		dataType: double
+		lineageTag: f6b4438b-9ff4-4e01-896c-34b31787ee62
+		summarizeBy: sum
+		sourceColumn: T13_1_APTOT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T13_1_ASOT_REACH
+		dataType: double
+		lineageTag: a0325a4e-eda3-40a9-ad34-e89e23ee2977
+		summarizeBy: sum
+		sourceColumn: T13_1_ASOT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T13_1_STOT_REACH
+		dataType: double
+		lineageTag: 74cdac2f-f2b3-4e74-a66e-9d7dc9ee384f
+		summarizeBy: sum
+		sourceColumn: T13_1_STOT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T13_1_CLOSOT_REACH
+		dataType: double
+		lineageTag: 3d17d821-ae50-4209-b684-3c469b02e0d0
+		summarizeBy: sum
+		sourceColumn: T13_1_CLOSOT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T13_1_SCSOT_REACH
+		dataType: double
+		lineageTag: 9a736bff-f4a8-4ada-8a55-38a73e3df03f
+		summarizeBy: sum
+		sourceColumn: T13_1_SCSOT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T13_1_PPMOT_REACH
+		dataType: double
+		lineageTag: 1820e4f3-c3fa-4af3-9100-f111c92abd54
+		summarizeBy: sum
+		sourceColumn: T13_1_PPMOT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T13_1_EOT_REACH
+		dataType: double
+		lineageTag: 3475bd5c-532b-4f1c-a541-0e062e885eb4
+		summarizeBy: sum
+		sourceColumn: T13_1_EOT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T13_1_NST_REACH
+		dataType: double
+		lineageTag: efc7d79c-2682-46f0-94df-b05cd5cc7545
+		summarizeBy: sum
+		sourceColumn: T13_1_NST_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T14_1_AFFT_REACH
+		dataType: double
+		lineageTag: f7639d61-f53c-402e-8937-11c1d2bea138
+		summarizeBy: sum
+		sourceColumn: T14_1_AFFT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T14_1_BCT_REACH
+		dataType: double
+		lineageTag: bbff8b00-ba9c-4ce0-aefa-c87edb3cd3ba
+		summarizeBy: sum
+		sourceColumn: T14_1_BCT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T14_1_MIT_REACH
+		dataType: double
+		lineageTag: 8606520e-6119-4017-91eb-c37202c8b55d
+		summarizeBy: sum
+		sourceColumn: T14_1_MIT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T14_1_CTT_REACH
+		dataType: double
+		lineageTag: 2f334689-07d2-4fb5-9488-8fc9d8348049
+		summarizeBy: sum
+		sourceColumn: T14_1_CTT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T14_1_TCT_REACH
+		dataType: double
+		lineageTag: 0dde4ea2-5212-4094-bd44-518a471f4c98
+		summarizeBy: sum
+		sourceColumn: T14_1_TCT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T14_1_PAT_REACH
+		dataType: double
+		lineageTag: 34ec3a28-8484-4c7b-8214-dba55a2f2364
+		summarizeBy: sum
+		sourceColumn: T14_1_PAT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T14_1_PST_REACH
+		dataType: double
+		lineageTag: ef163008-106c-4f32-9fa9-f435794b3f1d
+		summarizeBy: sum
+		sourceColumn: T14_1_PST_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column T14_1_OTHT_REACH
+		dataType: double
+		lineageTag: a32ba347-f214-410c-ae42-d4c174bcea22
+		summarizeBy: sum
+		sourceColumn: T14_1_OTHT_REACH
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SOURCE_FILE
+		dataType: string
+		lineageTag: fb0ffd3d-0e0f-49aa-9bf2-6492dc54ea00
+		summarizeBy: none
+		sourceColumn: SOURCE_FILE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Demographics = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\MicroMedia_Dashboard\data\demographics\clean"),
+				    #"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),
+				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File (3)", each #"Transform File (3)"([Content])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File (3)"}),
+				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (3)", Table.ColumnNames(#"Transform File (3)"(#"Sample File (3)"))),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded Table Column1",{{"Source.Name", type text}, {"CODE", type text}, {"YEAR_MONTH", type date}, {"HOUR", Int64.Type}, {"RADIUS", Int64.Type}, {"MOVEMENT_MODALITY", type text}, {"T1_1AGE0M_REACH", type number}, {"T1_1AGE1M_REACH", type number}, {"T1_1AGE2M_REACH", type number}, {"T1_1AGE3M_REACH", type number}, {"T1_1AGE4M_REACH", type number}, {"T1_1AGE5M_REACH", type number}, {"T1_1AGE6M_REACH", type number}, {"T1_1AGE7M_REACH", type number}, {"T1_1AGE8M_REACH", type number}, {"T1_1AGE9M_REACH", type number}, {"T1_1AGE10M_REACH", type number}, {"T1_1AGE11M_REACH", type number}, {"T1_1AGE12M_REACH", type number}, {"T1_1AGE13M_REACH", type number}, {"T1_1AGE14M_REACH", type number}, {"T1_1AGE15M_REACH", type number}, {"T1_1AGE16M_REACH", type number}, {"T1_1AGE17M_REACH", type number}, {"T1_1AGE18M_REACH", type number}, {"T1_1AGE19M_REACH", type number}, {"T1_1AGE20_24M_REACH", type number}, {"T1_1AGE25_29M_REACH", type number}, {"T1_1AGE30_34M_REACH", type number}, {"T1_1AGE35_39M_REACH", type number}, {"T1_1AGE40_44M_REACH", type number}, {"T1_1AGE45_49M_REACH", type number}, {"T1_1AGE50_54M_REACH", type number}, {"T1_1AGE55_59M_REACH", type number}, {"T1_1AGE60_64M_REACH", type number}, {"T1_1AGE65_69M_REACH", type number}, {"T1_1AGE70_74M_REACH", type number}, {"T1_1AGE75_79M_REACH", type number}, {"T1_1AGE80_84M_REACH", type number}, {"T1_1AGEGE_85M_REACH", type number}, {"T1_1AGE0F_REACH", type number}, {"T1_1AGE1F_REACH", type number}, {"T1_1AGE2F_REACH", type number}, {"T1_1AGE3F_REACH", type number}, {"T1_1AGE4F_REACH", type number}, {"T1_1AGE5F_REACH", type number}, {"T1_1AGE6F_REACH", type number}, {"T1_1AGE7F_REACH", type number}, {"T1_1AGE8F_REACH", type number}, {"T1_1AGE9F_REACH", type number}, {"T1_1AGE10F_REACH", type number}, {"T1_1AGE11F_REACH", type number}, {"T1_1AGE12F_REACH", type number}, {"T1_1AGE13F_REACH", type number}, {"T1_1AGE14F_REACH", type number}, {"T1_1AGE15F_REACH", type number}, {"T1_1AGE16F_REACH", type number}, {"T1_1AGE17F_REACH", type number}, {"T1_1AGE18F_REACH", type number}, {"T1_1AGE19F_REACH", type number}, {"T1_1AGE20_24F_REACH", type number}, {"T1_1AGE25_29F_REACH", type number}, {"T1_1AGE30_34F_REACH", type number}, {"T1_1AGE35_39F_REACH", type number}, {"T1_1AGE40_44F_REACH", type number}, {"T1_1AGE45_49F_REACH", type number}, {"T1_1AGE50_54F_REACH", type number}, {"T1_1AGE55_59F_REACH", type number}, {"T1_1AGE60_64F_REACH", type number}, {"T1_1AGE65_69F_REACH", type number}, {"T1_1AGE70_74F_REACH", type number}, {"T1_1AGE75_79F_REACH", type number}, {"T1_1AGE80_84F_REACH", type number}, {"T1_1AGEGE_85F_REACH", type number}, {"T9_2_PA_REACH", type number}, {"T9_2_PB_REACH", type number}, {"T9_2_PC_REACH", type number}, {"T9_2_PD_REACH", type number}, {"T9_2_PE_REACH", type number}, {"T9_2_PF_REACH", type number}, {"T9_2_PG_REACH", type number}, {"T9_2_PH_REACH", type number}, {"T9_2_PI_REACH", type number}, {"T9_2_PJ_REACH", type number}, {"T9_2_PZ_REACH", type number}, {"T13_1_MDSOT_REACH", type number}, {"T13_1_POT_REACH", type number}, {"T13_1_APTOT_REACH", type number}, {"T13_1_ASOT_REACH", type number}, {"T13_1_STOT_REACH", type number}, {"T13_1_CLOSOT_REACH", type number}, {"T13_1_SCSOT_REACH", type number}, {"T13_1_PPMOT_REACH", type number}, {"T13_1_EOT_REACH", type number}, {"T13_1_NST_REACH", type number}, {"T14_1_AFFT_REACH", type number}, {"T14_1_BCT_REACH", type number}, {"T14_1_MIT_REACH", type number}, {"T14_1_CTT_REACH", type number}, {"T14_1_TCT_REACH", type number}, {"T14_1_PAT_REACH", type number}, {"T14_1_PST_REACH", type number}, {"T14_1_OTHT_REACH", type number}, {"SOURCE_FILE", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Source.Name"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"YEAR_MONTH", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

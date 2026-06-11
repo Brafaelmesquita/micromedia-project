@@ -1,0 +1,80 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "084cb6c9231da729edc6",
+  "position": {
+    "x": 10,
+    "y": 290,
+    "z": 1000,
+    "height": 430,
+    "width": 760,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Footfall"
+                    }
+                  },
+                  "Property": "VISITATION_MODALITY"
+                }
+              },
+              "queryRef": "Footfall.VISITATION_MODALITY",
+              "nativeQueryRef": "VISITATION_MODALITY"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Population by Visitation"
+                }
+              },
+              "queryRef": "_Measures.Population by Visitation",
+              "nativeQueryRef": "Population by Visitation"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "PaS by Visitation"
+                }
+              },
+              "queryRef": "_Measures.PaS by Visitation",
+              "nativeQueryRef": "PaS by Visitation"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "OTS by Visitation"
+                }
+              },
+              "queryRef": "_Measures.OTS by Visitation",
+              "nativeQueryRef": "OTS by Visitation"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

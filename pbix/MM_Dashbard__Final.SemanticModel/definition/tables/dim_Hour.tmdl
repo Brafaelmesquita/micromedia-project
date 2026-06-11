@@ -1,0 +1,34 @@
+table dim_Hour
+	lineageTag: dd86b695-c01f-4fca-a176-c136e19e307e
+
+	column Hour
+		formatString: 0
+		lineageTag: ecb836a8-d685-4e8a-82cd-a7478ea406aa
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Hour]
+
+		annotation SummarizationSetBy = Automatic
+
+	column HourLabel
+		lineageTag: 0c3e364b-0f57-4f2c-8625-d3afe36993de
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [HourLabel]
+		sortByColumn: Hour
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_Hour = calculated
+		mode: import
+		source = ```
+				
+				   SELECTCOLUMNS(
+				       GENERATESERIES(0, 23, 1),
+				       "Hour",      [Value],
+				       "HourLabel", FORMAT([Value], "00") & ":00"
+				   )
+				```
+
+	annotation PBI_Id = 7d2ec57a23ad423e898d5fec7b6aee6f
+

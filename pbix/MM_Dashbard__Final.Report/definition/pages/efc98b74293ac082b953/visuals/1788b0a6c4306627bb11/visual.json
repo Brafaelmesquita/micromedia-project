@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "1788b0a6c4306627bb11",
+  "position": {
+    "x": 0,
+    "y": 496.66666666666669,
+    "z": 8000,
+    "height": 223.33333333333334,
+    "width": 325,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "donutChart",
+    "query": {
+      "queryState": {
+        "Series": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Footfall"
+                    }
+                  },
+                  "Property": "VISITATION_MODALITY"
+                }
+              },
+              "queryRef": "Footfall.VISITATION_MODALITY",
+              "nativeQueryRef": "VISITATION_MODALITY"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

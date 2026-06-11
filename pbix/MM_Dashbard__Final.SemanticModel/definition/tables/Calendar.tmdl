@@ -1,0 +1,125 @@
+table Calendar
+	lineageTag: f71ec687-bbf5-442e-84b5-d8d206c01855
+	dataCategory: Time
+
+	column Date
+		isKey
+		formatString: General Date
+		lineageTag: a4266d48-9b48-469b-bb16-4a24d3e9f224
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: 4de97b4f-9d1a-415e-a537-ca23dffe18bd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		formatString: 0
+		lineageTag: 164e19a7-1f73-4937-89bf-8e3c0619bd6a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthNumber]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		lineageTag: 809593d0-e530-4cc4-8e44-9d441af86200
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthName]
+		sortByColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column YEAR_MONTH
+		lineageTag: 243634ad-1822-4d99-ab9d-a3d66a6e4f3e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [YEAR_MONTH]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		formatString: 0
+		lineageTag: 0f79733b-33d8-4d44-859d-854a70686af7
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeekNumber
+		formatString: 0
+		lineageTag: 21a30482-9ba5-44e4-8dce-ac5c204a1cfe
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DayOfWeekNumber]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeekName
+		lineageTag: 27351ebb-874b-48b9-9ef6-5a4022b14cb6
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DayOfWeekName]
+		sortByColumn: DayOfWeekNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsWeekend
+		lineageTag: 44100c55-19aa-4357-9ef3-eb91f8c7e892
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [IsWeekend]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekOfYear
+		formatString: 0
+		lineageTag: 56a55163-74ad-4154-a790-7113e54e0d1e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [WeekOfYear]
+
+		annotation SummarizationSetBy = Automatic
+
+	column WeekStartDate
+		formatString: General Date
+		lineageTag: 847af442-b887-4423-8862-4367db460db1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [WeekStartDate]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Calendar = calculated
+		mode: import
+		source =
+				
+				VAR _MinDate = DATE(2025, 1, 1)
+				VAR _MaxDate = DATE(2026, 12, 31)
+				RETURN
+				ADDCOLUMNS(
+				    CALENDAR(_MinDate, _MaxDate),
+				    "Year",            YEAR([Date]),
+				    "MonthNumber",     MONTH([Date]),
+				    "MonthName",       FORMAT([Date], "mmmm", "en-GB"),
+				    "YEAR_MONTH",      FORMAT([Date], "yyyy-mm"),
+				    "Day",             DAY([Date]),
+				    "DayOfWeekNumber", WEEKDAY([Date], 2),
+				    "DayOfWeekName",   FORMAT([Date], "dddd", "en-GB"),
+				    "IsWeekend",       IF(WEEKDAY([Date], 2) >= 6, "Weekend", "Weekday"),
+				    "WeekOfYear",      WEEKNUM([Date], 2),
+				    "WeekStartDate",   [Date] - WEEKDAY([Date], 2) + 1
+				)
+
+	annotation PBI_Id = 9fe5c90abefe4821a81f1083ca5212ea
+

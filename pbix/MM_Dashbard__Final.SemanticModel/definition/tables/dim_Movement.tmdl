@@ -1,0 +1,31 @@
+table dim_Movement
+	lineageTag: 825030b6-6659-4138-a0d1-63dedf9130b2
+
+	column MovementModality
+		lineageTag: c98bfa40-cabc-45f5-b8a3-6fe6532b95c4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MovementModality]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort
+		formatString: 0
+		lineageTag: 287aa878-3ece-4a85-92df-8edadced872b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sort]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_Movement = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "MovementModality", STRING, "Sort", INTEGER,
+				    { {"All",1}, {"Pedestrians",2}, {"Non_Pedestrians",3} }
+				)
+
+	annotation PBI_Id = a8cb5feead2a4b62841bf1f38a3e03b4
+

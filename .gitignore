@@ -13,6 +13,10 @@ data/processed/
 # Power BI
 *.pbix
 
+# Power BI PBIP - cache local, específico da máquina
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
 # OS
 .DS_Store
 Thumbs.db

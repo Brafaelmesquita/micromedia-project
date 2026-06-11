@@ -1,0 +1,289 @@
+expression Parameter1 = #"Sample File" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: a98fd39c-2c68-4e12-9853-30699b34257e
+	queryGroup: 'Transform File from master_sites\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Sample File' =
+		let
+		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\MicroMedia_Dashboard\data\master_sites"),
+		    Navigation1 = Source{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 02aab1d3-44ac-43d5-8b7e-c6340c9df7fc
+	queryGroup: 'Transform File from master_sites\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File' =
+		let
+		    Source = Csv.Document(Parameter1,[Delimiter=",", Columns=34, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+	lineageTag: 39768cab-da6b-492d-b258-3e904d04fb5c
+	queryGroup: 'Transform File from master_sites'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File' =
+		let
+		    Source = (Parameter1 as binary) => let
+		    Source = Csv.Document(Parameter1,[Delimiter=",", Columns=34, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+		in
+		    #"Promoted Headers"
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File""}" ]
+	lineageTag: d01f63ae-6c4f-4ed0-92bd-9904d6b85c64
+	queryGroup: 'Transform File from master_sites\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression Parameter2 = #"Sample File (2)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (2)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 78b50a03-49df-49cd-bfac-98d9a5aa4887
+	queryGroup: 'Transform File from footfall\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Sample File (2)' =
+		let
+		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\MicroMedia_Dashboard\data\footfall"),
+		    Navigation1 = Source{0}[Content]
+		in
+		    Navigation1
+	lineageTag: a7b0b47b-3e8a-418e-8c51-af40bd7d1b4e
+	queryGroup: 'Transform File from footfall\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (2)' =
+		let
+		    Source = Parquet.Document(Parameter2, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: 364670bd-3d2a-49fc-8193-dec65cbe52e7
+	queryGroup: 'Transform File from footfall'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (2)' =
+		let
+		    Source = (Parameter2 as binary) => let
+		    Source = Parquet.Document(Parameter2, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (2)""}" ]
+	lineageTag: dbfbac20-25e0-4299-9796-893122e106a2
+	queryGroup: 'Transform File from footfall\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression Parameter3 = #"Sample File (3)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (3)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: f96d35eb-4dac-4951-bf3c-be103b22ed77
+	queryGroup: 'Transform File from clean\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Sample File (3)' =
+		let
+		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\MicroMedia_Dashboard\data\demographics\clean"),
+		    Navigation1 = Source{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 4ce0631e-d791-4762-b6d0-dbf2e200c267
+	queryGroup: 'Transform File from clean\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (3)' =
+		let
+		    Source = Parquet.Document(Parameter3, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: 5014c9d7-6f38-46ea-938d-aacf41b143df
+	queryGroup: 'Transform File from clean'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (3)' =
+		let
+		    Source = (Parameter3 as binary) => let
+		    Source = Parquet.Document(Parameter3, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (3)""}" ]
+	lineageTag: 89c69831-05c0-4c3b-90bc-2272ca5345b4
+	queryGroup: 'Transform File from clean\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression Parameter4 = #"Sample File (4)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (4)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 29ad3a87-484d-4895-91f5-24fb421ce0c5
+	queryGroup: 'Transform File from age_long\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Sample File (4)' =
+		let
+		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\MicroMedia_Dashboard\data\demographics\age_long"),
+		    Navigation1 = Source{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 2fbe0d61-8a63-44a7-94b4-dde87427115f
+	queryGroup: 'Transform File from age_long\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (4)' =
+		let
+		    Source = Parquet.Document(Parameter4, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: 45cb213f-62ac-4255-94b0-3cdaf82d7e97
+	queryGroup: 'Transform File from age_long'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (4)' =
+		let
+		    Source = (Parameter4 as binary) => let
+		    Source = Parquet.Document(Parameter4, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (4)""}" ]
+	lineageTag: c9e062b2-8ff4-4e8a-8d95-88f9e4710c59
+	queryGroup: 'Transform File from age_long\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression Parameter5 = #"Sample File (5)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (5)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 0f47eca3-b26d-488f-8376-36719ae9e672
+	queryGroup: 'Transform File from age_long (2)\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Sample File (5)' =
+		let
+		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\MicroMedia_Dashboard\data\demographics\age_long"),
+		    Navigation1 = Source{0}[Content]
+		in
+		    Navigation1
+	lineageTag: c7c4c4d1-f6a6-4adc-922a-f2698cfea0a3
+	queryGroup: 'Transform File from age_long (2)\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (5)' =
+		let
+		    Source = Parquet.Document(Parameter5, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: 002a9159-f061-4a04-ab5d-59be79b90b46
+	queryGroup: 'Transform File from age_long (2)'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (5)' =
+		let
+		    Source = (Parameter5 as binary) => let
+		    Source = Parquet.Document(Parameter5, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (5)""}" ]
+	lineageTag: ede0e48c-23ce-4ef8-800b-62b2f8120faf
+	queryGroup: 'Transform File from age_long (2)\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression Parameter6 = #"Sample File (6)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (6)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: a3a4e2f9-5a3a-44be-93a9-32e18f7f5d5a
+	queryGroup: 'Transform File from age_long (3)\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Sample File (6)' =
+		let
+		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\MicroMedia_Dashboard\data\demographics\age_long"),
+		    Navigation1 = Source{0}[Content]
+		in
+		    Navigation1
+	lineageTag: 0411009e-0b50-4039-ae0f-12433ceb5e67
+	queryGroup: 'Transform File from age_long (3)\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (6)' =
+		let
+		    Source = Parquet.Document(Parameter6, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: a2bdfb8a-15df-45c2-9ca0-7b4395299baa
+	queryGroup: 'Transform File from age_long (3)'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (6)' =
+		let
+		    Source = (Parameter6 as binary) => let
+		    Source = Parquet.Document(Parameter6, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (6)""}" ]
+	lineageTag: a1ebe27f-8321-4b6b-bffa-98fa006cd9bd
+	queryGroup: 'Transform File from age_long (3)\Helper Queries'
+
+	annotation PBI_ResultType = Function
+
+expression Parameter7 = #"Sample File (7)" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File (7)", Type="Binary", IsParameterQueryRequired=true]
+	lineageTag: 4dec53d9-f384-4e9e-b11e-0839ff67dbc1
+	queryGroup: 'Transform File from brand_affinity\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Sample File (7)' =
+		let
+		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\MicroMedia_Dashboard\data\brand_affinity"),
+		    Navigation1 = Source{0}[Content]
+		in
+		    Navigation1
+	lineageTag: eb0a925e-5cb4-4c8d-98e1-5ae79b78927f
+	queryGroup: 'Transform File from brand_affinity\Helper Queries'
+
+	annotation PBI_ResultType = Binary
+
+expression 'Transform Sample File (7)' =
+		let
+		    Source = Parquet.Document(Parameter7, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+	lineageTag: 4c39e442-31bb-409b-920c-d5f446841bd5
+	queryGroup: 'Transform File from brand_affinity'
+
+	annotation PBI_ResultType = Table
+
+expression 'Transform File (7)' =
+		let
+		    Source = (Parameter7 as binary) => let
+		    Source = Parquet.Document(Parameter7, [Compression=null, LegacyColumnNameEncoding=false, MaxDepth=null])
+		in
+		    Source
+		in
+		    Source
+	mAttributes: [ FunctionQueryBinding = "{""exemplarFormulaName"":""Transform Sample File (7)""}" ]
+	lineageTag: a802c893-9f4e-490c-940e-9bde2a7a0a2e
+	queryGroup: 'Transform File from brand_affinity\Helper Queries'
+
+	annotation PBI_ResultType = Function
+

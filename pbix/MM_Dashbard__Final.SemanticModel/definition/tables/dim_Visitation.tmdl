@@ -1,0 +1,31 @@
+table dim_Visitation
+	lineageTag: 83a2facf-beb8-40f2-a91b-76e15d8e7c72
+
+	column VisitationModality
+		lineageTag: 29a52d34-a147-44c2-8488-a3b327c6cacb
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [VisitationModality]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort
+		formatString: 0
+		lineageTag: f2f707f6-7440-429a-b399-c49f0f560965
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sort]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_Visitation = calculated
+		mode: import
+		source =
+				
+				DATATABLE(
+				    "VisitationModality", STRING, "Sort", INTEGER,
+				    { {"All",1}, {"Residents",2}, {"Workers",3}, {"Transient",4} }
+				)
+
+	annotation PBI_Id = e303b160d7dc4ccea820c16e894e3814
+

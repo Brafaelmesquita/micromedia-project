@@ -1,0 +1,135 @@
+table Demographics_ClassLong
+	lineageTag: dd4d604c-a458-4a8d-8283-dd4fe31ebd68
+
+	column CODE
+		dataType: string
+		lineageTag: 6d4b2a56-c4b7-49f8-8185-3a989f2b3710
+		summarizeBy: none
+		sourceColumn: CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column YEAR_MONTH
+		dataType: string
+		lineageTag: c996f702-2cca-4037-b98d-dbf3e0c89610
+		summarizeBy: none
+		sourceColumn: YEAR_MONTH
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOUR
+		dataType: int64
+		formatString: 0
+		lineageTag: 0e1bfc7e-a398-4226-89bc-e067c4b7a68d
+		summarizeBy: none
+		sourceColumn: HOUR
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOVEMENT_MODALITY
+		dataType: string
+		lineageTag: 43fa19c9-a71a-470b-bca8-95a8bd4baef6
+		summarizeBy: none
+		sourceColumn: MOVEMENT_MODALITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column RADIUS
+		dataType: int64
+		formatString: 0
+		lineageTag: fbb3f495-7f87-4e55-b6e9-5e1ae5851040
+		summarizeBy: sum
+		sourceColumn: RADIUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column REACH_PCT
+		dataType: double
+		lineageTag: 917d8c1b-9e96-428b-ab7a-4ee85d005e43
+		summarizeBy: sum
+		sourceColumn: REACH_PCT
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BREAKDOWN
+		dataType: string
+		lineageTag: d283e90c-38d7-4109-80a3-c75d7e90b1ec
+		summarizeBy: none
+		sourceColumn: BREAKDOWN
+
+		annotation SummarizationSetBy = Automatic
+
+	column SEGMENT
+		dataType: string
+		lineageTag: 9627e2cf-778d-455d-9019-87fe59c5d7a4
+		summarizeBy: none
+		sourceColumn: SEGMENT
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Demographics_ClassLong = m
+		mode: import
+		source =
+				let
+				    Source    = Demographics,
+				    KeyCols   = {"CODE", "YEAR_MONTH", "HOUR", "MOVEMENT_MODALITY", "RADIUS"},
+				    ClassCols = List.Select(
+				        Table.ColumnNames(Source),
+				        each Text.StartsWith(_, "T9_2_")
+				          or Text.StartsWith(_, "T13_1_")
+				          or Text.StartsWith(_, "T14_1_")
+				    ),
+				    Kept      = Table.SelectColumns(Source, KeyCols & ClassCols),
+				    Unpiv     = Table.UnpivotOtherColumns(Kept, KeyCols, "SRC_COL", "REACH_PCT"),
+				
+				    Labels = [
+				        T9_2_PA_REACH = "A - Employers & managers",
+				        T9_2_PB_REACH = "B - Higher professional",
+				        T9_2_PC_REACH = "C - Lower professional",
+				        T9_2_PD_REACH = "D - Non-manual",
+				        T9_2_PE_REACH = "E - Manual skilled",
+				        T9_2_PF_REACH = "F - Semi-skilled",
+				        T9_2_PG_REACH = "G - Unskilled",
+				        T9_2_PH_REACH = "H - Own account workers",
+				        T9_2_PI_REACH = "I - Farmers",
+				        T9_2_PJ_REACH = "J - Agricultural workers",
+				        T9_2_PZ_REACH = "Z - Other / unknown",
+				        T13_1_MDSOT_REACH = "Managers, directors & senior officials",
+				        T13_1_POT_REACH   = "Professional occupations",
+				        T13_1_APTOT_REACH = "Associate professional & technical",
+				        T13_1_ASOT_REACH  = "Administrative & secretarial",
+				        T13_1_STOT_REACH  = "Skilled trades",
+				        T13_1_CLOSOT_REACH= "Caring, leisure & other service",
+				        T13_1_SCSOT_REACH = "Sales & customer service",
+				        T13_1_PPMOT_REACH = "Process, plant & machine operatives",
+				        T13_1_EOT_REACH   = "Elementary occupations",
+				        T13_1_NST_REACH   = "Not stated",
+				        T14_1_AFFT_REACH = "Agriculture, forestry & fishing",
+				        T14_1_BCT_REACH  = "Building & construction",
+				        T14_1_MIT_REACH  = "Manufacturing",
+				        T14_1_CTT_REACH  = "Commerce & trade",
+				        T14_1_TCT_REACH  = "Transport & communications",
+				        T14_1_PAT_REACH  = "Public administration",
+				        T14_1_PST_REACH  = "Professional services",
+				        T14_1_OTHT_REACH = "Other industries"
+				    ],
+				
+				    WithBreak = Table.AddColumn(Unpiv, "BREAKDOWN", each
+				        if Text.StartsWith([SRC_COL], "T9_2_")  then "Social Grade"
+				        else if Text.StartsWith([SRC_COL], "T13_1_") then "Occupation"
+				        else "Industry", type text),
+				
+				    WithSeg   = Table.AddColumn(WithBreak, "SEGMENT", each
+				        Record.FieldOrDefault(Labels, [SRC_COL], [SRC_COL]), type text),
+				
+				    Cleaned   = Table.RemoveColumns(WithSeg, {"SRC_COL"}),
+				    Typed     = Table.TransformColumnTypes(Cleaned, {{"REACH_PCT", type number}})
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

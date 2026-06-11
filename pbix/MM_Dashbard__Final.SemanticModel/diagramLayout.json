@@ -1,0 +1,174 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 494.4471744471744,
+            "y": 506.953316953317
+          },
+          "nodeIndex": "Master_Sites",
+          "nodeLineageTag": "4d5627e5-be5e-47c0-a6a5-4eb1fc479c48",
+          "size": {
+            "height": 609.45945945945937,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 284,
+            "y": 0
+          },
+          "nodeIndex": "Footfall",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 568,
+            "y": 0
+          },
+          "nodeIndex": "Demographics",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 1552,
+            "y": 750.90909090909088
+          },
+          "nodeIndex": "Demographics_AgeLong",
+          "nodeLineageTag": "e0ce39ab-3c37-4f8a-9247-eb63cca8c8d5",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 1136,
+            "y": 0
+          },
+          "nodeIndex": "Brand_Affinity",
+          "nodeLineageTag": "6e0710d0-d3c4-491c-9e95-236ccfb72e0d",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 1420,
+            "y": 98
+          },
+          "nodeIndex": "_Measures",
+          "nodeLineageTag": "6dd560a5-b5c9-4b14-94bc-58d1b69adb09",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 1704,
+            "y": 50
+          },
+          "nodeIndex": "Calendar",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1704,
+            "y": 397.29729729729729
+          },
+          "nodeIndex": "dim_Hour",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1132.8888888888889,
+            "y": 410.63063063063061
+          },
+          "nodeIndex": "dim_Movement",
+          "nodeLineageTag": "825030b6-6659-4138-a0d1-63dedf9130b2",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 1411.7777777777778,
+            "y": 410.63063063063066
+          },
+          "nodeIndex": "dim_Visitation",
+          "nodeLineageTag": "83a2facf-beb8-40f2-a91b-76e15d8e7c72",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 954.909090909091,
+            "y": 690.3882063882063
+          },
+          "nodeIndex": "Demographics_ClassLong",
+          "nodeLineageTag": "dd4d604c-a458-4a8d-8283-dd4fe31ebd68",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 1704,
+            "y": 482.20638820638817
+          },
+          "nodeIndex": "Metrics",
+          "nodeLineageTag": "8e62a4e8-ef2a-44f8-97cc-4eb9be180225",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 60,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

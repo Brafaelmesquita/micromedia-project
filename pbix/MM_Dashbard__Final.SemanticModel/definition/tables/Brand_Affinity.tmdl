@@ -1,0 +1,127 @@
+table Brand_Affinity
+	lineageTag: 6e0710d0-d3c4-491c-9e95-236ccfb72e0d
+
+	column CODE
+		dataType: string
+		lineageTag: c5faa3b1-341b-4bd7-9cbd-4ed46d5e2c55
+		summarizeBy: none
+		sourceColumn: CODE
+
+		annotation SummarizationSetBy = Automatic
+
+	column YEAR_MONTH
+		dataType: string
+		lineageTag: c008b212-96d8-4669-bf12-89ecad90f973
+		summarizeBy: none
+		sourceColumn: YEAR_MONTH
+
+		annotation SummarizationSetBy = Automatic
+
+	column HOUR
+		dataType: int64
+		formatString: 0
+		lineageTag: 2aaa128f-ce62-4825-8ac5-2e77403371e5
+		summarizeBy: none
+		sourceColumn: HOUR
+
+		annotation SummarizationSetBy = Automatic
+
+	column RADIUS
+		dataType: int64
+		formatString: 0
+		lineageTag: 81898c83-ebe8-4dfc-9d68-a4aa91bcdb1c
+		summarizeBy: sum
+		sourceColumn: RADIUS
+
+		annotation SummarizationSetBy = Automatic
+
+	column MOVEMENT_MODALITY
+		dataType: string
+		lineageTag: ce360863-0fc1-40ce-b087-07f3be50fddf
+		summarizeBy: none
+		sourceColumn: MOVEMENT_MODALITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column VISITATION_MODALITY
+		dataType: string
+		lineageTag: 7ff7a0bd-ef08-45d9-a967-ae6bac28f58c
+		summarizeBy: none
+		sourceColumn: VISITATION_MODALITY
+
+		annotation SummarizationSetBy = Automatic
+
+	column IS_DEFAULT
+		dataType: int64
+		formatString: 0
+		lineageTag: 92a7b16b-bc12-441d-a922-d91bdd63b3f6
+		summarizeBy: sum
+		sourceColumn: IS_DEFAULT
+
+		annotation SummarizationSetBy = Automatic
+
+	column BRAND_AFFINITY_CATEGORY_NAME
+		dataType: string
+		lineageTag: 096b9732-0ab0-4e55-a12f-3b6b70c2d47a
+		summarizeBy: none
+		sourceColumn: BRAND_AFFINITY_CATEGORY_NAME
+
+		annotation SummarizationSetBy = Automatic
+
+	column BRAND_AFFINITY_INDEX
+		dataType: double
+		lineageTag: cd4011a3-d5d1-470c-8ccd-c4912ddd560c
+		summarizeBy: sum
+		sourceColumn: BRAND_AFFINITY_INDEX
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column BRAND_AFFINITY_DWELL_TIME
+		dataType: double
+		lineageTag: 6dd3c404-96be-4cce-9aa0-6bcab1a3f87d
+		summarizeBy: sum
+		sourceColumn: BRAND_AFFINITY_DWELL_TIME
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PROPORTION_OF_TARGET_USERS
+		dataType: double
+		lineageTag: 0d0c2147-b613-4ea8-bb2e-46cbba6a5516
+		summarizeBy: sum
+		sourceColumn: PROPORTION_OF_TARGET_USERS
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column SOURCE_FILE
+		dataType: string
+		lineageTag: 52afc99d-5b32-4e25-b05a-3bfe8332f34b
+		summarizeBy: none
+		sourceColumn: SOURCE_FILE
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Brand_Affinity = m
+		mode: import
+		source =
+				let
+				    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\MicroMedia_Dashboard\data\brand_affinity"),
+				    #"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),
+				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File (7)", each #"Transform File (7)"([Content])),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File (7)"}),
+				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (7)", Table.ColumnNames(#"Transform File (7)"(#"Sample File (7)"))),
+				    #"Removed Columns" = Table.RemoveColumns(#"Expanded Table Column1",{"Source.Name"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"CODE", type text}, {"YEAR_MONTH", type text}, {"HOUR", Int64.Type}, {"RADIUS", Int64.Type}, {"MOVEMENT_MODALITY", type text}, {"VISITATION_MODALITY", type text}, {"IS_DEFAULT", Int64.Type}, {"BRAND_AFFINITY_CATEGORY_NAME", type text}, {"BRAND_AFFINITY_INDEX", type number}, {"BRAND_AFFINITY_DWELL_TIME", type number}, {"PROPORTION_OF_TARGET_USERS", type number}, {"SOURCE_FILE", type text}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "2d19e8674ac7d64a8aa3",
+  "position": {
+    "x": 9.4756323257248614,
+    "y": 0,
+    "z": 0,
+    "height": 266.89697717458358,
+    "width": 470.62307217766812,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "pieChart",
+    "query": {
+      "queryState": {
+        "Category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Footfall"
+                    }
+                  },
+                  "Property": "MOVEMENT_MODALITY"
+                }
+              },
+              "queryRef": "Footfall.MOVEMENT_MODALITY",
+              "nativeQueryRef": "MOVEMENT_MODALITY",
+              "active": true
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Population by Movement"
+                }
+              },
+              "queryRef": "_Measures.Population by Movement",
+              "nativeQueryRef": "Population by Movement"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Population by Movement"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "MM_Dashbard__Final"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "887e6ba3-6635-4cec-84c1-2e783dc5f2f9"
+  }
+}

@@ -1,0 +1,181 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "10e012f5970689626ec9",
+  "position": {
+    "x": 10,
+    "y": 0,
+    "z": 0,
+    "height": 511,
+    "width": 525,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "About these numbers",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " "
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The three headline KPIs come from Locomizer's pre-extrapolated Footfall data:"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Total Footfall (Total Population) — whole population; "
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Footfall (PaS) — mobile-holding population;"
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Impressions (OTS) — eye contacts toward the screen."
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "All figures use the total-audience rows (movement and visitation = All) and Locomizer's deduplicated all-day total (HOUR = 25): a visitor present for several hours is counted once, not once per hour."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Why not sum the hourly rows?",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " Summing hours 0–23 overstates the audience by ~1.7x across these six sites (1.43x–1.94x by site), because the same person is counted in each hour they appear. HOUR = 25 is the only deduplicated figure Locomizer provides, so every KPI is built on it."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Impressions note",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "For Impressions, the all-day figure is slightly higher than the hourly sum: Locomizer derives the all-day OTS row independently, not as a sum of the 24 hours. Both come from the same eye-contacts column, so the difference is structural, not an error."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Definitions",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "HOUR = 25: all-day deduplicated row"
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Inflation: Hourly ÷ All-day (>1 = hourly overstates)"
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "PaS: population at screen (mobile-holding)"
+                  }
+                ],
+                "listType": "bullet"
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "OTS: opportunity to see (eye contacts)"
+                  }
+                ],
+                "listType": "bullet"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
