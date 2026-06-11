@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "3c82921a90c266b8ee45",
   "position": {
-    "x": 16.305732484076433,
-    "y": 359.98040176384126,
+    "x": 16.07535321821036,
+    "y": 285.3375196232339,
     "z": 6000,
-    "height": 331.1317981381676,
-    "width": 1244.2528172464479,
+    "height": 330.88435374149662,
+    "width": 1244.5002616431188,
     "tabOrder": 6000
   },
   "visual": {
@@ -81,7 +81,7 @@
                 }
               },
               "queryRef": "_Measures.Impressions Weighted (Daily)",
-              "nativeQueryRef": "Daily6",
+              "nativeQueryRef": "Daily2",
               "displayName": "Daily"
             },
             {
@@ -96,7 +96,7 @@
                 }
               },
               "queryRef": "_Measures.Impressions Weighted (Hourly)",
-              "nativeQueryRef": "Hourly6",
+              "nativeQueryRef": "Hourly2",
               "displayName": "Hourly"
             },
             {
@@ -111,7 +111,7 @@
                 }
               },
               "queryRef": "_Measures.Impressions Weighted (Inflation)",
-              "nativeQueryRef": "Inflation6",
+              "nativeQueryRef": "Inflation2",
               "displayName": "Inflation"
             },
             {
@@ -126,7 +126,7 @@
                 }
               },
               "queryRef": "_Measures.Impressions Weighted 2 (Daily)",
-              "nativeQueryRef": "Daily2",
+              "nativeQueryRef": "Daily1",
               "displayName": "Daily"
             },
             {
@@ -141,7 +141,7 @@
                 }
               },
               "queryRef": "_Measures.Impressions Weighted 2 (Hourly)",
-              "nativeQueryRef": "Hourly2",
+              "nativeQueryRef": "Hourly1",
               "displayName": "Hourly"
             },
             {
@@ -156,7 +156,7 @@
                 }
               },
               "queryRef": "_Measures.Impressions Weighted 2 (Inflation)",
-              "nativeQueryRef": "Inflation2",
+              "nativeQueryRef": "Inflation1",
               "displayName": "Inflation"
             },
             {
@@ -171,7 +171,7 @@
                 }
               },
               "queryRef": "_Measures.Ext Signals (Daily)",
-              "nativeQueryRef": "Daily4",
+              "nativeQueryRef": "Daily6",
               "displayName": "Daily"
             },
             {
@@ -186,7 +186,7 @@
                 }
               },
               "queryRef": "_Measures.Ext Signals (Hourly)",
-              "nativeQueryRef": "Hourly4",
+              "nativeQueryRef": "Hourly6",
               "displayName": "Hourly"
             },
             {
@@ -201,7 +201,7 @@
                 }
               },
               "queryRef": "_Measures.Ext Signals (Inflation)",
-              "nativeQueryRef": "Inflation4",
+              "nativeQueryRef": "Inflation6",
               "displayName": "Inflation"
             },
             {
@@ -216,7 +216,7 @@
                 }
               },
               "queryRef": "_Measures.Ext Signals 2 (Daily)",
-              "nativeQueryRef": "Daily3",
+              "nativeQueryRef": "Daily5",
               "displayName": "Daily"
             },
             {
@@ -231,7 +231,7 @@
                 }
               },
               "queryRef": "_Measures.Ext Signals 2 (Hourly)",
-              "nativeQueryRef": "Hourly3",
+              "nativeQueryRef": "Hourly5",
               "displayName": "Hourly"
             },
             {
@@ -246,7 +246,7 @@
                 }
               },
               "queryRef": "_Measures.Ext Signals 2 (Inflation)",
-              "nativeQueryRef": "Inflation3",
+              "nativeQueryRef": "Inflation5",
               "displayName": "Inflation"
             },
             {
@@ -261,7 +261,7 @@
                 }
               },
               "queryRef": "_Measures.Eye Contacts (Daily)",
-              "nativeQueryRef": "Daily5",
+              "nativeQueryRef": "Daily4",
               "displayName": "Daily"
             },
             {
@@ -276,7 +276,7 @@
                 }
               },
               "queryRef": "_Measures.Eye Contacts (Hourly)",
-              "nativeQueryRef": "Hourly5",
+              "nativeQueryRef": "Hourly4",
               "displayName": "Hourly"
             },
             {
@@ -291,7 +291,7 @@
                 }
               },
               "queryRef": "_Measures.Eye Contacts (Inflation)",
-              "nativeQueryRef": "Inflation5",
+              "nativeQueryRef": "Inflation4",
               "displayName": "Inflation"
             },
             {
@@ -306,7 +306,7 @@
                 }
               },
               "queryRef": "_Measures.Eye Contacts Weighted (Daily)",
-              "nativeQueryRef": "Daily",
+              "nativeQueryRef": "Daily3",
               "displayName": "Daily"
             },
             {
@@ -321,7 +321,7 @@
                 }
               },
               "queryRef": "_Measures.Eye Contacts Weighted (Hourly)",
-              "nativeQueryRef": "Hourly",
+              "nativeQueryRef": "Hourly3",
               "displayName": "Hourly"
             },
             {
@@ -336,7 +336,7 @@
                 }
               },
               "queryRef": "_Measures.Eye Contacts Weighted (Inflation)",
-              "nativeQueryRef": "Inflation",
+              "nativeQueryRef": "Inflation3",
               "displayName": "Inflation"
             },
             {
@@ -351,7 +351,7 @@
                 }
               },
               "queryRef": "_Measures.Signals (Daily)",
-              "nativeQueryRef": "Daily7",
+              "nativeQueryRef": "Daily",
               "displayName": "Daily"
             },
             {
@@ -366,7 +366,7 @@
                 }
               },
               "queryRef": "_Measures.Signals (Hourly)",
-              "nativeQueryRef": "Hourly7",
+              "nativeQueryRef": "Hourly",
               "displayName": "Hourly"
             },
             {
@@ -381,7 +381,7 @@
                 }
               },
               "queryRef": "_Measures.Signals (Inflation)",
-              "nativeQueryRef": "Inflation7",
+              "nativeQueryRef": "Inflation",
               "displayName": "Inflation"
             },
             {
@@ -396,7 +396,7 @@
                 }
               },
               "queryRef": "_Measures.Users (Daily)",
-              "nativeQueryRef": "Daily1",
+              "nativeQueryRef": "Daily7",
               "displayName": "Daily"
             },
             {
@@ -411,7 +411,7 @@
                 }
               },
               "queryRef": "_Measures.Users (Hourly)",
-              "nativeQueryRef": "Hourly1",
+              "nativeQueryRef": "Hourly7",
               "displayName": "Hourly"
             },
             {
@@ -426,7 +426,7 @@
                 }
               },
               "queryRef": "_Measures.Users (Inflation)",
-              "nativeQueryRef": "Inflation1",
+              "nativeQueryRef": "Inflation7",
               "displayName": "Inflation"
             }
           ],
@@ -780,342 +780,6 @@
           }
         },
         "type": "Categorical"
-      },
-      {
-        "name": "05d8eec3d2025596ac9d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Eye Contacts Weighted (Daily)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "bc3d6ab04ee420ad0a1c",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Eye Contacts Weighted (Hourly)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "c2544a9170a8978de2b5",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Eye Contacts Weighted (Inflation)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "1a63dbd0b4d8e4de1546",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Users (Daily)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "c7e86c0e4dd432c80900",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Users (Hourly)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "b892ee7060d7a322db71",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Users (Inflation)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "64939514b5c0c49b3638",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Impressions Weighted 2 (Daily)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f8f9bb85db2917a94069",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Impressions Weighted 2 (Hourly)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "4b94958ac0893050eac1",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Impressions Weighted 2 (Inflation)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "ed5bcafd9ae76d153031",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Ext Signals 2 (Daily)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "191c4f92e5b36619ac00",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Ext Signals 2 (Hourly)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "203ed89a9966e84205d4",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Ext Signals 2 (Inflation)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "d0d6fbde980ced99de10",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Ext Signals (Daily)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "3e22d7b1800aa5001ba7",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Ext Signals (Hourly)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "1697f2ce473540ca509a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Ext Signals (Inflation)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "9179281a60515c8a8d50",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Eye Contacts (Daily)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "dda16da550ea3d0b342d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Eye Contacts (Hourly)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "3ffcc2d9aa5e1d91e92a",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Eye Contacts (Inflation)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "2d7375a8b7b4e53c7020",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Impressions Weighted (Daily)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "efd38cf57009101e0929",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Impressions Weighted (Hourly)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "e30b6d14e8ee4529284d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Impressions Weighted (Inflation)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "6b6389439d45d00b22a0",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Signals (Daily)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f0a24b40676d4159a5ca",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Signals (Hourly)"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "a7dcc5802065dcc3c783",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Signals (Inflation)"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }
