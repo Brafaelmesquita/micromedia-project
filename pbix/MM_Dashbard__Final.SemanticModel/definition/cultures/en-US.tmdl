@@ -148,12 +148,6 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "id": {
-			            "State": "Generated",
-			            "Weight": 0.97
-			          }
-			        },
-			        {
 			          "mm": {
 			            "State": "Generated",
 			            "Weight": 0.97
@@ -198,19 +192,8 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.727
 			          }
-			        },
-			        {
-			          "Site ID": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
-			      ],
-			      "NameType": "Identifier"
+			      ]
 			    },
 			    "master_site.new_mm_id": {
 			      "Definition": {
@@ -11458,16 +11441,6 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.491
 			          }
-			        },
-			        {
-			          "Daily": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -11483,16 +11456,6 @@ cultureInfo en-US
 			        {
 			          "ots": {
 			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "Daily": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -11575,16 +11538,6 @@ cultureInfo en-US
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.491
-			          }
-			        },
-			        {
-			          "Daily": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -11878,7 +11831,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Hourly": {
+			          "Total Footfall": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -11910,7 +11863,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Hourly": {
+			          "Footfall": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -11942,7 +11895,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Hourly": {
+			          "Impressions": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -14715,16 +14668,6 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.605
 			          }
-			        },
-			        {
-			          "Inflation": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14746,16 +14689,6 @@ cultureInfo en-US
 			          "PaS": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Inflation": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14779,20 +14712,10 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Inflation": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
-			    "entity__measure.selection_subtitle": {
+			    "entity__measure.header_title": {
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_Measures",
@@ -14802,114 +14725,114 @@ cultureInfo en-US
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "selection subtitle": {
+			          "header title": {
 			            "State": "Generated"
 			          }
 			        },
 			        {
-			          "subtitle": {
+			          "title": {
 			            "State": "Generated",
 			            "Weight": 0.97
 			          }
 			        },
 			        {
-			          "selection slogan": {
+			          "header designation": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.5
+			            "Weight": 0.75
 			          }
 			        },
 			        {
-			          "selection description": {
+			          "designation": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.5
+			            "Weight": 0.736
 			          }
 			        },
 			        {
-			          "selection legend": {
+			          "header name": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.5
+			            "Weight": 0.727
 			          }
 			        },
 			        {
-			          "selection header": {
+			          "header award": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.5
+			            "Weight": 0.727
 			          }
 			        },
 			        {
-			          "selection footer": {
+			          "header call": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.5
+			            "Weight": 0.727
 			          }
 			        },
 			        {
-			          "selection surtitle": {
+			          "header heading": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.5
+			            "Weight": 0.727
 			          }
 			        },
 			        {
-			          "selection supertitle": {
+			          "header label": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.5
+			            "Weight": 0.727
 			          }
 			        },
 			        {
-			          "slogan": {
+			          "award": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.491
+			            "Weight": 0.714
 			          }
 			        },
 			        {
-			          "description": {
+			          "call": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.491
+			            "Weight": 0.714
 			          }
 			        },
 			        {
-			          "legend": {
+			          "heading": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.491
+			            "Weight": 0.714
 			          }
 			        }
 			      ]
@@ -14933,6 +14856,16 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
+			        },
+			        {
+			          "Daily": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -14954,6 +14887,16 @@ cultureInfo en-US
 			          "impressions weighted": {
 			            "State": "Generated",
 			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "Hourly": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14977,6 +14920,16 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
+			        },
+			        {
+			          "Inflation": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -14998,6 +14951,16 @@ cultureInfo en-US
 			          "impressions weighted 2": {
 			            "State": "Generated",
 			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "Daily": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15021,6 +14984,16 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
+			        },
+			        {
+			          "Inflation": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -15042,6 +15015,16 @@ cultureInfo en-US
 			          "impressions weighted 2": {
 			            "State": "Generated",
 			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "Hourly": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15161,6 +15144,16 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
+			        },
+			        {
+			          "Daily": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -15182,6 +15175,16 @@ cultureInfo en-US
 			          "ext signals 2": {
 			            "State": "Generated",
 			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "Hourly": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15205,6 +15208,16 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
+			        },
+			        {
+			          "Inflation": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -15226,6 +15239,16 @@ cultureInfo en-US
 			          "eye contacts": {
 			            "State": "Generated",
 			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "Daily": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15249,6 +15272,16 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
+			        },
+			        {
+			          "Hourly": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -15270,6 +15303,16 @@ cultureInfo en-US
 			          "eye contacts": {
 			            "State": "Generated",
 			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "Inflation": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15293,6 +15336,16 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
+			        },
+			        {
+			          "Daily": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -15314,6 +15367,16 @@ cultureInfo en-US
 			          "eye contacts weighted": {
 			            "State": "Generated",
 			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "Hourly": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15337,6 +15400,16 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
+			        },
+			        {
+			          "Inflation": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -15358,6 +15431,16 @@ cultureInfo en-US
 			          "signals": {
 			            "State": "Generated",
 			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "Daily": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15381,6 +15464,16 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
+			        },
+			        {
+			          "Hourly": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -15402,6 +15495,16 @@ cultureInfo en-US
 			          "signals": {
 			            "State": "Generated",
 			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "Inflation": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15425,6 +15528,16 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
+			        },
+			        {
+			          "Daily": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -15447,6 +15560,16 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
+			        },
+			        {
+			          "Hourly": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -15468,6 +15591,16 @@ cultureInfo en-US
 			          "users": {
 			            "State": "Generated",
 			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "Inflation": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15541,16 +15674,6 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.605
 			          }
-			        },
-			        {
-			          "Daily": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -15572,16 +15695,6 @@ cultureInfo en-US
 			          "dwell time": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Hourly": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15654,16 +15767,6 @@ cultureInfo en-US
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.605
-			          }
-			        },
-			        {
-			          "Ratio": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -16008,9 +16111,419 @@ cultureInfo en-US
 			          }
 			        }
 			      ]
+			    },
+			    "entity__measure.sites_selected": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Sites selected"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "sites selected": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "location selected": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "place selected": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "spot selected": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        },
+			        {
+			          "position selected": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.485
+			          }
+			        }
+			      ]
+			    },
+			    "entity__measure.avg_daily_total_population": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Avg Daily Total Population"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "avg daily total population": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "average daily total population": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "avg daily aggregate population": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "avg daily overall population": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "avg daily total populace": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "avg daily total person": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        }
+			      ]
+			    },
+			    "entity__measure.avg_daily_PaS": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Avg Daily PaS"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "avg daily PaS": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "average daily pas": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        },
+			        {
+			          "avg daily helper": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.508
+			          }
+			        },
+			        {
+			          "avg daily supporter": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.508
+			          }
+			        },
+			        {
+			          "avg daily aide": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.508
+			          }
+			        }
+			      ]
+			    },
+			    "entity__measure.avg_daily_OTS": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Avg Daily OTS"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "avg daily OTS": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "average daily ot": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        }
+			      ]
+			    },
+			    "entity__measure.avg_hourly_total_population": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Avg Hourly Total Population"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "avg hourly total population": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "average hourly total population": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "avg hourly aggregate population": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "avg hourly overall population": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "avg hourly total populace": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        },
+			        {
+			          "avg hourly total person": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.514
+			          }
+			        }
+			      ]
+			    },
+			    "entity__measure.avg_hourly_PaS": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Avg Hourly PaS"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "avg hourly PaS": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "average hourly pas": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        },
+			        {
+			          "avg hourly helper": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.508
+			          }
+			        },
+			        {
+			          "avg hourly supporter": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.508
+			          }
+			        },
+			        {
+			          "avg hourly aide": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.508
+			          }
+			        }
+			      ]
+			    },
+			    "entity__measure.avg_hourly_OTS": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Avg Hourly OTS"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "avg hourly OTS": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "average hourly ot": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.591
+			          }
+			        }
+			      ]
 			    }
 			  },
 			  "Relationships": {
+			    "brand_affinity_has_dim_movement": {
+			      "Binding": {
+			        "ConceptualEntity": "Brand_Affinity"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "brand_affinity": {
+			          "Target": {
+			            "Entity": "brand_affinity"
+			          }
+			        },
+			        "dim_movement": {
+			          "Target": {
+			            "Entity": "dim_movement"
+			          },
+			          "Nouns": [
+			            {
+			              "movement modality": {
+			                "State": "Generated"
+			              }
+			            },
+			            {
+			              "modality": {
+			                "State": "Generated"
+			              }
+			            }
+			          ]
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "brand_affinity"
+			            },
+			            "Object": {
+			              "Role": "dim_movement"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "brand_affinities_have_dim_movements"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_movement"
+			            },
+			            "Object": {
+			              "Role": "brand_affinity"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_movements_have_brand_affinities"
+			        }
+			      ]
+			    },
 			    "brand_affinity_has_dim_hour": {
 			      "Binding": {
 			        "ConceptualEntity": "Brand_Affinity"
@@ -16670,6 +17183,435 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "master_sites_have_footfalls"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_avg_hourly_OTS": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "entity__measure.avg_hourly_OTS": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_hourly_OTS"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_hourly_OTS"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_avg_hourly_OTS"
+			        }
+			      ]
+			    },
+			    "calendar_has_entity__measure_avg_hourly_OTS": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendar"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendar": {
+			          "Target": {
+			            "Entity": "calendar"
+			          }
+			        },
+			        "entity__measure.avg_hourly_OTS": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_hourly_OTS"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendar"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_hourly_OTS"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "calendars_have_avg_hourly_OTS"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_avg_hourly_PaS": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "entity__measure.avg_hourly_PaS": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_hourly_PaS"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_hourly_PaS"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_avg_hourly_PaS"
+			        }
+			      ]
+			    },
+			    "calendar_has_entity__measure_avg_hourly_PaS": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendar"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendar": {
+			          "Target": {
+			            "Entity": "calendar"
+			          }
+			        },
+			        "entity__measure.avg_hourly_PaS": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_hourly_PaS"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendar"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_hourly_PaS"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "calendars_have_avg_hourly_PaS"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_avg_hourly_total_population": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "entity__measure.avg_hourly_total_population": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_hourly_total_population"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_hourly_total_population"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_avg_hourly_total_population"
+			        }
+			      ]
+			    },
+			    "calendar_has_entity__measure_avg_hourly_total_population": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendar"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendar": {
+			          "Target": {
+			            "Entity": "calendar"
+			          }
+			        },
+			        "entity__measure.avg_hourly_total_population": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_hourly_total_population"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendar"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_hourly_total_population"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "calendars_have_avg_hourly_total_population"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_avg_daily_OTS": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "entity__measure.avg_daily_OTS": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_daily_OTS"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_daily_OTS"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_avg_daily_OTS"
+			        }
+			      ]
+			    },
+			    "calendar_has_entity__measure_avg_daily_OTS": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendar"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendar": {
+			          "Target": {
+			            "Entity": "calendar"
+			          }
+			        },
+			        "entity__measure.avg_daily_OTS": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_daily_OTS"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendar"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_daily_OTS"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "calendars_have_avg_daily_OTS"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_avg_daily_PaS": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "entity__measure.avg_daily_PaS": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_daily_PaS"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_daily_PaS"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_avg_daily_PaS"
+			        }
+			      ]
+			    },
+			    "calendar_has_entity__measure_avg_daily_PaS": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendar"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendar": {
+			          "Target": {
+			            "Entity": "calendar"
+			          }
+			        },
+			        "entity__measure.avg_daily_PaS": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_daily_PaS"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendar"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_daily_PaS"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "calendars_have_avg_daily_PaS"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_avg_daily_total_population": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "entity__measure.avg_daily_total_population": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_daily_total_population"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_daily_total_population"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_avg_daily_total_population"
+			        }
+			      ]
+			    },
+			    "calendar_has_entity__measure_avg_daily_total_population": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendar"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendar": {
+			          "Target": {
+			            "Entity": "calendar"
+			          }
+			        },
+			        "entity__measure.avg_daily_total_population": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_daily_total_population"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendar"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_daily_total_population"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "calendars_have_avg_daily_total_population"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_sites_selected": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "entity__measure.sites_selected": {
+			          "Target": {
+			            "Entity": "entity__measure.sites_selected"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.sites_selected"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_sites_selected"
 			        }
 			      ]
 			    },
@@ -17630,7 +18572,40 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "footfall_has_entity__measure_selection_subtitle": {
+			    "master_site_has_entity__measure_header_title": {
+			      "Binding": {
+			        "ConceptualEntity": "Master_Sites"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "master_site": {
+			          "Target": {
+			            "Entity": "master_site"
+			          }
+			        },
+			        "entity__measure.header_title": {
+			          "Target": {
+			            "Entity": "entity__measure.header_title"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "master_site"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.header_title"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "master_sites_have_header_title"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_header_title": {
 			      "Binding": {
 			        "ConceptualEntity": "Footfall"
 			      },
@@ -17641,9 +18616,9 @@ cultureInfo en-US
 			            "Entity": "footfall"
 			          }
 			        },
-			        "entity__measure.selection_subtitle": {
+			        "entity__measure.header_title": {
 			          "Target": {
-			            "Entity": "entity__measure.selection_subtitle"
+			            "Entity": "entity__measure.header_title"
 			          }
 			        }
 			      },
@@ -17654,45 +18629,12 @@ cultureInfo en-US
 			              "Role": "footfall"
 			            },
 			            "Object": {
-			              "Role": "entity__measure.selection_subtitle"
+			              "Role": "entity__measure.header_title"
 			            }
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "footfalls_have_selection_subtitle"
-			        }
-			      ]
-			    },
-			    "calendar_has_entity__measure_selection_subtitle": {
-			      "Binding": {
-			        "ConceptualEntity": "Calendar"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "calendar": {
-			          "Target": {
-			            "Entity": "calendar"
-			          }
-			        },
-			        "entity__measure.selection_subtitle": {
-			          "Target": {
-			            "Entity": "entity__measure.selection_subtitle"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "calendar"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.selection_subtitle"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "calendars_have_selection_subtitle"
+			          "ID": "footfalls_have_header_title"
 			        }
 			      ]
 			    },
@@ -19751,39 +20693,6 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "footfalls_have_pa_S"
-			        }
-			      ]
-			    },
-			    "master_site_has_entity__measure_total_screens": {
-			      "Binding": {
-			        "ConceptualEntity": "Master_Sites"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "master_site": {
-			          "Target": {
-			            "Entity": "master_site"
-			          }
-			        },
-			        "entity__measure.total_screens": {
-			          "Target": {
-			            "Entity": "entity__measure.total_screens"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "master_site"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.total_screens"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "master_sites_have_total_screens"
 			        }
 			      ]
 			    },
@@ -25348,19 +26257,6 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "master_sites_have_mm_ids"
-			        },
-			        {
-			          "Name": {
-			            "Subject": {
-			              "Role": "master_site"
-			            },
-			            "Name": {
-			              "Role": "master_site.mm_id"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "mm_ids_are_names_IDs_of_master_sites"
 			        }
 			      ]
 			    },
@@ -25583,64 +26479,6 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.9,
 			          "ID": "calendars_are_started_on_week_start_dates"
-			        }
-			      ]
-			    },
-			    "brand_affinity_has_dim_movement": {
-			      "Binding": {
-			        "ConceptualEntity": "Brand_Affinity"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "brand_affinity": {
-			          "Target": {
-			            "Entity": "brand_affinity"
-			          }
-			        },
-			        "dim_movement": {
-			          "Target": {
-			            "Entity": "dim_movement"
-			          },
-			          "Nouns": [
-			            {
-			              "movement modality": {
-			                "State": "Generated"
-			              }
-			            },
-			            {
-			              "modality": {
-			                "State": "Generated"
-			              }
-			            }
-			          ]
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "brand_affinity"
-			            },
-			            "Object": {
-			              "Role": "dim_movement"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "brand_affinities_have_dim_movements"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "dim_movement"
-			            },
-			            "Object": {
-			              "Role": "brand_affinity"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dim_movements_have_brand_affinities"
 			        }
 			      ]
 			    },

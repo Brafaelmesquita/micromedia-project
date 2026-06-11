@@ -3,9 +3,9 @@
   "name": "9eb23840d3e961574940",
   "position": {
     "x": 904.34100930916225,
-    "y": 371.26898579127879,
+    "y": 381.30328270455658,
     "z": 12011,
-    "height": 100.34296913277805,
+    "height": 110.37726604605585,
     "width": 140.48015678588928,
     "tabOrder": 12011
   },
@@ -111,7 +111,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "18D"
+                  "Value": "14D"
                 }
               }
             }
@@ -136,7 +136,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Impressions'"
+                  "Value": "'AVG Daily Impressions'"
                 }
               }
             },

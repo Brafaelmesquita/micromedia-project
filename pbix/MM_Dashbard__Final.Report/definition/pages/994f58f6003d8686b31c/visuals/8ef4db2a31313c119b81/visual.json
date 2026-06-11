@@ -3,9 +3,9 @@
   "name": "8ef4db2a31313c119b81",
   "position": {
     "x": 755.08084272415488,
-    "y": 371.26898579127879,
+    "y": 381.30328270455658,
     "z": 12010,
-    "height": 100.34296913277805,
+    "height": 110.37726604605585,
     "width": 140.48015678588928,
     "tabOrder": 12010
   },
@@ -111,7 +111,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "18D"
+                  "Value": "14D"
                 }
               }
             }
@@ -136,7 +136,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Footfall'"
+                  "Value": "'AVG Daily Footfall'"
                 }
               }
             },

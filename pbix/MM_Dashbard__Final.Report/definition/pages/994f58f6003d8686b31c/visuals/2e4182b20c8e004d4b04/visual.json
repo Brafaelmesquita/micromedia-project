@@ -5,7 +5,7 @@
     "x": 23.831455169034786,
     "y": 262.14600685938268,
     "z": 12004,
-    "height": 209.46594806467419,
+    "height": 230,
     "width": 576.97207251347379,
     "tabOrder": 12004
   },
@@ -46,7 +46,8 @@
                 }
               },
               "queryRef": "_Measures.Total Population (Hourly)",
-              "nativeQueryRef": "Total Population (Hourly)"
+              "nativeQueryRef": "Total Footfall",
+              "displayName": "Total Footfall"
             },
             {
               "field": {
@@ -60,7 +61,8 @@
                 }
               },
               "queryRef": "_Measures.PaS (Hourly)",
-              "nativeQueryRef": "PaS (Hourly)"
+              "nativeQueryRef": "Footfall",
+              "displayName": "Footfall"
             },
             {
               "field": {
@@ -74,7 +76,8 @@
                 }
               },
               "queryRef": "_Measures.OTS (Hourly)",
-              "nativeQueryRef": "OTS (Hourly)"
+              "nativeQueryRef": "Impressions",
+              "displayName": "Impressions"
             }
           ]
         }
@@ -98,6 +101,111 @@
         "isDefaultSort": true
       }
     },
+    "objects": {
+      "categoryAxis": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "titleText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Date'"
+                }
+              }
+            },
+            "titleBold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "valueAxis": [
+        {
+          "properties": {
+            "titleText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Impacts per day'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#29B6E8'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Total Population (Hourly)"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0A7FA8'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.PaS (Hourly)"
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#003D52'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.OTS (Hourly)"
+          }
+        }
+      ]
+    },
     "visualContainerObjects": {
       "border": [
         {
@@ -113,6 +221,44 @@
               "expr": {
                 "Literal": {
                   "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Daily audience impacts by date'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#23B5E8'"
+                    }
+                  }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
                 }
               }
             }
