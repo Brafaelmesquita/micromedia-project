@@ -1,0 +1,128 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "0df9b7e620d0d16d9c15",
+  "position": {
+    "x": 864.753421399693,
+    "y": 167.37162994832767,
+    "z": 13002,
+    "height": 534.99146001340455,
+    "width": 415.44029576459906,
+    "tabOrder": 13002
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Across all sixteen months the inflation holds its shape — no broken month, no step-change. Each metric stays inside a tight band (most vary less than 10% around their own level), which is what a healthy, consistent feed looks like. The earliest months sit right alongside the most recent ones, so there's no onboarding distortion to discount."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Two things stand out, neither a problem. The person metrics (Users, PaS, Total Population) peaked together in mid-2025 — around 1.8 in May — then settled back to ~1.5–1.6; because unrelated metrics moved in step, this reads as a seasonal swing in how long people lingered, not a data fault. And the eye-contact metrics are the most variable line and have eased down over the period (from ~1.0 in mid-2025 to ~0.6–0.75 lately) — a drift in how the eye-contact extrapolation splits across the hours, still within tolerance but the one line worth keeping an eye on."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The practical read: nothing here needs action. This page is the early-warning system — if a line ever steps outside its band, that's the month to open the raw file and check the delivery."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'What the trend shows'"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#23B5E8'"
+                    }
+                  }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

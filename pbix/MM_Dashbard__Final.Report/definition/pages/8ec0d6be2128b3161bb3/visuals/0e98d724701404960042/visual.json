@@ -19,87 +19,61 @@
               {
                 "textRuns": [
                   {
-                    "value": "Daily = all-day deduplicated total (HOUR 25) · Hourly = sum of hours 00–23 · Inflation = Hourly ÷ Daily. Use Daily for all reporting; Hourly is validation only. (* = source columns for the OTS / PaS / Total Population KPIs.)"
+                    "value": "Daily and Hourly don't differ by accident: each metric behaves the same way at almost every site, and has done so across all sixteen months. That consistency is the real result — the Locomizer feed is stable, and the Daily (HOUR 25) figures hold up as the reporting base.",
+                    "textStyle": {
+                      "fontSize": "11pt"
+                    }
                   }
                 ]
               },
               {
                 "textRuns": [
                   {
-                    "value": " • "
-                  },
-                  {
-                    "value": "Additive events — Inflation ≈ 1.00.",
-                    "textStyle": {
-                      "fontWeight": "bold"
-                    }
-                  },
-                  {
-                    "value": " Signals, Ext Signals, Ext Signals 2. Observation events, so the all-day total equals the sum of the hours by construction; Daily and Hourly are interchangeable."
+                    "value": ""
                   }
                 ]
               },
               {
                 "textRuns": [
                   {
-                    "value": " • "
-                  },
-                  {
-                    "value": "Unique-person counts — Inflation > 1 (median ≈ 1.5).",
+                    "value": "The split is clean. Signals and their extrapolated versions add up exactly — Hourly equals Daily to the decimal at every site. Anything that counts people (Users, PaS, Total Population) runs above Daily once you sum the hours, because a visitor who stays three hours gets counted three times; on the larger sites that overcount settles around 1.5×. The reach and eye-contact metrics land below Daily (~0.7), not because audience falls but because each hour is extrapolated to its own population and the hours don't re-add to the day.",
                     "textStyle": {
-                      "fontWeight": "bold"
+                      "fontSize": "11pt"
                     }
-                  },
-                  {
-                    "value": " Users, * Extrapolated_number_of_users (PaS), * Extrapolated_users_2 (Total Population). The all-day figure deduplicates people; summing hours re-counts repeat visitors. Use Daily — the index measures repeat-visit overcount."
                   }
                 ]
               },
               {
                 "textRuns": [
                   {
-                    "value": " • "
-                  },
-                  {
-                    "value": "Reach / eye-contact counts — Inflation < 1 (median ≈ 0.7–0.9).",
-                    "textStyle": {
-                      "fontWeight": "bold"
-                    }
-                  },
-                  {
-                    "value": " Eye Contacts, Eye Contacts Weighted, Impressions Weighted / Weighted 2, * Extrapolated_number_of_eye_contacts (OTS). Extrapolated to population — each hour scaled to its own smaller population while the all-day row is scaled to the full daily population, so the hours don't sum to the day. Use Daily; the hourly sum understates reach, not a real drop."
+                    "value": ""
                   }
                 ]
               },
               {
                 "textRuns": [
                   {
-                    "value": " • "
-                  },
-                  {
-                    "value": "Dwell Time — Inflation < 1 (median ≈ 0.71).",
+                    "value": "Two things worth flagging. The overcount isn't flat — it climbs with how busy a site is, from about 1.27× across the quietest quarter of the network to 1.63× across the busiest. Busier, stickier locations simply hold people over more hours. And the handful of sites showing 3× or 5× inflation are all small-panel locations where a tiny denominator swings the ratio; the large sites stay in a tight 1.4–2.0 band. Treat those spikes as noise, not signal.",
                     "textStyle": {
-                      "fontWeight": "bold"
+                      "fontSize": "11pt"
                     }
-                  },
-                  {
-                    "value": " An average (%), not a count — it can't be summed; the ratio just compares all-day vs hourly average."
                   }
                 ]
               },
               {
                 "textRuns": [
                   {
-                    "value": " "
-                  },
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
                   {
-                    "value": "Bottom line:",
+                    "value": "For anyone using the numbers: report from Daily, keep Hourly for validation, and read inflation on the person metrics as repeat presence — a high value is normal for a busy screen, not an error.",
                     "textStyle": {
-                      "fontWeight": "bold"
+                      "fontSize": "11pt"
                     }
-                  },
-                  {
-                    "value": " real overcount appears only for unique-person counts (Users, PaS, Total Population). For additive events the index is trivially 1; for reach metrics it reflects the extrapolation method, not an audience change."
                   }
                 ]
               }

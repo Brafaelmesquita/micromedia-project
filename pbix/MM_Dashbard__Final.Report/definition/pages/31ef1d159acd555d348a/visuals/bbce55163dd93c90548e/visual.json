@@ -23,11 +23,11 @@
                       "Entity": "Calendar"
                     }
                   },
-                  "Property": "YEAR_MONTH"
+                  "Property": "Month-Year"
                 }
               },
-              "queryRef": "Calendar.YEAR_MONTH",
-              "nativeQueryRef": "YEAR_MONTH",
+              "queryRef": "Calendar.Month-Year",
+              "nativeQueryRef": "Month-Year",
               "active": true
             }
           ]
@@ -129,7 +129,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },

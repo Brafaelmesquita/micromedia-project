@@ -100,6 +100,15 @@ table Calendar
 
 		annotation SummarizationSetBy = Automatic
 
+	column Month-Year =
+			
+			MID ( 'Calendar'[YEAR_MONTH], 6, 2 ) & " - " & LEFT ( 'Calendar'[YEAR_MONTH], 4 )
+		lineageTag: e9bc09b7-3c1b-4d20-8e5c-e248638200c0
+		summarizeBy: none
+		sortByColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Calendar = calculated
 		mode: import
 		source =
