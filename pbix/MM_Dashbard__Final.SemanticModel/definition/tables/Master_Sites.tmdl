@@ -291,6 +291,12 @@ table Master_Sites
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Site Label' = Master_Sites[MM ID] & " - " & Master_Sites[Display Name]
+		lineageTag: a159db78-3c66-4e76-834b-5e6d65d8ea7e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Master_Sites = m
 		mode: import
 		source =

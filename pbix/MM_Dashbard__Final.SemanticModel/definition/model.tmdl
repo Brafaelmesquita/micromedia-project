@@ -79,7 +79,7 @@ ref table dim_Hour
 ref table dim_Movement
 ref table dim_Visitation
 ref table Demographics_ClassLong
-ref table Metrics
+ref table 'Dim Metric'
 
 ref cultureInfo en-US
 

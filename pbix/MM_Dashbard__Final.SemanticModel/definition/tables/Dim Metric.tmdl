@@ -1,0 +1,61 @@
+table 'Dim Metric'
+	lineageTag: d0c95761-7245-410e-a8de-7ecbe143b73c
+
+	column Metric
+		lineageTag: 0fbc64ce-edf4-4f31-a01c-790958cce500
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Metric]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort
+		formatString: 0
+		lineageTag: fba39beb-5664-4033-9a2b-768bd9bd6e6b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sort]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Metric Label' =
+			
+			IF (
+			    'Dim Metric'[Metric] IN {
+			        "Extrapolated_number_of_users",
+			        "Extrapolated_users_2",
+			        "Extrapolated_number_of_eye_contacts"
+			    },
+			    "* " & 'Dim Metric'[Metric] & " *",
+			    'Dim Metric'[Metric]
+			)
+		lineageTag: 45aaa88e-3b14-49d2-a217-691b41437daf
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dim Metric' = calculated
+		mode: import
+		source =
+				
+				DATATABLE (
+				    "Metric", STRING,
+				    "Sort", INTEGER,
+				    {
+				        { "Dwell Time", 1 },
+				        { "Ext Signals", 2 },
+				        { "Ext Signals 2", 3 },
+				        { "Eye Contacts", 4 },
+				        { "Eye Contacts Weighted", 5 },
+				        { "Impressions Weighted", 6 },
+				        { "Impressions Weighted 2", 7 },
+				        { "Signals", 8 },
+				        { "Users", 9 },
+				        { "Extrapolated_number_of_users",        10 },
+				        { "Extrapolated_users_2",                11 },
+				        { "Extrapolated_number_of_eye_contacts", 12 }
+				    }
+				)
+
+	annotation PBI_Id = ba62606df2bc4028adb9d2fd5bf3d044
+

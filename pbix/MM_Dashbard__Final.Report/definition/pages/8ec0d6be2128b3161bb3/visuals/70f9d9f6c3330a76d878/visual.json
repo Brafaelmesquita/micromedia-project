@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "70f9d9f6c3330a76d878",
+  "position": {
+    "x": 640.14248185582619,
+    "y": 124.01620731110022,
+    "z": 9000,
+    "height": 32.82781958235006,
+    "width": 640.14248185582619,
+    "tabOrder": 9000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Daily = deduplicated all-day total (HOUR = 25). Hourly = sum of hours 00–23, so repeat visits are counted multiple times. Inflation = Hourly ÷ Daily.",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontFamily": "Segoe UI Light",
+                      "fontStyle": "italic",
+                      "color": "#888888"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
