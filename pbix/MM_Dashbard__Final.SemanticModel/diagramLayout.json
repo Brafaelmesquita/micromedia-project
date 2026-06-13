@@ -4,8 +4,8 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 0,
-        "y": 0
+        "x": 743,
+        "y": 98
       },
       "nodes": [
         {
@@ -150,12 +150,11 @@
         {
           "location": {
             "x": 1704,
-            "y": 482.20638820638817
+            "y": 458.20638820638817
           },
-          "nodeIndex": "Metrics",
-          "nodeLineageTag": "8e62a4e8-ef2a-44f8-97cc-4eb9be180225",
+          "nodeIndex": "Dim Metric",
           "size": {
-            "height": 152,
+            "height": 200,
             "width": 234
           },
           "zIndex": 0

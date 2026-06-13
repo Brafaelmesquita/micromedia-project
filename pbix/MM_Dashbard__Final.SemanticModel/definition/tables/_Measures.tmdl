@@ -272,29 +272,21 @@ table _Measures
 		formatString: 0
 		lineageTag: 6cdf99b9-75fa-47a2-915d-33d7ebbe81aa
 
-	measure 'Radii ClassLong' = DISTINCTCOUNT ( Demographics_ClassLong[RADIUS] )
-		formatString: 0
-		lineageTag: 3235f527-b9fb-4f93-a548-058dd171b6fc
-
-	measure 'Radii AgeLong' = DISTINCTCOUNT ( Demographics_AgeLong[RADIUS] )
-		formatString: 0
-		lineageTag: cb4003b2-e5da-471f-b830-b5d17de80738
-
 	measure 'Total Population (Inflation)' = DIVIDE ( [Total Population (Hourly)], [Total Population] )
-		displayFolder: Inflation
+		displayFolder: KPIs\Inflation
 		lineageTag: 8f6756b9-de9d-44b9-b477-cc27295bf46e
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'PaS (Inflation)' = DIVIDE ( [PaS (Hourly)], [PaS] )
-		displayFolder: Inflation
+		displayFolder: KPIs\Inflation
 		lineageTag: 859ed572-1028-4c31-aab1-0cad4f5183f5
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'OTS (Inflation)' = DIVIDE ( [OTS (Hourly)], [OTS] )
 		formatString: 0.00
-		displayFolder: Inflation
+		displayFolder: KPIs\Inflation
 		lineageTag: b6ccdc8b-99b2-4e7d-97dc-7712676069c5
 
 	measure 'Header Title' =
@@ -324,7 +316,7 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Impressions Weighted
+		displayFolder: Footfall QA\Impressions Weighted
 		lineageTag: 42c53885-16f5-4b91-968e-388025ba22f6
 
 	measure 'Impressions Weighted (Hourly)' =
@@ -332,13 +324,13 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Impressions Weighted
+		displayFolder: Footfall QA\Impressions Weighted
 		lineageTag: db3373af-dc55-453c-8056-af39fde7d10f
 
 	measure 'Impressions Weighted (Inflation)' =
 			
 			DIVIDE ( [Impressions Weighted (Hourly)], [Impressions Weighted (Daily)] )
-		displayFolder: KPIs\By Hour\project01\Impressions Weighted
+		displayFolder: Footfall QA\Impressions Weighted
 		lineageTag: 5c6066d5-d0e3-4685-8e65-db63e7996ee1
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -348,13 +340,13 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED_2] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Impressions Weighted 2
+		displayFolder: Footfall QA\Impressions Weighted 2
 		lineageTag: c64236c8-a5b2-4e24-9390-1ca34ea795db
 
 	measure 'Impressions Weighted 2 (Inflation)' =
 			
 			DIVIDE ( [Impressions Weighted 2 (Hourly)], [Impressions Weighted 2 (Daily)] )
-		displayFolder: KPIs\By Hour\project01\Impressions Weighted 2
+		displayFolder: Footfall QA\Impressions Weighted 2
 		lineageTag: 90403f57-343c-417b-b6fa-8b2a853a8f29
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -364,7 +356,7 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED_2] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Impressions Weighted 2
+		displayFolder: Footfall QA\Impressions Weighted 2
 		lineageTag: e58c4ab2-7bcf-42f9-804b-a81a964f392e
 
 	measure 'Ext Signals (Daily)' =
@@ -372,7 +364,7 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_SIGNALS] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Ext Signals
+		displayFolder: Footfall QA\Ext Signals
 		lineageTag: 03d1eeee-a8c3-4947-9265-9461c595f669
 
 	measure 'Ext Signals (Hourly)' =
@@ -380,13 +372,13 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_SIGNALS] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Ext Signals
+		displayFolder: Footfall QA\Ext Signals
 		lineageTag: 1c5354b3-a596-490d-b9c9-478dc5adafe3
 
 	measure 'Ext Signals (Inflation)' =
 			
 			DIVIDE ( [Ext Signals (Hourly)], [Ext Signals (Daily)] )
-		displayFolder: KPIs\By Hour\project01\Ext Signals
+		displayFolder: Footfall QA\Ext Signals
 		lineageTag: 27910369-48ba-495a-92eb-8fafd071bf2b
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -396,7 +388,7 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_SIGNALS_2] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Ext Signal 2
+		displayFolder: Footfall QA\Ext Signal 2
 		lineageTag: 248507cf-fc68-4dd7-80a8-f452014ce969
 
 	measure 'Ext Signals 2 (Hourly)' =
@@ -404,13 +396,13 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_SIGNALS_2] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Ext Signal 2
+		displayFolder: Footfall QA\Ext Signal 2
 		lineageTag: b1674649-33fb-4c19-a189-ce525839cbb7
 
 	measure 'Ext Signals 2 (Inflation)' =
 			
 			DIVIDE ( [Ext Signals 2 (Hourly)], [Ext Signals 2 (Daily)] )
-		displayFolder: KPIs\By Hour\project01\Ext Signal 2
+		displayFolder: Footfall QA\Ext Signal 2
 		lineageTag: 6e86724e-cbe9-4bf6-8ccb-24214ee5c671
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -420,7 +412,7 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[NUMBER_OF_EYE_CONTACTS] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Eyes Contacts
+		displayFolder: Footfall QA\Eyes Contacts
 		lineageTag: 01980d29-4ba2-4ef9-b2e8-33b2e6579027
 
 	measure 'Eye Contacts (Hourly)' =
@@ -428,13 +420,13 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[NUMBER_OF_EYE_CONTACTS] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Eyes Contacts
+		displayFolder: Footfall QA\Eyes Contacts
 		lineageTag: b02ec94f-75a6-4bba-89b3-f59e11391977
 
 	measure 'Eye Contacts (Inflation)' =
 			
 			DIVIDE ( [Eye Contacts (Hourly)], [Eye Contacts (Daily)] )
-		displayFolder: KPIs\By Hour\project01\Eyes Contacts
+		displayFolder: Footfall QA\Eyes Contacts
 		lineageTag: 2a294606-6abe-415a-8992-1b9da159a734
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -444,7 +436,7 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[NUMBER_OF_EYE_CONTACTS_WEIGHTED] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Eye Contacts Weighted
+		displayFolder: Footfall QA\Eye Contacts Weighted
 		lineageTag: 41447d8b-b58c-42f1-9b6f-da8c46e14a9a
 
 	measure 'Eye Contacts Weighted (Hourly)' =
@@ -452,13 +444,13 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[NUMBER_OF_EYE_CONTACTS_WEIGHTED] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Eye Contacts Weighted
+		displayFolder: Footfall QA\Eye Contacts Weighted
 		lineageTag: 1183d6bd-606b-4abd-8332-c58da89f81b7
 
 	measure 'Eye Contacts Weighted (Inflation)' =
 			
 			DIVIDE ( [Eye Contacts Weighted (Hourly)], [Eye Contacts Weighted (Daily)] )
-		displayFolder: KPIs\By Hour\project01\Eye Contacts Weighted
+		displayFolder: Footfall QA\Eye Contacts Weighted
 		lineageTag: cfd5cdb2-1673-4ebc-b650-26a5ac398377
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -468,7 +460,7 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[NUMBER_OF_SIGNALS] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Signals
+		displayFolder: Footfall QA\Signals
 		lineageTag: 41e64c99-0a8c-445e-9bb9-cf4be15cb8e4
 
 	measure 'Signals (Hourly)' =
@@ -476,13 +468,13 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[NUMBER_OF_SIGNALS] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Signals
+		displayFolder: Footfall QA\Signals
 		lineageTag: 16643a4b-9b2b-4a8b-ba67-de8fbb0b1c87
 
 	measure 'Signals (Inflation)' =
 			
 			DIVIDE ( [Signals (Hourly)], [Signals (Daily)] )
-		displayFolder: KPIs\By Hour\project01\Signals
+		displayFolder: Footfall QA\Signals
 		lineageTag: 717f4497-1e3f-4c19-a42d-079ee241d3fd
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -492,7 +484,7 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[NUMBER_OF_USERS] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Users
+		displayFolder: Footfall QA\Users
 		lineageTag: 23f803e8-6ea0-4352-bda2-29eb3bc031c5
 
 	measure 'Users (Hourly)' =
@@ -500,13 +492,13 @@ table _Measures
 			CALCULATE ( SUM ( Footfall[NUMBER_OF_USERS] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
 		formatString: #,0
-		displayFolder: KPIs\By Hour\project01\Users
+		displayFolder: Footfall QA\Users
 		lineageTag: 8cddcdbd-3141-44ec-b264-acef5d00ca4b
 
 	measure 'Users (Inflation)' =
 			
 			DIVIDE ( [Users (Hourly)], [Users (Daily)] )
-		displayFolder: KPIs\By Hour\project01\Users
+		displayFolder: Footfall QA\Users
 		lineageTag: 43104164-49a7-4761-831e-411f6621a8f5
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -516,7 +508,7 @@ table _Measures
 			CALCULATE ( AVERAGE ( Footfall[DWELL_TIME] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
 		formatString: #,0.00%;-#,0.00%;#,0.00%
-		displayFolder: KPIs\By Hour\project01\Dwell Time
+		displayFolder: Footfall QA\Dwell Time
 		lineageTag: 077fe999-a575-4f47-b6f4-ec435a0c6dd9
 
 	measure 'Dwell Time (Hourly avg)' =
@@ -524,14 +516,14 @@ table _Measures
 			CALCULATE ( AVERAGE ( Footfall[DWELL_TIME] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
 		formatString: #,0.00%;-#,0.00%;#,0.00%
-		displayFolder: KPIs\By Hour\project01\Dwell Time
+		displayFolder: Footfall QA\Dwell Time
 		lineageTag: 4d25e4d7-8344-4f44-b8f2-76a21065c229
 
 	measure 'Dwell Time (Ratio)' =
 			
 			DIVIDE ( [Dwell Time (Hourly avg)], [Dwell Time (Daily)] )
 		formatString: 0.00%;-0.00%;0.00%
-		displayFolder: KPIs\By Hour\project01\Dwell Time
+		displayFolder: Footfall QA\Dwell Time
 		lineageTag: 30246b75-a3d8-4ff0-9a05-2d683e4180b3
 
 	measure 'Sites selected' = DISTINCTCOUNT(Footfall[CODE])
@@ -584,6 +576,82 @@ table _Measures
 			AVERAGEX ( VALUES ( 'Calendar'[Date] ), [OTS (Hourly)])
 		displayFolder: KPIs\AVG
 		lineageTag: 8c44ca3c-66f0-47b9-9991-5455dc916d07
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'QA Daily' =
+			
+			SWITCH (
+			    SELECTEDVALUE ( 'Dim Metric'[Metric] ),
+			    "Dwell Time",             [Dwell Time (Daily)],
+			    "Ext Signals",            [Ext Signals (Daily)],
+			    "Ext Signals 2",          [Ext Signals 2 (Daily)],
+			    "Eye Contacts",           [Eye Contacts (Daily)],
+			    "Eye Contacts Weighted",  [Eye Contacts Weighted (Daily)],
+			    "Impressions Weighted",   [Impressions Weighted (Daily)],
+			    "Impressions Weighted 2", [Impressions Weighted 2 (Daily)],
+			    "Signals",                [Signals (Daily)],
+			    "EXTRAPOLATED_NUMBER_OF_USERS",        [PaS],
+			    "EXTRAPOLATED_USERS_2",                [Total Population],
+			    "EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS", [OTS],
+			    "Users",                  [Users (Daily)]
+			)
+		displayFolder: Footfall QA
+		lineageTag: 168466f6-07d5-4748-a8f3-8a901997e83c
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Dim Metric'[Metric] ) = "Dwell Time",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure 'QA Hourly' =
+			
+			SWITCH (
+			    SELECTEDVALUE ( 'Dim Metric'[Metric] ),
+			    "Dwell Time",             [Dwell Time (Hourly avg)],
+			    "Ext Signals",            [Ext Signals (Hourly)],
+			    "Ext Signals 2",          [Ext Signals 2 (Hourly)],
+			    "Eye Contacts",           [Eye Contacts (Hourly)],
+			    "Eye Contacts Weighted",  [Eye Contacts Weighted (Hourly)],
+			    "Impressions Weighted",   [Impressions Weighted (Hourly)],
+			    "Impressions Weighted 2", [Impressions Weighted 2 (Hourly)],
+			    "Signals",                [Signals (Hourly)],
+			    "EXTRAPOLATED_NUMBER_OF_USERS",        [PaS (Hourly)],
+			    "EXTRAPOLATED_USERS_2",                [Total Population (Hourly)],
+			    "EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS", [OTS (Hourly)],
+			    "Users",                  [Users (Hourly)]
+			)
+		displayFolder: Footfall QA
+		lineageTag: a08ce8fc-3041-4729-a0b6-83e1187d622e
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Dim Metric'[Metric] ) = "Dwell Time",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure 'QA Inflation' =
+			
+			SWITCH (
+			    SELECTEDVALUE ( 'Dim Metric'[Metric] ),
+			    "Dwell Time",             [Dwell Time (Ratio)],
+			    "Ext Signals",            [Ext Signals (Inflation)],
+			    "Ext Signals 2",          [Ext Signals 2 (Inflation)],
+			    "Eye Contacts",           [Eye Contacts (Inflation)],
+			    "Eye Contacts Weighted",  [Eye Contacts Weighted (Inflation)],
+			    "Impressions Weighted",   [Impressions Weighted (Inflation)],
+			    "Impressions Weighted 2", [Impressions Weighted 2 (Inflation)],
+			    "Signals",                [Signals (Inflation)],
+			    "EXTRAPOLATED_NUMBER_OF_USERS",        [PaS (Inflation)],
+			    "EXTRAPOLATED_USERS_2",                [Total Population (Inflation)],
+			    "EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS", [OTS (Inflation)],
+			    "Users",                  [Users (Inflation)]
+			)
+		displayFolder: Footfall QA
+		lineageTag: 463447a4-0685-44ff-82bd-22e34d7f37d5
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 

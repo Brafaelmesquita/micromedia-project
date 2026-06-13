@@ -1,0 +1,180 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "0e98d724701404960042",
+  "position": {
+    "x": 15.859576664945793,
+    "y": 269.61280330407851,
+    "z": 12001,
+    "height": 426.88693856479097,
+    "width": 659.494062983996,
+    "tabOrder": 12001
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Daily = all-day deduplicated total (HOUR 25) · Hourly = sum of hours 00–23 · Inflation = Hourly ÷ Daily. Use Daily for all reporting; Hourly is validation only. (* = source columns for the OTS / PaS / Total Population KPIs.)"
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " • "
+                  },
+                  {
+                    "value": "Additive events — Inflation ≈ 1.00.",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " Signals, Ext Signals, Ext Signals 2. Observation events, so the all-day total equals the sum of the hours by construction; Daily and Hourly are interchangeable."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " • "
+                  },
+                  {
+                    "value": "Unique-person counts — Inflation > 1 (median ≈ 1.5).",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " Users, * Extrapolated_number_of_users (PaS), * Extrapolated_users_2 (Total Population). The all-day figure deduplicates people; summing hours re-counts repeat visitors. Use Daily — the index measures repeat-visit overcount."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " • "
+                  },
+                  {
+                    "value": "Reach / eye-contact counts — Inflation < 1 (median ≈ 0.7–0.9).",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " Eye Contacts, Eye Contacts Weighted, Impressions Weighted / Weighted 2, * Extrapolated_number_of_eye_contacts (OTS). Extrapolated to population — each hour scaled to its own smaller population while the all-day row is scaled to the full daily population, so the hours don't sum to the day. Use Daily; the hourly sum understates reach, not a real drop."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " • "
+                  },
+                  {
+                    "value": "Dwell Time — Inflation < 1 (median ≈ 0.71).",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " An average (%), not a count — it can't be summed; the ratio just compares all-day vs hourly average."
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": " "
+                  },
+                  {
+                    "value": "Bottom line:",
+                    "textStyle": {
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " real overcount appears only for unique-person counts (Users, PaS, Total Population). For additive events the index is trivially 1; for reach metrics it reflects the extrapolation method, not an audience change."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Daily vs Hourly — reading guide'"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#23B5E8'"
+                    }
+                  }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}
