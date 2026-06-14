@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Total Population (Hourly)"
+                  "Property": "Total Population"
                 }
               },
-              "queryRef": "_Measures.Total Population (Hourly)",
-              "nativeQueryRef": "Total Population (Hourly)"
+              "queryRef": "_Measures.Total Population",
+              "nativeQueryRef": "Total Population"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Total Population (Hourly)"
+                "Property": "Total Population"
               }
             },
             "direction": "Descending"
@@ -143,7 +143,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
                 }
               }
             },

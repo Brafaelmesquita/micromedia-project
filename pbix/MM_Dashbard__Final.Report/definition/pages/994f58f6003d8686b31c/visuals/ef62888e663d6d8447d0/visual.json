@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "PaS (Hourly)"
+                  "Property": "PaS"
                 }
               },
-              "queryRef": "_Measures.PaS (Hourly)",
-              "nativeQueryRef": "PaS (Hourly)"
+              "queryRef": "_Measures.PaS",
+              "nativeQueryRef": "PaS"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "PaS (Hourly)"
+                "Property": "PaS"
               }
             },
             "direction": "Descending"
@@ -143,7 +143,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
                 }
               }
             },

@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Avg Hourly Total Population"
+                  "Property": "Avg Daily Total Population"
                 }
               },
-              "queryRef": "_Measures.Avg Hourly Total Population",
-              "nativeQueryRef": "Avg Hourly Total Population"
+              "queryRef": "_Measures.Avg Daily Total Population",
+              "nativeQueryRef": "Avg Daily Total Population"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Avg Hourly Total Population"
+                "Property": "Avg Daily Total Population"
               }
             },
             "direction": "Descending"
@@ -143,7 +143,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
                 }
               }
             },
