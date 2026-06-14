@@ -4,10 +4,10 @@
   "position": {
     "x": 23.789364997418691,
     "y": 498.255033557047,
-    "z": 18001,
+    "z": 19000,
     "height": 202.20960247805886,
     "width": 261.68301497160559,
-    "tabOrder": 18001
+    "tabOrder": 19000
   },
   "visual": {
     "visualType": "donutChart",
@@ -23,11 +23,11 @@
                       "Entity": "Demographics_AgeLong"
                     }
                   },
-                  "Property": "GENDER"
+                  "Property": "Gender Label"
                 }
               },
-              "queryRef": "Demographics_AgeLong.GENDER",
-              "nativeQueryRef": "GENDER",
+              "queryRef": "Demographics_AgeLong.Gender Label",
+              "nativeQueryRef": "Gender Label",
               "active": true
             }
           ]
@@ -159,6 +159,136 @@
               }
             ]
           }
+        },
+        {
+          "properties": {
+            "borderShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Demographics_AgeLong"
+                          }
+                        },
+                        "Property": "GENDER"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'F'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "borderShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#118DFF'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Demographics_AgeLong"
+                          }
+                        },
+                        "Property": "Gender Label"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Female'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0A7FA8'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Demographics_AgeLong"
+                          }
+                        },
+                        "Property": "Gender Label"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Male'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
         }
       ]
     },
@@ -216,37 +346,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "c70cb40a010d5009d6e4",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Demographics_AgeLong"
-              }
-            },
-            "Property": "GENDER"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "c1d125ff17ace0c320bb",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Age Audience (Hourly)"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

@@ -549,6 +549,20 @@ table _Measures
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Age %' =
+			
+			DIVIDE (
+			    [Age Audience (Hourly)],
+			    CALCULATE (
+			        [Age Audience (Hourly)],
+			        REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET], Demographics_AgeLong[AGE_SORT] )
+			    )
+			)
+		displayFolder: Age&Gender
+		lineageTag: 9f65395f-601e-49f2-bf6a-a293f9dc88f8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Column1
 		dataType: string
 		isHidden
