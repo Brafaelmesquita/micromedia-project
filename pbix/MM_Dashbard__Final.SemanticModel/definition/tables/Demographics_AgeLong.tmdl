@@ -48,6 +48,9 @@ table Demographics_AgeLong
 		lineageTag: 32fa4ff8-9802-4b4b-914f-84148d9e825a
 		summarizeBy: none
 		sourceColumn: AGE_BRACKET
+		sortByColumn: AGE_SORT
+
+		changedProperty = SortByColumn
 
 		annotation SummarizationSetBy = Automatic
 
@@ -84,6 +87,19 @@ table Demographics_AgeLong
 		sourceColumn: AGE_SORT
 
 		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Gender Label' =
+			
+			SWITCH (
+			    Demographics_AgeLong[GENDER],
+			    "F", "Female",
+			    "M", "Male",
+			    Demographics_AgeLong[GENDER]
+			)
+		lineageTag: 0072257f-35a3-46ae-b448-d9919289b2a8
+		summarizeBy: none
 
 		annotation SummarizationSetBy = Automatic
 

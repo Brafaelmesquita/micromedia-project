@@ -4,10 +4,10 @@
   "position": {
     "x": 689.38421122935119,
     "y": 169.61040117547532,
-    "z": 12000,
+    "z": 11000,
     "height": 527.06888107217594,
     "width": 550.777861881651,
-    "tabOrder": 12000
+    "tabOrder": 11000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -662,62 +662,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "130f42c2c3bc178b2310",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "QA Daily"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "a7ace91de3b79c00c0d8",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "QA Hourly"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "7ff5b85890c4c04273c1",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "QA Inflation"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "597a8e38275c06206c3e",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Master_Sites"
-              }
-            },
-            "Property": "Site Label"
-          }
-        },
-        "type": "Categorical"
       }
     ]
   }
