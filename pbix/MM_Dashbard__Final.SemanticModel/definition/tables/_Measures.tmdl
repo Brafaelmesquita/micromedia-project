@@ -103,6 +103,8 @@ table _Measures
 		displayFolder: KPIs\By Hour
 		lineageTag: fdbaddee-f7f9-4861-89ed-b7deba5ca6df
 
+		annotation PBI_FormatHint = {"isDecimal":true}
+
 	measure 'PaS (Hourly)' =
 			
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_USERS] ),
@@ -120,7 +122,7 @@ table _Measures
 		lineageTag: c8f94d63-c789-4916-988f-920de6bb2f16
 
 	measure 'Age Audience (Hourly)' =
-			-- [Segments\Age]
+			
 			SUMX (
 			    FILTER ( Demographics_AgeLong, Demographics_AgeLong[MOVEMENT_MODALITY] = "All" ),
 			    VAR _code = Demographics_AgeLong[CODE]
@@ -137,31 +139,12 @@ table _Measures
 			            Footfall[IS_GRAND_TOTAL] = 1
 			        )
 			)
+		formatString: #,0
 		displayFolder: Age&Gender
 		lineageTag: 459ed597-c6d9-46ed-b469-e907371fd71f
 
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Age Profile %' = ```
-			-- [Segments\Age]
-			DIVIDE ( [Age Audience (Hourly)], [Total Population (Hourly)] )
-			
-			```
-		displayFolder: Age&Gender
-		lineageTag: ef0a46b4-13a3-4e81-97fb-841f391a2b0c
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Age Audience (Daily Unique)' =
-			-- [Segments\Age]
-			[Age Profile %] * [Total Population]
-		displayFolder: Age&Gender
-		lineageTag: 8cdb39fa-f2f5-4665-8614-8e60742ecc04
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
 	measure 'Age Impressions (OTS)' =
-			-- [Segments\Age]
+			
 			SUMX (
 			    FILTER ( Demographics_AgeLong, Demographics_AgeLong[MOVEMENT_MODALITY] = "All" ),
 			    VAR _code = Demographics_AgeLong[CODE]
@@ -182,95 +165,6 @@ table _Measures
 		lineageTag: d5f2aefe-0bbe-4ef0-9227-52b1e969de5e
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Age PaS (Daily Unique)' = [Age Profile %] * [PaS]                    -- [Segments\Age]
-		displayFolder: Age&Gender
-		lineageTag: 548a2df7-7893-4ee9-ba0e-91d2b6a08b51
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Class Audience (Hourly)' =
-			-- [Segments\Class]
-			SUMX (
-			    FILTER ( Demographics_ClassLong, Demographics_ClassLong[MOVEMENT_MODALITY] = "All" ),
-			    VAR _code = Demographics_ClassLong[CODE]
-			    VAR _ym   = Demographics_ClassLong[YEAR_MONTH]
-			    VAR _hr   = Demographics_ClassLong[HOUR]
-			    VAR _pct  = DIVIDE ( Demographics_ClassLong[REACH_PCT], 100 )
-			    RETURN
-			        _pct *
-			        CALCULATE (
-			            SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
-			            Footfall[CODE]           = _code,
-			            Footfall[YEAR_MONTH]     = _ym,
-			            Footfall[HOUR]           = _hr,
-			            Footfall[IS_GRAND_TOTAL] = 1
-			        )
-			)
-		displayFolder: Professions
-		lineageTag: b82e4c2d-b623-4ac9-9065-354524f02430
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Class Profile %' =
-			-- [Segments\Class]
-			DIVIDE ( [Class Audience (Hourly)], [Total Population (Hourly)] )
-		displayFolder: Professions
-		lineageTag: d8689c0b-14f7-4268-9b18-64f27a93fc34
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Class Audience (Daily Unique)' =
-			-- [Segments\Class]
-			[Class Profile %] * [Total Population]
-		displayFolder: Professions
-		lineageTag: b190f8ae-bf53-4504-85c2-125b6ffba077
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Class Impressions (OTS)' =
-			-- [Segments\Class]
-			SUMX (
-			    FILTER ( Demographics_ClassLong, Demographics_ClassLong[MOVEMENT_MODALITY] = "All" ),
-			    VAR _code = Demographics_ClassLong[CODE]
-			    VAR _ym   = Demographics_ClassLong[YEAR_MONTH]
-			    VAR _hr   = Demographics_ClassLong[HOUR]
-			    VAR _pct  = DIVIDE ( Demographics_ClassLong[REACH_PCT], 100 )
-			    RETURN
-			        _pct *
-			        CALCULATE (
-			            SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED] ),
-			            Footfall[CODE]           = _code,
-			            Footfall[YEAR_MONTH]     = _ym,
-			            Footfall[HOUR]           = _hr,
-			            Footfall[IS_GRAND_TOTAL] = 1
-			        )
-			)
-		displayFolder: Professions
-		lineageTag: 572ff9c4-1fb5-48f9-baa6-787fb397fc82
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'Class % Check (per cell)' =
-			-- [Diagnostics]
-			AVERAGEX (
-			    SUMMARIZE (
-			        FILTER ( Demographics_ClassLong, Demographics_ClassLong[MOVEMENT_MODALITY] = "All" ),
-			        Demographics_ClassLong[CODE],
-			        Demographics_ClassLong[YEAR_MONTH],
-			        Demographics_ClassLong[HOUR],
-			        Demographics_ClassLong[BREAKDOWN]
-			    ),
-			    CALCULATE ( SUM ( Demographics_ClassLong[REACH_PCT] ) )
-			)
-		displayFolder: Professions
-		lineageTag: b46c218c-be2b-4daf-ae35-ad8fe0e4179d
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
-	measure 'ClassLong Rows' = COUNTROWS ( Demographics_ClassLong )
-		formatString: 0
-		lineageTag: 6cdf99b9-75fa-47a2-915d-33d7ebbe81aa
 
 	measure 'Total Population (Inflation)' = DIVIDE ( [Total Population (Hourly)], [Total Population] )
 		displayFolder: KPIs\Inflation

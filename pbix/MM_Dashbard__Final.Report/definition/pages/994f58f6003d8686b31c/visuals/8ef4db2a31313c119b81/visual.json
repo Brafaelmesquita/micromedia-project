@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Avg Hourly PaS"
+                  "Property": "Avg Daily PaS"
                 }
               },
-              "queryRef": "_Measures.Avg Hourly PaS",
-              "nativeQueryRef": "Avg Hourly PaS"
+              "queryRef": "_Measures.Avg Daily PaS",
+              "nativeQueryRef": "Avg Daily PaS"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Avg Hourly PaS"
+                "Property": "Avg Daily PaS"
               }
             },
             "direction": "Descending"
@@ -143,7 +143,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
                 }
               }
             },

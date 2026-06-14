@@ -1,9 +1,0 @@
-{
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
-  "name": "11aa9f795cdd0906ae5b",
-  "displayName": "Methodology",
-  "displayOption": "FitToPage",
-  "height": 720,
-  "width": 1280,
-  "visibility": "HiddenInViewMode"
-}

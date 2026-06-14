@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "701d50d3a4049504ec0a",
   "position": {
-    "x": 609.58353748162665,
-    "y": 173.09162175404214,
+    "x": 539.225606608157,
+    "y": 173.13371192565825,
     "z": 9000,
-    "height": 79.020088192062715,
-    "width": 227.02596766291035,
+    "height": 79.297883324728971,
+    "width": 227.32059886422303,
     "tabOrder": 9000
   },
   "visual": {
@@ -214,7 +214,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
                 }
               }
             },

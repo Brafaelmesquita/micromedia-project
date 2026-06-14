@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "OTS (Hourly)"
+                  "Property": "OTS"
                 }
               },
-              "queryRef": "_Measures.OTS (Hourly)",
-              "nativeQueryRef": "OTS (Hourly)"
+              "queryRef": "_Measures.OTS",
+              "nativeQueryRef": "OTS"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "OTS (Hourly)"
+                "Property": "OTS"
               }
             },
             "direction": "Descending"
@@ -143,7 +143,7 @@
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
                 }
               }
             },
