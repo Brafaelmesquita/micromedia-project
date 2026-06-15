@@ -10,7 +10,8 @@ post-campaign reporting.
 Provided monthly by Locomizer as CSV exports:
 
 - **Footfall** — audience volume and movement profile per screen
-- **Demographics** — age and gender distribution per screen
+- **Demographics** — age, gender, social grade, occupation and industry
+  distribution per screen
 - **Brand Affinity** — affinity index for brand / POI categories per screen
 
 Screens are joined to the **Master Site List** on `CODE` (Custom ID), the shared
@@ -60,9 +61,20 @@ land in `data/processed/`. No code changes are needed to add a new month.
 
 The `.pbip` lives under `pbix/` (text-based, so it diffs cleanly in git). Pages:
 
-- **Campaign reporting** — pre- and post-campaign views (footfall / impressions,
-  demographics, brand affinity) filtered by screen, date, time of day and
-  movement type.
+- **Pre-Campaign — "Who you'll reach"** — proposed-audience profile to support
+  sales, across two pages:
+  - audience impact trend over the selected dates and headline KPIs
+    (footfall / impressions);
+  - gender split and age profile;
+  - visitation mix (residents / workers / transient visitors) and movement mix
+    (how they travel);
+  - social grade / occupation / industry profile (family selectable);
+  - brand-affinity index by brand / POI category (baseline 100).
+
+  Filterable by screen, network, city, date range and time of day.
+- **Post-Campaign reporting** — the same semantic model filtered to the delivered
+  screens and campaign dates, reporting actual impressions, demographics and
+  brand affinity.
 - **QA — Daily vs Hourly** and **QA — Inflation Trend** — internal data-quality
   monitors that validate Locomizer's all-day totals against the hourly sums.
   Not client-facing (hidden in the published app).
@@ -72,6 +84,30 @@ The `.pbip` lives under `pbix/` (text-based, so it diffs cleanly in git). Pages:
 for validation only — see the in-report reading guide. Inflation = Hourly ÷ Daily
 behaves predictably by metric (≈1.0 for signals, ≈1.5 for unique-person counts,
 ≈0.7–0.9 for reach/eye-contact metrics).
+
+Demographic composition (age, gender, social grade, occupation, industry) is
+**audience-weighted by footfall**, so multi-screen profiles reflect where the
+audience actually is rather than a simple per-screen average; each profile family
+sums to ~100%. For movement and visitation, **"All" is the deduplicated unique
+total — not the sum of the segments** (the same person can travel differently on
+different days), so segment views are shown as relative mix and never summed back
+to "All".
+
+## Semantic model notes
+
+- Profile visuals are driven by long-format demographic tables:
+  `Demographics_AgeLong` (age × gender, from the Python pipeline) and
+  `Demographics_ClassLong` (social grade / occupation / industry, unpivoted in
+  Power Query with a `BREAKDOWN` / `SEGMENT` structure).
+- Monthly demographic tables join the date `Calendar` on a `YEAR_MONTH` text key
+  (`YYYY-MM`); the relationship is many-to-many, single-direction.
+- Movement is modelled in two tiers: a fine-grained `dim_Movement` for the
+  footfall travel chart, and a coarse `dim_Movement_Group`
+  (Pedestrians / Non_Pedestrians) shared with the demographic and brand-affinity
+  tables. `dim_Visitation` is shared across Footfall and Brand_Affinity.
+- Composition charts pin the opposite modality to "All", so the modality slicers
+  are wired (via *Edit interactions*) to drive only the brand-affinity chart, not
+  the composition visuals.
 
 ## Monthly refresh & publish
 

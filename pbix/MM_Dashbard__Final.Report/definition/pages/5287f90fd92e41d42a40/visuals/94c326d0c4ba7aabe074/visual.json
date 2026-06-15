@@ -1,90 +1,93 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "e6cda5020d58db9dc1b2",
+  "name": "94c326d0c4ba7aabe074",
   "position": {
-    "x": 23.789364997418691,
-    "y": 173.13371192565825,
-    "z": 8000,
-    "height": 79.297883324728971,
-    "width": 130.84150748580279,
-    "tabOrder": 8000
+    "x": 23.710564399421127,
+    "y": 481.3244573082489,
+    "z": 7005,
+    "height": 238.29117221418235,
+    "width": 356.84399421128796,
+    "tabOrder": 7005
   },
   "visual": {
-    "visualType": "slicer",
+    "visualType": "clusteredBarChart",
     "query": {
       "queryState": {
-        "Values": {
+        "Category": {
           "projections": [
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Master_Sites"
+                      "Entity": "Footfall"
                     }
                   },
-                  "Property": "MM ID"
+                  "Property": "MOVEMENT_MODALITY"
                 }
               },
-              "queryRef": "Master_Sites.MM ID",
-              "nativeQueryRef": "MM ID",
+              "queryRef": "Footfall.MOVEMENT_MODALITY",
+              "nativeQueryRef": "MOVEMENT_MODALITY",
               "active": true
             }
           ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Movement Audience"
+                }
+              },
+              "queryRef": "_Measures.Movement Audience",
+              "nativeQueryRef": "Movement Audience"
+            }
+          ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Movement Audience"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
       }
     },
     "objects": {
-      "data": [
+      "categoryAxis": [
         {
           "properties": {
-            "mode": {
+            "showAxisTitle": {
               "expr": {
                 "Literal": {
-                  "Value": "'Dropdown'"
-                }
-              }
-            },
-            "isInvertedSelectionMode": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
           }
         }
       ],
-      "general": [
+      "valueAxis": [
         {
           "properties": {
-            "selfFilterEnabled": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "selection": [
-        {
-          "properties": {
-            "selectAllCheckboxEnabled": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "header": [
-        {
-          "properties": {
-            "show": {
+            "showAxisTitle": {
               "expr": {
                 "Literal": {
                   "Value": "false"
@@ -96,64 +99,6 @@
       ]
     },
     "visualContainerObjects": {
-      "title": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Site'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#23B5E8'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "visualHeader": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {
@@ -173,27 +118,60 @@
             }
           }
         }
+      ],
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'How they travel'"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#23B5E8'"
+                    }
+                  }
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
+                }
+              }
+            }
+          }
+        }
       ]
-    },
-    "syncGroup": {
-      "groupName": "MM ID",
-      "fieldChanges": true,
-      "filterChanges": true
     },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [
       {
-        "name": "7cdae19027c8699a1d30",
+        "name": "139e4377757c6893d65d",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "Master_Sites"
+                "Entity": "Footfall"
               }
             },
-            "Property": "MM ID"
+            "Property": "MOVEMENT_MODALITY"
           }
         },
         "type": "Categorical",
@@ -201,8 +179,8 @@
           "Version": 2,
           "From": [
             {
-              "Name": "m",
-              "Entity": "Master_Sites",
+              "Name": "f",
+              "Entity": "Footfall",
               "Type": 0
             }
           ],
@@ -217,10 +195,10 @@
                           "Column": {
                             "Expression": {
                               "SourceRef": {
-                                "Source": "m"
+                                "Source": "f"
                               }
                             },
-                            "Property": "MM ID"
+                            "Property": "MOVEMENT_MODALITY"
                           }
                         }
                       ],
@@ -228,7 +206,7 @@
                         [
                           {
                             "Literal": {
-                              "Value": "null"
+                              "Value": "'All'"
                             }
                           }
                         ]
@@ -255,6 +233,20 @@
             }
           ]
         }
+      },
+      {
+        "name": "a9908ee6c39646e9a404",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Movement Audience"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }

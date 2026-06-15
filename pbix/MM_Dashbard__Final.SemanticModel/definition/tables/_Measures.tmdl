@@ -563,6 +563,31 @@ table _Measures
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Visitation Audience' =
+			
+			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			    Footfall[MOVEMENT_MODALITY] = "All",
+			    Footfall[HOUR] <> 25 )
+		formatString: #,0
+		displayFolder: Modality
+		lineageTag: 5924e282-4869-42b4-9fde-703272e8af4c
+
+	measure 'Movement Audience' =
+			
+			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			    Footfall[VISITATION_MODALITY] = "All",
+			    Footfall[HOUR] <> 25 )
+		displayFolder: Modality
+		lineageTag: fef4d227-56f4-4c0d-abc2-2ac8819dfd05
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Brand Affinity Index' = AVERAGE ( Brand_Affinity[BRAND_AFFINITY_INDEX] )
+		displayFolder: Modality
+		lineageTag: 898bba54-e4fd-49fb-b214-88a566d2c748
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	column Column1
 		dataType: string
 		isHidden

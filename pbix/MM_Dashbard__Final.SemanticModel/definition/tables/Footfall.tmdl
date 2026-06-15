@@ -211,6 +211,17 @@ table Footfall
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Movement Group' =
+			
+			SWITCH ( TRUE (),
+			    Footfall[MOVEMENT_MODALITY] = "All", "All",
+			    Footfall[MOVEMENT_MODALITY] = "Pedestrians", "Pedestrians",
+			    "Non_Pedestrians" )
+		lineageTag: c1b6664a-4391-4bce-a763-38f4a43cf564
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Footfall = m
 		mode: import
 		source =

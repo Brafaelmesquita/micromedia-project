@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "5287f90fd92e41d42a40",
+  "displayName": "PreCamp - 2",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "objects": {
+    "outspace": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F0F0EE'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F0F0EE'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "0f70aa50489c6673c74d",
+      "target": "94c326d0c4ba7aabe074",
+      "type": "NoFilter"
+    },
+    {
+      "source": "10db1d98121ae5508106",
+      "target": "0f70aa50489c6673c74d",
+      "type": "NoFilter"
+    },
+    {
+      "source": "10db1d98121ae5508106",
+      "target": "94c326d0c4ba7aabe074",
+      "type": "NoFilter"
+    },
+    {
+      "source": "0f70aa50489c6673c74d",
+      "target": "b3ff45904400d042a541",
+      "type": "NoFilter"
+    }
+  ]
+}

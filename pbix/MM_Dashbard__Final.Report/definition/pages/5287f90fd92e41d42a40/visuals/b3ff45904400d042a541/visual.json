@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "701d50d3a4049504ec0a",
+  "name": "b3ff45904400d042a541",
   "position": {
-    "x": 539.225606608157,
-    "y": 173.13371192565825,
-    "z": 9000,
-    "height": 79.297883324728971,
-    "width": 227.32059886422303,
-    "tabOrder": 9000
+    "x": 568.93649067023682,
+    "y": 171.36641285248098,
+    "z": 7012,
+    "height": 79.514015563551169,
+    "width": 227.57459626809472,
+    "tabOrder": 7012
   },
   "visual": {
     "visualType": "slicer",
@@ -266,23 +266,5 @@
       "filterChanges": true
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "a01c25c8b603a86457aa",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Calendar"
-              }
-            },
-            "Property": "Date"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

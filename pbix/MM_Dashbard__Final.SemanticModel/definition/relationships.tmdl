@@ -34,22 +34,6 @@ relationship 0fb5a6e5-c4a2-59ac-032e-cd3c100272ee
 	fromColumn: Brand_Affinity.HOUR
 	toColumn: dim_Hour.Hour
 
-relationship 2d32af80-80da-f99e-97f7-20da211ba170
-	fromColumn: Demographics.MOVEMENT_MODALITY
-	toColumn: dim_Movement.MovementModality
-
-relationship 562058fd-1137-6599-e741-1dc6b7f2bdda
-	fromColumn: Demographics_AgeLong.MOVEMENT_MODALITY
-	toColumn: dim_Movement.MovementModality
-
-relationship 9b837818-59e2-2bd2-a285-1525475d9e4d
-	fromColumn: Brand_Affinity.MOVEMENT_MODALITY
-	toColumn: dim_Movement.MovementModality
-
-relationship d30b569e-6f8f-68de-6649-975028d55089
-	fromColumn: Footfall.MOVEMENT_GROUP
-	toColumn: dim_Movement.MovementModality
-
 relationship ebceb768-15ae-5cfd-ac97-f5d0ffade1b2
 	fromColumn: Footfall.VISITATION_MODALITY
 	toColumn: dim_Visitation.VisitationModality
@@ -62,11 +46,11 @@ relationship e23b7756-f2d6-3f99-f511-bd01efcdf03d
 	fromColumn: Demographics_ClassLong.CODE
 	toColumn: Master_Sites.'MM ID'
 
-relationship dda7e79c-7eec-fb72-9599-b460c440c3bd
-	fromColumn: Demographics_ClassLong.MOVEMENT_MODALITY
-	toColumn: dim_Movement.MovementModality
-
 relationship 6897aeeb-04a7-af9c-6998-a6556a1b61d0
 	fromColumn: Demographics_ClassLong.HOUR
 	toColumn: dim_Hour.Hour
+
+relationship 62d76c9b-f15e-ee4d-292f-45faba09e08c
+	fromColumn: Footfall.'Movement Group'
+	toColumn: dim_Movement_Group.'Movement Group'
 
