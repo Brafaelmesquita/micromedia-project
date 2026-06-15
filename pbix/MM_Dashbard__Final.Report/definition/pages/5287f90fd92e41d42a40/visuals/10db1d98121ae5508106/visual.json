@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "e6cda5020d58db9dc1b2",
+  "name": "10db1d98121ae5508106",
   "position": {
-    "x": 23.789364997418691,
-    "y": 173.13371192565825,
-    "z": 8000,
-    "height": 79.297883324728971,
-    "width": 130.84150748580279,
-    "tabOrder": 8000
+    "x": 366.03865785289935,
+    "y": 171.36641285248098,
+    "z": 7004,
+    "height": 79.514015563551169,
+    "width": 185.07572588067944,
+    "tabOrder": 7004
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Master_Sites"
+                      "Entity": "dim_Movement_Group"
                     }
                   },
-                  "Property": "MM ID"
+                  "Property": "Movement Group"
                 }
               },
-              "queryRef": "Master_Sites.MM ID",
-              "nativeQueryRef": "MM ID",
+              "queryRef": "dim_Movement_Group.Movement Group",
+              "nativeQueryRef": "Movement Group",
               "active": true
             }
           ]
@@ -58,10 +58,10 @@
       "general": [
         {
           "properties": {
-            "selfFilterEnabled": {
+            "orientation": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "1D"
                 }
               }
             }
@@ -71,6 +71,13 @@
       "selection": [
         {
           "properties": {
+            "strictSingleSelect": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
             "selectAllCheckboxEnabled": {
               "expr": {
                 "Literal": {
@@ -96,6 +103,26 @@
       ]
     },
     "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
       "title": [
         {
           "properties": {
@@ -109,14 +136,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Site'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
+                  "Value": "'Movement Group'"
                 }
               }
             },
@@ -124,6 +144,13 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
                 }
               }
             },
@@ -147,27 +174,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "border": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
                 }
               }
             }
@@ -175,25 +182,20 @@
         }
       ]
     },
-    "syncGroup": {
-      "groupName": "MM ID",
-      "fieldChanges": true,
-      "filterChanges": true
-    },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [
       {
-        "name": "7cdae19027c8699a1d30",
+        "name": "689bca7417b736360307",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "Master_Sites"
+                "Entity": "dim_Movement_Group"
               }
             },
-            "Property": "MM ID"
+            "Property": "Movement Group"
           }
         },
         "type": "Categorical",
@@ -201,8 +203,8 @@
           "Version": 2,
           "From": [
             {
-              "Name": "m",
-              "Entity": "Master_Sites",
+              "Name": "d",
+              "Entity": "dim_Movement_Group",
               "Type": 0
             }
           ],
@@ -217,10 +219,10 @@
                           "Column": {
                             "Expression": {
                               "SourceRef": {
-                                "Source": "m"
+                                "Source": "d"
                               }
                             },
-                            "Property": "MM ID"
+                            "Property": "Movement Group"
                           }
                         }
                       ],
@@ -228,7 +230,7 @@
                         [
                           {
                             "Literal": {
-                              "Value": "null"
+                              "Value": "'All'"
                             }
                           }
                         ]

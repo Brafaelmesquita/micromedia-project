@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "e6cda5020d58db9dc1b2",
+  "name": "51df252785e97a20b551",
   "position": {
-    "x": 23.789364997418691,
-    "y": 173.13371192565825,
-    "z": 8000,
-    "height": 79.297883324728971,
-    "width": 130.84150748580279,
-    "tabOrder": 8000
+    "x": 568.93649067023682,
+    "y": 172.7373441553008,
+    "z": 7010,
+    "height": 79.514015563551169,
+    "width": 187.81758848631912,
+    "tabOrder": 7010
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Master_Sites"
+                      "Entity": "dim_Hour"
                     }
                   },
-                  "Property": "MM ID"
+                  "Property": "Hour"
                 }
               },
-              "queryRef": "Master_Sites.MM ID",
-              "nativeQueryRef": "MM ID",
+              "queryRef": "dim_Hour.Hour",
+              "nativeQueryRef": "Hour",
               "active": true
             }
           ]
@@ -35,46 +35,13 @@
       }
     },
     "objects": {
-      "data": [
-        {
-          "properties": {
-            "mode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Dropdown'"
-                }
-              }
-            },
-            "isInvertedSelectionMode": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
       "general": [
         {
           "properties": {
-            "selfFilterEnabled": {
+            "orientation": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "selection": [
-        {
-          "properties": {
-            "selectAllCheckboxEnabled": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "0D"
                 }
               }
             }
@@ -93,9 +60,35 @@
             }
           }
         }
+      ],
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Between'"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "title": [
         {
           "properties": {
@@ -109,7 +102,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Site'"
+                  "Value": "'Hour'"
                 }
               }
             },
@@ -141,19 +134,6 @@
           }
         }
       ],
-      "visualHeader": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {
@@ -176,7 +156,7 @@
       ]
     },
     "syncGroup": {
-      "groupName": "MM ID",
+      "groupName": "Hour",
       "fieldChanges": true,
       "filterChanges": true
     },
@@ -185,15 +165,15 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "7cdae19027c8699a1d30",
+        "name": "9dc40a991a281a033b8d",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "Master_Sites"
+                "Entity": "dim_Hour"
               }
             },
-            "Property": "MM ID"
+            "Property": "Hour"
           }
         },
         "type": "Categorical",
@@ -201,8 +181,8 @@
           "Version": 2,
           "From": [
             {
-              "Name": "m",
-              "Entity": "Master_Sites",
+              "Name": "d",
+              "Entity": "dim_Hour",
               "Type": 0
             }
           ],
@@ -217,10 +197,10 @@
                           "Column": {
                             "Expression": {
                               "SourceRef": {
-                                "Source": "m"
+                                "Source": "d"
                               }
                             },
-                            "Property": "MM ID"
+                            "Property": "Hour"
                           }
                         }
                       ],

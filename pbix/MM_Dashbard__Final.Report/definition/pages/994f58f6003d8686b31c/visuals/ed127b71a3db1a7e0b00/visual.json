@@ -64,6 +64,13 @@
                   "Value": "1D"
                 }
               }
+            },
+            "selfFilterEnabled": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }

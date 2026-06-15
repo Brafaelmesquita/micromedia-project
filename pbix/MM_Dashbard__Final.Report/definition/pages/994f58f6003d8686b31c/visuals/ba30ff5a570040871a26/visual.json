@@ -155,6 +155,11 @@
         }
       ]
     },
+    "syncGroup": {
+      "groupName": "Hour",
+      "fieldChanges": true,
+      "filterChanges": true
+    },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {

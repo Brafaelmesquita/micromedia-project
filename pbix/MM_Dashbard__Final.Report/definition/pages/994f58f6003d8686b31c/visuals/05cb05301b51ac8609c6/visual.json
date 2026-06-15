@@ -182,6 +182,11 @@
         }
       ]
     },
+    "syncGroup": {
+      "groupName": "GENDER",
+      "fieldChanges": true,
+      "filterChanges": true
+    },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {

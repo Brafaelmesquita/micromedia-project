@@ -3022,9 +3022,6 @@ cultureInfo en-US
 			        }
 			      },
 			      "State": "Generated",
-			      "Visibility": {
-			        "Value": "Hidden"
-			      },
 			      "Terms": [
 			        {
 			          "movement group": {
@@ -3413,9 +3410,6 @@ cultureInfo en-US
 			        }
 			      },
 			      "State": "Generated",
-			      "Visibility": {
-			        "Value": "Hidden"
-			      },
 			      "Terms": [
 			        {
 			          "movement modality": {
@@ -9656,9 +9650,6 @@ cultureInfo en-US
 			        }
 			      },
 			      "State": "Generated",
-			      "Visibility": {
-			        "Value": "Hidden"
-			      },
 			      "Terms": [
 			        {
 			          "movement modality": {
@@ -10503,9 +10494,6 @@ cultureInfo en-US
 			        }
 			      },
 			      "State": "Generated",
-			      "Visibility": {
-			        "Value": "Hidden"
-			      },
 			      "Terms": [
 			        {
 			          "movement modality": {
@@ -12789,275 +12777,84 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "dim_movement": {
+			    "dim_movement_group": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "dim_Movement"
+			          "ConceptualEntity": "dim_Movement_Group"
 			        }
 			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "dim movement": {
+			          "dim movement group": {
 			            "State": "Generated"
 			          }
 			        },
 			        {
-			          "dim_Movement": {
+			          "dim_Movement_Group": {
 			            "Type": "Noun",
 			            "State": "Generated",
 			            "Weight": 0.99
 			          }
 			        },
 			        {
-			          "movement": {
-			            "State": "Generated",
-			            "Weight": 0.97
-			          }
-			        },
-			        {
-			          "dim effort": {
+			          "dim movement category": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.5
+			            "Weight": 0.762
 			          }
 			        },
 			        {
-			          "effort": {
+			          "dim movement organization": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.491
+			            "Weight": 0.762
 			          }
 			        },
 			        {
-			          "dim drive": {
+			          "dim movement bracket": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.485
+			            "Weight": 0.739
 			          }
 			        },
 			        {
-			          "dim crusade": {
+			          "dim movement class": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.485
+			            "Weight": 0.739
 			          }
 			        },
 			        {
-			          "dim undertaking": {
+			          "dim movement crew": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.485
+			            "Weight": 0.739
 			          }
 			        },
 			        {
-			          "dim program": {
+			          "dim movement team": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.485
-			          }
-			        },
-			        {
-			          "dim measure": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.485
-			          }
-			        },
-			        {
-			          "drive": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "crusade": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "undertaking": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        }
-			      ]
-			    },
-			    "dim_movement.movement_modality": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "dim_Movement",
-			          "ConceptualProperty": "MovementModality"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "movement modality": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "MovementModality": {
-			            "Type": "Noun",
-			            "State": "Generated",
-			            "Weight": 0.99
-			          }
-			        },
-			        {
-			          "modality": {
-			            "State": "Generated",
-			            "Weight": 0.97
-			          }
-			        }
-			      ]
-			    },
-			    "dim_movement.sort": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "dim_Movement",
-			          "ConceptualProperty": "Sort"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "sort": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "genus": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.491
-			          }
-			        },
-			        {
-			          "species": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.491
-			          }
-			        },
-			        {
-			          "variety": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.491
-			          }
-			        },
-			        {
-			          "nature": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.491
-			          }
-			        },
-			        {
-			          "kind": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "class": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "type": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "ilk": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "order": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.476
-			          }
-			        },
-			        {
-			          "person": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.466
+			            "Weight": 0.739
 			          }
 			        }
 			      ]
@@ -13602,9 +13399,6 @@ cultureInfo en-US
 			        }
 			      },
 			      "State": "Generated",
-			      "Visibility": {
-			        "Value": "Hidden"
-			      },
 			      "Terms": [
 			        {
 			          "movement modality": {
@@ -14224,16 +14018,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Daily": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14255,16 +14039,6 @@ cultureInfo en-US
 			          "impressions weighted": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Hourly": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14288,16 +14062,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Inflation": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14319,16 +14083,6 @@ cultureInfo en-US
 			          "impressions weighted 2": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Daily": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14352,16 +14106,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Inflation": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14383,16 +14127,6 @@ cultureInfo en-US
 			          "impressions weighted 2": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Hourly": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14416,16 +14150,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Daily": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14447,16 +14171,6 @@ cultureInfo en-US
 			          "ext signals": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Hourly": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14480,16 +14194,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Inflation": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14511,16 +14215,6 @@ cultureInfo en-US
 			          "ext signals 2": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Daily": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14544,16 +14238,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Hourly": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14575,16 +14259,6 @@ cultureInfo en-US
 			          "ext signals 2": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Inflation": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14608,16 +14282,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Daily": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14639,16 +14303,6 @@ cultureInfo en-US
 			          "eye contacts": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Hourly": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14672,16 +14326,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Inflation": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14703,16 +14347,6 @@ cultureInfo en-US
 			          "eye contacts weighted": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Daily": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14736,16 +14370,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Hourly": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14767,16 +14391,6 @@ cultureInfo en-US
 			          "eye contacts weighted": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Inflation": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14800,16 +14414,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Daily": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14831,16 +14435,6 @@ cultureInfo en-US
 			          "signals": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Hourly": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14864,16 +14458,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Inflation": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14895,16 +14479,6 @@ cultureInfo en-US
 			          "users": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Daily": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -14928,16 +14502,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
-			        },
-			        {
-			          "Hourly": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14959,16 +14523,6 @@ cultureInfo en-US
 			          "users": {
 			            "State": "Generated",
 			            "Weight": 0.75
-			          }
-			        },
-			        {
-			          "Inflation": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        }
 			      ]
@@ -15896,30 +15450,1162 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "metrics.group": {
+			    "footfall.movement_group1": {
 			      "Definition": {
 			        "Binding": {
-			          "ConceptualEntity": "Metrics",
-			          "ConceptualProperty": "Group"
+			          "ConceptualEntity": "Footfall",
+			          "ConceptualProperty": "Movement Group"
+			        }
+			      },
+			      "State": "Generated",
+			      "Visibility": {
+			        "Value": "Hidden"
+			      },
+			      "Terms": [
+			        {
+			          "movement group": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "movement category": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "movement organization": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "movement bracket": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "movement class": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "movement crew": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "movement team": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        }
+			      ]
+			    },
+			    "demographics_age_long.gender_label": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Demographics_AgeLong",
+			          "ConceptualProperty": "Gender Label"
 			        }
 			      },
 			      "State": "Generated",
 			      "Terms": [
 			        {
-			          "Metric": {
+			          "gender label": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "label": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "gender sticker": {
+			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
+			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.9
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "sticker": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "gender tag": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "gender decal": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "tag": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        },
+			        {
+			          "decal": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        },
+			        {
+			          "sexuality label": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        },
+			        {
+			          "gender name tag": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.589
+			          }
+			        },
+			        {
+			          "sex label": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.582
+			          }
+			        },
+			        {
+			          "name tag": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.571
+			          }
+			        }
+			      ]
+			    },
+			    "entity__measure.age_": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Age %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "age %": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "age percentage": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "age pct": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        }
+			      ]
+			    },
+			    "entity__measure.visitation_audience": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Visitation Audience"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "visitation audience": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "audience": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "visitation spectator": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "spectator": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "visitation consultation": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.475
+			          }
+			        },
+			        {
+			          "visitation appointment": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.475
+			          }
+			        },
+			        {
+			          "consultation": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "appointment": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "visitation interview": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.461
+			          }
+			        },
+			        {
+			          "visitation meeting": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.461
+			          }
+			        },
+			        {
+			          "visitation hearing": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.461
+			          }
+			        },
+			        {
+			          "interview": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.452
+			          }
+			        }
+			      ]
+			    },
+			    "entity__measure.movement_audience": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Movement Audience"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "movement audience": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "audience": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "movement spectator": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.5
+			          }
+			        },
+			        {
+			          "spectator": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.491
+			          }
+			        },
+			        {
+			          "movement consultation": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.475
+			          }
+			        },
+			        {
+			          "movement appointment": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.475
+			          }
+			        },
+			        {
+			          "consultation": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "appointment": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.466
+			          }
+			        },
+			        {
+			          "movement interview": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.461
+			          }
+			        },
+			        {
+			          "movement meeting": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.461
+			          }
+			        },
+			        {
+			          "movement hearing": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.461
+			          }
+			        },
+			        {
+			          "interview": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.452
+			          }
+			        }
+			      ]
+			    },
+			    "entity__measure.avg_brand_affinity_index": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Avg Brand Affinity Index"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "avg brand affinity index": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "average brand affinity index": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.599
+			          }
+			        },
+			        {
+			          "avg brand affinity directory": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "avg brand affinity catalogue": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "avg brand affinity catalog": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "avg brand affinity guide": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "avg brand affinity file": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "avg brand affinity key": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "avg brand affinity table": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.499
+			          }
+			        },
+			        {
+			          "avg brand affinity manifestation": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.489
+			          }
+			        },
+			        {
+			          "avg brand affinity pointer": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.489
+			          }
+			        }
+			      ]
+			    },
+			    "calendar.monthyear": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Calendar",
+			          "ConceptualProperty": "Month-Year"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "month-year": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "month year": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "month-yr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.762
+			          }
+			        },
+			        {
+			          "month yr": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "mth -year": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.609
+			          }
+			        },
+			        {
+			          "mth year": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.6
+			          }
+			        }
+			      ]
+			    },
+			    "dim_movement_group.movement_group": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "dim_Movement_Group",
+			          "ConceptualProperty": "Movement Group"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "movement group": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "movement category": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "movement organization": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "movement bracket": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "movement class": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "movement crew": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "movement team": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        }
+			      ]
+			    },
+			    "dim_metric.metric_label": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Dim Metric",
+			          "ConceptualProperty": "Metric Label"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "metric label": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "label": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "metric sticker": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "sticker": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "metric tag": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "metric decal": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "tag": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        },
+			        {
+			          "decal": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        },
+			        {
+			          "metric name tag": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.589
+			          }
+			        },
+			        {
+			          "name tag": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.571
 			          }
 			        }
 			      ]
 			    }
 			  },
 			  "Relationships": {
-			    "brand_affinity_has_dim_movement": {
+			    "demographics_age_long_has_dim_hour1": {
+			      "Binding": {
+			        "ConceptualEntity": "Demographics_AgeLong"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "demographics_age_long": {
+			          "Target": {
+			            "Entity": "demographics_age_long"
+			          }
+			        },
+			        "dim_hour": {
+			          "Target": {
+			            "Entity": "dim_hour"
+			          },
+			          "Nouns": [
+			            {
+			              "hour": {
+			                "State": "Generated"
+			              }
+			            }
+			          ]
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "demographics_age_long"
+			            },
+			            "Object": {
+			              "Role": "dim_hour"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "demographics_age_longs_have_dim_hours"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_hour"
+			            },
+			            "Object": {
+			              "Role": "demographics_age_long"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_hours_have_demographics_age_longs"
+			        }
+			      ]
+			    },
+			    "demographics_has_dim_hour1": {
+			      "Binding": {
+			        "ConceptualEntity": "Demographics"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "demographics": {
+			          "Target": {
+			            "Entity": "demographics"
+			          }
+			        },
+			        "dim_hour": {
+			          "Target": {
+			            "Entity": "dim_hour"
+			          },
+			          "Nouns": [
+			            {
+			              "hour": {
+			                "State": "Generated"
+			              }
+			            }
+			          ]
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "demographics"
+			            },
+			            "Object": {
+			              "Role": "dim_hour"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "demographics_have_dim_hours"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_hour"
+			            },
+			            "Object": {
+			              "Role": "demographics"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_hours_have_demographics"
+			        }
+			      ]
+			    },
+			    "footfall_has_dim_visitation1": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "dim_visitation": {
+			          "Target": {
+			            "Entity": "dim_visitation"
+			          },
+			          "Nouns": [
+			            {
+			              "visitation modality": {
+			                "State": "Generated"
+			              }
+			            },
+			            {
+			              "modality": {
+			                "State": "Generated"
+			              }
+			            }
+			          ]
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "dim_visitation"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_dim_visitations"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_visitation"
+			            },
+			            "Object": {
+			              "Role": "footfall"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_visitations_have_footfalls"
+			        }
+			      ]
+			    },
+			    "footfall_has_dim_hour1": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "dim_hour": {
+			          "Target": {
+			            "Entity": "dim_hour"
+			          },
+			          "Nouns": [
+			            {
+			              "hour": {
+			                "State": "Generated"
+			              }
+			            }
+			          ]
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "dim_hour"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_dim_hours"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_hour"
+			            },
+			            "Object": {
+			              "Role": "footfall"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_hours_have_footfalls"
+			        }
+			      ]
+			    },
+			    "demographics_class_long_has_dim_hour": {
+			      "Binding": {
+			        "ConceptualEntity": "Demographics_ClassLong"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "demographics_class_long": {
+			          "Target": {
+			            "Entity": "demographics_class_long"
+			          }
+			        },
+			        "dim_hour": {
+			          "Target": {
+			            "Entity": "dim_hour"
+			          },
+			          "Nouns": [
+			            {
+			              "hour": {
+			                "State": "Generated"
+			              }
+			            }
+			          ]
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "demographics_class_long"
+			            },
+			            "Object": {
+			              "Role": "dim_hour"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "demographics_class_longs_have_dim_hours"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_hour"
+			            },
+			            "Object": {
+			              "Role": "demographics_class_long"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_hours_have_demographics_class_longs"
+			        }
+			      ]
+			    },
+			    "demographics_class_long_has_master_site": {
+			      "Binding": {
+			        "ConceptualEntity": "Demographics_ClassLong"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "demographics_class_long": {
+			          "Target": {
+			            "Entity": "demographics_class_long"
+			          }
+			        },
+			        "master_site": {
+			          "Target": {
+			            "Entity": "master_site"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "demographics_class_long"
+			            },
+			            "Object": {
+			              "Role": "master_site"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "demographics_class_longs_have_master_sites"
+			        },
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "master_site"
+			            },
+			            "Object": {
+			              "Role": "demographics_class_long"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "master_sites_have_demographics_class_longs"
+			        }
+			      ]
+			    },
+			    "brand_affinity_has_dim_visitation": {
 			      "Binding": {
 			        "ConceptualEntity": "Brand_Affinity"
 			      },
@@ -15930,13 +16616,13 @@ cultureInfo en-US
 			            "Entity": "brand_affinity"
 			          }
 			        },
-			        "dim_movement": {
+			        "dim_visitation": {
 			          "Target": {
-			            "Entity": "dim_movement"
+			            "Entity": "dim_visitation"
 			          },
 			          "Nouns": [
 			            {
-			              "movement modality": {
+			              "visitation modality": {
 			                "State": "Generated"
 			              }
 			            },
@@ -15955,17 +16641,17 @@ cultureInfo en-US
 			              "Role": "brand_affinity"
 			            },
 			            "Object": {
-			              "Role": "dim_movement"
+			              "Role": "dim_visitation"
 			            }
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "brand_affinities_have_dim_movements"
+			          "ID": "brand_affinities_have_dim_visitations"
 			        },
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "dim_movement"
+			              "Role": "dim_visitation"
 			            },
 			            "Object": {
 			              "Role": "brand_affinity"
@@ -15973,7 +16659,7 @@ cultureInfo en-US
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "dim_movements_have_brand_affinities"
+			          "ID": "dim_visitations_have_brand_affinities"
 			        }
 			      ]
 			    },
@@ -16076,117 +16762,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "demographics_age_long_has_dim_movement": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_AgeLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_age_long": {
-			          "Target": {
-			            "Entity": "demographics_age_long"
-			          }
-			        },
-			        "dim_movement": {
-			          "Target": {
-			            "Entity": "dim_movement"
-			          },
-			          "Nouns": [
-			            {
-			              "movement modality": {
-			                "State": "Generated"
-			              }
-			            },
-			            {
-			              "modality": {
-			                "State": "Generated"
-			              }
-			            }
-			          ]
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_age_long"
-			            },
-			            "Object": {
-			              "Role": "dim_movement"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_age_longs_have_dim_movements"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "dim_movement"
-			            },
-			            "Object": {
-			              "Role": "demographics_age_long"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dim_movements_have_demographics_age_longs"
-			        }
-			      ]
-			    },
-			    "demographics_age_long_has_dim_hour": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_AgeLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_age_long": {
-			          "Target": {
-			            "Entity": "demographics_age_long"
-			          }
-			        },
-			        "dim_hour": {
-			          "Target": {
-			            "Entity": "dim_hour"
-			          },
-			          "Nouns": [
-			            {
-			              "hour": {
-			                "State": "Generated"
-			              }
-			            }
-			          ]
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_age_long"
-			            },
-			            "Object": {
-			              "Role": "dim_hour"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_age_longs_have_dim_hours"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "dim_hour"
-			            },
-			            "Object": {
-			              "Role": "demographics_age_long"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dim_hours_have_demographics_age_longs"
-			        }
-			      ]
-			    },
 			    "demographics_age_long_has_master_site": {
 			      "Binding": {
 			        "ConceptualEntity": "Demographics_AgeLong"
@@ -16230,117 +16805,6 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "master_sites_have_demographics_age_longs"
-			        }
-			      ]
-			    },
-			    "demographics_has_dim_movement": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics": {
-			          "Target": {
-			            "Entity": "demographics"
-			          }
-			        },
-			        "dim_movement": {
-			          "Target": {
-			            "Entity": "dim_movement"
-			          },
-			          "Nouns": [
-			            {
-			              "movement modality": {
-			                "State": "Generated"
-			              }
-			            },
-			            {
-			              "modality": {
-			                "State": "Generated"
-			              }
-			            }
-			          ]
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics"
-			            },
-			            "Object": {
-			              "Role": "dim_movement"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_have_dim_movements"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "dim_movement"
-			            },
-			            "Object": {
-			              "Role": "demographics"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dim_movements_have_demographics"
-			        }
-			      ]
-			    },
-			    "demographics_has_dim_hour": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics": {
-			          "Target": {
-			            "Entity": "demographics"
-			          }
-			        },
-			        "dim_hour": {
-			          "Target": {
-			            "Entity": "dim_hour"
-			          },
-			          "Nouns": [
-			            {
-			              "hour": {
-			                "State": "Generated"
-			              }
-			            }
-			          ]
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics"
-			            },
-			            "Object": {
-			              "Role": "dim_hour"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_have_dim_hours"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "dim_hour"
-			            },
-			            "Object": {
-			              "Role": "demographics"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dim_hours_have_demographics"
 			        }
 			      ]
 			    },
@@ -16390,7 +16854,7 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "footfall_has_dim_visitation": {
+			    "footfall_has_dim_movement_group": {
 			      "Binding": {
 			        "ConceptualEntity": "Footfall"
 			      },
@@ -16401,67 +16865,9 @@ cultureInfo en-US
 			            "Entity": "footfall"
 			          }
 			        },
-			        "dim_visitation": {
+			        "dim_movement_group": {
 			          "Target": {
-			            "Entity": "dim_visitation"
-			          },
-			          "Nouns": [
-			            {
-			              "visitation modality": {
-			                "State": "Generated"
-			              }
-			            },
-			            {
-			              "modality": {
-			                "State": "Generated"
-			              }
-			            }
-			          ]
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "footfall"
-			            },
-			            "Object": {
-			              "Role": "dim_visitation"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "footfalls_have_dim_visitations"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "dim_visitation"
-			            },
-			            "Object": {
-			              "Role": "footfall"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dim_visitations_have_footfalls"
-			        }
-			      ]
-			    },
-			    "footfall_has_dim_movement": {
-			      "Binding": {
-			        "ConceptualEntity": "Footfall"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "footfall": {
-			          "Target": {
-			            "Entity": "footfall"
-			          }
-			        },
-			        "dim_movement": {
-			          "Target": {
-			            "Entity": "dim_movement"
+			            "Entity": "dim_movement_group"
 			          }
 			        }
 			      },
@@ -16472,17 +16878,17 @@ cultureInfo en-US
 			              "Role": "footfall"
 			            },
 			            "Object": {
-			              "Role": "dim_movement"
+			              "Role": "dim_movement_group"
 			            }
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "footfalls_have_dim_movements"
+			          "ID": "footfalls_have_dim_movement_groups"
 			        },
 			        {
 			          "Attribute": {
 			            "Subject": {
-			              "Role": "dim_movement"
+			              "Role": "dim_movement_group"
 			            },
 			            "Object": {
 			              "Role": "footfall"
@@ -16490,60 +16896,7 @@ cultureInfo en-US
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "dim_movements_have_footfalls"
-			        }
-			      ]
-			    },
-			    "footfall_has_dim_hour": {
-			      "Binding": {
-			        "ConceptualEntity": "Footfall"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "footfall": {
-			          "Target": {
-			            "Entity": "footfall"
-			          }
-			        },
-			        "dim_hour": {
-			          "Target": {
-			            "Entity": "dim_hour"
-			          },
-			          "Nouns": [
-			            {
-			              "hour": {
-			                "State": "Generated"
-			              }
-			            }
-			          ]
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "footfall"
-			            },
-			            "Object": {
-			              "Role": "dim_hour"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "footfalls_have_dim_hours"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "dim_hour"
-			            },
-			            "Object": {
-			              "Role": "footfall"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dim_hours_have_footfalls"
+			          "ID": "dim_movement_groups_have_footfalls"
 			        }
 			      ]
 			    },
@@ -16636,6 +16989,303 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "master_sites_have_footfalls"
+			        }
+			      ]
+			    },
+			    "dim_metric_has_metric_label": {
+			      "Binding": {
+			        "ConceptualEntity": "Dim Metric"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_metric": {
+			          "Target": {
+			            "Entity": "dim_metric"
+			          }
+			        },
+			        "dim_metric.metric_label": {
+			          "Target": {
+			            "Entity": "dim_metric.metric_label"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_metric"
+			            },
+			            "Object": {
+			              "Role": "dim_metric.metric_label"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_metrics_have_metric_labels"
+			        }
+			      ]
+			    },
+			    "dim_movement_group_has_movement_group": {
+			      "Binding": {
+			        "ConceptualEntity": "dim_Movement_Group"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "dim_movement_group": {
+			          "Target": {
+			            "Entity": "dim_movement_group"
+			          }
+			        },
+			        "dim_movement_group.movement_group": {
+			          "Target": {
+			            "Entity": "dim_movement_group.movement_group"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "dim_movement_group"
+			            },
+			            "Object": {
+			              "Role": "dim_movement_group.movement_group"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "dim_movement_groups_have_movement_groups"
+			        }
+			      ]
+			    },
+			    "calendar_has_monthyear": {
+			      "Binding": {
+			        "ConceptualEntity": "Calendar"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "calendar": {
+			          "Target": {
+			            "Entity": "calendar"
+			          }
+			        },
+			        "calendar.monthyear": {
+			          "Target": {
+			            "Entity": "calendar.monthyear"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "calendar"
+			            },
+			            "Object": {
+			              "Role": "calendar.monthyear"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "calendars_have_monthyears"
+			        }
+			      ]
+			    },
+			    "brand_affinity_has_entity__measure_avg_brand_affinity_index": {
+			      "Binding": {
+			        "ConceptualEntity": "Brand_Affinity"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "brand_affinity": {
+			          "Target": {
+			            "Entity": "brand_affinity"
+			          }
+			        },
+			        "entity__measure.avg_brand_affinity_index": {
+			          "Target": {
+			            "Entity": "entity__measure.avg_brand_affinity_index"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "brand_affinity"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.avg_brand_affinity_index"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "brand_affinities_have_avg_brand_affinity_index"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_movement_audience": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "entity__measure.movement_audience": {
+			          "Target": {
+			            "Entity": "entity__measure.movement_audience"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.movement_audience"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_movement_audience"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_visitation_audience": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "entity__measure.visitation_audience": {
+			          "Target": {
+			            "Entity": "entity__measure.visitation_audience"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.visitation_audience"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_visitation_audience"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_age_": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "entity__measure.age_": {
+			          "Target": {
+			            "Entity": "entity__measure.age_"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.age_"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_age_"
+			        }
+			      ]
+			    },
+			    "demographics_age_long_has_entity__measure_age_": {
+			      "Binding": {
+			        "ConceptualEntity": "Demographics_AgeLong"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "demographics_age_long": {
+			          "Target": {
+			            "Entity": "demographics_age_long"
+			          }
+			        },
+			        "entity__measure.age_": {
+			          "Target": {
+			            "Entity": "entity__measure.age_"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "demographics_age_long"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.age_"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "demographics_age_longs_have_age_"
+			        }
+			      ]
+			    },
+			    "demographics_age_long_has_gender_label": {
+			      "Binding": {
+			        "ConceptualEntity": "Demographics_AgeLong"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "demographics_age_long": {
+			          "Target": {
+			            "Entity": "demographics_age_long"
+			          }
+			        },
+			        "demographics_age_long.gender_label": {
+			          "Target": {
+			            "Entity": "demographics_age_long.gender_label"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "demographics_age_long"
+			            },
+			            "Object": {
+			              "Role": "demographics_age_long.gender_label"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "demographics_age_longs_have_gender_labels"
 			        }
 			      ]
 			    },
@@ -18553,6 +19203,39 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
+			    "demographics_class_long_has_movement_modality": {
+			      "Binding": {
+			        "ConceptualEntity": "Demographics_ClassLong"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "demographics_class_long": {
+			          "Target": {
+			            "Entity": "demographics_class_long"
+			          }
+			        },
+			        "demographics_class_long.movement_modality": {
+			          "Target": {
+			            "Entity": "demographics_class_long.movement_modality"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "demographics_class_long"
+			            },
+			            "Object": {
+			              "Role": "demographics_class_long.movement_modality"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "demographics_class_longs_have_movement_modalities"
+			        }
+			      ]
+			    },
 			    "demographics_class_long_has_year_month": {
 			      "Binding": {
 			        "ConceptualEntity": "Demographics_ClassLong"
@@ -18649,72 +19332,6 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "dim_visitations_have_visitation_modalities"
-			        }
-			      ]
-			    },
-			    "dim_movement_has_sort": {
-			      "Binding": {
-			        "ConceptualEntity": "dim_Movement"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "dim_movement": {
-			          "Target": {
-			            "Entity": "dim_movement"
-			          }
-			        },
-			        "dim_movement.sort": {
-			          "Target": {
-			            "Entity": "dim_movement.sort"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "dim_movement"
-			            },
-			            "Object": {
-			              "Role": "dim_movement.sort"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dim_movements_have_sorts"
-			        }
-			      ]
-			    },
-			    "dim_movement_has_movement_modality": {
-			      "Binding": {
-			        "ConceptualEntity": "dim_Movement"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "dim_movement": {
-			          "Target": {
-			            "Entity": "dim_movement"
-			          }
-			        },
-			        "dim_movement.movement_modality": {
-			          "Target": {
-			            "Entity": "dim_movement.movement_modality"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "dim_movement"
-			            },
-			            "Object": {
-			              "Role": "dim_movement.movement_modality"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dim_movements_have_movement_modalities"
 			        }
 			      ]
 			    },
@@ -19147,402 +19764,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "demographics_class_long_has_entity__measure_ClassLong_rows": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_ClassLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_class_long": {
-			          "Target": {
-			            "Entity": "demographics_class_long"
-			          }
-			        },
-			        "entity__measure.ClassLong_rows": {
-			          "Target": {
-			            "Entity": "entity__measure.ClassLong_rows"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_class_long"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.ClassLong_rows"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_class_longs_have_ClassLong_rows"
-			        }
-			      ]
-			    },
-			    "demographics_class_long_has_entity__measure_class__check_per_cell": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_ClassLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_class_long": {
-			          "Target": {
-			            "Entity": "demographics_class_long"
-			          }
-			        },
-			        "entity__measure.class__check_per_cell": {
-			          "Target": {
-			            "Entity": "entity__measure.class__check_per_cell"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_class_long"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.class__check_per_cell"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_class_longs_have_class__check_per_cell"
-			        }
-			      ]
-			    },
-			    "footfall_has_entity__measure_class_impressions_OTS": {
-			      "Binding": {
-			        "ConceptualEntity": "Footfall"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "footfall": {
-			          "Target": {
-			            "Entity": "footfall"
-			          }
-			        },
-			        "entity__measure.class_impressions_OTS": {
-			          "Target": {
-			            "Entity": "entity__measure.class_impressions_OTS"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "footfall"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.class_impressions_OTS"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "footfalls_have_class_impressions_OTS"
-			        }
-			      ]
-			    },
-			    "demographics_class_long_has_entity__measure_class_impressions_OTS": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_ClassLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_class_long": {
-			          "Target": {
-			            "Entity": "demographics_class_long"
-			          }
-			        },
-			        "entity__measure.class_impressions_OTS": {
-			          "Target": {
-			            "Entity": "entity__measure.class_impressions_OTS"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_class_long"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.class_impressions_OTS"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_class_longs_have_class_impressions_OTS"
-			        }
-			      ]
-			    },
-			    "footfall_has_entity__measure_class_audience_daily_unique": {
-			      "Binding": {
-			        "ConceptualEntity": "Footfall"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "footfall": {
-			          "Target": {
-			            "Entity": "footfall"
-			          }
-			        },
-			        "entity__measure.class_audience_daily_unique": {
-			          "Target": {
-			            "Entity": "entity__measure.class_audience_daily_unique"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "footfall"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.class_audience_daily_unique"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "footfalls_have_class_audience_daily_unique"
-			        }
-			      ]
-			    },
-			    "demographics_class_long_has_entity__measure_class_audience_daily_unique": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_ClassLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_class_long": {
-			          "Target": {
-			            "Entity": "demographics_class_long"
-			          }
-			        },
-			        "entity__measure.class_audience_daily_unique": {
-			          "Target": {
-			            "Entity": "entity__measure.class_audience_daily_unique"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_class_long"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.class_audience_daily_unique"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_class_longs_have_class_audience_daily_unique"
-			        }
-			      ]
-			    },
-			    "footfall_has_entity__measure_class_profile_": {
-			      "Binding": {
-			        "ConceptualEntity": "Footfall"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "footfall": {
-			          "Target": {
-			            "Entity": "footfall"
-			          }
-			        },
-			        "entity__measure.class_profile_": {
-			          "Target": {
-			            "Entity": "entity__measure.class_profile_"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "footfall"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.class_profile_"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "footfalls_have_class_profile_"
-			        }
-			      ]
-			    },
-			    "demographics_class_long_has_entity__measure_class_profile_": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_ClassLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_class_long": {
-			          "Target": {
-			            "Entity": "demographics_class_long"
-			          }
-			        },
-			        "entity__measure.class_profile_": {
-			          "Target": {
-			            "Entity": "entity__measure.class_profile_"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_class_long"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.class_profile_"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_class_longs_have_class_profile_"
-			        }
-			      ]
-			    },
-			    "footfall_has_entity__measure_class_audience_hourly": {
-			      "Binding": {
-			        "ConceptualEntity": "Footfall"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "footfall": {
-			          "Target": {
-			            "Entity": "footfall"
-			          }
-			        },
-			        "entity__measure.class_audience_hourly": {
-			          "Target": {
-			            "Entity": "entity__measure.class_audience_hourly"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "footfall"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.class_audience_hourly"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "footfalls_have_class_audience_hourly"
-			        }
-			      ]
-			    },
-			    "demographics_class_long_has_entity__measure_class_audience_hourly": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_ClassLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_class_long": {
-			          "Target": {
-			            "Entity": "demographics_class_long"
-			          }
-			        },
-			        "entity__measure.class_audience_hourly": {
-			          "Target": {
-			            "Entity": "entity__measure.class_audience_hourly"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_class_long"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.class_audience_hourly"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_class_longs_have_class_audience_hourly"
-			        }
-			      ]
-			    },
-			    "footfall_has_entity__measure_age_PaS_daily_unique": {
-			      "Binding": {
-			        "ConceptualEntity": "Footfall"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "footfall": {
-			          "Target": {
-			            "Entity": "footfall"
-			          }
-			        },
-			        "entity__measure.age_PaS_daily_unique": {
-			          "Target": {
-			            "Entity": "entity__measure.age_PaS_daily_unique"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "footfall"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.age_PaS_daily_unique"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "footfalls_have_age_PaS_daily_unique"
-			        }
-			      ]
-			    },
-			    "demographics_age_long_has_entity__measure_age_PaS_daily_unique": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_AgeLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_age_long": {
-			          "Target": {
-			            "Entity": "demographics_age_long"
-			          }
-			        },
-			        "entity__measure.age_PaS_daily_unique": {
-			          "Target": {
-			            "Entity": "entity__measure.age_PaS_daily_unique"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_age_long"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.age_PaS_daily_unique"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_age_longs_have_age_PaS_daily_unique"
-			        }
-			      ]
-			    },
 			    "footfall_has_entity__measure_age_impressions_OTS": {
 			      "Binding": {
 			        "ConceptualEntity": "Footfall"
@@ -19606,138 +19827,6 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "demographics_age_longs_have_age_impressions_OTS"
-			        }
-			      ]
-			    },
-			    "footfall_has_entity__measure_age_audience_daily_unique": {
-			      "Binding": {
-			        "ConceptualEntity": "Footfall"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "footfall": {
-			          "Target": {
-			            "Entity": "footfall"
-			          }
-			        },
-			        "entity__measure.age_audience_daily_unique": {
-			          "Target": {
-			            "Entity": "entity__measure.age_audience_daily_unique"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "footfall"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.age_audience_daily_unique"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "footfalls_have_age_audience_daily_unique"
-			        }
-			      ]
-			    },
-			    "demographics_age_long_has_entity__measure_age_audience_daily_unique": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_AgeLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_age_long": {
-			          "Target": {
-			            "Entity": "demographics_age_long"
-			          }
-			        },
-			        "entity__measure.age_audience_daily_unique": {
-			          "Target": {
-			            "Entity": "entity__measure.age_audience_daily_unique"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_age_long"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.age_audience_daily_unique"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_age_longs_have_age_audience_daily_unique"
-			        }
-			      ]
-			    },
-			    "footfall_has_entity__measure_age_profile_": {
-			      "Binding": {
-			        "ConceptualEntity": "Footfall"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "footfall": {
-			          "Target": {
-			            "Entity": "footfall"
-			          }
-			        },
-			        "entity__measure.age_profile_": {
-			          "Target": {
-			            "Entity": "entity__measure.age_profile_"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "footfall"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.age_profile_"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "footfalls_have_age_profile_"
-			        }
-			      ]
-			    },
-			    "demographics_age_long_has_entity__measure_age_profile_": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_AgeLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_age_long": {
-			          "Target": {
-			            "Entity": "demographics_age_long"
-			          }
-			        },
-			        "entity__measure.age_profile_": {
-			          "Target": {
-			            "Entity": "entity__measure.age_profile_"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_age_long"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.age_profile_"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_age_longs_have_age_profile_"
 			        }
 			      ]
 			    },
@@ -20512,6 +20601,39 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
+			    "brand_affinity_has_movement_modality": {
+			      "Binding": {
+			        "ConceptualEntity": "Brand_Affinity"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "brand_affinity": {
+			          "Target": {
+			            "Entity": "brand_affinity"
+			          }
+			        },
+			        "brand_affinity.movement_modality": {
+			          "Target": {
+			            "Entity": "brand_affinity.movement_modality"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "brand_affinity"
+			            },
+			            "Object": {
+			              "Role": "brand_affinity.movement_modality"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "brand_affinities_have_movement_modalities"
+			        }
+			      ]
+			    },
 			    "brand_affinity_has_radius": {
 			      "Binding": {
 			        "ConceptualEntity": "Brand_Affinity"
@@ -20740,6 +20862,39 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "demographics_age_longs_have_age_brackets"
+			        }
+			      ]
+			    },
+			    "demographics_age_long_has_movement_modality": {
+			      "Binding": {
+			        "ConceptualEntity": "Demographics_AgeLong"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "demographics_age_long": {
+			          "Target": {
+			            "Entity": "demographics_age_long"
+			          }
+			        },
+			        "demographics_age_long.movement_modality": {
+			          "Target": {
+			            "Entity": "demographics_age_long.movement_modality"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "demographics_age_long"
+			            },
+			            "Object": {
+			              "Role": "demographics_age_long.movement_modality"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "demographics_age_longs_have_movement_modalities"
 			        }
 			      ]
 			    },
@@ -24043,6 +24198,39 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
+			    "demographics_has_movement_modality": {
+			      "Binding": {
+			        "ConceptualEntity": "Demographics"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "demographics": {
+			          "Target": {
+			            "Entity": "demographics"
+			          }
+			        },
+			        "demographics.movement_modality": {
+			          "Target": {
+			            "Entity": "demographics.movement_modality"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "demographics"
+			            },
+			            "Object": {
+			              "Role": "demographics.movement_modality"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "demographics_have_movement_modalities"
+			        }
+			      ]
+			    },
 			    "demographics_has_radius": {
 			      "Binding": {
 			        "ConceptualEntity": "Demographics"
@@ -24139,6 +24327,39 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "footfalls_have_year_months"
+			        }
+			      ]
+			    },
+			    "footfall_has_movement_group": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "footfall.movement_group": {
+			          "Target": {
+			            "Entity": "footfall.movement_group"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "footfall.movement_group"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_movement_groups"
 			        }
 			      ]
 			    },
@@ -26097,221 +26318,6 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.9,
 			          "ID": "calendars_are_started_on_week_start_dates"
-			        }
-			      ]
-			    },
-			    "brand_affinity_has_dim_visitation": {
-			      "Binding": {
-			        "ConceptualEntity": "Brand_Affinity"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "brand_affinity": {
-			          "Target": {
-			            "Entity": "brand_affinity"
-			          }
-			        },
-			        "dim_visitation": {
-			          "Target": {
-			            "Entity": "dim_visitation"
-			          },
-			          "Nouns": [
-			            {
-			              "visitation modality": {
-			                "State": "Generated"
-			              }
-			            },
-			            {
-			              "modality": {
-			                "State": "Generated"
-			              }
-			            }
-			          ]
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "brand_affinity"
-			            },
-			            "Object": {
-			              "Role": "dim_visitation"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "brand_affinities_have_dim_visitations"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "dim_visitation"
-			            },
-			            "Object": {
-			              "Role": "brand_affinity"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dim_visitations_have_brand_affinities"
-			        }
-			      ]
-			    },
-			    "demographics_class_long_has_master_site": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_ClassLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_class_long": {
-			          "Target": {
-			            "Entity": "demographics_class_long"
-			          }
-			        },
-			        "master_site": {
-			          "Target": {
-			            "Entity": "master_site"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_class_long"
-			            },
-			            "Object": {
-			              "Role": "master_site"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_class_longs_have_master_sites"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "master_site"
-			            },
-			            "Object": {
-			              "Role": "demographics_class_long"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "master_sites_have_demographics_class_longs"
-			        }
-			      ]
-			    },
-			    "demographics_class_long_has_dim_movement": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_ClassLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_class_long": {
-			          "Target": {
-			            "Entity": "demographics_class_long"
-			          }
-			        },
-			        "dim_movement": {
-			          "Target": {
-			            "Entity": "dim_movement"
-			          },
-			          "Nouns": [
-			            {
-			              "movement modality": {
-			                "State": "Generated"
-			              }
-			            },
-			            {
-			              "modality": {
-			                "State": "Generated"
-			              }
-			            }
-			          ]
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_class_long"
-			            },
-			            "Object": {
-			              "Role": "dim_movement"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_class_longs_have_dim_movements"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "dim_movement"
-			            },
-			            "Object": {
-			              "Role": "demographics_class_long"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dim_movements_have_demographics_class_longs"
-			        }
-			      ]
-			    },
-			    "demographics_class_long_has_dim_hour": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_ClassLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_class_long": {
-			          "Target": {
-			            "Entity": "demographics_class_long"
-			          }
-			        },
-			        "dim_hour": {
-			          "Target": {
-			            "Entity": "dim_hour"
-			          },
-			          "Nouns": [
-			            {
-			              "hour": {
-			                "State": "Generated"
-			              }
-			            }
-			          ]
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_class_long"
-			            },
-			            "Object": {
-			              "Role": "dim_hour"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_class_longs_have_dim_hours"
-			        },
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "dim_hour"
-			            },
-			            "Object": {
-			              "Role": "demographics_class_long"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "dim_hours_have_demographics_class_longs"
 			        }
 			      ]
 			    }

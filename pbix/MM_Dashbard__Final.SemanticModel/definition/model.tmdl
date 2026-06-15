@@ -76,7 +76,7 @@ ref table Brand_Affinity
 ref table _Measures
 ref table Calendar
 ref table dim_Hour
-ref table dim_Movement
+ref table dim_Movement_Group
 ref table dim_Visitation
 ref table Demographics_ClassLong
 ref table 'Dim Metric'

@@ -110,19 +110,6 @@
         },
         {
           "location": {
-            "x": 1132.8888888888889,
-            "y": 410.63063063063061
-          },
-          "nodeIndex": "dim_Movement",
-          "nodeLineageTag": "825030b6-6659-4138-a0d1-63dedf9130b2",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 8
-        },
-        {
-          "location": {
             "x": 1411.7777777777778,
             "y": 410.63063063063066
           },
@@ -153,6 +140,18 @@
             "y": 458.20638820638817
           },
           "nodeIndex": "Dim Metric",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1132.8888888888889,
+            "y": 410.63063063063061
+          },
+          "nodeIndex": "dim_Movement_Group",
           "size": {
             "height": 200,
             "width": 234

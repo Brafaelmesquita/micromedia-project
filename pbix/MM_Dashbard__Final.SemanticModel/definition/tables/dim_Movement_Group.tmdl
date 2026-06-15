@@ -1,0 +1,19 @@
+table dim_Movement_Group
+	lineageTag: 825030b6-6659-4138-a0d1-63dedf9130b2
+
+	column 'Movement Group'
+		lineageTag: 285fdb2c-3031-4fcf-adb2-9193c5cb2537
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Movement Group]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_Movement_Group = calculated
+		mode: import
+		source =
+				DATATABLE ( "Movement Group", STRING,
+				    { {"All"}, {"Pedestrians"}, {"Non_Pedestrians"} } )
+
+	annotation PBI_Id = a8cb5feead2a4b62841bf1f38a3e03b4
+
