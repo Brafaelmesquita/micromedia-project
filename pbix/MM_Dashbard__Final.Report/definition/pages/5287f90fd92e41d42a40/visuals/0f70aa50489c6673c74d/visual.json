@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "0f70aa50489c6673c74d",
   "position": {
-    "x": 23.710564399421127,
-    "y": 263.18726483357455,
-    "z": 7001,
-    "height": 207.46743849493487,
-    "width": 356.84399421128796,
-    "tabOrder": 7001
+    "x": 14.666666666666666,
+    "y": 249.33333333333334,
+    "z": 7000,
+    "height": 209.33333333333334,
+    "width": 342.66666666666669,
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "pieChart",
@@ -209,6 +209,33 @@
             ]
           }
         }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Light'', wf_segoe-ui_light, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -339,20 +366,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "30608007617bce9064c3",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Visitation Audience"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

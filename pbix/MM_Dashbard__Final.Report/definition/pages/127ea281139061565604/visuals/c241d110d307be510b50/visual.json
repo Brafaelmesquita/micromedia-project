@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "82fd2e57120be0406d9a",
+  "name": "c241d110d307be510b50",
   "position": {
-    "x": 806.10760605807047,
-    "y": 171.36641285248098,
-    "z": 7011,
+    "x": 23.305832147937412,
+    "y": 263.69671961576717,
+    "z": 9000,
     "height": 79.514015563551169,
-    "width": 108.30357292276797,
-    "tabOrder": 7011
+    "width": 175.47920676094051,
+    "tabOrder": 9000
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Demographics_AgeLong"
+                      "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "GENDER"
+                  "Property": "Display Name"
                 }
               },
-              "queryRef": "Demographics_AgeLong.GENDER",
-              "nativeQueryRef": "GENDER",
+              "queryRef": "Master_Sites.Display Name",
+              "nativeQueryRef": "Display Name",
               "active": true
             }
           ]
@@ -38,20 +38,6 @@
       "data": [
         {
           "properties": {
-            "numericStart": {
-              "expr": {
-                "Literal": {
-                  "Value": "14D"
-                }
-              }
-            },
-            "numericEnd": {
-              "expr": {
-                "Literal": {
-                  "Value": "18D"
-                }
-              }
-            },
             "mode": {
               "expr": {
                 "Literal": {
@@ -65,10 +51,10 @@
       "general": [
         {
           "properties": {
-            "orientation": {
+            "selfFilterEnabled": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "true"
                 }
               }
             }
@@ -81,7 +67,7 @@
             "selectAllCheckboxEnabled": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -103,19 +89,6 @@
       ]
     },
     "visualContainerObjects": {
-      "visualHeader": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "title": [
         {
           "properties": {
@@ -129,7 +102,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Gender'"
+                  "Value": "'Display'"
                 }
               }
             },
@@ -161,6 +134,19 @@
           }
         }
       ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "border": [
         {
           "properties": {
@@ -183,7 +169,7 @@
       ]
     },
     "syncGroup": {
-      "groupName": "GENDER",
+      "groupName": "Display Name",
       "fieldChanges": true,
       "filterChanges": true
     },
@@ -192,15 +178,15 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "253c71e7a0bb18e95043",
+        "name": "ded2db16c4cd35743beb",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "Demographics_AgeLong"
+                "Entity": "Master_Sites"
               }
             },
-            "Property": "GENDER"
+            "Property": "Display Name"
           }
         },
         "type": "Categorical",
@@ -208,43 +194,55 @@
           "Version": 2,
           "From": [
             {
-              "Name": "d",
-              "Entity": "Demographics_AgeLong",
+              "Name": "m",
+              "Entity": "Master_Sites",
               "Type": 0
             }
           ],
           "Where": [
             {
               "Condition": {
-                "In": {
-                  "Expressions": [
-                    {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Source": "d"
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "m"
+                              }
+                            },
+                            "Property": "Display Name"
                           }
-                        },
-                        "Property": "GENDER"
-                      }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ]
+                      ]
                     }
-                  ],
-                  "Values": [
-                    [
-                      {
-                        "Literal": {
-                          "Value": "'F'"
-                        }
-                      }
-                    ],
-                    [
-                      {
-                        "Literal": {
-                          "Value": "'M'"
-                        }
-                      }
-                    ]
-                  ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
                 }
               }
             }

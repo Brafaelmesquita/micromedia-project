@@ -4,10 +4,10 @@
   "position": {
     "x": 667.42385131646881,
     "y": 498.255033557047,
-    "z": 20004,
+    "z": 24000,
     "height": 211.46102219927724,
     "width": 457.28446050593703,
-    "tabOrder": 20004
+    "tabOrder": 24000
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -114,6 +114,27 @@
                   "Value": "false"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Light'', wf_segoe-ui_light, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -122,6 +143,13 @@
         {
           "properties": {
             "showAxisTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "false"

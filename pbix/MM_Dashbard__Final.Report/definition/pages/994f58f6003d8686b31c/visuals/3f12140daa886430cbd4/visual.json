@@ -114,6 +114,27 @@
                   "Value": "false"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Light'', wf_segoe-ui_light, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -215,7 +236,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#118DFF'"
+                      "Value": "'#FF1174'"
                     }
                   }
                 }
@@ -256,7 +277,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#0A7FA8'"
+                      "Value": "'#118DFF'"
                     }
                   }
                 }

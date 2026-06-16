@@ -15,7 +15,7 @@ table Calendar
 	column Year
 		formatString: 0
 		lineageTag: 4de97b4f-9d1a-415e-a537-ca23dffe18bd
-		summarizeBy: none
+		summarizeBy: sum
 		isNameInferred
 		sourceColumn: [Year]
 
@@ -24,7 +24,7 @@ table Calendar
 	column MonthNumber
 		formatString: 0
 		lineageTag: 164e19a7-1f73-4937-89bf-8e3c0619bd6a
-		summarizeBy: none
+		summarizeBy: sum
 		isNameInferred
 		sourceColumn: [MonthNumber]
 
@@ -50,7 +50,7 @@ table Calendar
 	column Day
 		formatString: 0
 		lineageTag: 0f79733b-33d8-4d44-859d-854a70686af7
-		summarizeBy: none
+		summarizeBy: sum
 		isNameInferred
 		sourceColumn: [Day]
 
@@ -59,7 +59,7 @@ table Calendar
 	column DayOfWeekNumber
 		formatString: 0
 		lineageTag: 21a30482-9ba5-44e4-8dce-ac5c204a1cfe
-		summarizeBy: none
+		summarizeBy: sum
 		isNameInferred
 		sourceColumn: [DayOfWeekNumber]
 
@@ -85,7 +85,7 @@ table Calendar
 	column WeekOfYear
 		formatString: 0
 		lineageTag: 56a55163-74ad-4154-a790-7113e54e0d1e
-		summarizeBy: none
+		summarizeBy: sum
 		isNameInferred
 		sourceColumn: [WeekOfYear]
 

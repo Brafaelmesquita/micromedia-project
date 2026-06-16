@@ -80,6 +80,8 @@ ref table dim_Movement_Group
 ref table dim_Visitation
 ref table Demographics_ClassLong
 ref table 'Dim Metric'
+ref table DateTableTemplate_a0be75af-62ac-43d1-b0b8-ec91ea70e13c
+ref table LocalDateTable_25821627-00c4-4c3b-a09e-38eb347bc342
 
 ref cultureInfo en-US
 

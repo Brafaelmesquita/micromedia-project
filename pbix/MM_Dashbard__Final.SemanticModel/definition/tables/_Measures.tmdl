@@ -13,7 +13,7 @@ table _Measures
 		dataCategory: Uncategorized
 
 	measure 'Total Population' = CALCULATE( SUM( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
-		formatString: 0
+		formatString: #,0
 		displayFolder: KPIs\Base
 		lineageTag: fa2e2818-1a2d-4fd7-a6bb-6a0269b9cd7a
 
@@ -99,17 +99,15 @@ table _Measures
 			
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
-		formatString: 0
+		formatString: #,0
 		displayFolder: KPIs\By Hour
 		lineageTag: fdbaddee-f7f9-4861-89ed-b7deba5ca6df
-
-		annotation PBI_FormatHint = {"isDecimal":true}
 
 	measure 'PaS (Hourly)' =
 			
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_USERS] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
-		formatString: 0
+		formatString: #,0
 		displayFolder: KPIs\By Hour
 		lineageTag: 69a0f5ff-eb82-42a8-bec8-056496f4a26e
 
@@ -117,7 +115,7 @@ table _Measures
 			
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS] ),
 			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
-		formatString: 0
+		formatString: #,0
 		displayFolder: KPIs\By Hour
 		lineageTag: c8f94d63-c789-4916-988f-920de6bb2f16
 
@@ -558,10 +556,9 @@ table _Measures
 			        REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET], Demographics_AgeLong[AGE_SORT] )
 			    )
 			)
+		formatString: 0.0%;-0.0%;0.0%
 		displayFolder: Age&Gender
 		lineageTag: 9f65395f-601e-49f2-bf6a-a293f9dc88f8
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Visitation Audience' =
 			
@@ -587,6 +584,83 @@ table _Measures
 		lineageTag: 898bba54-e4fd-49fb-b214-88a566d2c748
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Class Audience (Hourly)' =
+			
+			SUMX (
+			    FILTER ( Demographics_ClassLong, Demographics_ClassLong[MOVEMENT_MODALITY] = "All" ),
+			    VAR _code = Demographics_ClassLong[CODE]
+			    VAR _ym   = Demographics_ClassLong[YEAR_MONTH_KEY]
+			    VAR _hr   = Demographics_ClassLong[HOUR]
+			    RETURN
+			        ( Demographics_ClassLong[REACH_PCT] / 100 )
+			        * CALCULATE (
+			            SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			            Footfall[CODE] = _code,
+			            Footfall[YEAR_MONTH] = _ym,
+			            Footfall[HOUR] = _hr,
+			            Footfall[IS_GRAND_TOTAL] = 1
+			        )
+			)
+		formatString: #,0
+		lineageTag: 53db95ee-a94a-4c8d-a009-67aa3fc03265
+
+	measure 'Class %' =
+			
+			DIVIDE (
+			    [Class Audience (Hourly)],
+			    CALCULATE ( [Class Audience (Hourly)], REMOVEFILTERS ( Demographics_ClassLong[SEGMENT] ) )
+			)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 174514e5-9912-45ee-9ad7-307624207525
+
+	measure 'Class Title' = "Audience by " & LOWER ( SELECTEDVALUE ( Demographics_ClassLong[BREAKDOWN], "class" ) )
+		displayFolder: Titles
+		lineageTag: e2472f7f-4e3c-4a6d-a4e0-0976b277fb94
+
+	measure 'Site Header' =
+			
+			VAR SiteName = SELECTEDVALUE ( Master_Sites[Display Name] )
+			VAR SiteID   = SELECTEDVALUE ( Master_Sites[MM ID] )
+			RETURN
+			    IF (
+			        ISBLANK ( SiteName ),
+			        "Multiple sites",
+			        SiteName & " - MM ID " & SiteID
+			    )
+		displayFolder: Titles
+		lineageTag: 27445238-20cc-42d9-9371-4af099f2895e
+
+	measure 'Exposure Ratio' = DIVIDE( [OTS], [PaS] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Footfall QA
+		lineageTag: b0700bd0-2797-4899-a865-57e5321da44b
+
+	measure 'Total Screens' =
+			
+			CALCULATE(
+			    DISTINCTCOUNT( Footfall[CODE] ),
+			    Footfall[IS_GRAND_TOTAL] = 1,
+			    Footfall[HOUR] = 25
+			)
+		formatString: 0
+		displayFolder: Footfall QA
+		lineageTag: d9851998-dd38-4840-9d19-b8dc0159d1ae
+
+	measure 'Median Exposure (screen)' = MEDIANX( VALUES( Footfall[CODE] ), [Exposure Ratio] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Footfall QA
+		lineageTag: 77182f5f-075d-4f37-a346-55312b554872
+
+	measure 'P25 Exposure' = PERCENTILEX.INC( VALUES( Footfall[CODE] ), [Exposure Ratio], 0.25 )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Footfall QA
+		lineageTag: 209b031c-008e-47d2-8ee9-43d31126be48
+
+	measure 'P75 Exposure' = PERCENTILEX.INC( VALUES( Footfall[CODE] ), [Exposure Ratio], 0.75 )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: Footfall QA
+		lineageTag: b5da6c96-e399-411c-930d-5863b18b152f
 
 	column Column1
 		dataType: string

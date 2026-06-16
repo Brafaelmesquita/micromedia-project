@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "94c326d0c4ba7aabe074",
   "position": {
-    "x": 23.710564399421127,
-    "y": 481.3244573082489,
-    "z": 7005,
-    "height": 238.29117221418235,
-    "width": 356.84399421128796,
-    "tabOrder": 7005
+    "x": 16,
+    "y": 494.66666666666669,
+    "z": 10000,
+    "height": 206.66666666666666,
+    "width": 342.66666666666669,
+    "tabOrder": 10000
   },
   "visual": {
     "visualType": "clusteredBarChart",
@@ -23,11 +23,11 @@
                       "Entity": "Footfall"
                     }
                   },
-                  "Property": "MOVEMENT_MODALITY"
+                  "Property": "Travel mode (short)"
                 }
               },
-              "queryRef": "Footfall.MOVEMENT_MODALITY",
-              "nativeQueryRef": "MOVEMENT_MODALITY",
+              "queryRef": "Footfall.Travel mode (short)",
+              "nativeQueryRef": "Travel mode (short)",
               "active": true
             }
           ]
@@ -80,6 +80,34 @@
                   "Value": "false"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "preferredCategoryWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "20D"
+                }
+              }
+            },
+            "maxMarginFactor": {
+              "expr": {
+                "Literal": {
+                  "Value": "50L"
+                }
+              }
             }
           }
         }
@@ -91,6 +119,30 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#29B6E8'"
+                    }
+                  }
                 }
               }
             }
@@ -218,6 +270,7 @@
             }
           ]
         },
+        "howCreated": "User",
         "objects": {
           "general": [
             {
@@ -233,20 +286,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "a9908ee6c39646e9a404",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Movement Audience"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

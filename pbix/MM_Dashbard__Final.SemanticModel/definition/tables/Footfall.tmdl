@@ -222,6 +222,39 @@ table Footfall
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Travel mode (short)' =
+			
+			SWITCH (
+			    TRUE (),
+			    'Footfall'[MOVEMENT_MODALITY] = "Car_City", "Car (city)",
+			    'Footfall'[MOVEMENT_MODALITY] = "Car_Highway", "Car (highway)",
+			    'Footfall'[MOVEMENT_MODALITY]
+			)
+		lineageTag: 8044f13f-9a05-43a5-b4cf-1b6fe5f5afcf
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Ratio Band' =
+			
+			VAR _PaS = CALCULATE( SUM( Footfall[EXTRAPOLATED_NUMBER_OF_USERS] ),       Footfall[IS_GRAND_TOTAL]=1, Footfall[HOUR]=25 )
+			VAR _OTS = CALCULATE( SUM( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS] ), Footfall[IS_GRAND_TOTAL]=1, Footfall[HOUR]=25 )
+			VAR _Ratio = DIVIDE( _OTS, _PaS )
+			RETURN
+			SWITCH(
+			    TRUE(),
+			    ISBLANK(_PaS) || _PaS = 0, "0 - No data",
+			    _OTS = 0,                  "5 - OTS=0 (anomaly)",
+			    _Ratio < 0.23,             "4 - Bottom 25%",   -- use o seu P25
+			    _Ratio < 0.40,             "3 - Below median", -- use a sua mediana
+			    _Ratio < 0.56,             "2 - Above median", -- use o seu P75
+			                               "1 - Top 25%"
+			)
+		lineageTag: d389dc62-aa41-4eda-9bdb-5359b805bf50
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Footfall = m
 		mode: import
 		source =

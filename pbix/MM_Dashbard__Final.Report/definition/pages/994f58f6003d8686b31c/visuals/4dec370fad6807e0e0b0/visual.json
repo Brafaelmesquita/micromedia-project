@@ -4,10 +4,10 @@
   "position": {
     "x": 297.3670624677336,
     "y": 498.255033557047,
-    "z": 20001,
+    "z": 21000,
     "height": 85.90604026845638,
     "width": 175.77697470314922,
-    "tabOrder": 20001
+    "tabOrder": 21000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -210,23 +210,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "09c12a9e5c0dc4eb050b",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Age Audience (Hourly)"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

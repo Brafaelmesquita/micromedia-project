@@ -106,6 +106,25 @@ table Brand_Affinity
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Brand Category (short)' =
+			
+			SWITCH (
+			    TRUE (),
+			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Colleges, Universities, Professional Schools, and Junior Colleges", "Colleges & universities",
+			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Museums and Art Galleries", "Museums & galleries",
+			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "HEALTHY AUDIENCE", "Healthy audience",
+			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Radio, Television, Consumer Electronics, and Music Stores", "Radio, TV & electronics",
+			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Motor Vehicle Dealers (New and Used)", "Car dealers",
+			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Eating Places/Restaurants", "Restaurants",
+			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Drinks_Out", "Drinks out",
+			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Bank", "Banks",
+			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME]
+			)
+		lineageTag: ee1048b9-29ef-49c6-8a4e-2e868bb3b2b8
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Brand_Affinity = m
 		mode: import
 		source =
