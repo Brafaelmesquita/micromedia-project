@@ -4,10 +4,10 @@
   "position": {
     "x": 34.666666666666664,
     "y": 204,
-    "z": 3001,
+    "z": 4000,
     "height": 502.66666666666669,
     "width": 565.33333333333337,
-    "tabOrder": 3001
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "scatterChart",
@@ -395,7 +395,22 @@
             "Property": "Ratio Band"
           }
         },
-        "type": "Categorical"
+        "type": "Categorical",
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
       }
     ]
   }

@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "8c2be4db03c45dd6e0d7",
-  "displayName": "Data QA",
+  "displayName": "QA - Exposure & Screen Validation",
   "displayOption": "FitToPage",
   "height": 720,
   "width": 1280,
@@ -40,5 +40,6 @@
         }
       }
     ]
-  }
+  },
+  "visibility": "HiddenInViewMode"
 }

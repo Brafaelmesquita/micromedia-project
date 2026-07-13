@@ -5,8 +5,8 @@
     "x": 0,
     "y": 0,
     "z": 2000,
-    "height": 46.666666666666664,
-    "width": 74.666666666666671,
+    "height": 33,
+    "width": 239,
     "tabOrder": 3000
   },
   "visual": {
@@ -25,14 +25,14 @@
                           "Entity": "Master_Sites"
                         }
                       },
-                      "Property": "MM ID"
+                      "Property": "Display Name"
                     }
                   },
                   "Function": 3
                 }
               },
-              "queryRef": "Min(Master_Sites.MM ID)",
-              "nativeQueryRef": "First MM ID"
+              "queryRef": "Min(Master_Sites.Display Name)",
+              "nativeQueryRef": "First Display Name"
             }
           ]
         }
