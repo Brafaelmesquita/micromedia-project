@@ -255,6 +255,13 @@ table Footfall
 
 		annotation SummarizationSetBy = Automatic
 
+	column HasValidSite = NOT ISBLANK( RELATED( Master_Sites[MM ID] ) )
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 9e1e38ef-933e-4254-b8b6-9defa6645bf4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Footfall = m
 		mode: import
 		source =

@@ -1,18 +1,39 @@
 table _Measures
 	lineageTag: 6dd560a5-b5c9-4b14-94bc-58d1b69adb09
 
-	measure PaS = CALCULATE( SUM( Footfall[EXTRAPOLATED_NUMBER_OF_USERS] ),  Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
-		formatString: 0
+	measure PaS =
+			
+			CALCULATE(
+			    SUM( Footfall[EXTRAPOLATED_NUMBER_OF_USERS] ),
+			    Footfall[IS_GRAND_TOTAL] = 1,
+			    Footfall[HOUR] = 25,
+			    Footfall[HasValidSite] = TRUE()
+			)
+		formatString: #,0
 		displayFolder: KPIs\Base
 		lineageTag: fff3dce4-db9e-4175-8f3e-6e72c06ddeec
 
-	measure OTS = CALCULATE( SUM( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS] ), Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
-		formatString: 0
+	measure OTS =
+			
+			CALCULATE(
+			    SUM( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS] ),
+			    Footfall[IS_GRAND_TOTAL] = 1,
+			    Footfall[HOUR] = 25,
+			    Footfall[HasValidSite] = TRUE()
+			)
+		formatString: #,0
 		displayFolder: KPIs\Base
 		lineageTag: 79b86f31-77d7-4674-81c4-2c970d29fae4
 		dataCategory: Uncategorized
 
-	measure 'Total Population' = CALCULATE( SUM( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] = 25 )
+	measure 'Total Population' =
+			
+			CALCULATE(
+			    SUM( Footfall[EXTRAPOLATED_USERS_2] ),
+			    Footfall[IS_GRAND_TOTAL] = 1,
+			    Footfall[HOUR] = 25,
+			    Footfall[HasValidSite] = TRUE()
+			)
 		formatString: #,0
 		displayFolder: KPIs\Base
 		lineageTag: fa2e2818-1a2d-4fd7-a6bb-6a0269b9cd7a
@@ -426,26 +447,23 @@ table _Measures
 	measure 'Avg Daily Total Population' =
 			
 			AVERAGEX ( VALUES ( 'Calendar'[Date] ), [Total Population] )
+		formatString: 0
 		displayFolder: KPIs\AVG
 		lineageTag: bd2b995e-9a84-4a7c-a76f-d6c383a9db57
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Avg Daily PaS' =
 			
 			AVERAGEX ( VALUES ( 'Calendar'[Date] ), [PaS] )
+		formatString: 0
 		displayFolder: KPIs\AVG
 		lineageTag: e6b2cc0f-2171-4368-920e-f13bc3327e54
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Avg Daily OTS' =
 			
 			AVERAGEX ( VALUES ( 'Calendar'[Date] ), [OTS] )
+		formatString: 0
 		displayFolder: KPIs\AVG
 		lineageTag: 4a776ea4-1cf0-40ab-9ccd-c68fb2d3bdc6
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Avg Hourly Total Population' =
 			

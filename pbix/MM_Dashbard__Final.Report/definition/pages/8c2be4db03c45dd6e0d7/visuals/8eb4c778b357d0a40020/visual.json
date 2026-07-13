@@ -4,10 +4,10 @@
   "position": {
     "x": 616,
     "y": 204,
-    "z": 3005,
+    "z": 7000,
     "height": 502.66666666666669,
     "width": 348,
-    "tabOrder": 3005
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "tableEx",
@@ -249,48 +249,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "ea5bb556c7a1e6595454",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Exposure Ratio"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "d51ebac0deb7290d0a29",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "PaS"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "fc5f1834e1898ad09780",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "OTS"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }
