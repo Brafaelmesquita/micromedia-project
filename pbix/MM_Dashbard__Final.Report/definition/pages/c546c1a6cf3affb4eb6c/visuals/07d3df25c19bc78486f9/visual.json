@@ -4,10 +4,10 @@
   "position": {
     "x": 541.07589055240044,
     "y": 173.13371192565825,
-    "z": 8000,
+    "z": 7000,
     "height": 79.297883324728971,
     "width": 227.32059886422303,
-    "tabOrder": 8000
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "slicer",
@@ -66,7 +66,7 @@
             "endDate": {
               "expr": {
                 "Literal": {
-                  "Value": "datetime'2025-01-31T00:00:00'"
+                  "Value": "datetime'2025-06-22T00:00:00'"
                 }
               }
             },
@@ -139,7 +139,7 @@
                             },
                             "Right": {
                               "Literal": {
-                                "Value": "datetime'2025-02-01T00:00:00'"
+                                "Value": "datetime'2025-06-23T00:00:00'"
                               }
                             }
                           }
@@ -282,74 +282,6 @@
           }
         },
         "type": "Advanced",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "c",
-              "Entity": "Calendar",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "And": {
-                  "Left": {
-                    "Comparison": {
-                      "ComparisonKind": 0,
-                      "Left": {
-                        "Column": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Source": "c"
-                            }
-                          },
-                          "Property": "Date"
-                        }
-                      },
-                      "Right": {
-                        "DateSpan": {
-                          "Expression": {
-                            "Literal": {
-                              "Value": "datetime'2025-01-01T00:00:00'"
-                            }
-                          },
-                          "TimeUnit": 5
-                        }
-                      }
-                    }
-                  },
-                  "Right": {
-                    "Comparison": {
-                      "ComparisonKind": 0,
-                      "Left": {
-                        "Column": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Source": "c"
-                            }
-                          },
-                          "Property": "Date"
-                        }
-                      },
-                      "Right": {
-                        "DateSpan": {
-                          "Expression": {
-                            "Literal": {
-                              "Value": "datetime'2026-05-31T00:00:00'"
-                            }
-                          },
-                          "TimeUnit": 5
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
         "objects": {
           "general": [
             {

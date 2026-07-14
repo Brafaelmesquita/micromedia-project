@@ -4,10 +4,10 @@
   "position": {
     "x": 278.66666666666669,
     "y": 173.33333333333334,
-    "z": 6000,
+    "z": 5000,
     "height": 534.66666666666663,
     "width": 989.33333333333337,
-    "tabOrder": 6000
+    "tabOrder": 5000
   },
   "visual": {
     "visualType": "azureMap",
@@ -184,7 +184,7 @@
             "defaultStyle": {
               "expr": {
                 "Literal": {
-                  "Value": "'road_shaded_relief'"
+                  "Value": "'grayscale_dark'"
                 }
               }
             },

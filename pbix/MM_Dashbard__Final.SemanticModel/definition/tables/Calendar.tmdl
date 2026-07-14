@@ -4,13 +4,15 @@ table Calendar
 
 	column Date
 		isKey
-		formatString: General Date
+		formatString: Long Date
 		lineageTag: a4266d48-9b48-469b-bb16-4a24d3e9f224
 		summarizeBy: none
 		isNameInferred
 		sourceColumn: [Date]
 
 		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
 
 	column Year
 		formatString: 0

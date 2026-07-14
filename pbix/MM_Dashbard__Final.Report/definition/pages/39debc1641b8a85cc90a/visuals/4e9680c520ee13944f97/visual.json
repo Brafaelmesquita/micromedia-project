@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "ef62888e663d6d8447d0",
+  "name": "4e9680c520ee13944f97",
   "position": {
-    "x": 900.55770055770063,
-    "y": 625.997425997426,
-    "z": 14000,
-    "height": 86.761046761046757,
-    "width": 119.7082797082797,
-    "tabOrder": 12000
+    "x": 943.45793786349,
+    "y": 227.14721207273041,
+    "z": 6000,
+    "height": 86.674594080383983,
+    "width": 190.28560309601539,
+    "tabOrder": 6000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "PaS"
+                  "Property": "Total Population"
                 }
               },
-              "queryRef": "_Measures.PaS",
-              "nativeQueryRef": "PaS"
+              "queryRef": "_Measures.Total Population",
+              "nativeQueryRef": "Total Population"
             }
           ]
         }
@@ -42,7 +42,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "PaS"
+                "Property": "Total Population"
               }
             },
             "direction": "Descending"
@@ -136,7 +136,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Footfall'"
+                  "Value": "'Total Footfall'"
                 }
               }
             },

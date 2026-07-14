@@ -13,9 +13,10 @@ data/processed/
 # Power BI
 *.pbix
 
-# Power BI PBIP - cache local, específico da máquina
+# Power BI PBIP
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
+**/.pbi/unappliedChanges.json
 
 # OS
 .DS_Store

@@ -4,10 +4,10 @@
   "position": {
     "x": 492.012012012012,
     "y": 360.22308022308022,
-    "z": 16000,
+    "z": 15000,
     "height": 318.48991848991852,
     "width": 692.990132990133,
-    "tabOrder": 16000
+    "tabOrder": 15000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -43,7 +43,7 @@
               },
               "queryRef": "Demographics.HOUR",
               "nativeQueryRef": "HOUR",
-              "active": false
+              "active": true
             }
           ]
         }
@@ -82,7 +82,20 @@
             "isPinned": true
           }
         ],
-        "root": {}
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'50001 - Tower Records - Dawson Street'"
+                  }
+                }
+              ],
+              "isToggled": true
+            }
+          ]
+        }
       }
     ],
     "drillFilterOtherVisuals": true

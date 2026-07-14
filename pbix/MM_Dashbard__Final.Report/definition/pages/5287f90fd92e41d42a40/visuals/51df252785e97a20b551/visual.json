@@ -4,10 +4,10 @@
   "position": {
     "x": 796,
     "y": 164,
-    "z": 13000,
+    "z": 11000,
     "height": 72,
     "width": 182.66666666666666,
-    "tabOrder": 13000
+    "tabOrder": 11000
   },
   "visual": {
     "visualType": "slicer",
@@ -75,7 +75,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "1L"
+                                "Value": "3L"
                               }
                             }
                           ]
