@@ -196,13 +196,13 @@
         "sort": [
           {
             "field": {
-              "Column": {
+              "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "Master_Sites"
+                    "Entity": "_Measures"
                   }
                 },
-                "Property": "MM ID"
+                "Property": "65+ #"
               }
             },
             "direction": "Descending"
