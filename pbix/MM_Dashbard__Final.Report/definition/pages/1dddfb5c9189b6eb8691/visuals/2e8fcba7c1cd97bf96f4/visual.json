@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "39b43cca4ab000270ab3",
+  "name": "2e8fcba7c1cd97bf96f4",
   "position": {
-    "x": 13.333333333333334,
-    "y": 164,
-    "z": 10000,
-    "height": 73.333333333333329,
-    "width": 117.33333333333333,
-    "tabOrder": 10000
+    "x": 23.789364997418691,
+    "y": 173.13371192565825,
+    "z": 6000,
+    "height": 79.297883324728971,
+    "width": 130.84150748580279,
+    "tabOrder": 6000
   },
   "visual": {
     "visualType": "slicer",
@@ -56,6 +56,44 @@
                 "Literal": {
                   "Value": "true"
                 }
+              }
+            },
+            "selfFilter": {
+              "filter": {
+                "Version": 2,
+                "From": [
+                  {
+                    "Name": "m",
+                    "Entity": "Master_Sites",
+                    "Type": 0
+                  }
+                ],
+                "Where": [
+                  {
+                    "Condition": {
+                      "Contains": {
+                        "Left": {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "m"
+                              }
+                            },
+                            "Property": "MM ID"
+                          }
+                        },
+                        "Right": {
+                          "Literal": {
+                            "Value": "'50204'"
+                          }
+                        }
+                      }
+                    },
+                    "Annotations": {
+                      "PowerBI.MParameterBehavior": 1
+                    }
+                  }
+                ]
               }
             }
           }

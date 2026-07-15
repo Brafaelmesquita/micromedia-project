@@ -110,6 +110,14 @@ table Demographics_AgeLong
 
 		annotation SummarizationSetBy = Automatic
 
+	column YEAR_MONTH_KEY
+		dataType: string
+		lineageTag: 5240f08b-e1be-461c-a367-3ad3ded7e1f7
+		summarizeBy: none
+		sourceColumn: YEAR_MONTH_KEY
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Demographics_AgeLong = m
 		mode: import
 		source =
@@ -128,9 +136,11 @@ table Demographics_AgeLong
 				else if [AGE_BRACKET] = "35-44" then 3
 				else if [AGE_BRACKET] = "45-54" then 4
 				else if [AGE_BRACKET] = "55-64" then 5
-				else 6)
+				else 6),
+				    #"Duplicated Column" = Table.DuplicateColumn(#"Added Custom", "YEAR_MONTH", "YEAR_MONTH - Copy"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",{{"YEAR_MONTH - Copy", "YEAR_MONTH_KEY"}})
 				in
-				    #"Added Custom"
+				    #"Renamed Columns"
 
 	annotation PBI_NavigationStepName = Navigation
 

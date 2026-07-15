@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "39b43cca4ab000270ab3",
+  "name": "1c94af9e2a2a465b140f",
   "position": {
-    "x": 13.333333333333334,
-    "y": 164,
+    "x": 974.04233350542052,
+    "y": 173.13371192565825,
     "z": 10000,
-    "height": 73.333333333333329,
-    "width": 117.33333333333333,
+    "height": 79.297883324728971,
+    "width": 107.05214248838411,
     "tabOrder": 10000
   },
   "visual": {
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Master_Sites"
+                      "Entity": "Demographics_AgeLong"
                     }
                   },
-                  "Property": "MM ID"
+                  "Property": "GENDER"
                 }
               },
-              "queryRef": "Master_Sites.MM ID",
-              "nativeQueryRef": "MM ID",
+              "queryRef": "Demographics_AgeLong.GENDER",
+              "nativeQueryRef": "GENDER",
               "active": true
             }
           ]
@@ -38,6 +38,20 @@
       "data": [
         {
           "properties": {
+            "numericStart": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "numericEnd": {
+              "expr": {
+                "Literal": {
+                  "Value": "18D"
+                }
+              }
+            },
             "mode": {
               "expr": {
                 "Literal": {
@@ -51,10 +65,10 @@
       "general": [
         {
           "properties": {
-            "selfFilterEnabled": {
+            "orientation": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "0D"
                 }
               }
             }
@@ -67,7 +81,7 @@
             "selectAllCheckboxEnabled": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -89,6 +103,19 @@
       ]
     },
     "visualContainerObjects": {
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "title": [
         {
           "properties": {
@@ -102,7 +129,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Site'"
+                  "Value": "'Gender'"
                 }
               }
             },
@@ -134,19 +161,6 @@
           }
         }
       ],
-      "visualHeader": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {
@@ -169,7 +183,7 @@
       ]
     },
     "syncGroup": {
-      "groupName": "MM ID",
+      "groupName": "GENDER",
       "fieldChanges": true,
       "filterChanges": true
     },
@@ -178,15 +192,15 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "7cdae19027c8699a1d30",
+        "name": "253c71e7a0bb18e95043",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "Master_Sites"
+                "Entity": "Demographics_AgeLong"
               }
             },
-            "Property": "MM ID"
+            "Property": "GENDER"
           }
         },
         "type": "Categorical",
@@ -194,55 +208,43 @@
           "Version": 2,
           "From": [
             {
-              "Name": "m",
-              "Entity": "Master_Sites",
+              "Name": "d",
+              "Entity": "Demographics_AgeLong",
               "Type": 0
             }
           ],
           "Where": [
             {
               "Condition": {
-                "Not": {
-                  "Expression": {
-                    "In": {
-                      "Expressions": [
-                        {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "m"
-                              }
-                            },
-                            "Property": "MM ID"
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "d"
                           }
+                        },
+                        "Property": "GENDER"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'F'"
                         }
-                      ],
-                      "Values": [
-                        [
-                          {
-                            "Literal": {
-                              "Value": "null"
-                            }
-                          }
-                        ]
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "objects": {
-          "general": [
-            {
-              "properties": {
-                "isInvertedSelectionMode": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "true"
-                    }
-                  }
+                      }
+                    ],
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'M'"
+                        }
+                      }
+                    ]
+                  ]
                 }
               }
             }

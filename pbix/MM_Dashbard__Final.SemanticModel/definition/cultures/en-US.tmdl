@@ -15622,7 +15622,7 @@ cultureInfo en-US
 			      "Definition": {
 			        "Binding": {
 			          "ConceptualEntity": "_Measures",
-			          "ConceptualProperty": "Age %"
+			          "ConceptualProperty": "Age Share %"
 			        }
 			      },
 			      "State": "Generated",

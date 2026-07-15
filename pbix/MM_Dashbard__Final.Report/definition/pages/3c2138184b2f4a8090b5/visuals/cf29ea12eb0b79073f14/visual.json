@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "39b43cca4ab000270ab3",
+  "name": "cf29ea12eb0b79073f14",
   "position": {
-    "x": 13.333333333333334,
-    "y": 164,
-    "z": 10000,
-    "height": 73.333333333333329,
-    "width": 117.33333333333333,
-    "tabOrder": 10000
+    "x": 347.06040268456366,
+    "y": 173.13371192565825,
+    "z": 3000,
+    "height": 79.297883324728971,
+    "width": 185.02839442436758,
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "slicer",
@@ -23,11 +23,11 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "MM ID"
+                  "Property": "Network"
                 }
               },
-              "queryRef": "Master_Sites.MM ID",
-              "nativeQueryRef": "MM ID",
+              "queryRef": "Master_Sites.Network",
+              "nativeQueryRef": "Network",
               "active": true
             }
           ]
@@ -44,6 +44,13 @@
                   "Value": "'Dropdown'"
                 }
               }
+            },
+            "isInvertedSelectionMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -51,6 +58,13 @@
       "general": [
         {
           "properties": {
+            "orientation": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
             "selfFilterEnabled": {
               "expr": {
                 "Literal": {
@@ -64,6 +78,13 @@
       "selection": [
         {
           "properties": {
+            "strictSingleSelect": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
             "selectAllCheckboxEnabled": {
               "expr": {
                 "Literal": {
@@ -89,6 +110,26 @@
       ]
     },
     "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
       "title": [
         {
           "properties": {
@@ -102,14 +143,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Site'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
+                  "Value": "'Network'"
                 }
               }
             },
@@ -117,6 +151,13 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
                 }
               }
             },
@@ -140,27 +181,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "border": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
                 }
               }
             }
@@ -169,7 +190,7 @@
       ]
     },
     "syncGroup": {
-      "groupName": "MM ID",
+      "groupName": "Network",
       "fieldChanges": true,
       "filterChanges": true
     },
@@ -178,7 +199,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "7cdae19027c8699a1d30",
+        "name": "89302dffe6068b055dc5",
         "field": {
           "Column": {
             "Expression": {
@@ -186,7 +207,7 @@
                 "Entity": "Master_Sites"
               }
             },
-            "Property": "MM ID"
+            "Property": "Network"
           }
         },
         "type": "Categorical",
@@ -213,7 +234,7 @@
                                 "Source": "m"
                               }
                             },
-                            "Property": "MM ID"
+                            "Property": "Network"
                           }
                         }
                       ],
@@ -222,6 +243,13 @@
                           {
                             "Literal": {
                               "Value": "null"
+                            }
+                          }
+                        ],
+                        [
+                          {
+                            "Literal": {
+                              "Value": "''"
                             }
                           }
                         ]

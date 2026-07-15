@@ -568,16 +568,16 @@ table _Measures
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Age %' =
+	measure 'Age Share %' =
 			
 			DIVIDE (
 			    [Age Audience (Hourly)],
 			    CALCULATE (
 			        [Age Audience (Hourly)],
-			        REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET], Demographics_AgeLong[AGE_SORT] )
+			        REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET], Demographics_AgeLong[GENDER] )
 			    )
 			)
-		formatString: 0.0%;-0.0%;0.0%
+		formatString: 0%;-0%;0%
 		displayFolder: Age&Gender
 		lineageTag: 9f65395f-601e-49f2-bf6a-a293f9dc88f8
 
@@ -609,7 +609,11 @@ table _Measures
 	measure 'Class Audience (Hourly)' =
 			
 			SUMX (
-			    FILTER ( Demographics_ClassLong, Demographics_ClassLong[MOVEMENT_MODALITY] = "All" ),
+			    FILTER (
+			        Demographics_ClassLong,
+			        Demographics_ClassLong[MOVEMENT_MODALITY] = "All"
+			            && Demographics_ClassLong[HasValidSite] = TRUE ()
+			    ),
 			    VAR _code = Demographics_ClassLong[CODE]
 			    VAR _ym   = Demographics_ClassLong[YEAR_MONTH_KEY]
 			    VAR _hr   = Demographics_ClassLong[HOUR]
@@ -620,7 +624,8 @@ table _Measures
 			            Footfall[CODE] = _code,
 			            Footfall[YEAR_MONTH] = _ym,
 			            Footfall[HOUR] = _hr,
-			            Footfall[IS_GRAND_TOTAL] = 1
+			            Footfall[IS_GRAND_TOTAL] = 1,
+			            Footfall[HasValidSite] = TRUE ()
 			        )
 			)
 		formatString: #,0
@@ -682,6 +687,60 @@ table _Measures
 		formatString: 0.0%;-0.0%;0.0%
 		displayFolder: Footfall QA
 		lineageTag: b5da6c96-e399-411c-930d-5863b18b152f
+
+	measure 'Male #' = CALCULATE ( [Age Audience (Hourly)], Demographics_AgeLong[GENDER] = "M" )
+		formatString: #,0
+		displayFolder: Age&Gender
+		lineageTag: f089e020-ae88-469a-a714-5309b50c9197
+
+	measure 'Female #' = CALCULATE ( [Age Audience (Hourly)], Demographics_AgeLong[GENDER] = "F" )
+		formatString: #,0
+		displayFolder: Age&Gender
+		lineageTag: 1039ffec-ee87-4eef-a240-fed339d85c3c
+
+	measure 'Under 18 #' = CALCULATE ( [Age Audience (Hourly)], Demographics_AgeLong[AGE_BRACKET] = "Under 18" )
+		formatString: #,0
+		displayFolder: Age&Gender
+		lineageTag: 3a92c2ed-08d4-4299-88d7-f146f04f5c83
+
+	measure '18-24 #' = CALCULATE ( [Age Audience (Hourly)], Demographics_AgeLong[AGE_BRACKET] = "18-24" )
+		formatString: #,0
+		displayFolder: Age&Gender
+		lineageTag: cd512e12-0469-4b11-bacd-026f9523e4b8
+
+	measure '25-34 #' = CALCULATE ( [Age Audience (Hourly)], Demographics_AgeLong[AGE_BRACKET] = "25-34" )
+		formatString: #,0
+		displayFolder: Age&Gender
+		lineageTag: 722024eb-ad40-45c8-b386-4962d2908a7c
+
+	measure '35-44 #' = ```
+			CALCULATE ( [Age Audience (Hourly)], Demographics_AgeLong[AGE_BRACKET] = "35-44" )
+			
+			```
+		formatString: #,0
+		displayFolder: Age&Gender
+		lineageTag: 6e63acfe-f499-4a00-afcb-aaa28a39146a
+
+	measure '45-54 #' = ```
+			CALCULATE ( [Age Audience (Hourly)], Demographics_AgeLong[AGE_BRACKET] = "45-54" )
+			
+			```
+		formatString: #,0
+		displayFolder: Age&Gender
+		lineageTag: 871d1f65-6a41-4794-b1f8-c5a9969ac37a
+
+	measure '55-64 #' = ```
+			CALCULATE ( [Age Audience (Hourly)], Demographics_AgeLong[AGE_BRACKET] = "55-64" )
+			
+			```
+		formatString: #,0
+		displayFolder: Age&Gender
+		lineageTag: 8caf33cb-673f-4f93-a8e8-86214296d373
+
+	measure '65+ #' = CALCULATE ( [Age Audience (Hourly)], Demographics_AgeLong[AGE_BRACKET] = "65+" )
+		formatString: #,0
+		displayFolder: Age&Gender
+		lineageTag: 68a901d2-4de6-471c-8ec0-741eb91b2c2b
 
 	partition _Measures = m
 		mode: import

@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "cdb7799063009830cbcb",
+  "name": "65773a3b5543cadcb649",
   "position": {
-    "x": 24,
-    "y": 269,
+    "x": 23.910232849761098,
+    "y": 268.99011955981234,
     "z": 14000,
-    "height": 212,
-    "width": 458,
+    "height": 199.2519404146758,
+    "width": 242.09110760383112,
     "tabOrder": 14000
   },
   "visual": {
@@ -60,7 +60,7 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Age %"
+                  "Property": "Age Share %"
                 }
               },
               "queryRef": "_Measures.Age %",

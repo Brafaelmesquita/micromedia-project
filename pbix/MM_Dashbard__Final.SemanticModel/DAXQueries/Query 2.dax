@@ -1,9 +1,1 @@
-EVALUATE
-ROW (
-    "Excluded Total Pop", CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
-        Footfall[HasValidSite] = FALSE (),
-        Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 ),
-    "Kept Total Pop", CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
-        Footfall[HasValidSite] = TRUE (),
-        Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
-)
+EVALUATE VALUES ( Demographics_AgeLong[AGE_BRACKET] )
