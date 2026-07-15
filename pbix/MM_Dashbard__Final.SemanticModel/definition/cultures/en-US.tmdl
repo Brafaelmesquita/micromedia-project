@@ -11313,32 +11313,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "entity__measure.column_1": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_Measures",
-			          "ConceptualProperty": "Column1"
-			        }
-			      },
-			      "State": "Generated",
-			      "Visibility": {
-			        "Value": "Hidden"
-			      },
-			      "Terms": [
-			        {
-			          "column 1": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "Column1": {
-			            "Type": "Noun",
-			            "State": "Generated",
-			            "Weight": 0.99
-			          }
-			        }
-			      ]
-			    },
 			    "entity__measure.pa_S": {
 			      "Definition": {
 			        "Binding": {

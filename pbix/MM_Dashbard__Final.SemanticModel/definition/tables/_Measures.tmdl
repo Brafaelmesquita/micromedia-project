@@ -119,7 +119,8 @@ table _Measures
 	measure 'Total Population (Hourly)' =
 			
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
-			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
+			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25,
+			    Footfall[HasValidSite] = TRUE () )
 		formatString: #,0
 		displayFolder: KPIs\By Hour
 		lineageTag: fdbaddee-f7f9-4861-89ed-b7deba5ca6df
@@ -127,7 +128,8 @@ table _Measures
 	measure 'PaS (Hourly)' =
 			
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_USERS] ),
-			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
+			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25,
+			    Footfall[HasValidSite] = TRUE () )
 		formatString: #,0
 		displayFolder: KPIs\By Hour
 		lineageTag: 69a0f5ff-eb82-42a8-bec8-056496f4a26e
@@ -135,7 +137,8 @@ table _Measures
 	measure 'OTS (Hourly)' =
 			
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS] ),
-			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25 )
+			    Footfall[IS_GRAND_TOTAL] = 1, Footfall[HOUR] <> 25,
+			    Footfall[HasValidSite] = TRUE () )
 		formatString: #,0
 		displayFolder: KPIs\By Hour
 		lineageTag: c8f94d63-c789-4916-988f-920de6bb2f16
@@ -680,25 +683,15 @@ table _Measures
 		displayFolder: Footfall QA
 		lineageTag: b5da6c96-e399-411c-930d-5863b18b152f
 
-	column Column1
-		dataType: string
-		isHidden
-		lineageTag: cc97966a-36e7-4cce-8fb2-775c8aa75cb4
-		summarizeBy: none
-		sourceColumn: Column1
-
-		changedProperty = IsHidden
-
-		annotation SummarizationSetBy = Automatic
-
 	partition _Measures = m
 		mode: import
 		source =
 				let
 				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WCshJTE7NyM9JSS1Sio0FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t]),
-				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}})
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Column1"})
 				in
-				    #"Changed Type"
+				    #"Removed Columns"
 
 	changedProperty = IsHidden
 

@@ -85,6 +85,13 @@ table Demographics_ClassLong
 
 		annotation SummarizationSetBy = Automatic
 
+	column HasValidSite = NOT ISBLANK ( RELATED ( Master_Sites[MM ID] ) )
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2d57c2e0-d30a-4af1-90b9-fa7b19c7670e
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Demographics_ClassLong = m
 		mode: import
 		source =
