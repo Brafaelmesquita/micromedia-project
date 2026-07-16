@@ -1,1 +1,9 @@
-EVALUATE VALUES ( Demographics_AgeLong[AGE_BRACKET] )
+EVALUATE
+CALCULATETABLE (
+    SUMMARIZECOLUMNS (
+        Demographics_AgeLong[AGE_BRACKET],
+        "AgeShare",    [Age Share %],
+        "AgeAudience", [Age Audience (Hourly)]
+    ),
+    Master_Sites[MM ID] = "50001"
+)

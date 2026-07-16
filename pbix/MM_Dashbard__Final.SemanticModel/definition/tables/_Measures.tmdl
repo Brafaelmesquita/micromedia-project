@@ -568,19 +568,6 @@ table _Measures
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Age Share %' =
-			
-			DIVIDE (
-			    [Age Audience (Hourly)],
-			    CALCULATE (
-			        [Age Audience (Hourly)],
-			        REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET], Demographics_AgeLong[GENDER] )
-			    )
-			)
-		formatString: 0%;-0%;0%
-		displayFolder: Age&Gender
-		lineageTag: 9f65395f-601e-49f2-bf6a-a293f9dc88f8
-
 	measure 'Visitation Audience' =
 			
 			CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ),

@@ -15618,42 +15618,6 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
-			    "entity__measure.age_share_": {
-			      "Definition": {
-			        "Binding": {
-			          "ConceptualEntity": "_Measures",
-			          "ConceptualProperty": "Age Share %"
-			        }
-			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "age share %": {
-			            "State": "Generated"
-			          }
-			        },
-			        {
-			          "age share percentage": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.762
-			          }
-			        },
-			        {
-			          "age share pct": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.739
-			          }
-			        }
-			      ]
-			    },
 			    "entity__measure.visitation_audience": {
 			      "Definition": {
 			        "Binding": {

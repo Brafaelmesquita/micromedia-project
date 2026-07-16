@@ -60,11 +60,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Age Share %"
+                  "Property": "Age Audience (Hourly)"
                 }
               },
-              "queryRef": "_Measures.Age %",
-              "nativeQueryRef": "Age %"
+              "queryRef": "_Measures.Age Audience (Hourly)",
+              "nativeQueryRef": "Age Audience (Hourly)"
             }
           ]
         }
@@ -275,5 +275,37 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "ac71c5a61d1d319e3588",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Demographics_AgeLong"
+              }
+            },
+            "Property": "AGE_BRACKET"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "b704ac7040f9b081e33c",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Age Audience (Hourly)"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

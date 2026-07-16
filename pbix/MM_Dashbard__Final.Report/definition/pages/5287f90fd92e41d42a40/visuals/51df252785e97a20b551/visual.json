@@ -23,11 +23,11 @@
                       "Entity": "dim_Hour"
                     }
                   },
-                  "Property": "Hour"
+                  "Property": "HourLabel"
                 }
               },
-              "queryRef": "dim_Hour.Hour",
-              "nativeQueryRef": "Hour",
+              "queryRef": "dim_Hour.HourLabel",
+              "nativeQueryRef": "HourLabel",
               "active": true
             }
           ]
@@ -67,7 +67,7 @@
                                   "Source": "d"
                                 }
                               },
-                              "Property": "Hour"
+                              "Property": "HourLabel"
                             }
                           }
                         ],
@@ -75,7 +75,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "13L"
+                                "Value": "'00:00'"
                               }
                             }
                           ]
@@ -121,7 +121,7 @@
             "strictSingleSelect": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -274,6 +274,7 @@
             }
           ]
         },
+        "howCreated": "User",
         "objects": {
           "general": [
             {
