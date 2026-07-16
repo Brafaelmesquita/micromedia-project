@@ -1,9 +1,9 @@
 EVALUATE
-CALCULATETABLE (
+TOPN (
+    10,
     SUMMARIZECOLUMNS (
-        Demographics_AgeLong[AGE_BRACKET],
-        "AgeShare",    [Age Share %],
-        "AgeAudience", [Age Audience (Hourly)]
+        Master_Sites[MM ID],
+        "Pop", [Total Population (Hourly)]
     ),
-    Master_Sites[MM ID] = "50001"
+    [Total Population (Hourly)], DESC
 )

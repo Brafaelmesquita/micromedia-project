@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "a9019336da888ca2ca11",
   "position": {
-    "x": 381,
-    "y": 165,
+    "x": 817,
+    "y": 438,
     "z": 5000,
-    "height": 543,
-    "width": 887,
+    "height": 269,
+    "width": 451,
     "tabOrder": 5000
   },
   "visual": {
@@ -104,21 +104,21 @@
             "centerLatitude": {
               "expr": {
                 "Literal": {
-                  "Value": "53.339794021776356D"
+                  "Value": "53.34634201894313D"
                 }
               }
             },
             "centerLongitude": {
               "expr": {
                 "Literal": {
-                  "Value": "-6.228988498164199D"
+                  "Value": "-6.2390453845409315D"
                 }
               }
             },
             "zoom": {
               "expr": {
                 "Literal": {
-                  "Value": "11.92D"
+                  "Value": "10.2D"
                 }
               }
             },
@@ -223,6 +223,13 @@
                   "Value": "33D"
                 }
               }
+            },
+            "clusteringEnabled": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
             }
           }
         },
@@ -303,14 +310,14 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
             "heatMapRadius": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "100D"
                 }
               }
             },
@@ -318,6 +325,20 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "heatMapIntensity": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
+            "heatMapRadiusUnit": {
+              "expr": {
+                "Literal": {
+                  "Value": "'meters'"
                 }
               }
             }

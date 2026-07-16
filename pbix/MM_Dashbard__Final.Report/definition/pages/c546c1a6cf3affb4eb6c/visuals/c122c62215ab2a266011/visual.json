@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "c122c62215ab2a266011",
   "position": {
-    "x": 548,
+    "x": 521,
     "y": 124,
     "z": 8000,
-    "height": 569,
-    "width": 714,
+    "height": 574,
+    "width": 749,
     "tabOrder": 8000
   },
   "visual": {
@@ -206,16 +206,16 @@
         "sort": [
           {
             "field": {
-              "Column": {
+              "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "Master_Sites"
+                    "Entity": "_Measures"
                   }
                 },
-                "Property": "MM ID"
+                "Property": "Under 18 #"
               }
             },
-            "direction": "Ascending"
+            "direction": "Descending"
           }
         ]
       }

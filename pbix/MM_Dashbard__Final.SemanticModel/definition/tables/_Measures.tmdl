@@ -729,6 +729,38 @@ table _Measures
 		displayFolder: Age&Gender
 		lineageTag: 68a901d2-4de6-471c-8ec0-741eb91b2c2b
 
+	measure 'Male %' = DIVIDE ( [Male #], [Total Population (Hourly)] )
+		displayFolder: Age&Gender
+		lineageTag: 9a316a98-cc40-4e2f-b40c-039103202033
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Female %' = DIVIDE ( [Female #], [Total Population (Hourly)] )
+		displayFolder: Age&Gender
+		lineageTag: 756183be-3b8b-42a4-827a-a1ce58e859e8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Ranking Title' = ```
+			
+			VAR _count = COUNTROWS ( ALLSELECTED ( dim_Hour[HourLabel] ) )
+			VAR _selCount = COUNTROWS ( VALUES ( dim_Hour[Hour] ) )
+			VAR _min = MIN ( dim_Hour[Hour] )
+			VAR _max = MAX ( dim_Hour[Hour] )
+			VAR _minLabel = FORMAT ( _min, "00" ) & ":00"
+			VAR _maxLabel = FORMAT ( _max, "00" ) & ":00"
+			RETURN
+			    "Top 10 Screens — " &
+			    SWITCH (
+			        TRUE (),
+			        _selCount = _count, "all hours",          
+			        _selCount = 1, _minLabel,                    
+			        _minLabel & " – " & _maxLabel                
+			    )
+			```
+		displayFolder: Titles
+		lineageTag: 54e1e902-d7ce-4600-9e51-6c01197b568b
+
 	partition _Measures = m
 		mode: import
 		source =
