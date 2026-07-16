@@ -449,7 +449,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#FF1174'"
+                      "Value": "'#E05A3A'"
                     }
                   }
                 }
@@ -490,7 +490,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#118DFF'"
+                      "Value": "'#29B6E8'"
                     }
                   }
                 }
@@ -535,6 +535,19 @@
                 }
               }
             },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "ribbonBands": [
+        {
+          "properties": {
             "show": {
               "expr": {
                 "Literal": {
