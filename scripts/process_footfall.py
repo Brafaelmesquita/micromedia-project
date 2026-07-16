@@ -2,12 +2,11 @@
 process_footfall.py
 ===================
 Reads monthly Footfall CSV exports from Locomizer and produces, for each
-input file, one Parquet (or CSV) file ready for Power BI ingestion.
+input file, one Parquet (or CSV) file ready for Power BI ingestion. The output
+keeps the input filename (with a new extension), so chronological, year-first
+naming is handled once, upstream, by rename_raw_chrono.py.
 
-Output files are renamed to a YEAR-FIRST, zero-padded-month convention so
-they sort chronologically in any file explorer (see "Output file naming"):
-
-  Example:  03_Mar25_Micromedia_Footfall.csv  ->  2025_03_Mar_Micromedia_Footfall.parquet
+  Example:  2025_03_Mar_Micromedia_Footfall.csv  ->  2025_03_Mar_Micromedia_Footfall.parquet
 
 Transformations
 ---------------
@@ -66,22 +65,11 @@ table is the single source of truth, joined to this fact table via CODE.
 
 Output file naming
 ------------------
-Locomizer delivers files as MM_MonYY_... (e.g. 03_Mar25_...). Because the
-month number leads, an alphabetical sort interleaves years (01_Jan25 sits
-next to 01_Jan26). Output files are therefore renamed to:
-
-  YYYY_MM[_Mon]_<rest>        e.g. 2025_03_Mar_Micromedia_Footfall.parquet
-
-which sorts strictly by year then month. Controlled by:
-
-  RENAME_OUTPUT_CHRONOLOGICAL = True   # turn the year-first rename on/off
-  INCLUDE_MONTH_NAME_IN_STEM  = True   # keep the 'Mar' token for readability
-
-The two-digit year in the source name is expanded to four digits (25 -> 2025)
-and cross-checked against the actual DATE values in the data; a mismatch is
-logged as a warning. If a source name does not match the expected pattern the
-original stem is reused unchanged, so the pipeline never fails on an odd name.
-The source CSVs in data/raw/ are left untouched (immutable landing zone).
+This script does NOT rename files — the output simply mirrors the input stem.
+Chronological, year-first naming (YYYY_MM_Mon_...) is standardised once,
+upstream, by rename_raw_chrono.py, which renames the raw CSVs by reading their
+MONTH/YEAR columns. Keeping naming in a single place avoids two sources of
+truth and keeps all three processing scripts identical in this respect.
 
 Output format
 -------------
@@ -95,6 +83,13 @@ Usage
 
 Changelog
 ---------
+  v3.4.0  2026-07-16  REFACTOR: removed the year-first output-naming logic
+                      (parse_filename_period / build_output_stem / period
+                      validation). Renaming is now centralised in
+                      rename_raw_chrono.py, which standardises the raw files
+                      themselves. Output stem = input stem again, matching
+                      process_demographics.py and process_brand_affinity.py.
+                      The v3.3.0 robustness fixes are KEPT unchanged.
   v3.3.0  2026-07-16  ROBUSTNESS: survive malformed source files.
                       (1) Blank-metric rows (a screen exported with CODE/DISPLAY
                           NAME but every measurement empty) no longer crash the
@@ -133,13 +128,12 @@ Changelog
 # ---------------------------------------------------------------------------
 
 import os
-import re
 import time
 import glob
 
 import pandas as pd
 
-__version__ = "3.3.0"
+__version__ = "3.4.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -150,14 +144,6 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Output format: "parquet" for Power BI, "csv" for Excel.
 OUTPUT_FORMAT = "parquet"
-
-# Output file naming.
-#   RENAME_OUTPUT_CHRONOLOGICAL: rename MM_MonYY_... -> YYYY_MM[_Mon]_... so
-#   processed files sort by year then month. Source CSVs are never renamed.
-#   INCLUDE_MONTH_NAME_IN_STEM : keep the 'Mar' token (2025_03_Mar_...) for
-#   readability; set False for a leaner 2025_03_... stem.
-RENAME_OUTPUT_CHRONOLOGICAL = True
-INCLUDE_MONTH_NAME_IN_STEM  = True
 
 # Sentinel value used by Locomizer to flag the all-day-total row.
 # Kept for clarity in the IS_GRAND_TOTAL semantics; not used as a filter.
@@ -171,17 +157,6 @@ EXCEL_ROW_LIMIT = 1_048_576
 # Title-Case values matched by add_grand_total_flag().
 MODALITY_ALL   = "All"
 VISITATION_ALL = "All"
-
-# Month-abbreviation -> month-number map used to parse Locomizer filenames
-# (e.g. '03_Mar25_Micromedia_Footfall.csv'). Case-insensitive lookup.
-MONTH_ABBR_TO_NUM = {
-    "jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6,
-    "jul": 7, "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12,
-}
-
-# Matches '<MM>_<Mon><YY>_<rest>' e.g. '03_Mar25_Micromedia_Footfall'.
-# Groups: (month-number, month-abbr, 2-or-4-digit year, remainder).
-FILENAME_PERIOD_RE = re.compile(r"^(\d{1,2})_([A-Za-z]{3})(\d{2,4})_(.+)$")
 
 # Columns to standardise to Title Case. Footfall and Demographics arrive
 # UPPERCASE from Locomizer; Brand Affinity arrives Title Case. Standardising
@@ -241,84 +216,6 @@ COLS_ORDER = [
 # %% ---------------------------------------------------------------------------
 # Helper functions
 # ---------------------------------------------------------------------------
-
-def parse_filename_period(filename):
-    """
-    Parse a Locomizer filename into its calendar period.
-
-    'MM_MonYY_<rest>' -> (year4, month_num, 'Mon', '<rest>'), else None.
-    e.g. '03_Mar25_Micromedia_Footfall.csv' -> (2025, 3, 'Mar', 'Micromedia_Footfall')
-
-    The two-digit year is expanded as 2000 + YY. Returns None (rather than
-    raising) on any name that does not match, so callers can fall back safely.
-    """
-    stem = os.path.splitext(os.path.basename(filename))[0]
-    m = FILENAME_PERIOD_RE.match(stem)
-    if not m:
-        return None
-
-    _mm_str, mon_str, yy_str, rest = m.groups()
-    month_num = MONTH_ABBR_TO_NUM.get(mon_str.lower())
-    if month_num is None:
-        return None
-
-    yy    = int(yy_str)
-    year4 = yy if yy > 100 else 2000 + yy
-    return year4, month_num, mon_str.title(), rest
-
-
-def build_output_stem(filename, include_month_name=True):
-    """
-    Build the year-first output stem from a source filename.
-
-    '03_Mar25_Micromedia_Footfall.csv'
-        include_month_name=True  -> ('2025_03_Mar_Micromedia_Footfall', (2025, 3))
-        include_month_name=False -> ('2025_03_Micromedia_Footfall',     (2025, 3))
-
-    Falls back to the original stem (and period=None) when the name does not
-    match the expected pattern, guaranteeing the pipeline never fails on it.
-    """
-    original_stem = os.path.splitext(os.path.basename(filename))[0]
-    parsed = parse_filename_period(filename)
-    if parsed is None:
-        return original_stem, None
-
-    year4, month_num, mon_abbr, rest = parsed
-    if include_month_name:
-        stem = f"{year4}_{month_num:02d}_{mon_abbr}_{rest}"
-    else:
-        stem = f"{year4}_{month_num:02d}_{rest}"
-    return stem, (year4, month_num)
-
-
-def validate_period_against_data(df, parsed_period, label):
-    """
-    Cross-check the period parsed from the filename against the data itself.
-
-    Uses the modal (most frequent) year/month of the DATE column so a few
-    stray edge-of-month rows don't trigger a false alarm. Warns on mismatch;
-    never raises. Returns True when they agree (or can't be checked).
-    """
-    if parsed_period is None or "DATE" not in df.columns:
-        return True
-
-    dates = pd.to_datetime(df["DATE"], errors="coerce").dropna()
-    if dates.empty:
-        return True
-
-    data_year  = int(dates.dt.year.mode().iloc[0])
-    data_month = int(dates.dt.month.mode().iloc[0])
-    name_year, name_month = parsed_period
-
-    if (data_year, data_month) != (name_year, name_month):
-        print(f"  ⚠️  [{label}] Filename period {name_year}-{name_month:02d} "
-              f"≠ data period {data_year}-{data_month:02d}. "
-              f"Output named from the FILENAME; verify the source file.")
-        return False
-
-    print(f"  [PERIOD] Filename ↔ data agree: {data_year}-{data_month:02d}. ✅")
-    return True
-
 
 def coerce_expected_dtypes(df):
     """Cast columns to their DTYPE_MAP types where present. Best-effort: a
@@ -513,12 +410,6 @@ for filepath in footfall_files:
     filename = os.path.basename(filepath)
     stem     = os.path.splitext(filename)[0]
 
-    # Decide the output stem up front (source file is never renamed).
-    if RENAME_OUTPUT_CHRONOLOGICAL:
-        out_stem, parsed_period = build_output_stem(filename, INCLUDE_MONTH_NAME_IN_STEM)
-    else:
-        out_stem, parsed_period = stem, None
-
     print(f"{'='*20} PROCESSING: {filename} {'='*20}")
     t_start = time.time()
 
@@ -558,10 +449,6 @@ for filepath in footfall_files:
     if nat_after > 0:
         print(f"  ⚠️  WARNING: {nat_after} rows have an invalid DATE (NaT).")
 
-    # Cross-check the period parsed from the filename against the actual data.
-    if RENAME_OUTPUT_CHRONOLOGICAL:
-        validate_period_against_data(df, parsed_period, "RENAME")
-
     # 2d — Title-Case modalities (must run before IS_GRAND_TOTAL).
     df = standardize_modality_casing(df, MODALITY_COLS)
     print(f"  [CASE]   MOVEMENT_MODALITY  : {sorted(df['MOVEMENT_MODALITY'].unique().tolist())}")
@@ -579,13 +466,11 @@ for filepath in footfall_files:
     # 2f — Column order
     df = apply_column_order(df, "OUTPUT")
 
-    # 2g — Export (year-first filename)
+    # 2g — Export (output mirrors the input stem; naming handled upstream)
     try:
-        path    = export_file(df, out_stem, OUTPUT_FORMAT)
+        path    = export_file(df, stem, OUTPUT_FORMAT)
         size_kb = file_info(path)[0]
         elapsed = time.time() - t_start
-        if out_stem != stem:
-            print(f"  [RENAME] {stem}  →  {out_stem}")
         print(f"  [EXPORT] → {os.path.basename(path):<55} ({size_kb:>7,.1f} KB)")
         print(f"  [TIME]   {elapsed:.1f}s")
 
