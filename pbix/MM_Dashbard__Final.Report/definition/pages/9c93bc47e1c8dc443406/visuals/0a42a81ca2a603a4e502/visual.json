@@ -144,6 +144,13 @@
                   "Value": "'Percent of total'"
                 }
               }
+            },
+            "percentageLabelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
+                }
+              }
             }
           }
         }

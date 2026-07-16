@@ -31,114 +31,6 @@
             }
           ]
         },
-        "Tooltips": {
-          "projections": [
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Master_Sites"
-                        }
-                      },
-                      "Property": "MM ID"
-                    }
-                  },
-                  "Function": 3
-                }
-              },
-              "queryRef": "Min(Master_Sites.MM ID)",
-              "nativeQueryRef": "First MM ID"
-            },
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Master_Sites"
-                        }
-                      },
-                      "Property": "Network"
-                    }
-                  },
-                  "Function": 3
-                }
-              },
-              "queryRef": "Min(Master_Sites.Network)",
-              "nativeQueryRef": "First Network"
-            },
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Master_Sites"
-                        }
-                      },
-                      "Property": "Display Name"
-                    }
-                  },
-                  "Function": 3
-                }
-              },
-              "queryRef": "Min(Master_Sites.Display Name)",
-              "nativeQueryRef": "First Display Name"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "PaS (Hourly)"
-                }
-              },
-              "queryRef": "_Measures.PaS (Hourly)",
-              "nativeQueryRef": "PaS (Hourly)"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "OTS (Hourly)"
-                }
-              },
-              "queryRef": "_Measures.OTS (Hourly)",
-              "nativeQueryRef": "OTS (Hourly)"
-            },
-            {
-              "field": {
-                "Aggregation": {
-                  "Expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Footfall"
-                        }
-                      },
-                      "Property": "DWELL_TIME"
-                    }
-                  },
-                  "Function": 1
-                }
-              },
-              "queryRef": "Sum(Footfall.DWELL_TIME)",
-              "nativeQueryRef": "Average of DWELL_TIME"
-            }
-          ]
-        },
         "X": {
           "projections": [
             {
@@ -212,21 +104,21 @@
             "centerLatitude": {
               "expr": {
                 "Literal": {
-                  "Value": "53.33776256728552D"
+                  "Value": "53.339794021776356D"
                 }
               }
             },
             "centerLongitude": {
               "expr": {
                 "Literal": {
-                  "Value": "-6.191219263515735D"
+                  "Value": "-6.228988498164199D"
                 }
               }
             },
             "zoom": {
               "expr": {
                 "Literal": {
-                  "Value": "10.61D"
+                  "Value": "11.92D"
                 }
               }
             },
@@ -292,19 +184,12 @@
                 }
               }
             },
-            "mapTransparency": {
-              "expr": {
-                "Literal": {
-                  "Value": "25D"
-                }
-              }
-            },
             "strokeColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "ThemeDataColor": {
-                      "ColorId": 1,
+                      "ColorId": 0,
                       "Percent": 0
                     }
                   }
@@ -322,6 +207,20 @@
               "expr": {
                 "Literal": {
                   "Value": "0D"
+                }
+              }
+            },
+            "iconId": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Circle'"
+                }
+              }
+            },
+            "mapTransparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "33D"
                 }
               }
             }
@@ -354,21 +253,21 @@
                           "min": {
                             "color": {
                               "Literal": {
-                                "Value": "'#FEC287'"
+                                "Value": "'#D6F2FA'"
                               }
                             }
                           },
                           "mid": {
                             "color": {
                               "Literal": {
-                                "Value": "'#DE4968'"
+                                "Value": "'#29B6E8'"
                               }
                             }
                           },
                           "max": {
                             "color": {
                               "Literal": {
-                                "Value": "'#6A1B9A'"
+                                "Value": "'#003D52'"
                               }
                             }
                           },
@@ -416,6 +315,19 @@
               }
             },
             "heatMapUseSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "false"
