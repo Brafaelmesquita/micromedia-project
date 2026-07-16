@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "c122c62215ab2a266011",
   "position": {
-    "x": 260.02378224115193,
-    "y": 168.36788965040105,
+    "x": 354.66845393812292,
+    "y": 164.38285084210753,
     "z": 15000,
-    "height": 531.006421205111,
-    "width": 1012.1998573065531,
+    "height": 547.94283614035851,
+    "width": 856.78334378310592,
     "tabOrder": 15000
   },
   "visual": {
@@ -43,7 +43,7 @@
               },
               "queryRef": "dim_Hour.HourLabel",
               "nativeQueryRef": "HourLabel",
-              "active": false
+              "active": true
             }
           ]
         },
@@ -196,16 +196,16 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "_Measures"
+                    "Entity": "Master_Sites"
                   }
                 },
-                "Property": "65+ #"
+                "Property": "MM ID"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
           }
         ]
       }
@@ -243,7 +243,40 @@
             "isPinned": true
           }
         ],
-        "root": {}
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'50429'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'50087'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'50036'"
+                  }
+                }
+              ],
+              "isToggled": true
+            }
+          ]
+        }
       }
     ],
     "objects": {
