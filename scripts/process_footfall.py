@@ -2,9 +2,11 @@
 process_footfall.py
 ===================
 Reads monthly Footfall CSV exports from Locomizer and produces, for each
-input file, one Parquet (or CSV) file ready for Power BI ingestion.
+input file, one Parquet (or CSV) file ready for Power BI ingestion. The output
+keeps the input filename (with a new extension), so chronological, year-first
+naming is handled once, upstream, by rename_raw_chrono.py.
 
-  Example:  03_Mar25_Micromedia_Footfall.csv  ->  03_Mar25_Micromedia_Footfall.parquet
+  Example:  2025_03_Mar_Micromedia_Footfall.csv  ->  2025_03_Mar_Micromedia_Footfall.parquet
 
 Transformations
 ---------------
@@ -61,6 +63,14 @@ Data model
 DISPLAY NAME, LATITUDE, LONGITUDE are dropped. The Master Sites dimension
 table is the single source of truth, joined to this fact table via CODE.
 
+Output file naming
+------------------
+This script does NOT rename files — the output simply mirrors the input stem.
+Chronological, year-first naming (YYYY_MM_Mon_...) is standardised once,
+upstream, by rename_raw_chrono.py, which renames the raw CSVs by reading their
+MONTH/YEAR columns. Keeping naming in a single place avoids two sources of
+truth and keeps all three processing scripts identical in this respect.
+
 Output format
 -------------
 OUTPUT_FORMAT = "parquet"  (recommended; ~5x smaller, ~15x faster in Power BI)
@@ -73,6 +83,28 @@ Usage
 
 Changelog
 ---------
+  v3.4.0  2026-07-16  REFACTOR: removed the year-first output-naming logic
+                      (parse_filename_period / build_output_stem / period
+                      validation). Renaming is now centralised in
+                      rename_raw_chrono.py, which standardises the raw files
+                      themselves. Output stem = input stem again, matching
+                      process_demographics.py and process_brand_affinity.py.
+                      The v3.3.0 robustness fixes are KEPT unchanged.
+  v3.3.0  2026-07-16  ROBUSTNESS: survive malformed source files.
+                      (1) Blank-metric rows (a screen exported with CODE/DISPLAY
+                          NAME but every measurement empty) no longer crash the
+                          typed read. A safe-mode fallback drops them and logs
+                          which screens were affected.
+                      (2) Excel-truncation guard: warns loudly when a file sits
+                          on Excel's 1,048,576-row limit (a CSV opened + saved in
+                          Excel loses every row past that point).
+  v3.2.0  2026-07-16  FEATURE: year-first output filenames. Processed files are
+                      renamed MM_MonYY_... -> YYYY_MM_Mon_... so they sort
+                      chronologically. Source CSVs are NOT touched. Parsed
+                      period is cross-validated against the data's DATE column.
+                      DOWNSTREAM NOTE: output filenames change, so any Power BI
+                      query that references a processed file by its old name
+                      must be repointed once (folder-based imports are safe).
   v3.1.0  2026-05-20  BEHAVIOUR CHANGE: stop removing HOUR=25 sentinel rows.
                       They are the only deduplicated daily totals Locomizer
                       provides; the dashboard needs them for day-level and
@@ -101,7 +133,7 @@ import glob
 
 import pandas as pd
 
-__version__ = "3.1.0"
+__version__ = "3.4.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -116,6 +148,11 @@ OUTPUT_FORMAT = "parquet"
 # Sentinel value used by Locomizer to flag the all-day-total row.
 # Kept for clarity in the IS_GRAND_TOTAL semantics; not used as a filter.
 HOUR_TOTAL = 25
+
+# Excel silently drops every row past 1,048,576 (2^20) when a CSV is opened
+# and re-saved. A file landing exactly on this boundary is almost certainly
+# truncated, so we warn (see check_excel_truncation).
+EXCEL_ROW_LIMIT = 1_048_576
 
 # Title-Case values matched by add_grand_total_flag().
 MODALITY_ALL   = "All"
@@ -179,6 +216,70 @@ COLS_ORDER = [
 # %% ---------------------------------------------------------------------------
 # Helper functions
 # ---------------------------------------------------------------------------
+
+def coerce_expected_dtypes(df):
+    """Cast columns to their DTYPE_MAP types where present. Best-effort: a
+    column that still can't be cast is left as-is so the schema/null checks
+    downstream surface the problem rather than crashing the run."""
+    for col, dt in DTYPE_MAP.items():
+        if col not in df.columns:
+            continue
+        try:
+            df[col] = df[col].astype(dt)
+        except (ValueError, TypeError):
+            pass
+    return df
+
+
+def drop_empty_metric_rows(df):
+    """
+    Drop placeholder rows that carry an identifier but no data — e.g. a screen
+    exported as '50104,50104 - HQ Laundrette,,,,,,...' with every metric blank.
+    A row counts as empty when every column except CODE is null.
+    Returns (clean_df, n_dropped, dropped_codes).
+    """
+    non_id     = [c for c in df.columns if c not in ("CODE", "SOURCE_FILE")]
+    empty_mask = df[non_id].isna().all(axis=1)
+    codes      = sorted(df.loc[empty_mask, "CODE"].dropna().unique().tolist())
+    return df.loc[~empty_mask].copy(), int(empty_mask.sum()), codes
+
+
+def load_footfall_csv(filepath):
+    """
+    Load one Footfall CSV robustly. Returns (df, n_empty_dropped, dropped_codes).
+
+    Fast path: typed read (dtype=DTYPE_MAP) — what every clean file uses.
+    Fallback: if the typed read raises because an integer column contains blank
+    cells (source placeholder rows), re-read untyped, drop the empty rows, then
+    cast to the expected dtypes. The fast files pay no penalty.
+    """
+    try:
+        df = pd.read_csv(filepath, dtype=DTYPE_MAP, usecols=EXPECTED_COLUMNS)
+        return df, 0, []
+    except (ValueError, TypeError):
+        df = pd.read_csv(filepath, dtype={"CODE": str}, usecols=EXPECTED_COLUMNS)
+        df, n_dropped, codes = drop_empty_metric_rows(df)
+        df = coerce_expected_dtypes(df)
+        print(f"  [CLEAN]  Typed read hit blank metric cells — recovered in safe mode.")
+        print(f"           Dropped {n_dropped:,} empty row(s) from screen(s): {codes}")
+        return df, n_dropped, codes
+
+
+def check_excel_truncation(n_rows_raw):
+    """
+    Warn if the file looks truncated at Excel's worksheet limit (2^20 rows).
+    Returns True when a likely truncation is detected.
+    """
+    if n_rows_raw >= EXCEL_ROW_LIMIT - 1:
+        print(f"  ⚠️  [TRUNCATION] {n_rows_raw:,} rows ≈ Excel's {EXCEL_ROW_LIMIT:,}-row "
+              f"limit.")
+        print(f"       This CSV was almost certainly opened + saved in Excel, which "
+              f"DROPS every row past the limit.")
+        print(f"       Data is likely MISSING — re-export from Locomizer and never "
+              f"open the raw CSV in Excel.")
+        return True
+    return False
+
 
 def validate_schema(df, filename):
     """Warn on missing expected columns; note extras. Returns (missing, extra)."""
@@ -312,9 +413,9 @@ for filepath in footfall_files:
     print(f"{'='*20} PROCESSING: {filename} {'='*20}")
     t_start = time.time()
 
-    # 2a — Load with explicit dtypes
+    # 2a — Load (robust: fast typed read, safe fallback for blank-metric rows)
     try:
-        df = pd.read_csv(filepath, dtype=DTYPE_MAP, usecols=EXPECTED_COLUMNS)
+        df, n_empty_dropped, dropped_codes = load_footfall_csv(filepath)
     except Exception as e:
         print(f"  ❌ LOAD FAILED: {e}")
         global_summary.append({"file": filename, "status": "LOAD ERROR", "error": str(e)})
@@ -322,8 +423,12 @@ for filepath in footfall_files:
         continue
 
     df["SOURCE_FILE"] = filename
-    rows_raw = len(df)
-    print(f"  [LOAD]   {rows_raw:>10,} rows × {len(df.columns)} columns")
+    rows_raw = len(df) + n_empty_dropped
+    note = f"  ({n_empty_dropped:,} empty rows dropped)" if n_empty_dropped else ""
+    print(f"  [LOAD]   {len(df):>10,} rows × {len(df.columns)} columns{note}")
+
+    # Guard against files silently truncated at Excel's 2^20-row limit.
+    truncated = check_excel_truncation(rows_raw)
 
     # 2b — Schema + null checks
     print(f"  [SCHEMA]")
@@ -361,7 +466,7 @@ for filepath in footfall_files:
     # 2f — Column order
     df = apply_column_order(df, "OUTPUT")
 
-    # 2g — Export
+    # 2g — Export (output mirrors the input stem; naming handled upstream)
     try:
         path    = export_file(df, stem, OUTPUT_FORMAT)
         size_kb = file_info(path)[0]
@@ -371,8 +476,11 @@ for filepath in footfall_files:
 
         global_summary.append({
             "file":           filename,
+            "output":         os.path.basename(path),
             "status":         "OK",
             "rows":           len(df),
+            "empty_dropped":  n_empty_dropped,
+            "truncated":      truncated,
             "grand_daily":    n_grand_daily,
             "grand_hourly":   n_grand_hourly,
             "date_min":       str(df["DATE"].min()),
@@ -394,7 +502,7 @@ for filepath in footfall_files:
 # ---------------------------------------------------------------------------
 
 print(f"{'='*20} GLOBAL SUMMARY {'='*20}")
-print(f"\n  {'FILE':<46} {'STATUS':<8}  {'ROWS':>8}  {'G.DAILY':>7}  {'G.HOURLY':>8}  {'DATE RANGE':<23}  {'SCRNS':>5}  {'TIME':>5}")
+print(f"\n  {'OUTPUT FILE':<46} {'STATUS':<8}  {'ROWS':>8}  {'G.DAILY':>7}  {'G.HOURLY':>8}  {'DATE RANGE':<23}  {'SCRNS':>5}  {'TIME':>5}")
 print(f"  {'-'*46} {'-'*8}  {'-'*8}  {'-'*7}  {'-'*8}  {'-'*23}  {'-'*5}  {'-'*5}")
 
 total_rows = 0
@@ -405,7 +513,7 @@ for s in global_summary:
         ok_count   += 1
         total_rows += s["rows"]
         date_range  = f"{s['date_min']} → {s['date_max']}"
-        print(f"  {s['file']:<46} {'✅ OK':<8}  {s['rows']:>8,}  "
+        print(f"  {s.get('output', s['file']):<46} {'✅ OK':<8}  {s['rows']:>8,}  "
               f"{s['grand_daily']:>7,}  {s['grand_hourly']:>8,}  "
               f"{date_range:<23}  {s['screens']:>5,}  {s['elapsed_s']:>4.1f}s")
     else:
@@ -414,6 +522,24 @@ for s in global_summary:
 
 print(f"  {'─'*120}")
 print(f"  {'TOTAL':<46} {'':>8}  {total_rows:>8,}")
+
+# Data-quality notes: surface anything that needs a human's attention.
+dq_notes = []
+for s in global_summary:
+    if s.get("status") != "OK":
+        continue
+    if s.get("empty_dropped"):
+        dq_notes.append(f"  • {s['output']}: dropped {s['empty_dropped']:,} empty "
+                        f"placeholder row(s).")
+    if s.get("truncated"):
+        dq_notes.append(f"  • {s['output']}: ⚠️  LIKELY TRUNCATED at Excel's row "
+                        f"limit — data may be missing. Re-export from Locomizer.")
+if dq_notes:
+    print(f"\n  {'DATA-QUALITY NOTES':<46}")
+    print(f"  {'-'*46}")
+    for line in dq_notes:
+        print(line)
+
 print(f"\n  Files OK      : {ok_count} / {len(footfall_files)}")
 print(f"  Output folder : {OUTPUT_DIR}")
 print(f"  Output format : {OUTPUT_FORMAT.upper()}")
