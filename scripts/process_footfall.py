@@ -4,7 +4,10 @@ process_footfall.py
 Reads monthly Footfall CSV exports from Locomizer and produces, for each
 input file, one Parquet (or CSV) file ready for Power BI ingestion.
 
-  Example:  03_Mar25_Micromedia_Footfall.csv  ->  03_Mar25_Micromedia_Footfall.parquet
+Output files are renamed to a YEAR-FIRST, zero-padded-month convention so
+they sort chronologically in any file explorer (see "Output file naming"):
+
+  Example:  03_Mar25_Micromedia_Footfall.csv  ->  2025_03_Mar_Micromedia_Footfall.parquet
 
 Transformations
 ---------------
@@ -61,6 +64,25 @@ Data model
 DISPLAY NAME, LATITUDE, LONGITUDE are dropped. The Master Sites dimension
 table is the single source of truth, joined to this fact table via CODE.
 
+Output file naming
+------------------
+Locomizer delivers files as MM_MonYY_... (e.g. 03_Mar25_...). Because the
+month number leads, an alphabetical sort interleaves years (01_Jan25 sits
+next to 01_Jan26). Output files are therefore renamed to:
+
+  YYYY_MM[_Mon]_<rest>        e.g. 2025_03_Mar_Micromedia_Footfall.parquet
+
+which sorts strictly by year then month. Controlled by:
+
+  RENAME_OUTPUT_CHRONOLOGICAL = True   # turn the year-first rename on/off
+  INCLUDE_MONTH_NAME_IN_STEM  = True   # keep the 'Mar' token for readability
+
+The two-digit year in the source name is expanded to four digits (25 -> 2025)
+and cross-checked against the actual DATE values in the data; a mismatch is
+logged as a warning. If a source name does not match the expected pattern the
+original stem is reused unchanged, so the pipeline never fails on an odd name.
+The source CSVs in data/raw/ are left untouched (immutable landing zone).
+
 Output format
 -------------
 OUTPUT_FORMAT = "parquet"  (recommended; ~5x smaller, ~15x faster in Power BI)
@@ -73,6 +95,21 @@ Usage
 
 Changelog
 ---------
+  v3.3.0  2026-07-16  ROBUSTNESS: survive malformed source files.
+                      (1) Blank-metric rows (a screen exported with CODE/DISPLAY
+                          NAME but every measurement empty) no longer crash the
+                          typed read. A safe-mode fallback drops them and logs
+                          which screens were affected.
+                      (2) Excel-truncation guard: warns loudly when a file sits
+                          on Excel's 1,048,576-row limit (a CSV opened + saved in
+                          Excel loses every row past that point).
+  v3.2.0  2026-07-16  FEATURE: year-first output filenames. Processed files are
+                      renamed MM_MonYY_... -> YYYY_MM_Mon_... so they sort
+                      chronologically. Source CSVs are NOT touched. Parsed
+                      period is cross-validated against the data's DATE column.
+                      DOWNSTREAM NOTE: output filenames change, so any Power BI
+                      query that references a processed file by its old name
+                      must be repointed once (folder-based imports are safe).
   v3.1.0  2026-05-20  BEHAVIOUR CHANGE: stop removing HOUR=25 sentinel rows.
                       They are the only deduplicated daily totals Locomizer
                       provides; the dashboard needs them for day-level and
@@ -96,12 +133,13 @@ Changelog
 # ---------------------------------------------------------------------------
 
 import os
+import re
 import time
 import glob
 
 import pandas as pd
 
-__version__ = "3.1.0"
+__version__ = "3.3.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -113,13 +151,37 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 # Output format: "parquet" for Power BI, "csv" for Excel.
 OUTPUT_FORMAT = "parquet"
 
+# Output file naming.
+#   RENAME_OUTPUT_CHRONOLOGICAL: rename MM_MonYY_... -> YYYY_MM[_Mon]_... so
+#   processed files sort by year then month. Source CSVs are never renamed.
+#   INCLUDE_MONTH_NAME_IN_STEM : keep the 'Mar' token (2025_03_Mar_...) for
+#   readability; set False for a leaner 2025_03_... stem.
+RENAME_OUTPUT_CHRONOLOGICAL = True
+INCLUDE_MONTH_NAME_IN_STEM  = True
+
 # Sentinel value used by Locomizer to flag the all-day-total row.
 # Kept for clarity in the IS_GRAND_TOTAL semantics; not used as a filter.
 HOUR_TOTAL = 25
 
+# Excel silently drops every row past 1,048,576 (2^20) when a CSV is opened
+# and re-saved. A file landing exactly on this boundary is almost certainly
+# truncated, so we warn (see check_excel_truncation).
+EXCEL_ROW_LIMIT = 1_048_576
+
 # Title-Case values matched by add_grand_total_flag().
 MODALITY_ALL   = "All"
 VISITATION_ALL = "All"
+
+# Month-abbreviation -> month-number map used to parse Locomizer filenames
+# (e.g. '03_Mar25_Micromedia_Footfall.csv'). Case-insensitive lookup.
+MONTH_ABBR_TO_NUM = {
+    "jan": 1, "feb": 2, "mar": 3, "apr": 4, "may": 5, "jun": 6,
+    "jul": 7, "aug": 8, "sep": 9, "oct": 10, "nov": 11, "dec": 12,
+}
+
+# Matches '<MM>_<Mon><YY>_<rest>' e.g. '03_Mar25_Micromedia_Footfall'.
+# Groups: (month-number, month-abbr, 2-or-4-digit year, remainder).
+FILENAME_PERIOD_RE = re.compile(r"^(\d{1,2})_([A-Za-z]{3})(\d{2,4})_(.+)$")
 
 # Columns to standardise to Title Case. Footfall and Demographics arrive
 # UPPERCASE from Locomizer; Brand Affinity arrives Title Case. Standardising
@@ -179,6 +241,148 @@ COLS_ORDER = [
 # %% ---------------------------------------------------------------------------
 # Helper functions
 # ---------------------------------------------------------------------------
+
+def parse_filename_period(filename):
+    """
+    Parse a Locomizer filename into its calendar period.
+
+    'MM_MonYY_<rest>' -> (year4, month_num, 'Mon', '<rest>'), else None.
+    e.g. '03_Mar25_Micromedia_Footfall.csv' -> (2025, 3, 'Mar', 'Micromedia_Footfall')
+
+    The two-digit year is expanded as 2000 + YY. Returns None (rather than
+    raising) on any name that does not match, so callers can fall back safely.
+    """
+    stem = os.path.splitext(os.path.basename(filename))[0]
+    m = FILENAME_PERIOD_RE.match(stem)
+    if not m:
+        return None
+
+    _mm_str, mon_str, yy_str, rest = m.groups()
+    month_num = MONTH_ABBR_TO_NUM.get(mon_str.lower())
+    if month_num is None:
+        return None
+
+    yy    = int(yy_str)
+    year4 = yy if yy > 100 else 2000 + yy
+    return year4, month_num, mon_str.title(), rest
+
+
+def build_output_stem(filename, include_month_name=True):
+    """
+    Build the year-first output stem from a source filename.
+
+    '03_Mar25_Micromedia_Footfall.csv'
+        include_month_name=True  -> ('2025_03_Mar_Micromedia_Footfall', (2025, 3))
+        include_month_name=False -> ('2025_03_Micromedia_Footfall',     (2025, 3))
+
+    Falls back to the original stem (and period=None) when the name does not
+    match the expected pattern, guaranteeing the pipeline never fails on it.
+    """
+    original_stem = os.path.splitext(os.path.basename(filename))[0]
+    parsed = parse_filename_period(filename)
+    if parsed is None:
+        return original_stem, None
+
+    year4, month_num, mon_abbr, rest = parsed
+    if include_month_name:
+        stem = f"{year4}_{month_num:02d}_{mon_abbr}_{rest}"
+    else:
+        stem = f"{year4}_{month_num:02d}_{rest}"
+    return stem, (year4, month_num)
+
+
+def validate_period_against_data(df, parsed_period, label):
+    """
+    Cross-check the period parsed from the filename against the data itself.
+
+    Uses the modal (most frequent) year/month of the DATE column so a few
+    stray edge-of-month rows don't trigger a false alarm. Warns on mismatch;
+    never raises. Returns True when they agree (or can't be checked).
+    """
+    if parsed_period is None or "DATE" not in df.columns:
+        return True
+
+    dates = pd.to_datetime(df["DATE"], errors="coerce").dropna()
+    if dates.empty:
+        return True
+
+    data_year  = int(dates.dt.year.mode().iloc[0])
+    data_month = int(dates.dt.month.mode().iloc[0])
+    name_year, name_month = parsed_period
+
+    if (data_year, data_month) != (name_year, name_month):
+        print(f"  ⚠️  [{label}] Filename period {name_year}-{name_month:02d} "
+              f"≠ data period {data_year}-{data_month:02d}. "
+              f"Output named from the FILENAME; verify the source file.")
+        return False
+
+    print(f"  [PERIOD] Filename ↔ data agree: {data_year}-{data_month:02d}. ✅")
+    return True
+
+
+def coerce_expected_dtypes(df):
+    """Cast columns to their DTYPE_MAP types where present. Best-effort: a
+    column that still can't be cast is left as-is so the schema/null checks
+    downstream surface the problem rather than crashing the run."""
+    for col, dt in DTYPE_MAP.items():
+        if col not in df.columns:
+            continue
+        try:
+            df[col] = df[col].astype(dt)
+        except (ValueError, TypeError):
+            pass
+    return df
+
+
+def drop_empty_metric_rows(df):
+    """
+    Drop placeholder rows that carry an identifier but no data — e.g. a screen
+    exported as '50104,50104 - HQ Laundrette,,,,,,...' with every metric blank.
+    A row counts as empty when every column except CODE is null.
+    Returns (clean_df, n_dropped, dropped_codes).
+    """
+    non_id     = [c for c in df.columns if c not in ("CODE", "SOURCE_FILE")]
+    empty_mask = df[non_id].isna().all(axis=1)
+    codes      = sorted(df.loc[empty_mask, "CODE"].dropna().unique().tolist())
+    return df.loc[~empty_mask].copy(), int(empty_mask.sum()), codes
+
+
+def load_footfall_csv(filepath):
+    """
+    Load one Footfall CSV robustly. Returns (df, n_empty_dropped, dropped_codes).
+
+    Fast path: typed read (dtype=DTYPE_MAP) — what every clean file uses.
+    Fallback: if the typed read raises because an integer column contains blank
+    cells (source placeholder rows), re-read untyped, drop the empty rows, then
+    cast to the expected dtypes. The fast files pay no penalty.
+    """
+    try:
+        df = pd.read_csv(filepath, dtype=DTYPE_MAP, usecols=EXPECTED_COLUMNS)
+        return df, 0, []
+    except (ValueError, TypeError):
+        df = pd.read_csv(filepath, dtype={"CODE": str}, usecols=EXPECTED_COLUMNS)
+        df, n_dropped, codes = drop_empty_metric_rows(df)
+        df = coerce_expected_dtypes(df)
+        print(f"  [CLEAN]  Typed read hit blank metric cells — recovered in safe mode.")
+        print(f"           Dropped {n_dropped:,} empty row(s) from screen(s): {codes}")
+        return df, n_dropped, codes
+
+
+def check_excel_truncation(n_rows_raw):
+    """
+    Warn if the file looks truncated at Excel's worksheet limit (2^20 rows).
+    Returns True when a likely truncation is detected.
+    """
+    if n_rows_raw >= EXCEL_ROW_LIMIT - 1:
+        print(f"  ⚠️  [TRUNCATION] {n_rows_raw:,} rows ≈ Excel's {EXCEL_ROW_LIMIT:,}-row "
+              f"limit.")
+        print(f"       This CSV was almost certainly opened + saved in Excel, which "
+              f"DROPS every row past the limit.")
+        print(f"       Data is likely MISSING — re-export from Locomizer and never "
+              f"open the raw CSV in Excel.")
+        return True
+    return False
+
 
 def validate_schema(df, filename):
     """Warn on missing expected columns; note extras. Returns (missing, extra)."""
@@ -309,12 +513,18 @@ for filepath in footfall_files:
     filename = os.path.basename(filepath)
     stem     = os.path.splitext(filename)[0]
 
+    # Decide the output stem up front (source file is never renamed).
+    if RENAME_OUTPUT_CHRONOLOGICAL:
+        out_stem, parsed_period = build_output_stem(filename, INCLUDE_MONTH_NAME_IN_STEM)
+    else:
+        out_stem, parsed_period = stem, None
+
     print(f"{'='*20} PROCESSING: {filename} {'='*20}")
     t_start = time.time()
 
-    # 2a — Load with explicit dtypes
+    # 2a — Load (robust: fast typed read, safe fallback for blank-metric rows)
     try:
-        df = pd.read_csv(filepath, dtype=DTYPE_MAP, usecols=EXPECTED_COLUMNS)
+        df, n_empty_dropped, dropped_codes = load_footfall_csv(filepath)
     except Exception as e:
         print(f"  ❌ LOAD FAILED: {e}")
         global_summary.append({"file": filename, "status": "LOAD ERROR", "error": str(e)})
@@ -322,8 +532,12 @@ for filepath in footfall_files:
         continue
 
     df["SOURCE_FILE"] = filename
-    rows_raw = len(df)
-    print(f"  [LOAD]   {rows_raw:>10,} rows × {len(df.columns)} columns")
+    rows_raw = len(df) + n_empty_dropped
+    note = f"  ({n_empty_dropped:,} empty rows dropped)" if n_empty_dropped else ""
+    print(f"  [LOAD]   {len(df):>10,} rows × {len(df.columns)} columns{note}")
+
+    # Guard against files silently truncated at Excel's 2^20-row limit.
+    truncated = check_excel_truncation(rows_raw)
 
     # 2b — Schema + null checks
     print(f"  [SCHEMA]")
@@ -344,6 +558,10 @@ for filepath in footfall_files:
     if nat_after > 0:
         print(f"  ⚠️  WARNING: {nat_after} rows have an invalid DATE (NaT).")
 
+    # Cross-check the period parsed from the filename against the actual data.
+    if RENAME_OUTPUT_CHRONOLOGICAL:
+        validate_period_against_data(df, parsed_period, "RENAME")
+
     # 2d — Title-Case modalities (must run before IS_GRAND_TOTAL).
     df = standardize_modality_casing(df, MODALITY_COLS)
     print(f"  [CASE]   MOVEMENT_MODALITY  : {sorted(df['MOVEMENT_MODALITY'].unique().tolist())}")
@@ -361,18 +579,23 @@ for filepath in footfall_files:
     # 2f — Column order
     df = apply_column_order(df, "OUTPUT")
 
-    # 2g — Export
+    # 2g — Export (year-first filename)
     try:
-        path    = export_file(df, stem, OUTPUT_FORMAT)
+        path    = export_file(df, out_stem, OUTPUT_FORMAT)
         size_kb = file_info(path)[0]
         elapsed = time.time() - t_start
+        if out_stem != stem:
+            print(f"  [RENAME] {stem}  →  {out_stem}")
         print(f"  [EXPORT] → {os.path.basename(path):<55} ({size_kb:>7,.1f} KB)")
         print(f"  [TIME]   {elapsed:.1f}s")
 
         global_summary.append({
             "file":           filename,
+            "output":         os.path.basename(path),
             "status":         "OK",
             "rows":           len(df),
+            "empty_dropped":  n_empty_dropped,
+            "truncated":      truncated,
             "grand_daily":    n_grand_daily,
             "grand_hourly":   n_grand_hourly,
             "date_min":       str(df["DATE"].min()),
@@ -394,7 +617,7 @@ for filepath in footfall_files:
 # ---------------------------------------------------------------------------
 
 print(f"{'='*20} GLOBAL SUMMARY {'='*20}")
-print(f"\n  {'FILE':<46} {'STATUS':<8}  {'ROWS':>8}  {'G.DAILY':>7}  {'G.HOURLY':>8}  {'DATE RANGE':<23}  {'SCRNS':>5}  {'TIME':>5}")
+print(f"\n  {'OUTPUT FILE':<46} {'STATUS':<8}  {'ROWS':>8}  {'G.DAILY':>7}  {'G.HOURLY':>8}  {'DATE RANGE':<23}  {'SCRNS':>5}  {'TIME':>5}")
 print(f"  {'-'*46} {'-'*8}  {'-'*8}  {'-'*7}  {'-'*8}  {'-'*23}  {'-'*5}  {'-'*5}")
 
 total_rows = 0
@@ -405,7 +628,7 @@ for s in global_summary:
         ok_count   += 1
         total_rows += s["rows"]
         date_range  = f"{s['date_min']} → {s['date_max']}"
-        print(f"  {s['file']:<46} {'✅ OK':<8}  {s['rows']:>8,}  "
+        print(f"  {s.get('output', s['file']):<46} {'✅ OK':<8}  {s['rows']:>8,}  "
               f"{s['grand_daily']:>7,}  {s['grand_hourly']:>8,}  "
               f"{date_range:<23}  {s['screens']:>5,}  {s['elapsed_s']:>4.1f}s")
     else:
@@ -414,6 +637,24 @@ for s in global_summary:
 
 print(f"  {'─'*120}")
 print(f"  {'TOTAL':<46} {'':>8}  {total_rows:>8,}")
+
+# Data-quality notes: surface anything that needs a human's attention.
+dq_notes = []
+for s in global_summary:
+    if s.get("status") != "OK":
+        continue
+    if s.get("empty_dropped"):
+        dq_notes.append(f"  • {s['output']}: dropped {s['empty_dropped']:,} empty "
+                        f"placeholder row(s).")
+    if s.get("truncated"):
+        dq_notes.append(f"  • {s['output']}: ⚠️  LIKELY TRUNCATED at Excel's row "
+                        f"limit — data may be missing. Re-export from Locomizer.")
+if dq_notes:
+    print(f"\n  {'DATA-QUALITY NOTES':<46}")
+    print(f"  {'-'*46}")
+    for line in dq_notes:
+        print(line)
+
 print(f"\n  Files OK      : {ok_count} / {len(footfall_files)}")
 print(f"  Output folder : {OUTPUT_DIR}")
 print(f"  Output format : {OUTPUT_FORMAT.upper()}")
