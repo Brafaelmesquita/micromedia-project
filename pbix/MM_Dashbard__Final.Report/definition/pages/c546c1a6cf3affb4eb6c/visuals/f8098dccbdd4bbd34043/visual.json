@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "f8098dccbdd4bbd34043",
   "position": {
-    "x": 23.789364997418691,
-    "y": 173.13371192565825,
+    "x": 34.869089572568264,
+    "y": 162.39033143796078,
     "z": 6000,
-    "height": 79.297883324728971,
-    "width": 130.84150748580279,
+    "height": 78.704516463796949,
+    "width": 130.51002097161265,
     "tabOrder": 6000
   },
   "visual": {
@@ -44,6 +44,13 @@
                   "Value": "'Dropdown'"
                 }
               }
+            },
+            "isInvertedSelectionMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -56,44 +63,6 @@
                 "Literal": {
                   "Value": "true"
                 }
-              }
-            },
-            "selfFilter": {
-              "filter": {
-                "Version": 2,
-                "From": [
-                  {
-                    "Name": "m",
-                    "Entity": "Master_Sites",
-                    "Type": 0
-                  }
-                ],
-                "Where": [
-                  {
-                    "Condition": {
-                      "Contains": {
-                        "Left": {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "m"
-                              }
-                            },
-                            "Property": "MM ID"
-                          }
-                        },
-                        "Right": {
-                          "Literal": {
-                            "Value": "'50204'"
-                          }
-                        }
-                      }
-                    },
-                    "Annotations": {
-                      "PowerBI.MParameterBehavior": 1
-                    }
-                  }
-                ]
               }
             }
           }
