@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "51df252785e97a20b551",
+  "name": "0f04efeb03db02837924",
   "position": {
-    "x": 796,
-    "y": 164,
-    "z": 11000,
-    "height": 72,
-    "width": 182.66666666666666,
-    "tabOrder": 11000
+    "x": 523,
+    "y": 167,
+    "z": 11003,
+    "height": 85,
+    "width": 153,
+    "tabOrder": 11003
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_Hour"
+                      "Entity": "Demographics_AgeLong"
                     }
                   },
-                  "Property": "HourLabel"
+                  "Property": "AGE_BRACKET"
                 }
               },
-              "queryRef": "dim_Hour.HourLabel",
-              "nativeQueryRef": "HourLabel",
+              "queryRef": "Demographics_AgeLong.AGE_BRACKET",
+              "nativeQueryRef": "AGE_BRACKET",
               "active": true
             }
           ]
@@ -35,23 +35,29 @@
       }
     },
     "objects": {
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
+                }
+              }
+            }
+          }
+        }
+      ],
       "general": [
         {
           "properties": {
-            "orientation": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
             "filter": {
               "filter": {
                 "Version": 2,
                 "From": [
                   {
                     "Name": "d",
-                    "Entity": "dim_Hour",
+                    "Entity": "Demographics_AgeLong",
                     "Type": 0
                   }
                 ],
@@ -67,7 +73,7 @@
                                   "Source": "d"
                                 }
                               },
-                              "Property": "HourLabel"
+                              "Property": "AGE_BRACKET"
                             }
                           }
                         ],
@@ -75,7 +81,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'08:00'"
+                                "Value": "'45-54'"
                               }
                             }
                           ]
@@ -102,40 +108,13 @@
           }
         }
       ],
-      "data": [
-        {
-          "properties": {
-            "mode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Basic'"
-                }
-              }
-            },
-            "numericEnd": {
-              "expr": {
-                "Literal": {
-                  "Value": "24D"
-                }
-              }
-            },
-            "numericStart": {
-              "expr": {
-                "Literal": {
-                  "Value": "14D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "selection": [
         {
           "properties": {
-            "strictSingleSelect": {
+            "selectAllCheckboxEnabled": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -144,19 +123,6 @@
       ]
     },
     "visualContainerObjects": {
-      "visualHeader": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "title": [
         {
           "properties": {
@@ -167,24 +133,10 @@
                 }
               }
             },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Hour'"
-                }
-              }
-            },
             "fontFamily": {
               "expr": {
                 "Literal": {
                   "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
                 }
               }
             },
@@ -196,6 +148,20 @@
                       "Value": "'#23B5E8'"
                     }
                   }
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Age Bracket'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -223,87 +189,23 @@
         }
       ]
     },
-    "syncGroup": {
-      "groupName": "Hour",
-      "fieldChanges": true,
-      "filterChanges": true
-    },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [
       {
-        "name": "9dc40a991a281a033b8d",
+        "name": "db6f9eb38fe3f2b0e185",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "dim_Hour"
+                "Entity": "Demographics_AgeLong"
               }
             },
-            "Property": "Hour"
+            "Property": "AGE_BRACKET"
           }
         },
-        "type": "Categorical",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "d",
-              "Entity": "dim_Hour",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Not": {
-                  "Expression": {
-                    "In": {
-                      "Expressions": [
-                        {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "d"
-                              }
-                            },
-                            "Property": "Hour"
-                          }
-                        }
-                      ],
-                      "Values": [
-                        [
-                          {
-                            "Literal": {
-                              "Value": "null"
-                            }
-                          }
-                        ]
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "howCreated": "User",
-        "objects": {
-          "general": [
-            {
-              "properties": {
-                "isInvertedSelectionMode": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "true"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
+        "type": "Categorical"
       }
     ]
   }

@@ -2,18 +2,18 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "71563cf6c71161281b38",
   "position": {
-    "x": 381,
-    "y": 165,
+    "x": 383,
+    "y": 261,
     "z": 11001,
-    "height": 395,
-    "width": 303,
+    "height": 448,
+    "width": 319,
     "tabOrder": 11001
   },
   "visual": {
-    "visualType": "clusteredBarChart",
+    "visualType": "tableEx",
     "query": {
       "queryState": {
-        "Category": {
+        "Values": {
           "projections": [
             {
               "field": {
@@ -27,13 +27,9 @@
                 }
               },
               "queryRef": "Master_Sites.Site Label",
-              "nativeQueryRef": "Site Label",
-              "active": true
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
+              "nativeQueryRef": "Screens",
+              "displayName": "Screens"
+            },
             {
               "field": {
                 "Measure": {
@@ -42,11 +38,12 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Total Population (Hourly)"
+                  "Property": "Age Audience (Hourly)"
                 }
               },
-              "queryRef": "_Measures.Total Population (Hourly)",
-              "nativeQueryRef": "Total Population (Hourly)"
+              "queryRef": "_Measures.Age Audience (Hourly)",
+              "nativeQueryRef": "Audience",
+              "displayName": "Audience"
             }
           ]
         }
@@ -61,7 +58,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Total Population (Hourly)"
+                "Property": "Age Audience (Hourly)"
               }
             },
             "direction": "Descending"
@@ -70,44 +67,57 @@
       }
     },
     "objects": {
-      "categoryAxis": [
+      "general": [
+        {
+          "properties": {}
+        }
+      ],
+      "total": [
         {
           "properties": {
-            "show": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnFormatting": [
+        {
+          "properties": {
+            "styleValues": {
               "expr": {
                 "Literal": {
                   "Value": "true"
                 }
               }
-            },
-            "showAxisTitle": {
+            }
+          },
+          "selector": {
+            "metadata": "_Measures.Age Audience (Hourly)"
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "innerPadding": {
-              "expr": {
-                "Literal": {
-                  "Value": "10L"
+                  "Value": "9D"
                 }
               }
             }
           }
         }
       ],
-      "valueAxis": [
+      "grid": [
         {
           "properties": {
-            "showAxisTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "show": {
+            "gridHorizontal": {
               "expr": {
                 "Literal": {
                   "Value": "false"
@@ -117,46 +127,33 @@
           }
         }
       ],
-      "dataPoint": [
+      "columnWidth": [
         {
           "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#29B6E8'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "labels": [
-        {
-          "properties": {
-            "show": {
+            "value": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "302.0005540933647D"
                 }
               }
             }
+          },
+          "selector": {
+            "metadata": "Master_Sites.Site Label"
           }
-        }
-      ],
-      "general": [
+        },
         {
           "properties": {
-            "responsive": {
+            "value": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "64.99865640329901D"
                 }
               }
             }
+          },
+          "selector": {
+            "metadata": "_Measures.Age Audience (Hourly)"
           }
         }
       ]
@@ -199,6 +196,13 @@
                       "Value": "'#29B6E8'"
                     }
                   }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -300,12 +304,12 @@
                                 "Source": "_"
                               }
                             },
-                            "Property": "Total Population (Hourly)"
+                            "Property": "Age Audience (Hourly)"
                           }
                         }
                       }
                     ],
-                    "Top": 10
+                    "Top": 20
                   }
                 }
               },
@@ -345,7 +349,7 @@
         }
       },
       {
-        "name": "4bf8b4aeadd5be04f211",
+        "name": "e93dac427a4c694f8548",
         "field": {
           "Measure": {
             "Expression": {
@@ -353,7 +357,7 @@
                 "Entity": "_Measures"
               }
             },
-            "Property": "Total Population (Hourly)"
+            "Property": "Age Audience (Hourly)"
           }
         },
         "type": "Advanced"

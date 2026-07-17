@@ -158,7 +158,8 @@ table _Measures
 			            Footfall[CODE]           = _code,
 			            Footfall[YEAR_MONTH]     = _ym,
 			            Footfall[HOUR]           = _hr,
-			            Footfall[IS_GRAND_TOTAL] = 1
+			            Footfall[IS_GRAND_TOTAL] = 1,
+			            Footfall[HasValidSite] = TRUE ()
 			        )
 			)
 		formatString: #,0
@@ -741,23 +742,7 @@ table _Measures
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Ranking Title' = ```
-			
-			VAR _count = COUNTROWS ( ALLSELECTED ( dim_Hour[HourLabel] ) )
-			VAR _selCount = COUNTROWS ( VALUES ( dim_Hour[Hour] ) )
-			VAR _min = MIN ( dim_Hour[Hour] )
-			VAR _max = MAX ( dim_Hour[Hour] )
-			VAR _minLabel = FORMAT ( _min, "00" ) & ":00"
-			VAR _maxLabel = FORMAT ( _max, "00" ) & ":00"
-			RETURN
-			    "Top 10 Screens — " &
-			    SWITCH (
-			        TRUE (),
-			        _selCount = _count, "all hours",          
-			        _selCount = 1, _minLabel,                    
-			        _minLabel & " – " & _maxLabel                
-			    )
-			```
+	measure 'Ranking Title' = "Top Screens"
 		displayFolder: Titles
 		lineageTag: 54e1e902-d7ce-4600-9e51-6c01197b568b
 

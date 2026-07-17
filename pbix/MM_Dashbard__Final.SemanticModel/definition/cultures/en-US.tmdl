@@ -11883,6 +11883,16 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.75
 			          }
+			        },
+			        {
+			          "Audience": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -15131,6 +15141,16 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.6
 			          }
+			        },
+			        {
+			          "Screens": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -17063,12 +17083,6 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "screens": {
-			            "State": "Generated",
-			            "Weight": 0.97
-			          }
-			        },
-			        {
 			          "aggregate screen": {
 			            "Type": "Noun",
 			            "State": "Suggested",
@@ -17096,16 +17110,6 @@ cultureInfo en-US
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.5
-			          }
-			        },
-			        {
-			          "awning": {
-			            "Type": "Noun",
-			            "State": "Suggested",
-			            "Source": {
-			              "Agent": "Thesaurus"
-			            },
-			            "Weight": 0.491
 			          }
 			        },
 			        {
@@ -17149,23 +17153,33 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "shade": {
+			          "total VDT": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.476
+			            "Weight": 0.475
 			          }
 			        },
 			        {
-			          "canopy": {
+			          "total VDU": {
 			            "Type": "Noun",
 			            "State": "Suggested",
 			            "Source": {
 			              "Agent": "Thesaurus"
 			            },
-			            "Weight": 0.476
+			            "Weight": 0.475
+			          }
+			        },
+			        {
+			          "total monitor": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.461
 			          }
 			        }
 			      ]
@@ -18856,6 +18870,200 @@ cultureInfo en-US
 			          }
 			        }
 			      ]
+			    },
+			    "entity__measure.male_1": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Male %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "male %": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "male percentage": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "male pct": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        }
+			      ]
+			    },
+			    "entity__measure.female_1": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Female %"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "female %": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "female percentage": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "female pct": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        }
+			      ]
+			    },
+			    "entity__measure.ranking_title": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Ranking Title"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "ranking title": {
+			            "State": "Generated"
+			          }
+			        },
+			        {
+			          "title": {
+			            "State": "Generated",
+			            "Weight": 0.97
+			          }
+			        },
+			        {
+			          "ranking designation": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.75
+			          }
+			        },
+			        {
+			          "designation": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.736
+			          }
+			        },
+			        {
+			          "ranking name": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "ranking award": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "ranking call": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "ranking heading": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "ranking label": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.727
+			          }
+			        },
+			        {
+			          "award": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        },
+			        {
+			          "call": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        },
+			        {
+			          "heading": {
+			            "Type": "Noun",
+			            "State": "Suggested",
+			            "Source": {
+			              "Agent": "Thesaurus"
+			            },
+			            "Weight": 0.714
+			          }
+			        }
+			      ]
 			    }
 			  },
 			  "Relationships": {
@@ -19693,6 +19901,171 @@ cultureInfo en-US
 			        }
 			      ]
 			    },
+			    "entity__measure_has_ranking_title": {
+			      "Binding": {
+			        "ConceptualEntity": "_Measures"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "entity__measure": {
+			          "Target": {
+			            "Entity": "entity__measure"
+			          }
+			        },
+			        "entity__measure.ranking_title": {
+			          "Target": {
+			            "Entity": "entity__measure.ranking_title"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "entity__measure"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.ranking_title"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "Phrasing_measures_have_ranking_title"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_female_1": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "entity__measure.female_1": {
+			          "Target": {
+			            "Entity": "entity__measure.female_1"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.female_1"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_female_"
+			        }
+			      ]
+			    },
+			    "demographics_age_long_has_entity__measure_female_1": {
+			      "Binding": {
+			        "ConceptualEntity": "Demographics_AgeLong"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "demographics_age_long": {
+			          "Target": {
+			            "Entity": "demographics_age_long"
+			          }
+			        },
+			        "entity__measure.female_1": {
+			          "Target": {
+			            "Entity": "entity__measure.female_1"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "demographics_age_long"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.female_1"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "demographics_age_longs_have_female_"
+			        }
+			      ]
+			    },
+			    "footfall_has_entity__measure_male_1": {
+			      "Binding": {
+			        "ConceptualEntity": "Footfall"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "footfall": {
+			          "Target": {
+			            "Entity": "footfall"
+			          }
+			        },
+			        "entity__measure.male_1": {
+			          "Target": {
+			            "Entity": "entity__measure.male_1"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "footfall"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.male_1"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "footfalls_have_male_"
+			        }
+			      ]
+			    },
+			    "demographics_age_long_has_entity__measure_male_1": {
+			      "Binding": {
+			        "ConceptualEntity": "Demographics_AgeLong"
+			      },
+			      "State": "Generated",
+			      "Roles": {
+			        "demographics_age_long": {
+			          "Target": {
+			            "Entity": "demographics_age_long"
+			          }
+			        },
+			        "entity__measure.male_1": {
+			          "Target": {
+			            "Entity": "entity__measure.male_1"
+			          }
+			        }
+			      },
+			      "Phrasings": [
+			        {
+			          "Attribute": {
+			            "Subject": {
+			              "Role": "demographics_age_long"
+			            },
+			            "Object": {
+			              "Role": "entity__measure.male_1"
+			            }
+			          },
+			          "State": "Generated",
+			          "Weight": 0.99,
+			          "ID": "demographics_age_longs_have_male_"
+			        }
+			      ]
+			    },
 			    "demographics_class_long_has_has_valid_site": {
 			      "Binding": {
 			        "ConceptualEntity": "Demographics_ClassLong"
@@ -20217,7 +20590,7 @@ cultureInfo en-US
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "footfalls_have_female_"
+			          "ID": "footfalls_have_female_1"
 			        }
 			      ]
 			    },
@@ -20250,7 +20623,7 @@ cultureInfo en-US
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "demographics_age_longs_have_female_"
+			          "ID": "demographics_age_longs_have_female_1"
 			        }
 			      ]
 			    },
@@ -20283,7 +20656,7 @@ cultureInfo en-US
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "footfalls_have_male_"
+			          "ID": "footfalls_have_male_1"
 			        }
 			      ]
 			    },
@@ -20316,7 +20689,7 @@ cultureInfo en-US
 			          },
 			          "State": "Generated",
 			          "Weight": 0.99,
-			          "ID": "demographics_age_longs_have_male_"
+			          "ID": "demographics_age_longs_have_male_1"
 			        }
 			      ]
 			    },
@@ -21109,72 +21482,6 @@ cultureInfo en-US
 			          "State": "Generated",
 			          "Weight": 0.99,
 			          "ID": "footfalls_have_visitation_audience"
-			        }
-			      ]
-			    },
-			    "footfall_has_entity__measure_age_share_": {
-			      "Binding": {
-			        "ConceptualEntity": "Footfall"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "footfall": {
-			          "Target": {
-			            "Entity": "footfall"
-			          }
-			        },
-			        "entity__measure.age_share_": {
-			          "Target": {
-			            "Entity": "entity__measure.age_share_"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "footfall"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.age_share_"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "footfalls_have_age_share_"
-			        }
-			      ]
-			    },
-			    "demographics_age_long_has_entity__measure_age_share_": {
-			      "Binding": {
-			        "ConceptualEntity": "Demographics_AgeLong"
-			      },
-			      "State": "Generated",
-			      "Roles": {
-			        "demographics_age_long": {
-			          "Target": {
-			            "Entity": "demographics_age_long"
-			          }
-			        },
-			        "entity__measure.age_share_": {
-			          "Target": {
-			            "Entity": "entity__measure.age_share_"
-			          }
-			        }
-			      },
-			      "Phrasings": [
-			        {
-			          "Attribute": {
-			            "Subject": {
-			              "Role": "demographics_age_long"
-			            },
-			            "Object": {
-			              "Role": "entity__measure.age_share_"
-			            }
-			          },
-			          "State": "Generated",
-			          "Weight": 0.99,
-			          "ID": "demographics_age_longs_have_age_share_"
 			        }
 			      ]
 			    },

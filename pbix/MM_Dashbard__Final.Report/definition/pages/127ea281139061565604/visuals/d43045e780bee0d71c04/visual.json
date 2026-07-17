@@ -6,7 +6,7 @@
     "y": 342,
     "z": 10000,
     "height": 80,
-    "width": 227,
+    "width": 224,
     "tabOrder": 10000
   },
   "visual": {
@@ -59,7 +59,7 @@
             "startDate": {
               "expr": {
                 "Literal": {
-                  "Value": "datetime'2025-05-10T00:00:00'"
+                  "Value": "datetime'2025-05-01T00:00:00'"
                 }
               }
             },
@@ -119,7 +119,7 @@
                             },
                             "Right": {
                               "Literal": {
-                                "Value": "datetime'2025-05-10T00:00:00'"
+                                "Value": "datetime'2025-05-01T00:00:00'"
                               }
                             }
                           }
@@ -266,5 +266,23 @@
       "filterChanges": true
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "8de9d9bccc6098cf6793",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

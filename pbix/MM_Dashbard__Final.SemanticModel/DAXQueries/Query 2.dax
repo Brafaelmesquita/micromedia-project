@@ -1,9 +1,16 @@
 EVALUATE
 TOPN (
     10,
-    SUMMARIZECOLUMNS (
-        Master_Sites[MM ID],
-        "Pop", [Total Population (Hourly)]
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( Master_Sites[MM ID] ),
+            Demographics_AgeLong[Gender Label] = "Female",
+            Demographics_AgeLong[AGE_BRACKET] = "65+",
+            dim_Hour[Hour] = 12,
+            Calendar[YEAR_MONTH] = "2025-05"
+        ),
+        "Audience", [Age Audience (Hourly)]
     ),
-    [Total Population (Hourly)], DESC
+    [Age Audience (Hourly)], DESC
 )
+ORDER BY [Age Audience (Hourly)] DESC
