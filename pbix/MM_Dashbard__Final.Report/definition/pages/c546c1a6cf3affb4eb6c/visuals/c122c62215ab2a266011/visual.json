@@ -23,11 +23,11 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "Display Name"
+                  "Property": "Site Label"
                 }
               },
-              "queryRef": "Master_Sites.Display Name",
-              "nativeQueryRef": "Display Name",
+              "queryRef": "Master_Sites.Site Label",
+              "nativeQueryRef": "Site Label",
               "active": true
             },
             {
@@ -43,7 +43,7 @@
               },
               "queryRef": "dim_Hour.HourLabel",
               "nativeQueryRef": "HourLabel",
-              "active": true
+              "active": false
             }
           ]
         },
@@ -209,19 +209,6 @@
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "Master_Sites"
-                  }
-                },
-                "Property": "Display Name"
-              }
-            },
-            "direction": "Ascending"
-          },
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
                     "Entity": "dim_Hour"
                   }
                 },
@@ -241,7 +228,7 @@
         "levels": [
           {
             "queryRefs": [
-              "Master_Sites.Display Name"
+              "Master_Sites.Site Label"
             ],
             "isCollapsed": true,
             "identityKeys": [
@@ -252,7 +239,7 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "Display Name"
+                  "Property": "Site Label"
                 }
               }
             ],
@@ -266,30 +253,7 @@
             "isPinned": true
           }
         ],
-        "root": {
-          "children": [
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'FlyeFit -George''s Street -D2'"
-                  }
-                }
-              ],
-              "isToggled": true
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'Golden Discs - Dundrum-D14'"
-                  }
-                }
-              ],
-              "isToggled": true
-            }
-          ]
-        }
+        "root": {}
       }
     ],
     "objects": {

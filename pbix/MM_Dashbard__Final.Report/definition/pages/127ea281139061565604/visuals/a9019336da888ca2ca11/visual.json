@@ -107,21 +107,21 @@
             "centerLatitude": {
               "expr": {
                 "Literal": {
-                  "Value": "53.35780797282419D"
+                  "Value": "53.34961631001927D"
                 }
               }
             },
             "centerLongitude": {
               "expr": {
                 "Literal": {
-                  "Value": "-6.257498686931513D"
+                  "Value": "-6.255722480189226D"
                 }
               }
             },
             "zoom": {
               "expr": {
                 "Literal": {
-                  "Value": "10.2D"
+                  "Value": "12.34D"
                 }
               }
             },

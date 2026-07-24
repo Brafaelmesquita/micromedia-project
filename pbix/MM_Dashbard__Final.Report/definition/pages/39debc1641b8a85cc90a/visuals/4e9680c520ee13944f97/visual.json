@@ -6,7 +6,7 @@
     "y": 227.14721207273041,
     "z": 6000,
     "height": 86.674594080383983,
-    "width": 190.28560309601539,
+    "width": 120.54742395087887,
     "tabOrder": 6000
   },
   "visual": {
@@ -136,7 +136,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Total Footfall'"
+                  "Value": "'Population'"
                 }
               }
             },
