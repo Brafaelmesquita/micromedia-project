@@ -35,6 +35,9 @@ Transformations applied to every file (wide cleaning, unchanged from v1.5.0):
     string for clean display in Power BI slicers. MONTH and YEAR dropped.
   * Explicit column dtypes on load -- avoids pandas type inference.
   * Low-cardinality string columns stored as 'category'.
+  * Redundant catchment RADIUS collapsed (NEW in v1.7.0) -- Locomizer ships a
+    duplicate 50 m / 183 m profile for some screen/hours; the rows are identical
+    across every reach column, so only one is kept. Prevents 2x over-counting.
 
 Long-format export (NEW in v1.6.0):
   * All T1_1AGE*M_REACH and T1_1AGE*F_REACH columns unpivoted to rows.
@@ -69,6 +72,34 @@ Usage:
   Drop new monthly CSVs into INPUT_DIR and re-run -- no code changes needed.
 
 Version history:
+  v1.7.0  2026-07-24  FIX: collapse redundant catchment RADIUS (audience 2x bug).
+                      (1) Locomizer exports each demographic profile at TWO
+                          catchment radii (50 m and 183 m) for ~6.5% of
+                          (CODE, YEAR_MONTH, HOUR, MODALITY) groups. Every one
+                          of the 97 reach columns is byte-for-byte identical
+                          across the two radii -- verified max abs diff = 0.0
+                          over all 18 monthly exports (36,284 duplicated rows in
+                          the wide file). The second radius therefore carries no
+                          information; it only DOUBLES any sum over the table.
+                      (2) Symptom this fixes: the Power BI Matrix "Who they are
+                          -- hourly audience by age & gender" showed Male and
+                          Female EACH reproducing ~100% of Total Population, so
+                          age/gender columns summed to 2.00x Total. Root cause
+                          was the duplicated radius rows, not the DAX measure.
+                      (3) Added collapse_redundant_radius(): keeps ONE row per
+                          (CODE, YEAR_MONTH, HOUR, MOVEMENT_MODALITY), retaining
+                          the smallest available radius for determinism. Runs
+                          after YEAR_MONTH is built, so BOTH the wide _clean and
+                          the age_long exports are corrected at source. A naive
+                          fixed-radius filter (RADIUS = 50) was rejected because
+                          262,712 groups carry only ONE radius and it is not
+                          always 50 -- that would zero-out screens carrying only
+                          the 183 m profile.
+                      (4) RADIUS column is KEPT (schema unchanged) -- no measure
+                          references it, so only the duplicate ROWS are removed.
+                      Validation: after re-run, sum of REACH_PCT per group = 100
+                          (was 200 where duplicated); age breakdown reconciles to
+                          Total Population (Hourly).
   v1.6.0  2026-05-21  NEW: age-long format export for Power BI Matrix.
                       (1) Added AGE_BRACKET_MAP (35 -> 7 mapping) and
                           AGE_BRACKET_ORDER constants. Brackets chosen to
@@ -113,7 +144,7 @@ import glob
 
 import pandas as pd
 
-__version__ = "1.6.0"
+__version__ = "1.7.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -319,6 +350,53 @@ def build_year_month_column(df):
         + df["MONTH"].astype(str).str.zfill(2)
     )
     df.drop(columns=["YEAR", "MONTH"], inplace=True)
+    return df
+
+
+def collapse_redundant_radius(df):
+    """
+    Collapse Locomizer's duplicate catchment RADIUS (NEW in v1.7.0).
+
+    Locomizer exports each demographic profile at TWO catchment radii (50 m and
+    183 m) for a subset of screen/hours. Every reach column is byte-for-byte
+    identical across the two radii (verified: max abs diff = 0.0 across all 97
+    reach columns and all 18 monthly exports), so the second radius carries no
+    information -- it only doubles any sum over the table and is what made the
+    age/gender Matrix report 2.00x Total Population.
+
+    We keep ONE row per (CODE, YEAR_MONTH, HOUR, MOVEMENT_MODALITY), retaining
+    the smallest available radius for determinism (so groups with both radii
+    keep 50 m; groups carrying only 183 m keep 183 m -- nothing is dropped).
+    RADIUS is not used by any dashboard measure, so the column is kept as-is and
+    only the duplicate rows are removed.
+
+    Must run AFTER build_year_month_column so YEAR_MONTH exists for the key.
+    """
+    key = ["CODE", "YEAR_MONTH", "HOUR", "MOVEMENT_MODALITY"]
+    missing = [c for c in key + ["RADIUS"] if c not in df.columns]
+    if missing:
+        raise ValueError(
+            f"collapse_redundant_radius needs columns {missing}. "
+            f"Run it after CODE extraction and build_year_month_column."
+        )
+
+    before   = len(df)
+    dup_keys = int((df.groupby(key, observed=True)["RADIUS"].transform("nunique") > 1).sum())
+
+    df = (
+        df.sort_values("RADIUS", kind="stable")
+          .drop_duplicates(subset=key, keep="first")
+          .reset_index(drop=True)
+    )
+
+    removed = before - len(df)
+    # Post-condition: every key must now be unique.
+    assert not df.duplicated(subset=key).any(), \
+        "collapse_redundant_radius: duplicate keys remain after collapse."
+
+    print(f"  [RADIUS] Collapsed redundant catchment radius: "
+          f"{removed:,} duplicate row(s) removed "
+          f"({dup_keys:,} rows were in 2-radius groups)  ->  {len(df):,} rows remain.")
     return df
 
 
@@ -628,6 +706,12 @@ for filepath in demographics_files:
     unique_ym  = sorted(df["YEAR_MONTH"].unique().tolist())
     print(f"  [PERIOD] YEAR_MONTH column built. "
           f"Periods in file: {unique_ym}  |  Sample: '{sample_ym}'")
+
+    # -- 2h+: Collapse redundant catchment RADIUS (NEW in v1.7.0) --------------
+    # Removes Locomizer's duplicate 50 m / 183 m profile rows before export so
+    # BOTH the wide _clean and the age_long files are de-duplicated at source.
+    # This is the fix for the age/gender Matrix reporting 2x Total Population.
+    df = collapse_redundant_radius(df)
 
     # -- 2i: Column reordering -------------------------------------------------
     df = build_column_order(df)
