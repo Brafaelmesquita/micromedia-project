@@ -206,16 +206,29 @@
         "sort": [
           {
             "field": {
-              "Measure": {
+              "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "_Measures"
+                    "Entity": "Master_Sites"
                   }
                 },
-                "Property": "Under 18 #"
+                "Property": "Display Name"
               }
             },
-            "direction": "Descending"
+            "direction": "Ascending"
+          },
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "dim_Hour"
+                  }
+                },
+                "Property": "HourLabel"
+              }
+            },
+            "direction": "Ascending"
           }
         ]
       }
@@ -260,6 +273,16 @@
                 {
                   "Literal": {
                     "Value": "'FlyeFit -George''s Street -D2'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'Golden Discs - Dundrum-D14'"
                   }
                 }
               ],

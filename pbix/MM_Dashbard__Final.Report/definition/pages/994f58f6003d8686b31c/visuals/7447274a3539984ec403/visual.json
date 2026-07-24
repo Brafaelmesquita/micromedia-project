@@ -4,10 +4,10 @@
   "position": {
     "x": 24,
     "y": 275,
-    "z": 14000,
+    "z": 12000,
     "height": 78,
     "width": 227,
-    "tabOrder": 14000
+    "tabOrder": 12000
   },
   "visual": {
     "visualType": "slicer",
@@ -59,7 +59,7 @@
             "startDate": {
               "expr": {
                 "Literal": {
-                  "Value": "datetime'2026-05-01T00:00:00'"
+                  "Value": "datetime'2026-03-01T00:00:00'"
                 }
               }
             },
@@ -119,7 +119,7 @@
                             },
                             "Right": {
                               "Literal": {
-                                "Value": "datetime'2026-05-01T00:00:00'"
+                                "Value": "datetime'2026-03-01T00:00:00'"
                               }
                             }
                           }

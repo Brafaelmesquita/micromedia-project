@@ -39,6 +39,10 @@
       }
     ]
   },
+  "publicCustomVisuals": [
+    "iconMapProE938B1CED4834168A55864E1F8E7242E",
+    "deneb7E15AEF80B9E4D4F8E12924291ECE89A"
+  ],
   "resourcePackages": [
     {
       "name": "SharedResources",
@@ -59,6 +63,11 @@
           "name": "mm_eye13399830302107696.svg",
           "path": "mm_eye13399830302107696.svg",
           "type": "Image"
+        },
+        {
+          "name": "site_radius_circles40475504003745333.geojson",
+          "path": "site_radius_circles40475504003745333.geojson",
+          "type": "ShapeMap"
         }
       ]
     }
