@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "c122c62215ab2a266011",
   "position": {
-    "x": 521,
-    "y": 124,
-    "z": 8000,
-    "height": 574,
-    "width": 749,
-    "tabOrder": 8000
+    "x": 35.200831130735033,
+    "y": 162,
+    "z": 4000,
+    "height": 528,
+    "width": 1010,
+    "tabOrder": 4000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -23,11 +23,11 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "MM ID"
+                  "Property": "Display Name"
                 }
               },
-              "queryRef": "Master_Sites.MM ID",
-              "nativeQueryRef": "MM ID",
+              "queryRef": "Master_Sites.Display Name",
+              "nativeQueryRef": "Display Name",
               "active": true
             },
             {
@@ -43,7 +43,7 @@
               },
               "queryRef": "dim_Hour.HourLabel",
               "nativeQueryRef": "HourLabel",
-              "active": false
+              "active": true
             }
           ]
         },
@@ -228,7 +228,7 @@
         "levels": [
           {
             "queryRefs": [
-              "Master_Sites.MM ID"
+              "Master_Sites.Display Name"
             ],
             "isCollapsed": true,
             "identityKeys": [
@@ -239,7 +239,7 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "MM ID"
+                  "Property": "Display Name"
                 }
               }
             ],
@@ -253,7 +253,20 @@
             "isPinned": true
           }
         ],
-        "root": {}
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'FlyeFit -George''s Street -D2'"
+                  }
+                }
+              ],
+              "isToggled": true
+            }
+          ]
+        }
       }
     ],
     "objects": {
@@ -964,7 +977,7 @@
             "rowPadding": {
               "expr": {
                 "Literal": {
-                  "Value": "1D"
+                  "Value": "0D"
                 }
               }
             },
@@ -991,7 +1004,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "9D"
                 }
               }
             },
@@ -1124,6 +1137,53 @@
             }
           }
         }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "3D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "3D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "lockAspect": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "drillFilterOtherVisuals": true
@@ -1186,6 +1246,7 @@
             }
           ]
         },
+        "howCreated": "User",
         "objects": {
           "general": [
             {
