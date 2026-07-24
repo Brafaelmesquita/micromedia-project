@@ -4,10 +4,10 @@
   "position": {
     "x": 523,
     "y": 167,
-    "z": 11003,
+    "z": 8000,
     "height": 85,
     "width": 153,
-    "tabOrder": 11003
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "slicer",
@@ -44,55 +44,20 @@
                   "Value": "'Dropdown'"
                 }
               }
+            },
+            "isInvertedSelectionMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
       ],
       "general": [
         {
-          "properties": {
-            "filter": {
-              "filter": {
-                "Version": 2,
-                "From": [
-                  {
-                    "Name": "d",
-                    "Entity": "Demographics_AgeLong",
-                    "Type": 0
-                  }
-                ],
-                "Where": [
-                  {
-                    "Condition": {
-                      "In": {
-                        "Expressions": [
-                          {
-                            "Column": {
-                              "Expression": {
-                                "SourceRef": {
-                                  "Source": "d"
-                                }
-                              },
-                              "Property": "AGE_BRACKET"
-                            }
-                          }
-                        ],
-                        "Values": [
-                          [
-                            {
-                              "Literal": {
-                                "Value": "'45-54'"
-                              }
-                            }
-                          ]
-                        ]
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          }
+          "properties": {}
         }
       ],
       "header": [
@@ -190,23 +155,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "db6f9eb38fe3f2b0e185",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Demographics_AgeLong"
-              }
-            },
-            "Property": "AGE_BRACKET"
-          }
-        },
-        "type": "Categorical"
-      }
-    ]
   }
 }

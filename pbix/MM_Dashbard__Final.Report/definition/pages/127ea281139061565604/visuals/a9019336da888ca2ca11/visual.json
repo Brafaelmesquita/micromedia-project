@@ -4,10 +4,10 @@
   "position": {
     "x": 710,
     "y": 167,
-    "z": 5000,
+    "z": 3000,
     "height": 540,
     "width": 558,
-    "tabOrder": 5000
+    "tabOrder": 3000
   },
   "visual": {
     "visualType": "azureMap",
@@ -67,6 +67,9 @@
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "isDefaultSort": true
       }
     },
     "objects": {
@@ -104,14 +107,14 @@
             "centerLatitude": {
               "expr": {
                 "Literal": {
-                  "Value": "53.34634201894313D"
+                  "Value": "53.35780797282419D"
                 }
               }
             },
             "centerLongitude": {
               "expr": {
                 "Literal": {
-                  "Value": "-6.2390453845409315D"
+                  "Value": "-6.257498686931513D"
                 }
               }
             },
@@ -352,6 +355,64 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "referenceLayer": [
+        {
+          "properties": {
+            "additionalDatasource": {
+              "geoJson": {
+                "type": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'packaged'"
+                    }
+                  }
+                },
+                "name": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'site_radius_circles.geojson'"
+                    }
+                  }
+                },
+                "content": {
+                  "expr": {
+                    "ResourcePackageItem": {
+                      "PackageName": "RegisteredResources",
+                      "PackageType": 1,
+                      "ItemName": "site_radius_circles40475504003745333.geojson"
+                    }
+                  }
+                }
+              }
+            },
+            "polygonFillColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#29B6E8'"
+                    }
+                  }
+                }
+              }
+            },
+            "polygonStrokeTransparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "polygonStrokeWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
                 }
               }
             }

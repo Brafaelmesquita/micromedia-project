@@ -4,10 +4,10 @@
   "position": {
     "x": 584.80444511707344,
     "y": 367.61983006507688,
-    "z": 11000,
+    "z": 5000,
     "height": 339.72455840702224,
     "width": 670.48277949538408,
-    "tabOrder": 13000
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "pivotTable",
@@ -92,10 +92,10 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Total Population"
+                "Property": "OTS"
               }
             },
-            "direction": "Ascending"
+            "direction": "Descending"
           }
         ]
       }

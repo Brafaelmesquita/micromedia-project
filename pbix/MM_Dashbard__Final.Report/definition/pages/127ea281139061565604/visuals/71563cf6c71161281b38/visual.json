@@ -4,10 +4,10 @@
   "position": {
     "x": 383,
     "y": 261,
-    "z": 11001,
-    "height": 448,
-    "width": 319,
-    "tabOrder": 11001
+    "z": 6000,
+    "height": 427,
+    "width": 318,
+    "tabOrder": 6000
   },
   "visual": {
     "visualType": "tableEx",
@@ -347,20 +347,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "e93dac427a4c694f8548",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Age Audience (Hourly)"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

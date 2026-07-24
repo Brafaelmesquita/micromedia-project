@@ -208,19 +208,18 @@ table _Measures
 
 	measure 'Header Title' =
 			
-			VAR NSites  = DISTINCTCOUNT ( Master_Sites[MM ID] )
-			VAR YM      = VALUES ( Footfall[YEAR_MONTH] )
-			VAR Cnt     = COUNTROWS ( YM )
-			VAR MinYM   = MINX ( YM, Footfall[YEAR_MONTH] )
-			VAR MaxYM   = MAXX ( YM, Footfall[YEAR_MONTH] )
-			VAR MinDate = DATE ( VALUE ( LEFT ( MinYM, 4 ) ), VALUE ( RIGHT ( MinYM, 2 ) ), 1 )
-			VAR MaxDate = DATE ( VALUE ( LEFT ( MaxYM, 4 ) ), VALUE ( RIGHT ( MaxYM, 2 ) ), 1 )
+			VAR NSites   = DISTINCTCOUNT ( Master_Sites[MM ID] )
+			VAR MinDate  = CALCULATE ( MIN ( Footfall[DATE] ), Footfall[HasValidSite] = TRUE () )
+			VAR MaxDate  = CALCULATE ( MAX ( Footfall[DATE] ), Footfall[HasValidSite] = TRUE () )
+			VAR NoData   = ISBLANK ( MinDate )
 			VAR Period =
 			    SWITCH (
 			        TRUE (),
-			        Cnt = 0, "No period",
-			        Cnt = 1, FORMAT ( MinDate, "MMMM YYYY" ),
-			        FORMAT ( MinDate, "MMM YYYY" ) & " – " & FORMAT ( MaxDate, "MMM YYYY" )
+			        NoData,                          "No period",
+			        MinDate = MaxDate,               FORMAT ( MinDate, "D MMM YYYY" ),
+			        YEAR ( MinDate ) = YEAR ( MaxDate ),
+			            FORMAT ( MinDate, "D MMM" ) & " – " & FORMAT ( MaxDate, "D MMM YYYY" ),
+			        FORMAT ( MinDate, "D MMM YYYY" ) & " – " & FORMAT ( MaxDate, "D MMM YYYY" )
 			    )
 			VAR SitesTxt = FORMAT ( NSites, "0" ) & " " & IF ( NSites = 1, "site", "sites" )
 			RETURN
@@ -745,6 +744,18 @@ table _Measures
 	measure 'Ranking Title' = "Top Screens"
 		displayFolder: Titles
 		lineageTag: 54e1e902-d7ce-4600-9e51-6c01197b568b
+
+	measure 'Site Radius (m)' = ```
+			
+			   CALCULATE (
+			       MAX ( Footfall[RADIUS] ),
+			       Footfall[IS_GRAND_TOTAL] = 1,
+			       Footfall[HOUR] = 25,
+			       Footfall[HasValidSite] = TRUE ()
+			   )
+			```
+		formatString: 0
+		lineageTag: c3844f4e-5bef-4439-a17d-35105153599c
 
 	partition _Measures = m
 		mode: import

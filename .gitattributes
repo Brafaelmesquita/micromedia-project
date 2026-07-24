@@ -1,0 +1,18 @@
+# Normalize all text files to LF in the repository.
+# Git compares the normalized (LF) version, so Power BI / editors re-saving
+# PBIP files with CRLF no longer show up as spurious "modified" churn.
+* text=auto eol=lf
+
+# Binary assets — never normalize or diff as text.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.xlsx  binary
+*.xls   binary
+*.xlsm  binary
+*.pbix  binary
+*.parquet binary
+*.abf   binary
