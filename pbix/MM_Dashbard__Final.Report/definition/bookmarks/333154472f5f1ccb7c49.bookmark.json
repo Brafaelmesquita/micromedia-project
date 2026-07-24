@@ -13,37 +13,6 @@
     "sections": {
       "127ea281139061565604": {
         "visualContainers": {
-          "12d21e9b01cad0331124": {
-            "singleVisual": {
-              "visualType": "textbox",
-              "objects": {}
-            }
-          },
-          "1e3f33c52b949933db30": {
-            "filters": {
-              "byExpr": [
-                {
-                  "name": "afb3c058d7499a7c0596",
-                  "type": "Advanced",
-                  "expression": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "_Measures"
-                        }
-                      },
-                      "Property": "Header Title"
-                    }
-                  },
-                  "howCreated": 0
-                }
-              ]
-            },
-            "singleVisual": {
-              "visualType": "cardVisual",
-              "objects": {}
-            }
-          },
           "4e56d780c7177207ae80": {
             "filters": {
               "byExpr": [
