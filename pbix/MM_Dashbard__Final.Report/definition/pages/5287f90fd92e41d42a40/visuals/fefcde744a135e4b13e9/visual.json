@@ -4,10 +4,10 @@
   "position": {
     "x": 367.40958915571917,
     "y": 249.50949711321229,
-    "z": 14000,
+    "z": 12000,
     "height": 79.514015563551169,
     "width": 507.24458204334366,
-    "tabOrder": 14000
+    "tabOrder": 12000
   },
   "visual": {
     "visualType": "slicer",
@@ -88,7 +88,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Industry'"
+                                "Value": "'Social Grade'"
                               }
                             }
                           ]

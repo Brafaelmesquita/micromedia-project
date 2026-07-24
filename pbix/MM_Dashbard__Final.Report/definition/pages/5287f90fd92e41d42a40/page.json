@@ -58,11 +58,6 @@
       "type": "NoFilter"
     },
     {
-      "source": "0f70aa50489c6673c74d",
-      "target": "b3ff45904400d042a541",
-      "type": "NoFilter"
-    },
-    {
       "source": "a766d5a06108636e1a7a",
       "target": "0f70aa50489c6673c74d",
       "type": "NoFilter"

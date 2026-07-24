@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "5d25b34fae0950309109",
   "position": {
-    "x": 141.96700754545657,
-    "y": 268.32598696300806,
-    "z": 10000,
-    "height": 84.682074676237221,
-    "width": 200.24820011674919,
-    "tabOrder": 10000
+    "x": 142.01917193554965,
+    "y": 268.37446461350191,
+    "z": 6000,
+    "height": 91.372629002651436,
+    "width": 305.4456455231491,
+    "tabOrder": 6000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -28,6 +28,20 @@
               },
               "queryRef": "_Measures.Avg Daily Total Population",
               "nativeQueryRef": "Avg Daily Total Population"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Avg Hourly Total Population"
+                }
+              },
+              "queryRef": "_Measures.Avg Hourly Total Population",
+              "nativeQueryRef": "Avg Hourly Total Population"
             }
           ]
         }

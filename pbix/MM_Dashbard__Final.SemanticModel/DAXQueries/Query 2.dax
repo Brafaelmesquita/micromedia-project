@@ -1,16 +1,10 @@
 EVALUATE
-TOPN (
-    10,
+CALCULATETABLE (
     ADDCOLUMNS (
-        CALCULATETABLE (
-            VALUES ( Master_Sites[MM ID] ),
-            Demographics_AgeLong[Gender Label] = "Female",
-            Demographics_AgeLong[AGE_BRACKET] = "65+",
-            dim_Hour[Hour] = 12,
-            Calendar[YEAR_MONTH] = "2025-05"
-        ),
-        "Audience", [Age Audience (Hourly)]
+        VALUES ( Footfall[CODE] ),
+        "TotalPop", CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 1 ),
+        "InMaster", IF ( NOT ISBLANK ( LOOKUPVALUE ( Master_Sites[MM ID], Master_Sites[MM ID], Footfall[CODE] ) ), "YES", "NO" )
     ),
-    [Age Audience (Hourly)], DESC
+    Footfall[HasValidSite] = FALSE ()
 )
-ORDER BY [Age Audience (Hourly)] DESC
+ORDER BY Footfall[CODE]
