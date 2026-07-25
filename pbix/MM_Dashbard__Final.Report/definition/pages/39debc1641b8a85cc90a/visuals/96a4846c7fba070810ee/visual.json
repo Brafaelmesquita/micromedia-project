@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "96a4846c7fba070810ee",
   "position": {
-    "x": 522,
-    "y": 300,
+    "x": 528.25396825396831,
+    "y": 220.74646074646074,
     "z": 8000,
-    "height": 120,
-    "width": 240,
+    "height": 90,
+    "width": 150,
     "tabOrder": 8000
   },
   "visual": {
@@ -221,7 +221,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Opportunities to see the ads'"
+                  "Value": "''"
                 }
               }
             },

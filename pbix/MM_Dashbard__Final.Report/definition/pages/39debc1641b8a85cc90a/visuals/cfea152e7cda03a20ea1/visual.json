@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "cfea152e7cda03a20ea1",
   "position": {
-    "x": 273,
-    "y": 300,
+    "x": 274.56027456027459,
+    "y": 220.74646074646074,
     "z": 7000,
-    "height": 120,
-    "width": 240,
+    "height": 90,
+    "width": 150,
     "tabOrder": 7000
   },
   "visual": {
@@ -221,7 +221,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Mobile audience measured'"
+                  "Value": "''"
                 }
               }
             },

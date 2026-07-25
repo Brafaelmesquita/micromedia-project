@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "bb11cc22dd33ee44ff02",
+  "name": "dd22ee33ff4400010001",
   "position": {
     "x": 25.259545259545259,
-    "y": 323.981123981124,
-    "z": 1600,
-    "height": 72.483912483912491,
-    "width": 745.70570570570567,
-    "tabOrder": 1600
+    "y": 186.7009867009867,
+    "z": 1550,
+    "height": 34.045474045474045,
+    "width": 519.46803946803948,
+    "tabOrder": 1550
   },
   "visual": {
     "visualType": "textbox",
@@ -42,7 +42,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Population = everyone passing  ·  Mobile (PaS) = mobile audience measured  ·  Exposure (OTS) = opportunities to see your ads'"
+                  "Value": "'Our audience in numbers'"
                 }
               }
             },
@@ -56,54 +56,16 @@
             "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#666666'"
-                    }
-                  }
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "subTitle": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
                   "Value": "true"
                 }
               }
             },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Extrapolated from the Locomizer mobile-location panel  ·  full network, de-duplicated at Hour 25'"
-                }
-              }
-            },
             "fontColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#999999'"
+                      "Value": "'#0A7FA8'"
                     }
                   }
                 }
@@ -112,7 +74,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "9D"
+                  "Value": "16D"
                 }
               }
             }

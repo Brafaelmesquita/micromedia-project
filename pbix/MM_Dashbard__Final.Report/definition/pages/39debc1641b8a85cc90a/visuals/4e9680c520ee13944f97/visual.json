@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "4e9680c520ee13944f97",
   "position": {
-    "x": 24,
-    "y": 300,
+    "x": 24.161304161304162,
+    "y": 220.74646074646074,
     "z": 6000,
-    "height": 120,
-    "width": 240,
+    "height": 90,
+    "width": 150,
     "tabOrder": 6000
   },
   "visual": {
@@ -221,7 +221,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Everyone passing the selected screens'"
+                  "Value": "''"
                 }
               }
             },
