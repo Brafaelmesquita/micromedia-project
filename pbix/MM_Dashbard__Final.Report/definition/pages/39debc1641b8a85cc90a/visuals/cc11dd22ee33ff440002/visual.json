@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "cc11dd22ee33ff440002",
   "position": {
-    "x": 970.84513084513083,
-    "y": 186.7009867009867,
+    "x": 956.3553530751708,
+    "y": 186.60592255125286,
     "z": 5200,
-    "height": 173.52209352209351,
-    "width": 280.05148005148004,
+    "height": 173.77676537585421,
+    "width": 295.07061503416855,
     "tabOrder": 5200
   },
   "visual": {
@@ -77,7 +77,7 @@
             "labelStyle": {
               "expr": {
                 "Literal": {
-                  "Value": "'Percent of total'"
+                  "Value": "'Category, percent of total'"
                 }
               }
             },
@@ -85,6 +85,13 @@
               "expr": {
                 "Literal": {
                   "Value": "1L"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -204,6 +211,13 @@
               }
             },
             "showTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "show": {
               "expr": {
                 "Literal": {
                   "Value": "false"

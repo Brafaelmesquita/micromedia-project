@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "cc11dd22ee33ff440004",
   "position": {
-    "x": 851.13685113685119,
-    "y": 375.59845559845559,
+    "x": 956.5679965679966,
+    "y": 371.20549120549123,
     "z": 5400,
     "height": 325.07936507936506,
     "width": 294.32861432861432,
@@ -65,11 +65,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Avg Brand Affinity Index"
+                  "Property": "Median Brand Affinity Index"
                 }
               },
-              "queryRef": "_Measures.Avg Brand Affinity Index",
-              "nativeQueryRef": "Avg Brand Affinity Index"
+              "queryRef": "_Measures.Median Brand Affinity Index",
+              "nativeQueryRef": "Median Brand Affinity Index"
             }
           ]
         }
@@ -84,7 +84,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Avg Brand Affinity Index"
+                "Property": "Median Brand Affinity Index"
               }
             },
             "direction": "Descending"

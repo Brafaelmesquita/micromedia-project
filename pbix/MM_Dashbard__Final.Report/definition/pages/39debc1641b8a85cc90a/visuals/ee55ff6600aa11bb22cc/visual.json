@@ -5,8 +5,8 @@
     "x": 392.0720720720721,
     "y": 375.59845559845559,
     "z": 5500,
-    "height": 152.65551265551267,
-    "width": 453.57357357357358,
+    "height": 148.26254826254828,
+    "width": 554.61175461175458,
     "tabOrder": 5500
   },
   "visual": {
@@ -42,11 +42,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Total Population (Hourly)"
+                  "Property": "Population by Hour"
                 }
               },
-              "queryRef": "_Measures.Total Population (Hourly)",
-              "nativeQueryRef": "Total Population (Hourly)"
+              "queryRef": "_Measures.Population by Hour",
+              "nativeQueryRef": "Population by Hour"
             }
           ]
         }
@@ -55,16 +55,16 @@
         "sort": [
           {
             "field": {
-              "Column": {
+              "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "Footfall"
+                    "Entity": "_Measures"
                   }
                 },
-                "Property": "HOUR"
+                "Property": "Population by Hour"
               }
             },
-            "direction": "Ascending"
+            "direction": "Descending"
           }
         ],
         "isDefaultSort": true
@@ -73,18 +73,35 @@
     "objects": {
       "dataPoint": [
         {
+          "properties": {}
+        },
+        {
           "properties": {
             "fill": {
               "solid": {
                 "color": {
                   "expr": {
-                    "Literal": {
-                      "Value": "'#29B6E8'"
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "_Measures"
+                        }
+                      },
+                      "Property": "Peak Hour Colour"
                     }
                   }
                 }
               }
             }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ]
           }
         }
       ],
@@ -219,7 +236,7 @@
             {
               "Condition": {
                 "Comparison": {
-                  "ComparisonKind": 2,
+                  "ComparisonKind": 3,
                   "Left": {
                     "Column": {
                       "Expression": {

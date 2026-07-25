@@ -763,6 +763,65 @@ table _Measures
 		formatString: 0
 		lineageTag: c3844f4e-5bef-4439-a17d-35105153599c
 
+	measure 'Population by Hour' =
+			
+			CALCULATE (
+			    SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			    Footfall[IS_GRAND_TOTAL] = 1,
+			    Footfall[HasValidSite] = TRUE ()
+			)
+		displayFolder: KPIs\By Hour
+		lineageTag: c68f0a92-76dd-4688-8187-9f778e199e7e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Peak Hour Colour' =
+			
+			VAR N = 3
+			VAR Rnk =
+			    RANKX (
+			        FILTER ( ALL ( Footfall[HOUR] ), Footfall[HOUR] < 25 ),
+			        [Population by Hour],
+			        , DESC
+			    )
+			RETURN
+			    IF ( Rnk <= N, "#0A7FA8", "#A8E4F5" )
+		displayFolder: Titles
+		lineageTag: 08625612-7f44-435e-a5e4-5c5665485dcf
+
+	measure 'Median Brand Affinity Index' =
+			
+			CALCULATE ( MEDIAN ( Brand_Affinity[BRAND_AFFINITY_INDEX] ), Brand_Affinity[IS_DEFAULT] = 1 )
+		lineageTag: c7a302db-0297-4c33-8bff-dcb61faa1485
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Affinity Index (weighted)' =
+			
+			VAR T =
+			    ADDCOLUMNS (
+			        VALUES ( Brand_Affinity[CODE] ),
+			        "Idx", CALCULATE ( AVERAGE ( Brand_Affinity[BRAND_AFFINITY_INDEX] ), Brand_Affinity[IS_DEFAULT] = 1 ),
+			        "W",
+			            VAR c = Brand_Affinity[CODE]
+			            RETURN
+			                CALCULATE (
+			                    SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			                    Footfall[CODE] = c,
+			                    Footfall[IS_GRAND_TOTAL] = 1,
+			                    Footfall[HOUR] = 25,
+			                    Footfall[HasValidSite] = TRUE ()
+			                )
+			    )
+			RETURN
+			    DIVIDE (
+			        SUMX ( FILTER ( T, NOT ISBLANK ( [Idx] ) ), [Idx] * [W] ),
+			        SUMX ( FILTER ( T, NOT ISBLANK ( [Idx] ) ), [W] )
+			    )
+		lineageTag: af339790-9ced-492a-bb78-c7416e4a271b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	partition _Measures = m
 		mode: import
 		source =
