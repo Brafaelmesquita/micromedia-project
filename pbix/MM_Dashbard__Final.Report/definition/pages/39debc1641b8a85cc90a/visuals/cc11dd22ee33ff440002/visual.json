@@ -6,7 +6,7 @@
     "y": 186.7009867009867,
     "z": 5200,
     "height": 173.52209352209351,
-    "width": 285.54268554268555,
+    "width": 280.05148005148004,
     "tabOrder": 5200
   },
   "visual": {
@@ -78,6 +78,13 @@
               "expr": {
                 "Literal": {
                   "Value": "'Percent of total'"
+                }
+              }
+            },
+            "percentageLabelPrecision": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
                 }
               }
             }
@@ -165,6 +172,44 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "properties": {
+            "borderShow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "legend": [
+        {
+          "properties": {
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'BottomCenter'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "showTitle": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ]
