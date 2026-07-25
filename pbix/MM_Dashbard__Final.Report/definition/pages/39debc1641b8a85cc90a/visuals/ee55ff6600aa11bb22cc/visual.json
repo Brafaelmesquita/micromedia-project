@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "ee55ff6600aa11bb22cc",
   "position": {
-    "x": 392.0720720720721,
-    "y": 375.59845559845559,
+    "x": 662.23938223938228,
+    "y": 189.99570999571,
     "z": 5500,
-    "height": 148.26254826254828,
-    "width": 554.61175461175458,
+    "height": 143.86958386958386,
+    "width": 607.32732732732734,
     "tabOrder": 5500
   },
   "visual": {
@@ -173,7 +173,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Peak hours across the network'"
+                  "Value": "'Peak hours across the whole network'"
                 }
               }
             },
