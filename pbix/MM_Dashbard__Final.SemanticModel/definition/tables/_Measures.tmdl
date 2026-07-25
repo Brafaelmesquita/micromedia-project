@@ -593,7 +593,7 @@ table _Measures
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Avg Brand Affinity Index' = AVERAGE ( Brand_Affinity[BRAND_AFFINITY_INDEX] )
+	measure 'Avg Brand Affinity Index' = CALCULATE ( AVERAGE ( Brand_Affinity[BRAND_AFFINITY_INDEX] ), Brand_Affinity[IS_DEFAULT] = 1 )
 		displayFolder: Modality
 		lineageTag: 898bba54-e4fd-49fb-b214-88a566d2c748
 
