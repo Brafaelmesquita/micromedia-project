@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "cc11dd22ee33ff440003",
+  "name": "ee55ff6600aa11bb22cc",
   "position": {
-    "x": 624.89918489918489,
-    "y": 375.59845559845559,
-    "z": 5300,
-    "height": 304.21278421278424,
-    "width": 308.6057486057486,
-    "tabOrder": 5300
+    "x": 378.89317889317891,
+    "y": 400.85800085800088,
+    "z": 5500,
+    "height": 148.26254826254828,
+    "width": 238.31831831831832,
+    "tabOrder": 5500
   },
   "visual": {
     "visualType": "clusteredColumnChart",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Demographics_AgeLong"
+                      "Entity": "Footfall"
                     }
                   },
-                  "Property": "AGE_BRACKET"
+                  "Property": "HOUR"
                 }
               },
-              "queryRef": "Demographics_AgeLong.AGE_BRACKET",
-              "nativeQueryRef": "AGE_BRACKET",
+              "queryRef": "Footfall.HOUR",
+              "nativeQueryRef": "HOUR",
               "active": true
             }
           ]
@@ -42,11 +42,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Age Audience (Hourly)"
+                  "Property": "Total Population (Hourly)"
                 }
               },
-              "queryRef": "_Measures.Age Audience (Hourly)",
-              "nativeQueryRef": "Age Audience (Hourly)"
+              "queryRef": "_Measures.Total Population (Hourly)",
+              "nativeQueryRef": "Total Population (Hourly)"
             }
           ]
         }
@@ -58,10 +58,10 @@
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "Demographics_AgeLong"
+                    "Entity": "Footfall"
                   }
                 },
-                "Property": "AGE_BRACKET"
+                "Property": "HOUR"
               }
             },
             "direction": "Ascending"
@@ -92,13 +92,6 @@
         {
           "properties": {
             "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "showAxisTitle": {
               "expr": {
                 "Literal": {
                   "Value": "false"
@@ -156,7 +149,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Audience by age'"
+                  "Value": "'Peak hours across the network'"
                 }
               }
             },
@@ -190,5 +183,57 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "hourlt25",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Footfall"
+              }
+            },
+            "Property": "HOUR"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "f",
+              "Entity": "Footfall",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 2,
+                  "Left": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "f"
+                        }
+                      },
+                      "Property": "HOUR"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "25L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
   }
 }

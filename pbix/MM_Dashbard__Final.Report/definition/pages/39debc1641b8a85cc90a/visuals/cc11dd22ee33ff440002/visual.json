@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "cc11dd22ee33ff440002",
   "position": {
-    "x": 845.64564564564569,
-    "y": 220.74646074646074,
+    "x": 970.84513084513083,
+    "y": 186.7009867009867,
     "z": 5200,
-    "height": 154.85199485199485,
-    "width": 410.74217074217074,
+    "height": 173.52209352209351,
+    "width": 285.54268554268555,
     "tabOrder": 5200
   },
   "visual": {
@@ -20,16 +20,15 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Footfall"
+                      "Entity": "Demographics_AgeLong"
                     }
                   },
-                  "Property": "VISITATION_MODALITY"
+                  "Property": "GENDER"
                 }
               },
-              "queryRef": "Footfall.VISITATION_MODALITY",
-              "nativeQueryRef": "Modality",
-              "active": true,
-              "displayName": "Modality"
+              "queryRef": "Demographics_AgeLong.GENDER",
+              "nativeQueryRef": "GENDER",
+              "active": true
             }
           ]
         },
@@ -43,11 +42,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Visitation Audience"
+                  "Property": "Age Audience (Hourly)"
                 }
               },
-              "queryRef": "_Measures.Visitation Audience",
-              "nativeQueryRef": "Visitation Audience"
+              "queryRef": "_Measures.Age Audience (Hourly)",
+              "nativeQueryRef": "Age Audience (Hourly)"
             }
           ]
         }
@@ -62,7 +61,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Visitation Audience"
+                "Property": "Age Audience (Hourly)"
               }
             },
             "direction": "Descending"
@@ -110,15 +109,15 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Footfall"
+                            "Entity": "Demographics_AgeLong"
                           }
                         },
-                        "Property": "VISITATION_MODALITY"
+                        "Property": "GENDER"
                       }
                     },
                     "Right": {
                       "Literal": {
-                        "Value": "'Transient'"
+                        "Value": "'M'"
                       }
                     }
                   }
@@ -134,7 +133,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#0A7FA8'"
+                      "Value": "'#E24A8C'"
                     }
                   }
                 }
@@ -151,89 +150,21 @@
                       "Column": {
                         "Expression": {
                           "SourceRef": {
-                            "Entity": "Footfall"
+                            "Entity": "Demographics_AgeLong"
                           }
                         },
-                        "Property": "VISITATION_MODALITY"
+                        "Property": "GENDER"
                       }
                     },
                     "Right": {
                       "Literal": {
-                        "Value": "'Workers'"
+                        "Value": "'F'"
                       }
                     }
                   }
                 }
               }
             ]
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#A8E4F5'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "data": [
-              {
-                "scopeId": {
-                  "Comparison": {
-                    "ComparisonKind": 0,
-                    "Left": {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Entity": "Footfall"
-                          }
-                        },
-                        "Property": "VISITATION_MODALITY"
-                      }
-                    },
-                    "Right": {
-                      "Literal": {
-                        "Value": "'Residents'"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        }
-      ],
-      "legend": [
-        {
-          "properties": {
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI Light'', wf_segoe-ui_light, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
           }
         }
       ]
@@ -262,6 +193,13 @@
       "title": [
         {
           "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Audience by gender'"
+                }
+              }
+            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -280,10 +218,10 @@
                 }
               }
             },
-            "text": {
+            "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "'Audience by visitation'"
+                  "Value": "true"
                 }
               }
             }
@@ -292,81 +230,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "f539be9298cd6b29dc34",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "Footfall"
-              }
-            },
-            "Property": "VISITATION_MODALITY"
-          }
-        },
-        "type": "Categorical",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "f",
-              "Entity": "Footfall",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Not": {
-                  "Expression": {
-                    "In": {
-                      "Expressions": [
-                        {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "f"
-                              }
-                            },
-                            "Property": "VISITATION_MODALITY"
-                          }
-                        }
-                      ],
-                      "Values": [
-                        [
-                          {
-                            "Literal": {
-                              "Value": "'All'"
-                            }
-                          }
-                        ]
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "objects": {
-          "general": [
-            {
-              "properties": {
-                "isInvertedSelectionMode": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "true"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    ]
   }
 }
