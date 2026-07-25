@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "ced2f22a3b0fd58c3daa",
+  "name": "bb11cc22dd33ee44ff03",
   "position": {
-    "x": 23.771997098144887,
-    "y": 116.25114941173698,
-    "z": 5000,
-    "height": 32.261996061768059,
-    "width": 280.16996579956475,
-    "tabOrder": 5000
+    "x": 24,
+    "y": 690,
+    "z": 1700,
+    "height": 22,
+    "width": 1232,
+    "tabOrder": 1700
   },
   "visual": {
     "visualType": "textbox",
@@ -42,7 +42,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'What''s inside'"
+                  "Value": "'Powered by Locomizer   ·   Micromedia Ireland   ·   Look to the Light'"
                 }
               }
             },
@@ -53,17 +53,21 @@
                 }
               }
             },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#888888'"
+                    }
+                  }
                 }
               }
             },
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "16D"
+                  "Value": "9D"
                 }
               }
             }

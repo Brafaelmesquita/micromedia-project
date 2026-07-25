@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "cfea152e7cda03a20ea1",
   "position": {
-    "x": 943.45793786349,
-    "y": 332.75074049250861,
+    "x": 273,
+    "y": 300,
     "z": 7000,
-    "height": 84.682074676237221,
-    "width": 190.28560309601539,
+    "height": 120,
+    "width": 240,
     "tabOrder": 7000
   },
   "visual": {
@@ -202,6 +202,33 @@
               "expr": {
                 "Literal": {
                   "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Mobile audience measured'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

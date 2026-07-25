@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "63347d6ec72ae3022100",
+  "name": "3fbba95b6b7c59194a3b",
   "position": {
-    "x": 172.35292845869458,
-    "y": 173.34918816076797,
-    "z": 10000,
-    "height": 79.700776165870323,
-    "width": 439.35052861436014,
-    "tabOrder": 10000
+    "x": 681.44163621819121,
+    "y": 180,
+    "z": 14003,
+    "height": 71.730698549283289,
+    "width": 262.01630164529871,
+    "tabOrder": 14003
   },
   "visual": {
     "visualType": "slicer",
@@ -23,11 +23,11 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "Display Name"
+                  "Property": "Network"
                 }
               },
-              "queryRef": "Master_Sites.Display Name",
-              "nativeQueryRef": "Display Name",
+              "queryRef": "Master_Sites.Network",
+              "nativeQueryRef": "Network",
               "active": true
             }
           ]
@@ -44,6 +44,13 @@
                   "Value": "'Dropdown'"
                 }
               }
+            },
+            "isInvertedSelectionMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
@@ -51,49 +58,18 @@
       "general": [
         {
           "properties": {
+            "orientation": {
+              "expr": {
+                "Literal": {
+                  "Value": "1D"
+                }
+              }
+            },
             "selfFilterEnabled": {
               "expr": {
                 "Literal": {
                   "Value": "true"
                 }
-              }
-            },
-            "selfFilter": {
-              "filter": {
-                "Version": 2,
-                "From": [
-                  {
-                    "Name": "m",
-                    "Entity": "Master_Sites",
-                    "Type": 0
-                  }
-                ],
-                "Where": [
-                  {
-                    "Condition": {
-                      "Contains": {
-                        "Left": {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "m"
-                              }
-                            },
-                            "Property": "Display Name"
-                          }
-                        },
-                        "Right": {
-                          "Literal": {
-                            "Value": "'kill'"
-                          }
-                        }
-                      }
-                    },
-                    "Annotations": {
-                      "PowerBI.MParameterBehavior": 1
-                    }
-                  }
-                ]
               }
             }
           }
@@ -102,6 +78,13 @@
       "selection": [
         {
           "properties": {
+            "strictSingleSelect": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
             "selectAllCheckboxEnabled": {
               "expr": {
                 "Literal": {
@@ -127,6 +110,26 @@
       ]
     },
     "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
       "title": [
         {
           "properties": {
@@ -140,14 +143,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Display'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
+                  "Value": "'Network'"
                 }
               }
             },
@@ -155,6 +151,13 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
                 }
               }
             },
@@ -178,27 +181,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "border": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
                 }
               }
             }
@@ -207,7 +190,7 @@
       ]
     },
     "syncGroup": {
-      "groupName": "Display Name",
+      "groupName": "Network",
       "fieldChanges": true,
       "filterChanges": true
     },
@@ -216,7 +199,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "ded2db16c4cd35743beb",
+        "name": "89302dffe6068b055dc5",
         "field": {
           "Column": {
             "Expression": {
@@ -224,7 +207,7 @@
                 "Entity": "Master_Sites"
               }
             },
-            "Property": "Display Name"
+            "Property": "Network"
           }
         },
         "type": "Categorical",
@@ -251,7 +234,7 @@
                                 "Source": "m"
                               }
                             },
-                            "Property": "Display Name"
+                            "Property": "Network"
                           }
                         }
                       ],
@@ -260,6 +243,13 @@
                           {
                             "Literal": {
                               "Value": "null"
+                            }
+                          }
+                        ],
+                        [
+                          {
+                            "Literal": {
+                              "Value": "''"
                             }
                           }
                         ]

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "4e9680c520ee13944f97",
   "position": {
-    "x": 943.45793786349,
-    "y": 227.14721207273041,
+    "x": 24,
+    "y": 300,
     "z": 6000,
-    "height": 86.674594080383983,
-    "width": 120.54742395087887,
+    "height": 120,
+    "width": 240,
     "tabOrder": 6000
   },
   "visual": {
@@ -202,6 +202,40 @@
               "expr": {
                 "Literal": {
                   "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Everyone passing the selected screens'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
                 }
               }
             }

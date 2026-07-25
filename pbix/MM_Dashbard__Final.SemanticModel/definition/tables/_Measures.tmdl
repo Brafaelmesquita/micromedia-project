@@ -208,7 +208,13 @@ table _Measures
 
 	measure 'Header Title' =
 			
-			VAR NSites   = DISTINCTCOUNT ( Master_Sites[MM ID] )
+			VAR NSites =
+			    CALCULATE (
+			        DISTINCTCOUNT ( Footfall[CODE] ),
+			        Footfall[HasValidSite] = TRUE (),
+			        Footfall[IS_GRAND_TOTAL] = 1,
+			        Footfall[HOUR] = 25
+			    )
 			VAR MinDate  = CALCULATE ( MIN ( Footfall[DATE] ), Footfall[HasValidSite] = TRUE () )
 			VAR MaxDate  = CALCULATE ( MAX ( Footfall[DATE] ), Footfall[HasValidSite] = TRUE () )
 			VAR NoData   = ISBLANK ( MinDate )
