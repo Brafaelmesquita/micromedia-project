@@ -46,8 +46,8 @@
                 }
               },
               "queryRef": "_Measures.Total Population",
-              "nativeQueryRef": "Total Footfall",
-              "displayName": "Total Footfall"
+              "nativeQueryRef": "Population",
+              "displayName": "Population"
             },
             {
               "field": {
@@ -61,8 +61,8 @@
                 }
               },
               "queryRef": "_Measures.PaS",
-              "nativeQueryRef": "Footfall",
-              "displayName": "Footfall"
+              "nativeQueryRef": "Mobile",
+              "displayName": "Mobile"
             },
             {
               "field": {
@@ -76,8 +76,8 @@
                 }
               },
               "queryRef": "_Measures.OTS",
-              "nativeQueryRef": "Impressions",
-              "displayName": "Impressions"
+              "nativeQueryRef": "Exposure",
+              "displayName": "Exposure"
             }
           ]
         }

@@ -5,8 +5,8 @@
     "x": 878.59287859287861,
     "y": 256.988416988417,
     "z": 7000,
-    "height": 84.564564564564563,
-    "width": 199.87987987987989,
+    "height": 90,
+    "width": 180,
     "tabOrder": 6000
   },
   "visual": {
@@ -136,7 +136,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'AVG Daily Impressions'"
+                  "Value": "'AVG Daily Exposure'"
                 }
               }
             },

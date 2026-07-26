@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "84ce36367be5c692066c",
   "position": {
-    "x": 232.12851058309732,
-    "y": 157.4090329275939,
+    "x": 77.283018867924525,
+    "y": 150.42587601078168,
     "z": 14002,
-    "height": 71.730698549283289,
-    "width": 430.38419129569974,
+    "height": 71.762803234501348,
+    "width": 583.76280323450135,
     "tabOrder": 14002
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "Display Name"
+                  "Property": "Site Label"
                 }
               },
-              "queryRef": "Master_Sites.Display Name",
-              "nativeQueryRef": "Display Name",
+              "queryRef": "Master_Sites.Site Label",
+              "nativeQueryRef": "Site Label",
               "active": true
             }
           ]
@@ -102,7 +102,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Display'"
+                  "Value": "'Site'"
                 }
               }
             },
@@ -233,6 +233,7 @@
             }
           ]
         },
+        "howCreated": "User",
         "objects": {
           "general": [
             {

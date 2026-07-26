@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "5d25b34fae0950309109",
   "position": {
-    "x": 77.975117975117982,
-    "y": 255.8901758901759,
+    "x": 77.708256761723561,
+    "y": 256.03874343285844,
     "z": 4000,
-    "height": 92.252252252252248,
-    "width": 305.31102531102533,
+    "height": 90,
+    "width": 180,
     "tabOrder": 4000
   },
   "visual": {
@@ -28,20 +28,6 @@
               },
               "queryRef": "_Measures.Avg Daily Total Population",
               "nativeQueryRef": "Avg Daily Total Population"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Avg Hourly Total Population"
-                }
-              },
-              "queryRef": "_Measures.Avg Hourly Total Population",
-              "nativeQueryRef": "Avg Hourly Total Population"
             }
           ]
         }
@@ -150,7 +136,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'AVG Daily Total Footfall'"
+                  "Value": "'AVG Daily Population'"
                 }
               }
             },

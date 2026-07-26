@@ -5,8 +5,8 @@
     "x": 475.53839553839555,
     "y": 255.8901758901759,
     "z": 6000,
-    "height": 84.564564564564563,
-    "width": 199.87987987987989,
+    "height": 90,
+    "width": 180,
     "tabOrder": 5000
   },
   "visual": {
@@ -136,7 +136,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'AVG Daily Footfall'"
+                  "Value": "'AVG Daily Mobile'"
                 }
               }
             },

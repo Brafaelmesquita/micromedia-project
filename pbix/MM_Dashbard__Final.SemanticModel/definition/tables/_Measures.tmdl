@@ -13,6 +13,8 @@ table _Measures
 		displayFolder: KPIs\Base
 		lineageTag: fff3dce4-db9e-4175-8f3e-6e72c06ddeec
 
+		annotation PBI_FormatHint = {"isDecimal":true}
+
 	measure OTS =
 			
 			CALCULATE(
@@ -26,6 +28,8 @@ table _Measures
 		lineageTag: 79b86f31-77d7-4674-81c4-2c970d29fae4
 		dataCategory: Uncategorized
 
+		annotation PBI_FormatHint = {"isDecimal":true}
+
 	measure 'Total Population' =
 			
 			CALCULATE(
@@ -37,6 +41,8 @@ table _Measures
 		formatString: #,0
 		displayFolder: KPIs\Base
 		lineageTag: fa2e2818-1a2d-4fd7-a6bb-6a0269b9cd7a
+
+		annotation PBI_FormatHint = {"isDecimal":true}
 
 	measure 'OTS by Movement' =
 			
@@ -456,21 +462,21 @@ table _Measures
 	measure 'Avg Daily Total Population' =
 			
 			AVERAGEX ( VALUES ( 'Calendar'[Date] ), [Total Population] )
-		formatString: 0
+		formatString: 0.0
 		displayFolder: KPIs\AVG
 		lineageTag: bd2b995e-9a84-4a7c-a76f-d6c383a9db57
 
 	measure 'Avg Daily PaS' =
 			
 			AVERAGEX ( VALUES ( 'Calendar'[Date] ), [PaS] )
-		formatString: 0
+		formatString: 0.0
 		displayFolder: KPIs\AVG
 		lineageTag: e6b2cc0f-2171-4368-920e-f13bc3327e54
 
 	measure 'Avg Daily OTS' =
 			
 			AVERAGEX ( VALUES ( 'Calendar'[Date] ), [OTS] )
-		formatString: 0
+		formatString: 0.0
 		displayFolder: KPIs\AVG
 		lineageTag: 4a776ea4-1cf0-40ab-9ccd-c68fb2d3bdc6
 

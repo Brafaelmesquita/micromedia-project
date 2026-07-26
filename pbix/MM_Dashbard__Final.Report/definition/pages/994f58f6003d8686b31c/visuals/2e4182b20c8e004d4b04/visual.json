@@ -42,12 +42,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Total Population (Hourly)"
+                  "Property": "Total Population"
                 }
               },
-              "queryRef": "_Measures.Total Population (Hourly)",
-              "nativeQueryRef": "Total Footfall",
-              "displayName": "Total Footfall"
+              "queryRef": "_Measures.Total Population",
+              "nativeQueryRef": "Total Population"
             },
             {
               "field": {
@@ -57,12 +56,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "PaS (Hourly)"
+                  "Property": "PaS"
                 }
               },
-              "queryRef": "_Measures.PaS (Hourly)",
-              "nativeQueryRef": "Footfall",
-              "displayName": "Footfall"
+              "queryRef": "_Measures.PaS",
+              "nativeQueryRef": "PaS"
             },
             {
               "field": {
@@ -72,12 +70,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "OTS (Hourly)"
+                  "Property": "OTS"
                 }
               },
-              "queryRef": "_Measures.OTS (Hourly)",
-              "nativeQueryRef": "Impressions",
-              "displayName": "Impressions"
+              "queryRef": "_Measures.OTS",
+              "nativeQueryRef": "OTS"
             }
           ]
         }
@@ -181,62 +178,6 @@
                 }
               }
             }
-          }
-        }
-      ],
-      "dataPoint": [
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#29B6E8'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Total Population (Hourly)"
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#0A7FA8'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.PaS (Hourly)"
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#003D52'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.OTS (Hourly)"
           }
         }
       ],
