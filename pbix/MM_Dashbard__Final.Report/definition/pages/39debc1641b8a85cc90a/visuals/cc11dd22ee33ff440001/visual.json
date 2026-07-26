@@ -107,21 +107,21 @@
             "centerLatitude": {
               "expr": {
                 "Literal": {
-                  "Value": "53.35124036614864D"
+                  "Value": "53.349685686851636D"
                 }
               }
             },
             "centerLongitude": {
               "expr": {
                 "Literal": {
-                  "Value": "-6.253950550256984D"
+                  "Value": "-6.254387476744974D"
                 }
               }
             },
             "zoom": {
               "expr": {
                 "Literal": {
-                  "Value": "10.51D"
+                  "Value": "10.37D"
                 }
               }
             },
@@ -176,7 +176,7 @@
             "autoStrokeColor": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
@@ -223,7 +223,7 @@
             "mapTransparency": {
               "expr": {
                 "Literal": {
-                  "Value": "33D"
+                  "Value": "0D"
                 }
               }
             },
@@ -233,69 +233,18 @@
                   "Value": "false"
                 }
               }
+            },
+            "markerRangeType": {
+              "expr": {
+                "Literal": {
+                  "Value": "'auto'"
+                }
+              }
             }
           }
         },
         {
-          "properties": {
-            "fillColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "FillRule": {
-                      "Input": {
-                        "Aggregation": {
-                          "Expression": {
-                            "Column": {
-                              "Expression": {
-                                "SourceRef": {
-                                  "Entity": "Master_Sites"
-                                }
-                              },
-                              "Property": "Latitude_loco"
-                            }
-                          },
-                          "Function": 0
-                        }
-                      },
-                      "FillRule": {
-                        "linearGradient3": {
-                          "min": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'#D6F2FA'"
-                              }
-                            }
-                          },
-                          "mid": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'#29B6E8'"
-                              }
-                            }
-                          },
-                          "max": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'#003D52'"
-                              }
-                            }
-                          },
-                          "nullColoringStrategy": {
-                            "strategy": {
-                              "Literal": {
-                                "Value": "'asZero'"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
+          "properties": {},
           "selector": {
             "data": [
               {

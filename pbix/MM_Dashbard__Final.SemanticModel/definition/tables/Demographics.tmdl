@@ -1021,6 +1021,14 @@ table Demographics
 
 		annotation SummarizationSetBy = Automatic
 
+	column SITE_ID
+		dataType: string
+		lineageTag: 502fe68a-c683-46ff-9118-d2c1458c56f1
+		summarizeBy: none
+		sourceColumn: SITE_ID
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Demographics = m
 		mode: import
 		source =

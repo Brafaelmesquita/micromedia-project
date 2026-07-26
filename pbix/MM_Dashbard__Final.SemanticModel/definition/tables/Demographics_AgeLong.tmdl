@@ -103,7 +103,7 @@ table Demographics_AgeLong
 
 		annotation SummarizationSetBy = Automatic
 
-	column HasValidSite = NOT ISBLANK ( RELATED ( Master_Sites[MM ID] ) )
+	column HasValidSite = NOT ISBLANK ( RELATED ( Master_Sites[SITE_ID] ) )
 		formatString: """TRUE"";""TRUE"";""FALSE"""
 		lineageTag: c874ac60-3d1a-4d10-8038-e18b73212278
 		summarizeBy: none
@@ -115,6 +115,14 @@ table Demographics_AgeLong
 		lineageTag: 5240f08b-e1be-461c-a367-3ad3ded7e1f7
 		summarizeBy: none
 		sourceColumn: YEAR_MONTH_KEY
+
+		annotation SummarizationSetBy = Automatic
+
+	column SITE_ID
+		dataType: string
+		lineageTag: c689ae3d-fc69-48f2-a442-52fed67e1a7a
+		summarizeBy: none
+		sourceColumn: SITE_ID
 
 		annotation SummarizationSetBy = Automatic
 

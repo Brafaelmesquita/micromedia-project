@@ -6,7 +6,7 @@
     "y": 114.0506928635815,
     "z": 14000,
     "height": 33,
-    "width": 342.15207859074451,
+    "width": 400,
     "tabOrder": 14000
   },
   "visual": {
@@ -317,5 +317,23 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "8deb2634bbb865246eab",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Header Title"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

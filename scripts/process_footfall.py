@@ -83,6 +83,17 @@ Usage
 
 Changelog
 ---------
+  v3.5.0  2026-07-26  FEATURE: canonical SITE_ID column. Micromedia is migrating
+                      screen codes from the legacy MM ID scheme to NEW MM ID, and
+                      Locomizer delivers monthly exports under either scheme. A
+                      new SITE_ID column (from scripts/site_id_crosswalk.py, built
+                      by build_master_sites.py) maps every CODE — old or new —
+                      onto one canonical key, so the Power BI join no longer drops
+                      whichever scheme a given file used. CODE is preserved as the
+                      raw as-delivered value. Codes absent from the master site
+                      list are left unmapped (SITE_ID = CODE) and logged as
+                      orphans. DOWNSTREAM NOTE: the Power BI relationship now joins
+                      Footfall.SITE_ID -> Master_Sites.SITE_ID.
   v3.4.0  2026-07-16  REFACTOR: removed the year-first output-naming logic
                       (parse_filename_period / build_output_stem / period
                       validation). Renaming is now centralised in
@@ -133,7 +144,9 @@ import glob
 
 import pandas as pd
 
-__version__ = "3.4.0"
+from site_id_crosswalk import Crosswalk
+
+__version__ = "3.5.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -144,6 +157,11 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Output format: "parquet" for Power BI, "csv" for Excel.
 OUTPUT_FORMAT = "parquet"
+
+# Canonical SITE_ID crosswalk (built by build_master_sites.py). Loaded once.
+# If the master site list is absent, SITE_ID mirrors CODE so the run still
+# succeeds — the join simply falls back to raw CODE for this file.
+CROSSWALK, CROSSWALK_MSG = Crosswalk.load_or_none()
 
 # Sentinel value used by Locomizer to flag the all-day-total row.
 # Kept for clarity in the IS_GRAND_TOTAL semantics; not used as a filter.
@@ -197,6 +215,7 @@ EXPECTED_COLUMNS = list(DTYPE_MAP.keys())
 # modality columns it derives from.
 COLS_ORDER = [
     "CODE",
+    "SITE_ID",
     "DATE", "HOUR",
     "RADIUS",
     "MOVEMENT_MODALITY", "VISITATION_MODALITY",
@@ -346,6 +365,30 @@ def add_grand_total_flag(df):
     return df
 
 
+def add_site_id(df):
+    """Stamp a canonical SITE_ID on every row via the id crosswalk.
+
+    Unmatched CODEs (screens absent from the master site list) keep SITE_ID =
+    CODE and are logged as orphans rather than dropped.
+    """
+    if CROSSWALK is None:
+        df["SITE_ID"] = df["CODE"].astype("string")
+        print(f"  [SITE_ID] SKIPPED — {CROSSWALK_MSG}")
+        return df
+
+    df["SITE_ID"], matched = CROSSWALK.resolve_ids(df["CODE"])
+    remapped = int((matched & (df["SITE_ID"] != df["CODE"].astype("string"))).sum())
+    orphan_codes = sorted(df.loc[~matched, "CODE"].dropna().unique().tolist())
+    n_screens = df["CODE"].nunique()
+    print(f"  [SITE_ID] {n_screens - len(orphan_codes)}/{n_screens} screens "
+          f"mapped to SITE_ID ({remapped:,} rows re-keyed to a NEW MM ID).")
+    if orphan_codes:
+        print(f"  [ORPHAN]  {len(orphan_codes)} CODE(s) not in master site list "
+              f"(kept as-is): {orphan_codes[:10]}"
+              + (" ..." if len(orphan_codes) > 10 else ""))
+    return df
+
+
 def apply_column_order(df, label):
     """Reorder columns to COLS_ORDER; append any unexpected extras at the end."""
     ordered  = [c for c in COLS_ORDER if c in df.columns]
@@ -462,6 +505,9 @@ for filepath in footfall_files:
     print(f"  [FLAG]   IS_GRAND_TOTAL=1 on {n_grand:,} rows "
           f"({n_grand/len(df)*100:.1f}%) — {n_grand_daily:,} daily (HOUR=25), "
           f"{n_grand_hourly:,} hourly.")
+
+    # 2e2 — Canonical SITE_ID (crosswalk old/new codes -> one key)
+    df = add_site_id(df)
 
     # 2f — Column order
     df = apply_column_order(df, "OUTPUT")

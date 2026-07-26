@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "ee3f63c1bec0cdd7184c",
   "position": {
-    "x": 23.910232849761098,
-    "y": 180,
+    "x": 18.928934339394203,
+    "y": 157.4090329275939,
     "z": 14001,
     "height": 71.730698549283289,
     "width": 196.26316130845566,
@@ -23,11 +23,11 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "MM ID"
+                  "Property": "SITE_ID"
                 }
               },
-              "queryRef": "Master_Sites.MM ID",
-              "nativeQueryRef": "MM ID",
+              "queryRef": "Master_Sites.SITE_ID",
+              "nativeQueryRef": "SITE_ID",
               "active": true
             }
           ]
@@ -176,7 +176,7 @@
       ]
     },
     "syncGroup": {
-      "groupName": "MM ID",
+      "groupName": "SITE_ID",
       "fieldChanges": true,
       "filterChanges": true
     },
@@ -193,7 +193,7 @@
                 "Entity": "Master_Sites"
               }
             },
-            "Property": "MM ID"
+            "Property": "SITE_ID"
           }
         },
         "type": "Categorical",
@@ -220,7 +220,7 @@
                                 "Source": "m"
                               }
                             },
-                            "Property": "MM ID"
+                            "Property": "SITE_ID"
                           }
                         }
                       ],

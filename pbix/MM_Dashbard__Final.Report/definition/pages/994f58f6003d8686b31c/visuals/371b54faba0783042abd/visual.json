@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "371b54faba0783042abd",
   "position": {
-    "x": 960.39435279873737,
-    "y": 180,
+    "x": 959.398093096664,
+    "y": 157.4090329275939,
     "z": 14004,
     "height": 71.730698549283289,
     "width": 224.15843296651028,
@@ -59,14 +59,14 @@
             "startDate": {
               "expr": {
                 "Literal": {
-                  "Value": "datetime'2025-11-01T00:00:00'"
+                  "Value": "datetime'2025-01-01T00:00:00'"
                 }
               }
             },
             "endDate": {
               "expr": {
                 "Literal": {
-                  "Value": "datetime'2025-11-21T00:00:00'"
+                  "Value": "datetime'2026-07-31T00:00:00'"
                 }
               }
             },
@@ -119,7 +119,7 @@
                             },
                             "Right": {
                               "Literal": {
-                                "Value": "datetime'2025-11-01T00:00:00'"
+                                "Value": "datetime'2025-01-01T00:00:00'"
                               }
                             }
                           }
@@ -139,7 +139,7 @@
                             },
                             "Right": {
                               "Literal": {
-                                "Value": "datetime'2025-11-22T00:00:00'"
+                                "Value": "datetime'2026-08-01T00:00:00'"
                               }
                             }
                           }
@@ -266,5 +266,23 @@
       "filterChanges": true
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "511d19f404e53e654499",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "Categorical"
+      }
+    ]
   }
 }

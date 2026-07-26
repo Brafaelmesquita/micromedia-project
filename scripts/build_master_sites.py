@@ -20,6 +20,17 @@ Refactor notes (v2):
   • Translated Portuguese inline comments to English.
   • Moved clean_to_int() helper function to the dedicated helpers section
     at the top of the script, consistent with process_footfall.py.
+
+Refactor notes (v3):
+  • Added canonical SITE_ID column (NEW MM ID when present, else MM ID) to
+    support Micromedia's ongoing migration from the legacy 5-digit code scheme
+    to the new scheme. Locomizer delivers monthly exports under either scheme,
+    so a fixed join key silently drops whichever scheme a file did not use.
+  • Emits data/processed/sites/site_id_crosswalk.csv mapping every historical
+    identifier (old MM ID and NEW MM ID) onto its SITE_ID. The three fact
+    pipelines consume this to stamp a SITE_ID on every row, and the Power BI
+    model now joins on SITE_ID instead of MM ID.
+  • Logic lives in the shared module scripts/site_id_crosswalk.py.
 """
 
 # %% ---------------------------------------------------------------------------
@@ -31,6 +42,8 @@ import os
 import time
 
 import pandas as pd
+
+from site_id_crosswalk import Crosswalk
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -46,6 +59,7 @@ POWERBI_CSV    = os.path.join(BASE_DIR, "..", "data", "raw", "sites", "MasterLis
 # ── Output paths ───────────────────────────────────────────────────────────────
 OUTPUT_CSV  = os.path.join(PROCESSED_SITES_DIR, "master_sites_unified.csv")
 AUDIT_PATH  = os.path.join(PROCESSED_SITES_DIR, "pbi_audit_report.xlsx")
+CROSSWALK_CSV = os.path.join(PROCESSED_SITES_DIR, "site_id_crosswalk.csv")
 
 # ── Columns to exclude from the Locomizer sheet before merging ────────────────
 # These are either redundant with master columns or explicitly excluded.
@@ -69,6 +83,7 @@ FLAG_COLS = ["is_active", "PROOH", "On-Trade", "Alcohol App.", "Diageo - Approve
 # ── Logical column order for the final unified output ─────────────────────────
 COLS_ORDER = [
     # -- Identifiers --
+    "SITE_ID",
     "MM ID",
     "NEW MM ID",
     "Xibo ID_loco",
@@ -449,6 +464,43 @@ print(f"{'='*62}\n")
 
 
 # %% ---------------------------------------------------------------------------
+# Step 8.5 — Canonical SITE_ID + crosswalk export
+# ---------------------------------------------------------------------------
+# Micromedia is migrating screen codes from the legacy MM ID scheme to NEW MM ID.
+# Define one canonical key per screen (NEW MM ID when present, else MM ID) and
+# emit a crosswalk mapping BOTH historical identifiers onto it. The three fact
+# pipelines consume the crosswalk so their rows join regardless of which scheme
+# a given monthly export used.
+
+print(f"{'='*20} CANONICAL SITE_ID + CROSSWALK {'='*20}")
+
+crosswalk = Crosswalk.from_master(base)
+
+def _canonical_site_id(row):
+    new = str(row.get("NEW MM ID")).strip()
+    mm  = str(row.get("MM ID")).strip()
+    new = "" if new.lower() in ("nan", "none", "<na>", "") else (new[:-2] if new.endswith(".0") else new)
+    mm  = "" if mm.lower() in ("nan", "none", "<na>", "") else (mm[:-2] if mm.endswith(".0") else mm)
+    return new if new else mm
+
+base["SITE_ID"] = base.apply(_canonical_site_id, axis=1).replace("", pd.NA).astype("string")
+
+n_new = int((base["SITE_ID"] == base["NEW MM ID"].astype("string")).sum())
+n_missing = int(base["SITE_ID"].isna().sum())
+print(f"[SITE_ID] Assigned to {base['SITE_ID'].notna().sum()} screens "
+      f"({base['SITE_ID'].nunique()} unique).")
+print(f"          {n_new} use NEW MM ID; the rest fall back to MM ID.")
+if n_missing:
+    print(f"[WARN]    {n_missing} screen(s) have neither MM ID nor NEW MM ID.")
+
+crosswalk_df = crosswalk.to_frame()
+crosswalk_df.to_csv(CROSSWALK_CSV, index=False)
+print(f"[EXPORT]  Crosswalk ({len(crosswalk_df)} id mappings) -> "
+      f"{os.path.basename(CROSSWALK_CSV)}")
+print(f"{'='*60}\n")
+
+
+# %% ---------------------------------------------------------------------------
 # Step 9 — Column ordering
 # ---------------------------------------------------------------------------
 # Reorder columns into a logical thematic layout using the finalised column names.
@@ -495,6 +547,35 @@ for col in FLAG_COLS:
 print(f"\n{'='*20} FLAG COLUMN NORMALISATION {'='*20}")
 for col in FLAG_COLS:
     base = clean_to_int(base, col)
+print(f"{'='*60}\n")
+
+
+# %% ---------------------------------------------------------------------------
+# Step 10b — Geospatial / numeric column sanitisation
+# ---------------------------------------------------------------------------
+# Latitude, Longitude and azimuth are loaded into Power BI as `type number`.
+# Locomizer occasionally ships placeholder text in these cells (e.g. "N/A",
+# "TBC", stray whitespace) instead of a blank. Power BI's type conversion then
+# throws a load error on that single cell (observed: Custom ID 50362 azimuth =
+# "N/A "). Coerce these columns to numeric so any non-numeric placeholder
+# becomes a proper null (blank in the CSV) and loads cleanly.
+
+GEO_NUMERIC_COLS = ["Latitude_loco", "Longitude_loco", "azimuth_loco"]
+
+print(f"{'='*20} GEO / NUMERIC SANITISATION {'='*20}")
+for col in GEO_NUMERIC_COLS:
+    if col not in base.columns:
+        print(f"[SKIP] Column '{col}' not found.")
+        continue
+    before_bad = pd.to_numeric(base[col], errors="coerce").isna() & base[col].notna() & \
+                 (base[col].astype(str).str.strip() != "")
+    n_bad = int(before_bad.sum())
+    if n_bad:
+        offenders = base.loc[before_bad, ["MM ID", "Display Name", col]]
+        for _, r in offenders.iterrows():
+            print(f"[FIX]  {col}: MM ID {r['MM ID']} '{r['Display Name']}' had {r[col]!r} -> null")
+    base[col] = pd.to_numeric(base[col], errors="coerce")
+    print(f"[NUM]  {col:.<18} | coerced {n_bad} non-numeric cell(s) to null")
 print(f"{'='*60}\n")
 
 

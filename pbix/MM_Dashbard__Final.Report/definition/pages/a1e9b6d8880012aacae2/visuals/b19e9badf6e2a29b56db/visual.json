@@ -599,7 +599,7 @@
                 "Entity": "Master_Sites"
               }
             },
-            "Property": "MM ID"
+            "Property": "SITE_ID"
           }
         },
         "type": "Categorical",
