@@ -828,6 +828,11 @@ table _Measures
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	measure 'Capture Rate' = DIVIDE ( [OTS], [Total Population] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: KPIs\Rates
+		lineageTag: 1a1ff569-cf23-4f8d-b461-43c874f3ec7a
+
 	partition _Measures = m
 		mode: import
 		source =

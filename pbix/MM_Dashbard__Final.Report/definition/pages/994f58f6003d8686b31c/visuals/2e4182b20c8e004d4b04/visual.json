@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "2e4182b20c8e004d4b04",
   "position": {
-    "x": 23.910232849761098,
-    "y": 367.61983006507688,
+    "x": 23.511615343057809,
+    "y": 367.88762830902215,
     "z": 3000,
-    "height": 339.72455840702224,
-    "width": 550.93161524657864,
+    "height": 340.22690437601295,
+    "width": 542.15018908698,
     "tabOrder": 3000
   },
   "visual": {
@@ -270,5 +270,65 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "78c9b6524b001cac132d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Calendar"
+              }
+            },
+            "Property": "Date"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "487f128215478a1e2721",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Total Population"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "3cb3cf0b349dabd4b350",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "PaS"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "f1e309e890235b080cd9",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "OTS"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }

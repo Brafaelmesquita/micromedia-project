@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "b58411edc06a4aa6c79e",
   "position": {
-    "x": 584.80444511707344,
-    "y": 367.61983006507688,
+    "x": 576.72609400324154,
+    "y": 367.88762830902215,
     "z": 5000,
-    "height": 339.72455840702224,
-    "width": 670.48277949538408,
+    "height": 340.22690437601295,
+    "width": 692.90113452188007,
     "tabOrder": 7000
   },
   "visual": {
@@ -78,6 +78,20 @@
               "queryRef": "_Measures.OTS",
               "nativeQueryRef": "Exposure",
               "displayName": "Exposure"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Capture Rate"
+                }
+              },
+              "queryRef": "_Measures.Capture Rate",
+              "nativeQueryRef": "Capture Rate"
             }
           ]
         }
@@ -143,6 +157,17 @@
           },
           "selector": {
             "id": "Row"
+          }
+        },
+        {
+          "properties": {
+            "rowSubtotals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
           }
         }
       ],
@@ -322,6 +347,62 @@
             }
           ]
         }
+      },
+      {
+        "name": "8f6f64084a892b980bde",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Total Population"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "cc9a4ba9d9a3bed1730d",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "PaS"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "1dbb88372bcb5423d569",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "OTS"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "129d0ce24b0a407a9684",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Measures"
+              }
+            },
+            "Property": "Capture Rate"
+          }
+        },
+        "type": "Advanced"
       }
     ]
   }
