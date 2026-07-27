@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "b58411edc06a4aa6c79e",
   "position": {
     "x": 576.72609400324154,
@@ -347,62 +347,6 @@
             }
           ]
         }
-      },
-      {
-        "name": "8f6f64084a892b980bde",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Total Population"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "cc9a4ba9d9a3bed1730d",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "PaS"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "1dbb88372bcb5423d569",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "OTS"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "129d0ce24b0a407a9684",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Measures"
-              }
-            },
-            "Property": "Capture Rate"
-          }
-        },
-        "type": "Advanced"
       }
     ]
   }

@@ -42,32 +42,14 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Age Audience (Hourly)"
+                  "Property": "Weighted Age Reach %"
                 }
               },
-              "queryRef": "_Measures.Age Audience (Hourly)",
-              "nativeQueryRef": "Age Audience (Hourly)"
+              "queryRef": "_Measures.Weighted Age Reach %",
+              "nativeQueryRef": "Weighted Age Reach %"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Demographics_AgeLong"
-                  }
-                },
-                "Property": "AGE_BRACKET"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {

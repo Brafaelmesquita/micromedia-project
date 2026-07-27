@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "cc11dd22ee33ff440002",
   "position": {
     "x": 544.72758472758471,
@@ -42,11 +42,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Age Audience (Hourly)"
+                  "Property": "Weighted Gender %"
                 }
               },
-              "queryRef": "_Measures.Age Audience (Hourly)",
-              "nativeQueryRef": "Age Audience (Hourly)"
+              "queryRef": "_Measures.Weighted Gender %",
+              "nativeQueryRef": "Weighted Gender %"
             }
           ]
         }
@@ -61,7 +61,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Age Audience (Hourly)"
+                "Property": "Weighted Gender %"
               }
             },
             "direction": "Descending"

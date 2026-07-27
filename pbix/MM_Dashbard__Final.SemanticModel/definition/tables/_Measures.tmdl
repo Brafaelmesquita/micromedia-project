@@ -833,6 +833,23 @@ table _Measures
 		displayFolder: KPIs\Rates
 		lineageTag: 1a1ff569-cf23-4f8d-b461-43c874f3ec7a
 
+	measure 'Weighted Age Reach %' = ```
+			
+			        DIVIDE ( [Age Audience (Hourly)], CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong ) ) ) * 100
+			```
+		displayFolder: Age&Gender
+		lineageTag: 7cde8d39-3d5f-412d-b7bc-9aa8c6eda28a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Weighted Gender %' = ```
+			
+			        DIVIDE ( [Age Audience (Hourly)], CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong ) ) ) * 100
+			```
+		lineageTag: f92343d8-47ba-4341-aa74-965a83fe0761
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
 	partition _Measures = m
 		mode: import
 		source =
