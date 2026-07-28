@@ -6,7 +6,7 @@
     "y": 157.4090329275939,
     "z": 4000,
     "height": 528.01764209889086,
-    "width": 1010.2073379024064,
+    "width": 888.66365424945411,
     "tabOrder": 4000
   },
   "visual": {
@@ -43,7 +43,7 @@
               },
               "queryRef": "dim_Hour.HourLabel",
               "nativeQueryRef": "HourLabel",
-              "active": true
+              "active": false
             }
           ]
         },
@@ -206,16 +206,16 @@
         "sort": [
           {
             "field": {
-              "Column": {
+              "Measure": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "Master_Sites"
+                    "Entity": "_Measures"
                   }
                 },
-                "Property": "Site Label"
+                "Property": "65+ (disp)"
               }
             },
-            "direction": "Ascending"
+            "direction": "Descending"
           }
         ]
       }
@@ -253,30 +253,7 @@
             "isPinned": true
           }
         ],
-        "root": {
-          "children": [
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'10079 - On Street @ Middle Abbey st.'"
-                  }
-                }
-              ],
-              "isToggled": true
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'10001 - Tower Records - Dawson Street'"
-                  }
-                }
-              ],
-              "isToggled": true
-            }
-          ]
-        }
+        "root": {}
       }
     ],
     "objects": {
@@ -1048,7 +1025,7 @@
             "value": {
               "expr": {
                 "Literal": {
-                  "Value": "360.59222354703155D"
+                  "Value": "286.78766351879034D"
                 }
               }
             }

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "0f04efeb03db02837924",
+  "name": "372e83555257465715d2",
   "position": {
-    "x": 523,
-    "y": 167,
-    "z": 8000,
-    "height": 85,
-    "width": 153,
-    "tabOrder": 8000
+    "x": 1143.7061379802392,
+    "y": 335.73951959872875,
+    "z": 10002,
+    "height": 85.6783343783106,
+    "width": 126.52498216331914,
+    "tabOrder": 10002
   },
   "visual": {
     "visualType": "slicer",
@@ -23,11 +23,11 @@
                       "Entity": "Demographics_AgeLong"
                     }
                   },
-                  "Property": "AGE_BRACKET"
+                  "Property": "Gender Label"
                 }
               },
-              "queryRef": "Demographics_AgeLong.AGE_BRACKET",
-              "nativeQueryRef": "AGE_BRACKET",
+              "queryRef": "Demographics_AgeLong.Gender Label",
+              "nativeQueryRef": "Gender Label",
               "active": true
             }
           ]
@@ -57,7 +57,53 @@
       ],
       "general": [
         {
-          "properties": {}
+          "properties": {
+            "filter": {
+              "filter": {
+                "Version": 2,
+                "From": [
+                  {
+                    "Name": "d",
+                    "Entity": "Demographics_AgeLong",
+                    "Type": 0
+                  }
+                ],
+                "Where": [
+                  {
+                    "Condition": {
+                      "Not": {
+                        "Expression": {
+                          "In": {
+                            "Expressions": [
+                              {
+                                "Column": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Source": "d"
+                                    }
+                                  },
+                                  "Property": "Gender Label"
+                                }
+                              }
+                            ],
+                            "Values": [
+                              [
+                                {
+                                  "Literal": {
+                                    "Value": "'Female'"
+                                  }
+                                }
+                              ]
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
         }
       ],
       "header": [
@@ -98,10 +144,24 @@
                 }
               }
             },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Gender'"
+                }
+              }
+            },
             "fontFamily": {
               "expr": {
                 "Literal": {
                   "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
@@ -113,20 +173,6 @@
                       "Value": "'#23B5E8'"
                     }
                   }
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Age Bracket'"
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
                 }
               }
             }
@@ -153,6 +199,11 @@
           }
         }
       ]
+    },
+    "syncGroup": {
+      "groupName": "Gender Label",
+      "fieldChanges": true,
+      "filterChanges": true
     },
     "drillFilterOtherVisuals": true
   }

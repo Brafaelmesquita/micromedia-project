@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "a9019336da888ca2ca11",
   "position": {
-    "x": 710,
-    "y": 167,
+    "x": 7.6876876876876876,
+    "y": 157.04847704847705,
     "z": 3000,
-    "height": 540,
-    "width": 558,
+    "height": 550.21879021879022,
+    "width": 1259.6825396825398,
     "tabOrder": 3000
   },
   "visual": {
@@ -23,11 +23,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Total Population (Hourly)"
+                  "Property": "Total Population"
                 }
               },
-              "queryRef": "_Measures.Total Population (Hourly)",
-              "nativeQueryRef": "Total Population (Hourly)"
+              "queryRef": "_Measures.Total Population",
+              "nativeQueryRef": "Total Population"
             }
           ]
         },
@@ -107,21 +107,21 @@
             "centerLatitude": {
               "expr": {
                 "Literal": {
-                  "Value": "53.34961631001927D"
+                  "Value": "53.34899174353643D"
                 }
               }
             },
             "centerLongitude": {
               "expr": {
                 "Literal": {
-                  "Value": "-6.255722480189226D"
+                  "Value": "-6.264396146010995D"
                 }
               }
             },
             "zoom": {
               "expr": {
                 "Literal": {
-                  "Value": "12.34D"
+                  "Value": "12.49D"
                 }
               }
             },
