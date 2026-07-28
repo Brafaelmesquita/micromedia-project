@@ -150,23 +150,35 @@ table _Measures
 		lineageTag: c8f94d63-c789-4916-988f-920de6bb2f16
 
 	measure 'Age Audience (Hourly)' =
-			
+			VAR _mv = SELECTEDVALUE ( 'Demo Movement'[MovementKey], "All" )
+			RETURN
 			SUMX (
-			    FILTER ( Demographics_AgeLong, Demographics_AgeLong[MOVEMENT_MODALITY] = "All" ),
+			    FILTER ( Demographics_AgeLong, Demographics_AgeLong[MOVEMENT_MODALITY] = _mv ),
 			    VAR _code = Demographics_AgeLong[SITE_ID]
 			    VAR _ym   = Demographics_AgeLong[YEAR_MONTH]
 			    VAR _hr   = Demographics_AgeLong[HOUR]
 			    VAR _pct  = DIVIDE ( Demographics_AgeLong[REACH_PCT], 100 )
-			    RETURN
-			        _pct *
+			    VAR _tot  =
 			        CALCULATE (
 			            SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
-			            Footfall[SITE_ID]           = _code,
-			            Footfall[YEAR_MONTH]     = _ym,
-			            Footfall[HOUR]           = _hr,
-			            Footfall[IS_GRAND_TOTAL] = 1,
-			            Footfall[HasValidSite] = TRUE ()
+			            Footfall[SITE_ID] = _code, Footfall[YEAR_MONTH] = _ym, Footfall[HOUR] = _hr,
+			            Footfall[IS_GRAND_TOTAL] = 1, Footfall[HasValidSite] = TRUE ()
 			        )
+			    VAR _ped =
+			        CALCULATE (
+			            SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			            Footfall[SITE_ID] = _code, Footfall[YEAR_MONTH] = _ym, Footfall[HOUR] = _hr,
+			            Footfall[IS_GRAND_TOTAL] = 0, Footfall[VISITATION_MODALITY] = "All", Footfall[Movement Group] = "Pedestrians"
+			        )
+			    VAR _non =
+			        CALCULATE (
+			            SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			            Footfall[SITE_ID] = _code, Footfall[YEAR_MONTH] = _ym, Footfall[HOUR] = _hr,
+			            Footfall[IS_GRAND_TOTAL] = 0, Footfall[VISITATION_MODALITY] = "All", Footfall[Movement Group] = "Non_Pedestrians"
+			        )
+			    VAR _sh  = DIVIDE ( _ped, _ped + _non )
+			    VAR _pop = SWITCH ( _mv, "Pedestrians", _tot * _sh, "Non_Pedestrians", _tot * ( 1 - _sh ), _tot )
+			    RETURN _pct * _pop
 			)
 		formatString: #,0
 		displayFolder: Age&Gender
@@ -849,6 +861,181 @@ table _Measures
 		lineageTag: f92343d8-47ba-4341-aa74-965a83fe0761
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Population (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			RETURN
+			IF (
+			    _mode = "Share of audience (%)",
+			    DIVIDE ( [Movement Population (Hourly)], CALCULATE ( [Movement Population (Hourly)], REMOVEFILTERS ( Master_Sites ) ) ),
+			    [Movement Population (Hourly)]
+			)
+		displayFolder: Age&Gender\Display
+		lineageTag: 3f71c65c-77b0-4c00-ba7f-97c51e4d173a
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure 'Male (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [Male #], _tot ), [Male #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: e98ceebe-adbb-4c3f-a4de-9524ba0ab3aa
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure 'Female (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [Female #], _tot ), [Female #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: bb9966c6-a824-47b2-acc0-ab41aa453353
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure 'Under 18 (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [Under 18 #], _tot ), [Under 18 #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: ba720511-0477-4093-b411-2a6c8ffe5949
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure '18-24 (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [18-24 #], _tot ), [18-24 #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: 5f691161-e370-4691-9cd8-e19cfb7d1f6e
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure '25-34 (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [25-34 #], _tot ), [25-34 #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: 2e20687d-aab8-451f-831c-3011ac4b8f83
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure '35-44 (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [35-44 #], _tot ), [35-44 #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: d86d02b0-f1a9-4b52-b4ae-2f990e54aa64
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure '45-54 (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [45-54 #], _tot ), [45-54 #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: 844dd8b0-13de-456f-b5f4-2b28e60dbd0b
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure '55-64 (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [55-64 #], _tot ), [55-64 #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: 26bce3f6-0903-4e8a-9be1-df67823d986a
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure '65+ (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [65+ #], _tot ), [65+ #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: 3cad8e8b-849f-4e87-aa97-d8e51d310d4f
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure 'Movement Population (Hourly)' =
+			VAR _mv = SELECTEDVALUE ( 'Demo Movement'[MovementKey], "All" )
+			RETURN
+			IF (
+			    _mv = "All",
+			    [Total Population (Hourly)],
+			    SUMX (
+			        SUMMARIZE (
+			            FILTER ( Footfall, Footfall[IS_GRAND_TOTAL] = 1 && Footfall[HOUR] <> 25 && Footfall[HasValidSite] = TRUE () ),
+			            Footfall[SITE_ID], Footfall[YEAR_MONTH], Footfall[HOUR]
+			        ),
+			        VAR _tot = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 1 )
+			        VAR _ped = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 0, Footfall[VISITATION_MODALITY] = "All", Footfall[Movement Group] = "Pedestrians" )
+			        VAR _non = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 0, Footfall[VISITATION_MODALITY] = "All", Footfall[Movement Group] = "Non_Pedestrians" )
+			        VAR _sh  = DIVIDE ( _ped, _ped + _non )
+			        RETURN _tot * IF ( _mv = "Pedestrians", _sh, 1 - _sh )
+			    )
+			)
+		formatString: #,0
+		displayFolder: Age&Gender\Display
+		lineageTag: 28d0e1ec-141b-45c9-b862-e441ab6336a1
 
 	partition _Measures = m
 		mode: import

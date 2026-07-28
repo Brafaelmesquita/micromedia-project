@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "c122c62215ab2a266011",
   "position": {
-    "x": 35.200831130735033,
-    "y": 162,
+    "x": 22.913973147687717,
+    "y": 157.4090329275939,
     "z": 4000,
-    "height": 528,
-    "width": 1010,
+    "height": 528.01764209889086,
+    "width": 1010.2073379024064,
     "tabOrder": 4000
   },
   "visual": {
@@ -43,7 +43,7 @@
               },
               "queryRef": "dim_Hour.HourLabel",
               "nativeQueryRef": "HourLabel",
-              "active": false
+              "active": true
             }
           ]
         },
@@ -57,12 +57,12 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Total Population (Hourly)"
+                  "Property": "Population (disp)"
                 }
               },
-              "queryRef": "_Measures.Total Population (Hourly)",
-              "nativeQueryRef": "Total Population",
-              "displayName": "Total Population"
+              "queryRef": "_Measures.Population (disp)",
+              "nativeQueryRef": "Population",
+              "displayName": "Population"
             },
             {
               "field": {
@@ -72,10 +72,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Male #"
+                  "Property": "Male (disp)"
                 }
               },
-              "queryRef": "_Measures.Male #",
+              "queryRef": "_Measures.Male (disp)",
               "nativeQueryRef": "Male",
               "displayName": "Male"
             },
@@ -87,10 +87,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Female #"
+                  "Property": "Female (disp)"
                 }
               },
-              "queryRef": "_Measures.Female #",
+              "queryRef": "_Measures.Female (disp)",
               "nativeQueryRef": "Female",
               "displayName": "Female"
             },
@@ -102,10 +102,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Under 18 #"
+                  "Property": "Under 18 (disp)"
                 }
               },
-              "queryRef": "_Measures.Under 18 #",
+              "queryRef": "_Measures.Under 18 (disp)",
               "nativeQueryRef": "Under 18",
               "displayName": "Under 18"
             },
@@ -117,10 +117,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "18-24 #"
+                  "Property": "18-24 (disp)"
                 }
               },
-              "queryRef": "_Measures.18-24 #",
+              "queryRef": "_Measures.18-24 (disp)",
               "nativeQueryRef": "18-24",
               "displayName": "18-24"
             },
@@ -132,10 +132,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "25-34 #"
+                  "Property": "25-34 (disp)"
                 }
               },
-              "queryRef": "_Measures.25-34 #",
+              "queryRef": "_Measures.25-34 (disp)",
               "nativeQueryRef": "25-34",
               "displayName": "25-34"
             },
@@ -147,10 +147,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "35-44 #"
+                  "Property": "35-44 (disp)"
                 }
               },
-              "queryRef": "_Measures.35-44 #",
+              "queryRef": "_Measures.35-44 (disp)",
               "nativeQueryRef": "35-44",
               "displayName": "35-44"
             },
@@ -162,10 +162,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "45-54 #"
+                  "Property": "45-54 (disp)"
                 }
               },
-              "queryRef": "_Measures.45-54 #",
+              "queryRef": "_Measures.45-54 (disp)",
               "nativeQueryRef": "45-54",
               "displayName": "45-54"
             },
@@ -177,10 +177,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "55-64 #"
+                  "Property": "55-64 (disp)"
                 }
               },
-              "queryRef": "_Measures.55-64 #",
+              "queryRef": "_Measures.55-64 (disp)",
               "nativeQueryRef": "55-64",
               "displayName": "55-64"
             },
@@ -192,10 +192,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "65+ #"
+                  "Property": "65+ (disp)"
                 }
               },
-              "queryRef": "_Measures.65+ #",
+              "queryRef": "_Measures.65+ (disp)",
               "nativeQueryRef": "65+",
               "displayName": "65+"
             }
@@ -209,10 +209,10 @@
               "Column": {
                 "Expression": {
                   "SourceRef": {
-                    "Entity": "dim_Hour"
+                    "Entity": "Master_Sites"
                   }
                 },
-                "Property": "HourLabel"
+                "Property": "Site Label"
               }
             },
             "direction": "Ascending"
@@ -253,7 +253,30 @@
             "isPinned": true
           }
         ],
-        "root": {}
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'10079 - On Street @ Middle Abbey st.'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'10001 - Tower Records - Dawson Street'"
+                  }
+                }
+              ],
+              "isToggled": true
+            }
+          ]
+        }
       }
     ],
     "objects": {
@@ -305,7 +328,7 @@
                               "Entity": "_Measures"
                             }
                           },
-                          "Property": "Male #"
+                          "Property": "Male (disp)"
                         }
                       },
                       "FillRule": {
@@ -354,7 +377,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.Male #"
+            "metadata": "_Measures.Male (disp)"
           }
         },
         {
@@ -371,7 +394,7 @@
                               "Entity": "_Measures"
                             }
                           },
-                          "Property": "Female #"
+                          "Property": "Female (disp)"
                         }
                       },
                       "FillRule": {
@@ -420,7 +443,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.Female #"
+            "metadata": "_Measures.Female (disp)"
           }
         },
         {
@@ -437,7 +460,7 @@
                               "Entity": "_Measures"
                             }
                           },
-                          "Property": "Under 18 #"
+                          "Property": "Under 18 (disp)"
                         }
                       },
                       "FillRule": {
@@ -486,7 +509,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.Under 18 #"
+            "metadata": "_Measures.Under 18 (disp)"
           }
         },
         {
@@ -503,7 +526,7 @@
                               "Entity": "_Measures"
                             }
                           },
-                          "Property": "18-24 #"
+                          "Property": "18-24 (disp)"
                         }
                       },
                       "FillRule": {
@@ -552,7 +575,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.18-24 #"
+            "metadata": "_Measures.18-24 (disp)"
           }
         },
         {
@@ -569,7 +592,7 @@
                               "Entity": "_Measures"
                             }
                           },
-                          "Property": "35-44 #"
+                          "Property": "35-44 (disp)"
                         }
                       },
                       "FillRule": {
@@ -618,7 +641,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.35-44 #"
+            "metadata": "_Measures.35-44 (disp)"
           }
         },
         {
@@ -635,7 +658,7 @@
                               "Entity": "_Measures"
                             }
                           },
-                          "Property": "25-34 #"
+                          "Property": "25-34 (disp)"
                         }
                       },
                       "FillRule": {
@@ -684,7 +707,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.25-34 #"
+            "metadata": "_Measures.25-34 (disp)"
           }
         },
         {
@@ -701,7 +724,7 @@
                               "Entity": "_Measures"
                             }
                           },
-                          "Property": "45-54 #"
+                          "Property": "45-54 (disp)"
                         }
                       },
                       "FillRule": {
@@ -750,7 +773,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.45-54 #"
+            "metadata": "_Measures.45-54 (disp)"
           }
         },
         {
@@ -767,73 +790,7 @@
                               "Entity": "_Measures"
                             }
                           },
-                          "Property": "55-64 #"
-                        }
-                      },
-                      "FillRule": {
-                        "linearGradient3": {
-                          "min": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'#D6F2FA'"
-                              }
-                            }
-                          },
-                          "mid": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'#A8E4F5'"
-                              }
-                            }
-                          },
-                          "max": {
-                            "color": {
-                              "Literal": {
-                                "Value": "'#29B6E8'"
-                              }
-                            }
-                          },
-                          "nullColoringStrategy": {
-                            "strategy": {
-                              "Literal": {
-                                "Value": "'asZero'"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "data": [
-              {
-                "dataViewWildcard": {
-                  "matchingOption": 1
-                }
-              }
-            ],
-            "metadata": "_Measures.55-64 #"
-          }
-        },
-        {
-          "properties": {
-            "backColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "FillRule": {
-                      "Input": {
-                        "Measure": {
-                          "Expression": {
-                            "SourceRef": {
-                              "Entity": "_Measures"
-                            }
-                          },
-                          "Property": "65+ #"
+                          "Property": "55-64 (disp)"
                         }
                       },
                       "FillRule": {
@@ -882,7 +839,73 @@
                 }
               }
             ],
-            "metadata": "_Measures.65+ #"
+            "metadata": "_Measures.55-64 (disp)"
+          }
+        },
+        {
+          "properties": {
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "FillRule": {
+                      "Input": {
+                        "Measure": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "_Measures"
+                            }
+                          },
+                          "Property": "65+ (disp)"
+                        }
+                      },
+                      "FillRule": {
+                        "linearGradient3": {
+                          "min": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#D6F2FA'"
+                              }
+                            }
+                          },
+                          "mid": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#A8E4F5'"
+                              }
+                            }
+                          },
+                          "max": {
+                            "color": {
+                              "Literal": {
+                                "Value": "'#29B6E8'"
+                              }
+                            }
+                          },
+                          "nullColoringStrategy": {
+                            "strategy": {
+                              "Literal": {
+                                "Value": "'asZero'"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "dataViewWildcard": {
+                  "matchingOption": 1
+                }
+              }
+            ],
+            "metadata": "_Measures.65+ (disp)"
           }
         },
         {
@@ -895,7 +918,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.Total Population (Hourly)"
+            "metadata": "_Measures.Population (disp)"
           }
         },
         {
@@ -1016,6 +1039,22 @@
                 }
               }
             }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "360.59222354703155D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Master_Sites.Site Label"
           }
         }
       ]

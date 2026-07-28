@@ -1,0 +1,34 @@
+table 'Display Mode'
+	lineageTag: e3f56d19-04a9-4cf0-990e-6f9a712c5b3d
+
+	column 'Display Mode'
+		lineageTag: b335ac09-2873-402d-817f-9840a0fe5f61
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Display Mode]
+		sortByColumn: Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort
+		formatString: 0
+		lineageTag: e144b0c0-7cb6-4a9c-89e6-6ebe26236266
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sort]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Display Mode' = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Display Mode", STRING, "Sort", INTEGER,
+				    {
+				        { "Audience (count)", 1 },
+				        { "Share of audience (%)", 2 }
+				    }
+				)
+
+	annotation PBI_Id = 2396b774d7bf4803915c27c909079627
+
