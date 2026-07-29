@@ -3,9 +3,9 @@
   "name": "0a42a81ca2a603a4e502",
   "position": {
     "x": 0,
-    "y": 33.333333333333336,
+    "y": 40,
     "z": 0,
-    "height": 176,
+    "height": 150,
     "width": 320,
     "tabOrder": 0
   },
@@ -433,7 +433,7 @@
             "innerRadiusRatio": {
               "expr": {
                 "Literal": {
-                  "Value": "85L"
+                  "Value": "72L"
                 }
               }
             }
@@ -527,6 +527,19 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "lockAspect": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

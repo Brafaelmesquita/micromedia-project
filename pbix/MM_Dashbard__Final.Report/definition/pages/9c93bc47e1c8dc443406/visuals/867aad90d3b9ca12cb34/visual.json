@@ -2,12 +2,12 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "867aad90d3b9ca12cb34",
   "position": {
-    "x": 239,
-    "y": 1,
+    "x": 224,
+    "y": 3,
     "z": 6000,
-    "height": 33,
-    "width": 81,
-    "tabOrder": 2000
+    "height": 30,
+    "width": 88,
+    "tabOrder": 6000
   },
   "visual": {
     "visualType": "cardVisual",
@@ -79,7 +79,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -111,14 +111,32 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
+                  "Value": "10D"
+                }
+              }
+            },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#29B6E8'"
+                    }
+                  }
                 }
               }
             },
             "horizontalAlignment": {
               "expr": {
                 "Literal": {
-                  "Value": "'center'"
+                  "Value": "'right'"
                 }
               }
             }
@@ -176,6 +194,18 @@
                   "Value": "100D"
                 }
               }
+            },
+            "backgroundFillColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
             }
           },
           "selector": {
@@ -186,10 +216,55 @@
       "fillCustom": [
         {
           "properties": {
+            "fillColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#000000'"
+                    }
+                  }
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "transparency": {
               "expr": {
                 "Literal": {
-                  "Value": "100D"
+                  "Value": "0D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "id": "default"
+          }
+        },
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "accentBar": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -214,21 +289,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Total Footfall'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "'POPULATION'"
                 }
               }
             },
@@ -237,7 +298,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#23B5E8'"
+                      "Value": "'#888888'"
                     }
                   }
                 }
@@ -250,10 +311,29 @@
                 }
               }
             },
+            "bold": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
             "alignment": {
               "expr": {
                 "Literal": {
                   "Value": "'center'"
+                }
+              }
+            },
+            "background": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 1,
+                      "Percent": 0
+                    }
+                  }
                 }
               }
             }
@@ -279,14 +359,14 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
             "radius": {
               "expr": {
                 "Literal": {
-                  "Value": "10D"
+                  "Value": "8D"
                 }
               }
             }

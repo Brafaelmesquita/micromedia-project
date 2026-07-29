@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "38348a75dbeebb92ab38",
+  "name": "c2d1e2c1a2b3c4d5e6f7",
   "position": {
-    "x": 8,
-    "y": 3,
-    "z": 2000,
-    "height": 16,
-    "width": 200,
-    "tabOrder": 2000
+    "x": 64,
+    "y": 21,
+    "z": 7001,
+    "height": 13,
+    "width": 58,
+    "tabOrder": 7001
   },
   "visual": {
     "visualType": "cardVisual",
@@ -25,14 +25,14 @@
                           "Entity": "Master_Sites"
                         }
                       },
-                      "Property": "Display Name"
+                      "Property": "County"
                     }
                   },
                   "Function": 3
                 }
               },
-              "queryRef": "Min(Master_Sites.Display Name)",
-              "nativeQueryRef": "First Display Name"
+              "queryRef": "Min(Master_Sites.County)",
+              "nativeQueryRef": "First County"
             }
           ]
         }
@@ -101,7 +101,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "9D"
                 }
               }
             },
@@ -109,13 +109,6 @@
               "expr": {
                 "Literal": {
                   "Value": "'left'"
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
                 }
               }
             }

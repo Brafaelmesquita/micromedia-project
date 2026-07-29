@@ -3,9 +3,9 @@
   "name": "4078ca8b16cb3090a9d9",
   "position": {
     "x": 0,
-    "y": 178.66666666666666,
+    "y": 192,
     "z": 1000,
-    "height": 61.333333333333336,
+    "height": 46,
     "width": 320,
     "tabOrder": 1000
   },
@@ -73,13 +73,6 @@
       "labels": [
         {
           "properties": {
-            "labelDisplayUnits": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
             "show": {
               "expr": {
                 "Literal": {
@@ -87,70 +80,10 @@
                 }
               }
             },
-            "enableValueDataLabel": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
             "labelPosition": {
               "expr": {
                 "Literal": {
                   "Value": "'InsideCenter'"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "detailLabelPrecision": {
-              "expr": {
-                "Literal": {
-                  "Value": "0L"
-                }
-              }
-            },
-            "enableDetailDataLabel": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "detailFontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
-            }
-          }
-        },
-        {
-          "properties": {
-            "labelPosition": {
-              "expr": {
-                "Literal": {
-                  "Value": "'InsideCenter'"
-                }
-              }
-            },
-            "enableTitleDataLabel": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "enableValueDataLabel": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
                 }
               }
             },
@@ -161,89 +94,10 @@
                 }
               }
             },
-            "labelOverflow": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "optimizeLabelDisplay": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "labelContainerMaxWidth": {
-              "expr": {
-                "Literal": {
-                  "Value": "50D"
-                }
-              }
-            },
             "enableDetailDataLabel": {
               "expr": {
                 "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "detailBold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          },
-          "selector": {
-            "data": [
-              {
-                "scopeId": {
-                  "Comparison": {
-                    "ComparisonKind": 0,
-                    "Left": {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Entity": "Demographics_AgeLong"
-                          }
-                        },
-                        "Property": "Gender Label"
-                      }
-                    },
-                    "Right": {
-                      "Literal": {
-                        "Value": "'Female'"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        },
-        {
-          "properties": {
-            "labelPosition": {
-              "expr": {
-                "Literal": {
-                  "Value": "'InsideCenter'"
-                }
-              }
-            },
-            "enableValueDataLabel": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "labelContentLayout": {
-              "expr": {
-                "Literal": {
-                  "Value": "'SingleLine'"
                 }
               }
             },
@@ -254,10 +108,24 @@
                 }
               }
             },
-            "enableTitleDataLabel": {
+            "labelContentLayout": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'SingleLine'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "detailFontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
                 }
               }
             },
@@ -268,80 +136,12 @@
                 }
               }
             }
-          },
-          "selector": {
-            "data": [
-              {
-                "scopeId": {
-                  "Comparison": {
-                    "ComparisonKind": 0,
-                    "Left": {
-                      "Column": {
-                        "Expression": {
-                          "SourceRef": {
-                            "Entity": "Demographics_AgeLong"
-                          }
-                        },
-                        "Property": "Gender Label"
-                      }
-                    },
-                    "Right": {
-                      "Literal": {
-                        "Value": "'Male'"
-                      }
-                    }
-                  }
-                }
-              }
-            ]
           }
         }
       ],
       "legend": [
         {
           "properties": {
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'BottomCenter'"
-                }
-              }
-            },
-            "showTitle": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "12D"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI Light'', wf_segoe-ui_light, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "showGradientLegend": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
             "show": {
               "expr": {
                 "Literal": {
@@ -563,17 +363,17 @@
       "title": [
         {
           "properties": {
-            "text": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'Audience by gender'"
+                  "Value": "true"
                 }
               }
             },
-            "fontFamily": {
+            "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
+                  "Value": "'Gender split'"
                 }
               }
             },
@@ -582,16 +382,23 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#23B5E8'"
+                      "Value": "'#0A7FA8'"
                     }
                   }
                 }
               }
             },
-            "show": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "9D"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'left'"
                 }
               }
             }
