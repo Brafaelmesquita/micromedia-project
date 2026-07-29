@@ -3,9 +3,9 @@
   "name": "4078ca8b16cb3090a9d9",
   "position": {
     "x": 0,
-    "y": 192,
+    "y": 182,
     "z": 1000,
-    "height": 46,
+    "height": 58,
     "width": 320,
     "tabOrder": 1000
   },
@@ -122,10 +122,14 @@
                 }
               }
             },
-            "detailFontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
                 }
               }
             },
@@ -366,39 +370,7 @@
             "show": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Gender split'"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#0A7FA8'"
-                    }
-                  }
-                }
-              }
-            },
-            "fontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "9D"
-                }
-              }
-            },
-            "alignment": {
-              "expr": {
-                "Literal": {
-                  "Value": "'left'"
+                  "Value": "false"
                 }
               }
             }

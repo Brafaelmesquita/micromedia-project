@@ -3,9 +3,9 @@
   "name": "0a42a81ca2a603a4e502",
   "position": {
     "x": 0,
-    "y": 40,
+    "y": 28,
     "z": 0,
-    "height": 150,
+    "height": 183,
     "width": 320,
     "tabOrder": 0
   },
@@ -369,6 +369,13 @@
                 }
               }
             },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'RightCenter'"
+                }
+              }
+            },
             "showTitle": {
               "expr": {
                 "Literal": {
@@ -379,14 +386,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'RightCenter'"
+                  "Value": "7D"
                 }
               }
             }
@@ -396,17 +396,10 @@
       "labels": [
         {
           "properties": {
-            "fontSize": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "labelDisplayUnits": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
+                  "Value": "true"
                 }
               }
             },
@@ -421,6 +414,27 @@
               "expr": {
                 "Literal": {
                   "Value": "1L"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1000D"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'preferOutside'"
                 }
               }
             }
