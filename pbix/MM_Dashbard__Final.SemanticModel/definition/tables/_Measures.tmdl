@@ -617,6 +617,96 @@ table _Measures
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
+	/// Population-weighted share of the audience with positive affinity to the
+	/// category in context (0-100). Weighted by hourly Footfall population, IS_DEFAULT = 1.
+	measure 'Affinity Reach %' =
+			VAR _num =
+			    SUMX (
+			        FILTER ( Brand_Affinity, Brand_Affinity[IS_DEFAULT] = 1 ),
+			        VAR _code = Brand_Affinity[SITE_ID]
+			        VAR _ym   = Brand_Affinity[YEAR_MONTH]
+			        VAR _hr   = Brand_Affinity[HOUR]
+			        VAR _pop =
+			            CALCULATE (
+			                SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			                Footfall[SITE_ID] = _code, Footfall[YEAR_MONTH] = _ym, Footfall[HOUR] = _hr,
+			                Footfall[IS_GRAND_TOTAL] = 1, Footfall[HasValidSite] = TRUE ()
+			            )
+			        RETURN Brand_Affinity[PROPORTION_OF_TARGET_USERS] * _pop
+			    )
+			VAR _den =
+			    SUMX (
+			        FILTER ( Brand_Affinity, Brand_Affinity[IS_DEFAULT] = 1 ),
+			        VAR _code = Brand_Affinity[SITE_ID]
+			        VAR _ym   = Brand_Affinity[YEAR_MONTH]
+			        VAR _hr   = Brand_Affinity[HOUR]
+			        RETURN
+			            CALCULATE (
+			                SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			                Footfall[SITE_ID] = _code, Footfall[YEAR_MONTH] = _ym, Footfall[HOUR] = _hr,
+			                Footfall[IS_GRAND_TOTAL] = 1, Footfall[HasValidSite] = TRUE ()
+			            )
+			    )
+			RETURN DIVIDE ( _num, _den )
+		formatString: 0.0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10002-1111-4aaa-8bbb-000000000002
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Estimated unique people reachable with affinity to the selected category:
+	/// weighted reach share x deduplicated Total Population (HOUR = 25). Avoids the
+	/// hourly overcount of summing hours. Uses a single category in context.
+	measure 'Affine Reach (Population)' = DIVIDE ( [Affinity Reach %], 100 ) * [Total Population]
+		formatString: #,0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10003-1111-4aaa-8bbb-000000000003
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Affine impressions: audience with affinity to the category, expressed as
+	/// weighted eye-contacts (OTS). Mirrors 'Age Impressions (OTS)'. Hourly-summed,
+	/// which is correct for impressions. Uses a single category in context.
+	measure 'Affine Audience (OTS)' =
+			SUMX (
+			    FILTER ( Brand_Affinity, Brand_Affinity[IS_DEFAULT] = 1 ),
+			    VAR _code = Brand_Affinity[SITE_ID]
+			    VAR _ym   = Brand_Affinity[YEAR_MONTH]
+			    VAR _hr   = Brand_Affinity[HOUR]
+			    VAR _pct  = DIVIDE ( Brand_Affinity[PROPORTION_OF_TARGET_USERS], 100 )
+			    RETURN
+			        _pct *
+			        CALCULATE (
+			            SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED] ),
+			            Footfall[SITE_ID] = _code, Footfall[YEAR_MONTH] = _ym, Footfall[HOUR] = _hr,
+			            Footfall[IS_GRAND_TOTAL] = 1
+			        )
+			)
+		formatString: #,0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10004-1111-4aaa-8bbb-000000000004
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Count of categories whose population-weighted index over-indexes (> 110)
+	/// for the current screen/period selection.
+	measure 'Categories Over-Index' =
+			SUMX (
+			    VALUES ( Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] ),
+			    IF ( [Affinity Index (weighted)] > 110, 1, 0 )
+			)
+		formatString: 0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10005-1111-4aaa-8bbb-000000000005
+
+	/// Strongest-affinity category (by population-weighted index) in the current selection.
+	measure 'Top Affinity Category' =
+			VAR _t =
+			    TOPN ( 1, VALUES ( Brand_Affinity[Brand Category (short)] ), [Affinity Index (weighted)], DESC )
+			RETURN CONCATENATEX ( _t, Brand_Affinity[Brand Category (short)] )
+		displayFolder: Brand Affinity
+		lineageTag: d3a10006-1111-4aaa-8bbb-000000000006
+
 	measure 'Class Audience (Hourly)' =
 			
 			SUMX (

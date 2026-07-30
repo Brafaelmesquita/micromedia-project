@@ -69,3 +69,12 @@ relationship 55209656-52e4-a1c0-a52c-e70f066d5565
 	fromColumn: Demographics_AgeLong.YEAR_MONTH
 	toColumn: Calendar.YEAR_MONTH
 
+relationship b1d2e3f4-a5b6-47c8-9d0e-1f2a3b4c5d6e
+	fromColumn: Brand_Affinity.SITE_ID
+	toColumn: Master_Sites.SITE_ID
+
+relationship c2e3f4a5-b6c7-48d9-0e1f-2a3b4c5d6e7f
+	toCardinality: many
+	fromColumn: Brand_Affinity.YEAR_MONTH
+	toColumn: Calendar.YEAR_MONTH
+
