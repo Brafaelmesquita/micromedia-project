@@ -155,14 +155,14 @@
             "minBubbleRadius": {
               "expr": {
                 "Literal": {
-                  "Value": "6L"
+                  "Value": "3L"
                 }
               }
             },
             "maxRadius": {
               "expr": {
                 "Literal": {
-                  "Value": "6L"
+                  "Value": "3L"
                 }
               }
             },
