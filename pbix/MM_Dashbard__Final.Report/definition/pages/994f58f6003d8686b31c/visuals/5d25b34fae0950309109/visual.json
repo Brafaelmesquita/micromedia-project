@@ -23,10 +23,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Avg Daily Total Population"
+                  "Property": "Avg Daily Population (mv+vis)"
                 }
               },
-              "queryRef": "_Measures.Avg Daily Total Population",
+              "queryRef": "_Measures.Avg Daily Population (mv+vis)",
               "nativeQueryRef": "Avg Daily Total Population"
             }
           ]

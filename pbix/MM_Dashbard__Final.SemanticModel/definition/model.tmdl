@@ -85,6 +85,7 @@ ref table DateTableTemplate_a0be75af-62ac-43d1-b0b8-ec91ea70e13c
 ref table LocalDateTable_25821627-00c4-4c3b-a09e-38eb347bc342
 ref table 'Demo Movement'
 ref table 'Display Mode'
+ref table 'Demo Visitation'
 
 ref cultureInfo en-US
 

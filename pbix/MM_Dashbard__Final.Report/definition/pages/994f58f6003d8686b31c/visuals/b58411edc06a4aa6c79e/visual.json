@@ -1,5 +1,5 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "b58411edc06a4aa6c79e",
   "position": {
     "x": 576.72609400324154,
@@ -42,10 +42,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Total Population"
+                  "Property": "Population (mv+vis)"
                 }
               },
-              "queryRef": "_Measures.Total Population",
+              "queryRef": "_Measures.Population (mv+vis)",
               "nativeQueryRef": "Population",
               "displayName": "Population"
             },
@@ -57,10 +57,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "PaS"
+                  "Property": "PaS (mv+vis)"
                 }
               },
-              "queryRef": "_Measures.PaS",
+              "queryRef": "_Measures.PaS (mv+vis)",
               "nativeQueryRef": "Mobile",
               "displayName": "Mobile"
             },
@@ -72,10 +72,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "OTS"
+                  "Property": "OTS (mv+vis)"
                 }
               },
-              "queryRef": "_Measures.OTS",
+              "queryRef": "_Measures.OTS (mv+vis)",
               "nativeQueryRef": "Exposure",
               "displayName": "Exposure"
             },
@@ -87,11 +87,12 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Capture Rate"
+                  "Property": "Capture Rate (mv+vis)"
                 }
               },
-              "queryRef": "_Measures.Capture Rate",
-              "nativeQueryRef": "Capture Rate"
+              "queryRef": "_Measures.Capture Rate (mv+vis)",
+              "nativeQueryRef": "Capture Rate",
+              "displayName": "Capture Rate"
             }
           ]
         }
@@ -106,7 +107,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "OTS"
+                "Property": "Capture Rate (mv+vis)"
               }
             },
             "direction": "Descending"
@@ -201,6 +202,22 @@
                 }
               }
             }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "330.1503252107041D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Master_Sites.Site Label"
           }
         }
       ]

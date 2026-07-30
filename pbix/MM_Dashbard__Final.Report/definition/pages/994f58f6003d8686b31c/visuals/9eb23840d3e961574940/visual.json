@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "9eb23840d3e961574940",
   "position": {
-    "x": 878.59287859287861,
+    "x": 472.24367224367228,
     "y": 256.988416988417,
     "z": 7000,
-    "height": 90,
-    "width": 180,
+    "height": 90.055770055770054,
+    "width": 180.11154011154011,
     "tabOrder": 6000
   },
   "visual": {
@@ -23,10 +23,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Avg Daily OTS"
+                  "Property": "Avg Daily OTS (mv+vis)"
                 }
               },
-              "queryRef": "_Measures.Avg Daily OTS",
+              "queryRef": "_Measures.Avg Daily OTS (mv+vis)",
               "nativeQueryRef": "Avg Daily OTS"
             }
           ]

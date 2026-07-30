@@ -1037,6 +1037,59 @@ table _Measures
 		displayFolder: Age&Gender\Display
 		lineageTag: 28d0e1ec-141b-45c9-b862-e441ab6336a1
 
+	measure '_Mov Share' =
+			VAR _k = SELECTEDVALUE ( 'Demo Movement'[MovementKey], "All" )
+			VAR _ped = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 0, Footfall[HOUR] = 25, Footfall[VISITATION_MODALITY] = "All", Footfall[Movement Group] = "Pedestrians", Footfall[HasValidSite] = TRUE () )
+			VAR _non = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 0, Footfall[HOUR] = 25, Footfall[VISITATION_MODALITY] = "All", Footfall[Movement Group] = "Non_Pedestrians", Footfall[HasValidSite] = TRUE () )
+			RETURN
+			SWITCH ( _k, "Pedestrians", DIVIDE ( _ped, _ped + _non ), "Non_Pedestrians", DIVIDE ( _non, _ped + _non ), 1 )
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: 1b86db8c-6aa3-4af0-8e06-61e8ba6ad26d
+
+	measure '_Vis Share' =
+			VAR _k = SELECTEDVALUE ( 'Demo Visitation'[VisKey], "All" )
+			VAR _sel = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 0, Footfall[HOUR] = 25, Footfall[MOVEMENT_MODALITY] = "All", Footfall[VISITATION_MODALITY] = _k, Footfall[HasValidSite] = TRUE () )
+			VAR _all = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 0, Footfall[HOUR] = 25, Footfall[MOVEMENT_MODALITY] = "All", Footfall[VISITATION_MODALITY] IN { "Residents", "Workers", "Transient" }, Footfall[HasValidSite] = TRUE () )
+			RETURN
+			IF ( _k = "All", 1, DIVIDE ( _sel, _all ) )
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: 297d9009-7d37-4fbb-a0da-49eb40350f45
+
+	measure 'Population (mv+vis)' = [Total Population] * [_Mov Share] * [_Vis Share]
+		formatString: #,0
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: 0f19dfcc-9170-4585-8784-e250a3d96841
+
+	measure 'PaS (mv+vis)' = [PaS] * [_Mov Share] * [_Vis Share]
+		formatString: #,0
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: 9a70700c-f4cd-4dd7-8302-ba363ec15627
+
+	measure 'OTS (mv+vis)' = [OTS] * [_Mov Share] * [_Vis Share]
+		formatString: #,0
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: 0ce05ae5-27fb-4e5c-990d-d0a31ea755cd
+
+	measure 'Capture Rate (mv+vis)' = DIVIDE ( [OTS (mv+vis)], [Population (mv+vis)] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: a18f616c-9def-4b43-abd3-a6dda51047c0
+
+	measure 'Avg Daily Population (mv+vis)' = AVERAGEX ( VALUES ( 'Calendar'[Date] ), [Population (mv+vis)] )
+		formatString: 0.0
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: 1e4b1ef2-1d1c-4717-94c4-62c67894e0ea
+
+	measure 'Avg Daily PaS (mv+vis)' = AVERAGEX ( VALUES ( 'Calendar'[Date] ), [PaS (mv+vis)] )
+		formatString: 0.0
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: c09cfb16-af2d-45f7-8e70-30f65900d17a
+
+	measure 'Avg Daily OTS (mv+vis)' = AVERAGEX ( VALUES ( 'Calendar'[Date] ), [OTS (mv+vis)] )
+		formatString: 0.0
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: a9be8464-5925-4f1a-8564-e1c5a10e05cc
+
 	partition _Measures = m
 		mode: import
 		source =

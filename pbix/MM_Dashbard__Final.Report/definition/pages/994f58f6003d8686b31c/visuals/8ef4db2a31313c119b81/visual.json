@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "8ef4db2a31313c119b81",
   "position": {
-    "x": 475.53839553839555,
-    "y": 255.8901758901759,
+    "x": 278.95323895323895,
+    "y": 256.988416988417,
     "z": 6000,
-    "height": 90,
-    "width": 180,
+    "height": 90.055770055770054,
+    "width": 180.11154011154011,
     "tabOrder": 5000
   },
   "visual": {
@@ -23,10 +23,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Avg Daily PaS"
+                  "Property": "Avg Daily PaS (mv+vis)"
                 }
               },
-              "queryRef": "_Measures.Avg Daily PaS",
+              "queryRef": "_Measures.Avg Daily PaS (mv+vis)",
               "nativeQueryRef": "Avg Daily PaS"
             }
           ]
