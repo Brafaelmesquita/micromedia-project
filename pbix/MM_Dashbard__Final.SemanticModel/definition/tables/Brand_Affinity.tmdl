@@ -9,14 +9,6 @@ table Brand_Affinity
 
 		annotation SummarizationSetBy = Automatic
 
-	column SITE_ID
-		dataType: string
-		lineageTag: a7c3e1b2-4d5f-4a6b-9c8d-1e2f3a4b5c6d
-		summarizeBy: none
-		sourceColumn: SITE_ID
-
-		annotation SummarizationSetBy = Automatic
-
 	column YEAR_MONTH
 		dataType: string
 		lineageTag: c008b212-96d8-4669-bf12-89ecad90f973
@@ -130,6 +122,14 @@ table Brand_Affinity
 			)
 		lineageTag: ee1048b9-29ef-49c6-8a4e-2e868bb3b2b8
 		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column SITE_ID
+		dataType: string
+		lineageTag: a7c3e1b2-4d5f-4a6b-9c8d-1e2f3a4b5c6d
+		summarizeBy: none
+		sourceColumn: SITE_ID
 
 		annotation SummarizationSetBy = Automatic
 
