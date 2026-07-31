@@ -1288,6 +1288,20 @@ table _Measures
 		displayFolder: Brand Affinity
 		lineageTag: d3a1010f-1111-4aaa-8bbb-00000000010f
 
+	/// Screen's daily audience size (Total Population), robust to the daypart slicer
+	/// (ignores dim_Hour so it never conflicts with the HOUR = 25 sentinel).
+	measure 'Screen Population' = CALCULATE ( [Total Population], REMOVEFILTERS ( dim_Hour ) )
+		formatString: #,0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10110-1111-4aaa-8bbb-000000000110
+
+	/// Ranking metric combining volume and concentration: daily audience x affinity
+	/// index / 100. Not a literal headcount — validate interpretation before client use.
+	measure 'Affine potential' = [Screen Population] * DIVIDE ( [Avg Brand Affinity Index], 100 )
+		formatString: #,0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10111-1111-4aaa-8bbb-000000000111
+
 	partition _Measures = m
 		mode: import
 		source =

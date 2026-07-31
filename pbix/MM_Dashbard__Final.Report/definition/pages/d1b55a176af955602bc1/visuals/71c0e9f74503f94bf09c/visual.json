@@ -5,7 +5,7 @@
     "x": 1043.3526347149864,
     "y": 147.13947412647244,
     "z": 8000,
-    "height": 69.697645638855363,
+    "height": 69.69764563885536,
     "width": 199.23670419996026,
     "tabOrder": 8000
   },
@@ -216,6 +216,11 @@
         }
       ]
     },
-    "drillFilterOtherVisuals": true
+    "drillFilterOtherVisuals": true,
+    "syncGroup": {
+      "groupName": "Brand Category",
+      "fieldChanges": true,
+      "filterChanges": true
+    }
   }
 }

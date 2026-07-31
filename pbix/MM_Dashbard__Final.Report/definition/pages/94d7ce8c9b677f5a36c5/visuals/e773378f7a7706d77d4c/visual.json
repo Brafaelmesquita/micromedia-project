@@ -5,8 +5,8 @@
     "x": 16.896398942752814,
     "y": 169.66800605014285,
     "z": 17001,
-    "height": 521.67631735749319,
-    "width": 388.61717568331471,
+    "height": 521.6763173574932,
+    "width": 388.6171756833147,
     "tabOrder": 17001
   },
   "visual": {
@@ -48,6 +48,36 @@
               "queryRef": "_Measures.Avg Brand Affinity Index",
               "nativeQueryRef": "Avg Brand Affinity Index",
               "displayName": "Affinity index"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Screen Population"
+                }
+              },
+              "queryRef": "_Measures.Screen Population",
+              "nativeQueryRef": "Screen Population",
+              "displayName": "Total population"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Affine potential"
+                }
+              },
+              "queryRef": "_Measures.Affine potential",
+              "nativeQueryRef": "Affine potential",
+              "displayName": "Affine potential"
             }
           ]
         }
