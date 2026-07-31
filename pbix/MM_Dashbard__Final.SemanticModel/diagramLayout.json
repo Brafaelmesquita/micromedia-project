@@ -5,7 +5,7 @@
       "ordinal": 0,
       "scrollPosition": {
         "x": 118.48957538604736,
-        "y": 52.083331346511841
+        "y": 0
       },
       "nodes": [
         {
@@ -61,7 +61,7 @@
         },
         {
           "location": {
-            "x": 1136,
+            "x": 918.8125,
             "y": 0
           },
           "nodeIndex": "Brand_Affinity",
@@ -158,6 +158,45 @@
           "nodeIndex": "dim_Movement_Group",
           "size": {
             "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1761.471264367816,
+            "y": 482.20638820638817
+          },
+          "nodeIndex": "Demo Movement",
+          "nodeLineageTag": "4934f755-0def-4885-b0bb-5de42d7c6224",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2045.471264367816,
+            "y": 482.20638820638817
+          },
+          "nodeIndex": "Demo Visitation",
+          "nodeLineageTag": "ecec1539-2ddc-4a42-a9a6-b5a6ee3627c0",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2329.4712643678158,
+            "y": 494.20638820638817
+          },
+          "nodeIndex": "Display Mode",
+          "nodeLineageTag": "e3f56d19-04a9-4cf0-990e-6f9a712c5b3d",
+          "size": {
+            "height": 128,
             "width": 234
           },
           "zIndex": 0

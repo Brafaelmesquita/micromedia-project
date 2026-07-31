@@ -828,7 +828,8 @@ table _Measures
 			                    Footfall[SITE_ID] = c,
 			                    Footfall[IS_GRAND_TOTAL] = 1,
 			                    Footfall[HOUR] = 25,
-			                    Footfall[HasValidSite] = TRUE ()
+			                    Footfall[HasValidSite] = TRUE (),
+			                    REMOVEFILTERS ( dim_Hour )
 			                )
 			    )
 			RETURN
@@ -836,6 +837,7 @@ table _Measures
 			        SUMX ( FILTER ( T, NOT ISBLANK ( [Idx] ) ), [Idx] * [W] ),
 			        SUMX ( FILTER ( T, NOT ISBLANK ( [Idx] ) ), [W] )
 			    )
+		formatString: 0
 		lineageTag: af339790-9ced-492a-bb78-c7416e4a271b
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -1179,6 +1181,18 @@ table _Measures
 			RETURN CONCATENATEX ( _t, Brand_Affinity[Brand Category (short)] )
 		displayFolder: Brand Affinity
 		lineageTag: d3a10006-1111-4aaa-8bbb-000000000006
+
+	/// Index value of the strongest-affinity category (pairs with 'Top Affinity
+	/// Category'). MAXX over categories of the population-weighted index, so it
+	/// never averages across categories. Single value per screen/hour selection.
+	measure 'Top Affinity Index' =
+			MAXX (
+			    VALUES ( Brand_Affinity[Brand Category (short)] ),
+			    [Affinity Index (weighted)]
+			)
+		formatString: 0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10007-1111-4aaa-8bbb-000000000007
 
 	partition _Measures = m
 		mode: import

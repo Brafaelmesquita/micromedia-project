@@ -1,12 +1,12 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "7864054906e76456541b",
+  "name": "04c866b1cef3574dffe8",
   "position": {
     "x": 22.913973147687717,
     "y": 157.4090329275939,
     "z": 17001,
-    "height": 528.01764209889086,
-    "width": 888.66365424945411,
+    "height": 528.0176420988909,
+    "width": 888.6636542494541,
     "tabOrder": 17001
   },
   "visual": {
@@ -47,25 +47,6 @@
             }
           ]
         },
-        "Columns": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Brand_Affinity"
-                    }
-                  },
-                  "Property": "Brand Category (short)"
-                }
-              },
-              "queryRef": "Brand_Affinity.Brand Category (short)",
-              "nativeQueryRef": "Brand Category (short)",
-              "active": true
-            }
-          ]
-        },
         "Values": {
           "projections": [
             {
@@ -76,12 +57,27 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Affinity Index (weighted)"
+                  "Property": "Top Affinity Category"
                 }
               },
-              "queryRef": "_Measures.Affinity Index (weighted)",
-              "nativeQueryRef": "Affinity Index (weighted)",
-              "displayName": "Affinity index"
+              "queryRef": "_Measures.Top Affinity Category",
+              "nativeQueryRef": "Top Affinity Category",
+              "displayName": "Top category"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Top Affinity Index"
+                }
+              },
+              "queryRef": "_Measures.Top Affinity Index",
+              "nativeQueryRef": "Top Affinity Index",
+              "displayName": "Index"
             }
           ]
         }
@@ -198,7 +194,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.Affinity Index (weighted)"
+            "metadata": "_Measures.Top Affinity Index"
           }
         },
         {
@@ -399,7 +395,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Who they are — affinity index by category & hour'"
+                  "Value": "'Who they are — strongest affinity per site & hour'"
                 }
               }
             },
