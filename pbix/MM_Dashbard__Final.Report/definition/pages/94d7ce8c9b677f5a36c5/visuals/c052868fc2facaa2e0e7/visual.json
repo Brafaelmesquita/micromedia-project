@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "c052868fc2facaa2e0e7",
   "position": {
-    "x": 1045.0,
-    "y": 370.0,
+    "x": 1045,
+    "y": 370,
     "z": 8700,
-    "height": 230.0,
-    "width": 199.0,
+    "height": 230,
+    "width": 199,
     "tabOrder": 8700
   },
   "visual": {
@@ -176,6 +176,12 @@
           }
         }
       ]
+    },
+    "syncGroup": {
+      "groupName": "Segment",
+      "fieldChanges": true,
+      "filterChanges": true
     }
-  }
+  },
+  "isHidden": true
 }

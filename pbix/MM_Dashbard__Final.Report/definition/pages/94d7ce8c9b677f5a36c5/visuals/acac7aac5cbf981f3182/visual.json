@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "acac7aac5cbf981f3182",
   "position": {
-    "x": 1045.0,
-    "y": 655.0,
+    "x": 1045,
+    "y": 655,
     "z": 7000,
-    "height": 50.0,
-    "width": 199.0,
+    "height": 50,
+    "width": 199,
     "tabOrder": 7000
   },
   "visual": {
@@ -75,7 +75,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Restaurants'"
+                                "Value": "'Banks'"
                               }
                             }
                           ]
@@ -103,6 +103,19 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "data": [
+        {
+          "properties": {
+            "mode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dropdown'"
                 }
               }
             }
