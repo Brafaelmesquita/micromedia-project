@@ -612,6 +612,7 @@ table _Measures
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Avg Brand Affinity Index' = CALCULATE ( AVERAGE ( Brand_Affinity[BRAND_AFFINITY_INDEX] ), Brand_Affinity[IS_DEFAULT] = 1 )
+		formatString: 0
 		displayFolder: Modality
 		lineageTag: 898bba54-e4fd-49fb-b214-88a566d2c748
 
@@ -1213,6 +1214,79 @@ table _Measures
 		formatString: 0
 		displayFolder: Brand Affinity
 		lineageTag: d3a10009-1111-4aaa-8bbb-000000000009
+
+	/// Screen's #1 affinity category by day-level (all-hours) average index.
+	measure 'Top Category (day)' =
+			VAR T =
+			    ADDCOLUMNS (
+			        VALUES ( Brand_Affinity[Brand Category (short)] ),
+			        "@i", CALCULATE ( [Avg Brand Affinity Index], REMOVEFILTERS ( dim_Hour ) )
+			    )
+			RETURN
+			    MAXX ( TOPN ( 1, T, [@i], DESC ), Brand_Affinity[Brand Category (short)] )
+		displayFolder: Brand Affinity
+		lineageTag: d3a1010a-1111-4aaa-8bbb-00000000010a
+
+	/// Day-level index of the screen's #1 affinity category.
+	measure 'Top Category Index (day)' =
+			MAXX (
+			    VALUES ( Brand_Affinity[Brand Category (short)] ),
+			    CALCULATE ( [Avg Brand Affinity Index], REMOVEFILTERS ( dim_Hour ) )
+			)
+		formatString: 0
+		displayFolder: Brand Affinity
+		lineageTag: d3a1010b-1111-4aaa-8bbb-00000000010b
+
+	/// Daypart in which the screen's #1 category indexes highest.
+	measure 'Peak Daypart' =
+			VAR tc = [Top Category (day)]
+			VAR T =
+			    ADDCOLUMNS (
+			        ALL ( dim_Hour[Daypart] ),
+			        "@i", CALCULATE ( [Avg Brand Affinity Index], Brand_Affinity[Brand Category (short)] = tc, REMOVEFILTERS ( dim_Hour[Hour], dim_Hour[HourLabel] ) )
+			    )
+			RETURN
+			    MAXX ( TOPN ( 1, T, [@i], DESC ), dim_Hour[Daypart] )
+		displayFolder: Brand Affinity
+		lineageTag: d3a1010c-1111-4aaa-8bbb-00000000010c
+
+	/// Rank of the category by affinity index in the CURRENT context (respects the
+	/// daypart slicer). No REMOVEFILTERS, so selecting a daypart re-ranks for it.
+	measure 'Category Rank (live)' =
+			RANKX (
+			    ALL ( Brand_Affinity[Brand Category (short)] ),
+			    [Avg Brand Affinity Index],
+			    ,
+			    DESC,
+			    Dense
+			)
+		formatString: 0
+		displayFolder: Brand Affinity
+		lineageTag: d3a1010d-1111-4aaa-8bbb-00000000010d
+
+	/// Affinity index shown only when the category is within the chosen Top N
+	/// (Top categories parameter). Blank otherwise, so the matrix hides the rest.
+	measure 'Signature Index' =
+			IF (
+			    [Category Rank (live)] <= 'Top categories'[Top categories Value],
+			    [Avg Brand Affinity Index]
+			)
+		formatString: 0
+		displayFolder: Brand Affinity
+		lineageTag: d3a1010e-1111-4aaa-8bbb-00000000010e
+
+	/// Daypart in which the CURRENT (slicer-selected) category indexes highest for
+	/// this screen. Ignores any daypart selection and the blank hour member.
+	measure 'Peak Daypart (category)' =
+			VAR T =
+			    ADDCOLUMNS (
+			        FILTER ( ALL ( dim_Hour[Daypart] ), NOT ISBLANK ( dim_Hour[Daypart] ) ),
+			        "@i", CALCULATE ( [Avg Brand Affinity Index], REMOVEFILTERS ( dim_Hour[Hour], dim_Hour[HourLabel] ) )
+			    )
+			RETURN
+			    MAXX ( TOPN ( 1, T, [@i], DESC ), dim_Hour[Daypart] )
+		displayFolder: Brand Affinity
+		lineageTag: d3a1010f-1111-4aaa-8bbb-00000000010f
 
 	partition _Measures = m
 		mode: import

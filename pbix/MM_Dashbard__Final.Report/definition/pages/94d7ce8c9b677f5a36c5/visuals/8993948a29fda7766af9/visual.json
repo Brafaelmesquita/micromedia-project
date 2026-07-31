@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "71c0e9f74503f94bf09c",
+  "name": "8993948a29fda7766af9",
   "position": {
-    "x": 1043.3526347149864,
-    "y": 147.13947412647244,
-    "z": 8000,
-    "height": 69.697645638855363,
+    "x": 1044.7606679602156,
+    "y": 369.6087268727178,
+    "z": 8600,
+    "height": 290.75886513987132,
     "width": 199.23670419996026,
-    "tabOrder": 8000
+    "tabOrder": 8600
   },
   "visual": {
     "visualType": "slicer",
@@ -75,7 +75,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Banks'"
+                                "Value": "'Colleges & universities'"
                               }
                             }
                           ]
@@ -84,19 +84,6 @@
                     }
                   }
                 ]
-              }
-            }
-          }
-        }
-      ],
-      "header": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
               }
             }
           }
@@ -121,35 +108,9 @@
             }
           }
         }
-      ],
-      "data": [
-        {
-          "properties": {
-            "mode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Dropdown'"
-                }
-              }
-            }
-          }
-        }
       ]
     },
     "visualContainerObjects": {
-      "visualHeader": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "title": [
         {
           "properties": {

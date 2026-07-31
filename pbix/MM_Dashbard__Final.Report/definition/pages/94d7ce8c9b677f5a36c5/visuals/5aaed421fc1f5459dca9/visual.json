@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "b4ca27752748dc09b01f",
+  "name": "5aaed421fc1f5459dca9",
   "position": {
-    "x": 237.674278155814,
-    "y": 173.34918816076797,
-    "z": 13000,
-    "height": 79.700776165870323,
-    "width": 439.35052861436014,
-    "tabOrder": 13000
+    "x": 1044.7606679602156,
+    "y": 147.13947412647244,
+    "z": 8000,
+    "height": 204.16482055826316,
+    "width": 199.23670419996026,
+    "tabOrder": 8000
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Master_Sites"
+                      "Entity": "dim_Hour"
                     }
                   },
-                  "Property": "Site Label"
+                  "Property": "Daypart"
                 }
               },
-              "queryRef": "Master_Sites.Site Label",
-              "nativeQueryRef": "Site Label",
+              "queryRef": "dim_Hour.Daypart",
+              "nativeQueryRef": "Daypart",
               "active": true
             }
           ]
@@ -35,85 +35,55 @@
       }
     },
     "objects": {
-      "data": [
-        {
-          "properties": {
-            "mode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Dropdown'"
-                }
-              }
-            },
-            "isInvertedSelectionMode": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
       "general": [
         {
           "properties": {
-            "selfFilterEnabled": {
+            "orientation": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "0D"
                 }
               }
             },
-            "selfFilter": {
+            "filter": {
               "filter": {
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "m",
-                    "Entity": "Master_Sites",
+                    "Name": "d",
+                    "Entity": "dim_Hour",
                     "Type": 0
                   }
                 ],
                 "Where": [
                   {
                     "Condition": {
-                      "Contains": {
-                        "Left": {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "m"
+                      "In": {
+                        "Expressions": [
+                          {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Source": "d"
+                                }
+                              },
+                              "Property": "Daypart"
+                            }
+                          }
+                        ],
+                        "Values": [
+                          [
+                            {
+                              "Literal": {
+                                "Value": "'Late'"
                               }
-                            },
-                            "Property": "Display Name"
-                          }
-                        },
-                        "Right": {
-                          "Literal": {
-                            "Value": "'kill'"
-                          }
-                        }
+                            }
+                          ]
+                        ]
                       }
-                    },
-                    "Annotations": {
-                      "PowerBI.MParameterBehavior": 1
                     }
                   }
                 ]
-              }
-            }
-          }
-        }
-      ],
-      "selection": [
-        {
-          "properties": {
-            "selectAllCheckboxEnabled": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
               }
             }
           }
@@ -131,9 +101,42 @@
             }
           }
         }
+      ],
+      "selection": [
+        {
+          "properties": {
+            "strictSingleSelect": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "selectAllCheckboxEnabled": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
       "title": [
         {
           "properties": {
@@ -147,7 +150,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Display'"
+                  "Value": "'Daypart'"
                 }
               }
             },
@@ -179,19 +182,6 @@
           }
         }
       ],
-      "visualHeader": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
       "border": [
         {
           "properties": {
@@ -213,25 +203,20 @@
         }
       ]
     },
-    "syncGroup": {
-      "groupName": "Display Name",
-      "fieldChanges": true,
-      "filterChanges": true
-    },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [
       {
-        "name": "ded2db16c4cd35743beb",
+        "name": "f050e9b51f02fad91e81",
         "field": {
           "Column": {
             "Expression": {
               "SourceRef": {
-                "Entity": "Master_Sites"
+                "Entity": "dim_Hour"
               }
             },
-            "Property": "Display Name"
+            "Property": "Daypart"
           }
         },
         "type": "Categorical",
@@ -239,8 +224,8 @@
           "Version": 2,
           "From": [
             {
-              "Name": "m",
-              "Entity": "Master_Sites",
+              "Name": "d",
+              "Entity": "dim_Hour",
               "Type": 0
             }
           ],
@@ -255,10 +240,10 @@
                           "Column": {
                             "Expression": {
                               "SourceRef": {
-                                "Source": "m"
+                                "Source": "d"
                               }
                             },
-                            "Property": "Display Name"
+                            "Property": "Daypart"
                           }
                         }
                       ],
@@ -278,24 +263,8 @@
             }
           ]
         },
-        "howCreated": "User",
-        "objects": {
-          "general": [
-            {
-              "properties": {
-                "isInvertedSelectionMode": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "true"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
+        "howCreated": "User"
       }
     ]
-  },
-  "isHidden": true
+  }
 }

@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "b4ca27752748dc09b01f",
+  "name": "80478db4eda9a47bcae1",
   "position": {
-    "x": 237.674278155814,
-    "y": 173.34918816076797,
-    "z": 13000,
-    "height": 79.700776165870323,
-    "width": 439.35052861436014,
-    "tabOrder": 13000
+    "x": 23.789364997418691,
+    "y": 173.36247505233752,
+    "z": 12000,
+    "height": 79.297883324728971,
+    "width": 130.84150748580279,
+    "tabOrder": 12000
   },
   "visual": {
     "visualType": "slicer",
@@ -23,11 +23,11 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "Site Label"
+                  "Property": "SITE_ID"
                 }
               },
-              "queryRef": "Master_Sites.Site Label",
-              "nativeQueryRef": "Site Label",
+              "queryRef": "Master_Sites.SITE_ID",
+              "nativeQueryRef": "SITE_ID",
               "active": true
             }
           ]
@@ -86,12 +86,12 @@
                                 "Source": "m"
                               }
                             },
-                            "Property": "Display Name"
+                            "Property": "SITE_ID"
                           }
                         },
                         "Right": {
                           "Literal": {
-                            "Value": "'kill'"
+                            "Value": "'50150'"
                           }
                         }
                       }
@@ -147,7 +147,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Display'"
+                  "Value": "'Site'"
                 }
               }
             },
@@ -214,7 +214,7 @@
       ]
     },
     "syncGroup": {
-      "groupName": "Display Name",
+      "groupName": "SITE_ID",
       "fieldChanges": true,
       "filterChanges": true
     },
@@ -223,7 +223,7 @@
   "filterConfig": {
     "filters": [
       {
-        "name": "ded2db16c4cd35743beb",
+        "name": "7cdae19027c8699a1d30",
         "field": {
           "Column": {
             "Expression": {
@@ -231,7 +231,7 @@
                 "Entity": "Master_Sites"
               }
             },
-            "Property": "Display Name"
+            "Property": "SITE_ID"
           }
         },
         "type": "Categorical",
@@ -258,7 +258,7 @@
                                 "Source": "m"
                               }
                             },
-                            "Property": "Display Name"
+                            "Property": "SITE_ID"
                           }
                         }
                       ],
@@ -278,7 +278,6 @@
             }
           ]
         },
-        "howCreated": "User",
         "objects": {
           "general": [
             {

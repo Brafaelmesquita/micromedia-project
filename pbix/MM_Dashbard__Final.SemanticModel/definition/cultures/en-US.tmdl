@@ -15816,6 +15816,16 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.489
 			          }
+			        },
+			        {
+			          "Affinity index": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
 			        }
 			      ]
 			    },
@@ -22190,19 +22200,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Top Affinity Category"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Top category": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "table_measures.top_affinity_index": {
 			      "Definition": {
@@ -22211,19 +22209,52 @@ cultureInfo en-US
 			          "ConceptualProperty": "Top Affinity Index"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Index": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
+			      "State": "Generated"
+			    },
+			    "table_measures.top_category_day": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Top Category (day)"
 			        }
-			      ]
+			      },
+			      "State": "Generated"
+			    },
+			    "table_measures.top_category_index_day": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Top Category Index (day)"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_measures.peak_daypart": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Peak Daypart"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_measures.signature_index": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Signature Index"
+			        }
+			      },
+			      "State": "Generated"
+			    },
+			    "table_measures.peak_daypart_category": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "_Measures",
+			          "ConceptualProperty": "Peak Daypart (category)"
+			        }
+			      },
+			      "State": "Generated"
 			    }
 			  },
 			  "Relationships": {

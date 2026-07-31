@@ -19,6 +19,38 @@ table dim_Hour
 
 		annotation SummarizationSetBy = Automatic
 
+	column Daypart =
+			SWITCH (
+			    TRUE (),
+			    dim_Hour[Hour] >= 6 && dim_Hour[Hour] <= 11, "Morning",
+			    dim_Hour[Hour] >= 12 && dim_Hour[Hour] <= 14, "Midday",
+			    dim_Hour[Hour] >= 15 && dim_Hour[Hour] <= 17, "Afternoon",
+			    dim_Hour[Hour] >= 18 && dim_Hour[Hour] <= 22, "Evening",
+			    "Late"
+			)
+		dataType: string
+		lineageTag: d3a10101-1111-4aaa-8bbb-000000000101
+		summarizeBy: none
+		sortByColumn: DaypartOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column DaypartOrder =
+			SWITCH (
+			    TRUE (),
+			    dim_Hour[Hour] >= 6 && dim_Hour[Hour] <= 11, 1,
+			    dim_Hour[Hour] >= 12 && dim_Hour[Hour] <= 14, 2,
+			    dim_Hour[Hour] >= 15 && dim_Hour[Hour] <= 17, 3,
+			    dim_Hour[Hour] >= 18 && dim_Hour[Hour] <= 22, 4,
+			    5
+			)
+		dataType: int64
+		formatString: 0
+		lineageTag: d3a10102-1111-4aaa-8bbb-000000000102
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
 	partition dim_Hour = calculated
 		mode: import
 		source = ```
