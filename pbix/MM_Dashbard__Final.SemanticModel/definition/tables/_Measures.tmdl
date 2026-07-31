@@ -1297,10 +1297,42 @@ table _Measures
 
 	/// Ranking metric combining volume and concentration: daily audience x affinity
 	/// index / 100. Not a literal headcount — validate interpretation before client use.
-	measure 'Affine potential' = [Screen Population] * DIVIDE ( [Avg Brand Affinity Index], 100 )
+	measure 'Affine potential' = [Screen Population] * DIVIDE ( [Avg Brand Affinity Index (seg)], 100 )
 		formatString: #,0
 		displayFolder: Brand Affinity
 		lineageTag: d3a10111-1111-4aaa-8bbb-000000000111
+
+	/// Affinity index for the selected audience segment (Segment slicer). Segment=All
+	/// -> All+All (same as base). Movement segments force visitation=All and vice versa.
+	measure 'Avg Brand Affinity Index (seg)' =
+			VAR s = SELECTEDVALUE ( Segment[Segment], "All" )
+			VAR mv = IF ( s = "Pedestrians" || s = "Non_Pedestrians", s, "All" )
+			VAR vs = IF ( s = "Residents" || s = "Workers" || s = "Transient", s, "All" )
+			RETURN
+			    CALCULATE (
+			        AVERAGE ( Brand_Affinity[BRAND_AFFINITY_INDEX] ),
+			        Brand_Affinity[MOVEMENT_MODALITY] = mv,
+			        Brand_Affinity[VISITATION_MODALITY] = vs
+			    )
+		formatString: 0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10112-1111-4aaa-8bbb-000000000112
+
+	/// % of the audience affine to the category, for the selected segment. Only varies
+	/// meaningfully outside All+All (where it is ~100%).
+	measure 'Proportion of Target (seg)' =
+			VAR s = SELECTEDVALUE ( Segment[Segment], "All" )
+			VAR mv = IF ( s = "Pedestrians" || s = "Non_Pedestrians", s, "All" )
+			VAR vs = IF ( s = "Residents" || s = "Workers" || s = "Transient", s, "All" )
+			RETURN
+			    CALCULATE (
+			        AVERAGE ( Brand_Affinity[PROPORTION_OF_TARGET_USERS] ),
+			        Brand_Affinity[MOVEMENT_MODALITY] = mv,
+			        Brand_Affinity[VISITATION_MODALITY] = vs
+			    )
+		formatString: 0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10113-1111-4aaa-8bbb-000000000113
 
 	partition _Measures = m
 		mode: import

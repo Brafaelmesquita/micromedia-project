@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "8993948a29fda7766af9",
+  "name": "c052868fc2facaa2e0e7",
   "position": {
-    "x": 1044.7606679602156,
-    "y": 369.6087268727178,
-    "z": 8600,
-    "height": 290.7588651398713,
-    "width": 199.23670419996026,
-    "tabOrder": 8600
+    "x": 1045.0,
+    "y": 370.0,
+    "z": 8700,
+    "height": 230.0,
+    "width": 199.0,
+    "tabOrder": 8700
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Brand_Affinity"
+                      "Entity": "Segment"
                     }
                   },
-                  "Property": "Brand Category (short)"
+                  "Property": "Segment"
                 }
               },
-              "queryRef": "Brand_Affinity.Brand Category (short)",
-              "nativeQueryRef": "Brand Category (short)",
+              "queryRef": "Segment.Segment",
+              "nativeQueryRef": "Segment",
               "active": true
             }
           ]
@@ -50,8 +50,8 @@
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "b",
-                    "Entity": "Brand_Affinity",
+                    "Name": "s",
+                    "Entity": "Segment",
                     "Type": 0
                   }
                 ],
@@ -64,10 +64,10 @@
                             "Column": {
                               "Expression": {
                                 "SourceRef": {
-                                  "Source": "b"
+                                  "Source": "s"
                                 }
                               },
-                              "Property": "Brand Category (short)"
+                              "Property": "Segment"
                             }
                           }
                         ],
@@ -75,7 +75,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Colleges & universities'"
+                                "Value": "'All'"
                               }
                             }
                           ]
@@ -124,7 +124,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Category'"
+                  "Value": "'Segment'"
                 }
               }
             },
@@ -176,12 +176,6 @@
           }
         }
       ]
-    },
-    "drillFilterOtherVisuals": true,
-    "syncGroup": {
-      "groupName": "Brand Category",
-      "fieldChanges": true,
-      "filterChanges": true
     }
   }
 }

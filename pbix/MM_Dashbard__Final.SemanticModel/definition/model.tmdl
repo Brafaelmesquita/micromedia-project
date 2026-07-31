@@ -87,6 +87,7 @@ ref table 'Demo Movement'
 ref table 'Display Mode'
 ref table 'Demo Visitation'
 ref table 'Top categories'
+ref table Segment
 
 ref cultureInfo en-US
 

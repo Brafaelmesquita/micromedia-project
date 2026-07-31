@@ -42,12 +42,27 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Avg Brand Affinity Index"
+                  "Property": "Avg Brand Affinity Index (seg)"
                 }
               },
-              "queryRef": "_Measures.Avg Brand Affinity Index",
-              "nativeQueryRef": "Avg Brand Affinity Index",
+              "queryRef": "_Measures.Avg Brand Affinity Index (seg)",
+              "nativeQueryRef": "Avg Brand Affinity Index (seg)",
               "displayName": "Affinity index"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Proportion of Target (seg)"
+                }
+              },
+              "queryRef": "_Measures.Proportion of Target (seg)",
+              "nativeQueryRef": "Proportion of Target (seg)",
+              "displayName": "% affine"
             },
             {
               "field": {
@@ -92,7 +107,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Avg Brand Affinity Index"
+                "Property": "Avg Brand Affinity Index (seg)"
               }
             },
             "direction": "Descending"
@@ -145,7 +160,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.Avg Brand Affinity Index"
+            "metadata": "_Measures.Avg Brand Affinity Index (seg)"
           }
         },
         {

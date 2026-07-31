@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "71c0e9f74503f94bf09c",
+  "name": "acac7aac5cbf981f3182",
   "position": {
-    "x": 1043.3526347149864,
-    "y": 147.13947412647244,
-    "z": 8000,
-    "height": 69.697645638855363,
-    "width": 199.23670419996026,
-    "tabOrder": 8000
+    "x": 1045.0,
+    "y": 655.0,
+    "z": 7000,
+    "height": 50.0,
+    "width": 199.0,
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "slicer",
@@ -75,7 +75,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Commercial sports'"
+                                "Value": "'Restaurants'"
                               }
                             }
                           ]
@@ -84,19 +84,6 @@
                     }
                   }
                 ]
-              }
-            }
-          }
-        }
-      ],
-      "header": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
               }
             }
           }
@@ -121,106 +108,13 @@
             }
           }
         }
-      ],
-      "data": [
-        {
-          "properties": {
-            "mode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Dropdown'"
-                }
-              }
-            }
-          }
-        }
-      ]
-    },
-    "visualContainerObjects": {
-      "visualHeader": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "title": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Category'"
-                }
-              }
-            },
-            "fontFamily": {
-              "expr": {
-                "Literal": {
-                  "Value": "'''Segoe UI Bold'', wf_segoe-ui_bold, helvetica, arial, sans-serif'"
-                }
-              }
-            },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "fontColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#23B5E8'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "border": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
-                }
-              }
-            }
-          }
-        }
       ]
     },
     "syncGroup": {
       "groupName": "Brand Category",
       "fieldChanges": true,
       "filterChanges": true
-    },
-    "drillFilterOtherVisuals": true
-  }
+    }
+  },
+  "isHidden": true
 }
