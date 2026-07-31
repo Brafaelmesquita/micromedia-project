@@ -4,10 +4,10 @@
   "position": {
     "x": 562,
     "y": 150,
-    "z": 16000,
+    "z": 17000,
     "height": 80,
     "width": 243,
-    "tabOrder": 16000
+    "tabOrder": 17000
   },
   "visual": {
     "visualType": "slicer",
@@ -216,11 +216,11 @@
         }
       ]
     },
-    "drillFilterOtherVisuals": true,
     "syncGroup": {
       "groupName": "Audience movement",
       "fieldChanges": true,
       "filterChanges": true
-    }
+    },
+    "drillFilterOtherVisuals": true
   }
 }
