@@ -1194,6 +1194,26 @@ table _Measures
 		displayFolder: Brand Affinity
 		lineageTag: d3a10007-1111-4aaa-8bbb-000000000007
 
+	/// Rank of the current category among all categories for this screen, by day-level
+	/// (all-hours) average affinity index. Stable across hour columns. Powers the top-3 highlight.
+	measure 'Category Rank (screen)' =
+			RANKX (
+			    ALL ( Brand_Affinity[Brand Category (short)] ),
+			    CALCULATE ( [Avg Brand Affinity Index], REMOVEFILTERS ( dim_Hour ) ),
+			    ,
+			    DESC,
+			    Dense
+			)
+		formatString: 0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10008-1111-4aaa-8bbb-000000000008
+
+	/// 1 when the current category is among this screen's top 3 affinities (day level).
+	measure 'Is Top3 Category (screen)' = IF ( [Category Rank (screen)] <= 3, 1, 0 )
+		formatString: 0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10009-1111-4aaa-8bbb-000000000009
+
 	partition _Measures = m
 		mode: import
 		source =

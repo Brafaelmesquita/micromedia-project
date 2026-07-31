@@ -1,35 +1,20 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "04c866b1cef3574dffe8",
+  "name": "ee051446a10dd96473fb",
   "position": {
-    "x": 22.913973147687717,
-    "y": 157.4090329275939,
+    "x": 0,
+    "y": 155.58767359784883,
     "z": 17001,
-    "height": 528.01764209889086,
-    "width": 888.66365424945411,
+    "height": 528.0124669610254,
+    "width": 888.4689777397522,
     "tabOrder": 17001
   },
   "visual": {
     "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Rows": {
+        "Columns": {
           "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Master_Sites"
-                    }
-                  },
-                  "Property": "Site Label"
-                }
-              },
-              "queryRef": "Master_Sites.Site Label",
-              "nativeQueryRef": "Site Label",
-              "active": true
-            },
             {
               "field": {
                 "Column": {
@@ -47,6 +32,25 @@
             }
           ]
         },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Master_Sites"
+                    }
+                  },
+                  "Property": "Site Label"
+                }
+              },
+              "queryRef": "Master_Sites.Site Label",
+              "nativeQueryRef": "Site Label",
+              "active": true
+            }
+          ]
+        },
         "Values": {
           "projections": [
             {
@@ -57,27 +61,12 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Top Affinity Category"
+                  "Property": "Avg Brand Affinity Index"
                 }
               },
-              "queryRef": "_Measures.Top Affinity Category",
-              "nativeQueryRef": "Top Affinity Category",
-              "displayName": "Top category"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Top Affinity Index"
-                }
-              },
-              "queryRef": "_Measures.Top Affinity Index",
-              "nativeQueryRef": "Top Affinity Index",
-              "displayName": "Index"
+              "queryRef": "_Measures.Avg Brand Affinity Index",
+              "nativeQueryRef": "Avg Brand Affinity Index",
+              "displayName": "Affinity index"
             }
           ]
         }
@@ -92,7 +81,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "Top Affinity Index"
+                "Property": "Avg Brand Affinity Index"
               }
             },
             "direction": "Descending"
@@ -100,125 +89,6 @@
         ]
       }
     },
-    "expansionStates": [
-      {
-        "roles": [
-          "Rows"
-        ],
-        "levels": [
-          {
-            "queryRefs": [
-              "Master_Sites.Site Label"
-            ],
-            "isCollapsed": true,
-            "identityKeys": [
-              {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Master_Sites"
-                    }
-                  },
-                  "Property": "Site Label"
-                }
-              }
-            ],
-            "isPinned": true
-          },
-          {
-            "queryRefs": [
-              "dim_Hour.HourLabel"
-            ],
-            "isCollapsed": true,
-            "isPinned": true
-          }
-        ],
-        "root": {
-          "children": [
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'10079 - On Street @ Middle Abbey st.'"
-                  }
-                }
-              ],
-              "isToggled": true
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'10001 - Tower Records - Dawson Street'"
-                  }
-                }
-              ],
-              "isToggled": true
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'50288 - The Space Between - Slim - D4'"
-                  }
-                }
-              ],
-              "isToggled": true
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'10075 - Golden Discs Stephen''s Green #1 Window'"
-                  }
-                }
-              ],
-              "isToggled": true
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'10076 - Golden Discs Stephen''s Green #2 In-Store'"
-                  }
-                }
-              ],
-              "isToggled": true
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'50335 - McGraths Drumcondra - Stretch Screen'"
-                  }
-                }
-              ],
-              "isToggled": true
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'20030 - Aparto Dorset Street'"
-                  }
-                }
-              ],
-              "isToggled": true
-            },
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'30011 - Dennehy''s Gym - Douglas- #1 Cork'"
-                  }
-                }
-              ],
-              "isToggled": true
-            }
-          ]
-        }
-      }
-    ],
     "objects": {
       "general": [
         {
@@ -246,7 +116,7 @@
             "columnSubtotals": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -264,7 +134,7 @@
                 }
               }
             ],
-            "metadata": "_Measures.Top Affinity Index"
+            "metadata": "_Measures.Avg Brand Affinity Index"
           }
         },
         {
@@ -465,7 +335,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Who they are — strongest affinity per site & hour'"
+                  "Value": "'Where this category over-indexes — affinity index by screen & hour'"
                 }
               }
             },

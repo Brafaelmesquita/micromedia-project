@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "8f876a479d4b48932377",
   "position": {
-    "x": 1045.0764274749747,
-    "y": 146.45017620478671,
+    "x": 1044.7606679602156,
+    "y": 146.43545750385772,
     "z": 8000,
-    "height": 69.73817914513653,
-    "width": 199.2519404146758,
+    "height": 345.672161703818,
+    "width": 209.09293691656609,
     "tabOrder": 8000
   },
   "visual": {
@@ -43,6 +43,47 @@
                 "Literal": {
                   "Value": "0D"
                 }
+              }
+            },
+            "filter": {
+              "filter": {
+                "Version": 2,
+                "From": [
+                  {
+                    "Name": "d",
+                    "Entity": "dim_Hour",
+                    "Type": 0
+                  }
+                ],
+                "Where": [
+                  {
+                    "Condition": {
+                      "In": {
+                        "Expressions": [
+                          {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Source": "d"
+                                }
+                              },
+                              "Property": "HourLabel"
+                            }
+                          }
+                        ],
+                        "Values": [
+                          [
+                            {
+                              "Literal": {
+                                "Value": "'01:00'"
+                              }
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  }
+                ]
               }
             }
           }
@@ -82,13 +123,6 @@
               "expr": {
                 "Literal": {
                   "Value": "14D"
-                }
-              }
-            },
-            "isInvertedSelectionMode": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
                 }
               }
             }

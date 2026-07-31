@@ -2,17 +2,36 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "7864054906e76456541b",
   "position": {
-    "x": 22.913973147687717,
-    "y": 157.4090329275939,
+    "x": 0,
+    "y": 155.58767359784883,
     "z": 17001,
-    "height": 528.01764209889086,
-    "width": 888.66365424945411,
+    "height": 528.01246696102544,
+    "width": 888.46897773975218,
     "tabOrder": 17001
   },
   "visual": {
     "visualType": "pivotTable",
     "query": {
       "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Brand_Affinity"
+                    }
+                  },
+                  "Property": "Brand Category (short)"
+                }
+              },
+              "queryRef": "Brand_Affinity.Brand Category (short)",
+              "nativeQueryRef": "Brand Category (short)",
+              "active": true
+            }
+          ]
+        },
         "Rows": {
           "projections": [
             {
@@ -43,25 +62,6 @@
               },
               "queryRef": "dim_Hour.HourLabel",
               "nativeQueryRef": "HourLabel",
-              "active": true
-            }
-          ]
-        },
-        "Columns": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Brand_Affinity"
-                    }
-                  },
-                  "Property": "Brand Category (short)"
-                }
-              },
-              "queryRef": "Brand_Affinity.Brand Category (short)",
-              "nativeQueryRef": "Brand Category (short)",
               "active": true
             }
           ]
@@ -144,6 +144,26 @@
                 {
                   "Literal": {
                     "Value": "'10079 - On Street @ Middle Abbey st.'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'10001 - Tower Records - Dawson Street'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'10003 - Copper Face Jacks - Harcourt Street'"
                   }
                 }
               ],

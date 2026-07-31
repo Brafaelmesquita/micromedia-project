@@ -1,11 +1,11 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "51df252785e97a20b551",
+  "name": "71c0e9f74503f94bf09c",
   "position": {
     "x": 1045.0764274749747,
     "y": 146.45017620478671,
     "z": 8000,
-    "height": 69.738179145136527,
+    "height": 69.73817914513653,
     "width": 199.2519404146758,
     "tabOrder": 8000
   },
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "dim_Hour"
+                      "Entity": "Brand_Affinity"
                     }
                   },
-                  "Property": "HourLabel"
+                  "Property": "Brand Category (short)"
                 }
               },
-              "queryRef": "dim_Hour.HourLabel",
-              "nativeQueryRef": "HourLabel",
+              "queryRef": "Brand_Affinity.Brand Category (short)",
+              "nativeQueryRef": "Brand Category (short)",
               "active": true
             }
           ]
@@ -50,8 +50,8 @@
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "d",
-                    "Entity": "dim_Hour",
+                    "Name": "b",
+                    "Entity": "Brand_Affinity",
                     "Type": 0
                   }
                 ],
@@ -64,10 +64,10 @@
                             "Column": {
                               "Expression": {
                                 "SourceRef": {
-                                  "Source": "d"
+                                  "Source": "b"
                                 }
                               },
-                              "Property": "HourLabel"
+                              "Property": "Brand Category (short)"
                             }
                           }
                         ],
@@ -75,7 +75,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'01:00'"
+                                "Value": "'Restaurants'"
                               }
                             }
                           ]
@@ -102,47 +102,20 @@
           }
         }
       ],
-      "data": [
-        {
-          "properties": {
-            "mode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Basic'"
-                }
-              }
-            },
-            "numericEnd": {
-              "expr": {
-                "Literal": {
-                  "Value": "24D"
-                }
-              }
-            },
-            "numericStart": {
-              "expr": {
-                "Literal": {
-                  "Value": "14D"
-                }
-              }
-            }
-          }
-        }
-      ],
       "selection": [
         {
           "properties": {
             "strictSingleSelect": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
             "selectAllCheckboxEnabled": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             }
@@ -177,7 +150,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Hour'"
+                  "Value": "'Category'"
                 }
               }
             },
@@ -230,88 +203,9 @@
         }
       ]
     },
-    "syncGroup": {
-      "groupName": "Hour",
-      "fieldChanges": true,
-      "filterChanges": true
-    },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {
-    "filters": [
-      {
-        "name": "9dc40a991a281a033b8d",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "dim_Hour"
-              }
-            },
-            "Property": "Hour"
-          }
-        },
-        "type": "Categorical",
-        "filter": {
-          "Version": 2,
-          "From": [
-            {
-              "Name": "d",
-              "Entity": "dim_Hour",
-              "Type": 0
-            }
-          ],
-          "Where": [
-            {
-              "Condition": {
-                "Not": {
-                  "Expression": {
-                    "In": {
-                      "Expressions": [
-                        {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "d"
-                              }
-                            },
-                            "Property": "Hour"
-                          }
-                        }
-                      ],
-                      "Values": [
-                        [
-                          {
-                            "Literal": {
-                              "Value": "null"
-                            }
-                          }
-                        ]
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        },
-        "howCreated": "User",
-        "objects": {
-          "general": [
-            {
-              "properties": {
-                "isInvertedSelectionMode": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "true"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    ]
+    "filters": []
   }
 }
