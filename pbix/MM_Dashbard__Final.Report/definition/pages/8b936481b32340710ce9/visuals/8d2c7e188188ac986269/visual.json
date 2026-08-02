@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "edd914772eb3494a9168",
+  "name": "8d2c7e188188ac986269",
   "position": {
-    "x": 1049.91848991849,
-    "y": 157.04847704847705,
-    "z": 11000,
-    "height": 71.385671385671387,
-    "width": 219.64821964821965,
-    "tabOrder": 11000
+    "x": 1050,
+    "y": 165,
+    "z": 10000,
+    "height": 72,
+    "width": 220,
+    "tabOrder": 10000
   },
   "visual": {
     "visualType": "slicer",
@@ -20,14 +20,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Display Mode"
+                      "Entity": "Demo Movement"
                     }
                   },
-                  "Property": "Display Mode"
+                  "Property": "Audience movement"
                 }
               },
-              "queryRef": "Display Mode.Display Mode",
-              "nativeQueryRef": "Display Mode",
+              "queryRef": "Demo Movement.Audience movement",
+              "nativeQueryRef": "Audience movement",
               "active": true
             }
           ]
@@ -90,7 +90,7 @@
                 "From": [
                   {
                     "Name": "d",
-                    "Entity": "Display Mode",
+                    "Entity": "Demo Movement",
                     "Type": 0
                   }
                 ],
@@ -106,7 +106,7 @@
                                   "Source": "d"
                                 }
                               },
-                              "Property": "Display Mode"
+                              "Property": "Audience movement"
                             }
                           }
                         ],
@@ -114,7 +114,7 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'Audience (count)'"
+                                "Value": "'All movement'"
                               }
                             }
                           ]
@@ -163,7 +163,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'View'"
+                  "Value": "'Audience movement'"
                 }
               }
             },
@@ -196,6 +196,12 @@
         }
       ]
     },
+    "syncGroup": {
+      "groupName": "Audience movement",
+      "fieldChanges": true,
+      "filterChanges": true
+    },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "isHidden": true
 }

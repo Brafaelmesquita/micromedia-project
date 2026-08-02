@@ -1,0 +1,230 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "57a51aebef21d9cd8fbb",
+  "position": {
+    "x": 914.83483483483485,
+    "y": 321.78464178464179,
+    "z": 9800,
+    "height": 384.38438438438442,
+    "width": 352.53539253539253,
+    "tabOrder": 9800
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "How to read this",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "12pt",
+                      "color": "#0a7fa8"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The table",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "11pt",
+                      "color": "#0a7fa8"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Rows are screens — expand a screen to see the hour of day (00–23).",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Columns show the audience Population and its make-up: Gender (Male / Female) and Age bands (Under 18, 18–24, 25–34, 35–44, 45–54, 55–64, 65+).",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Values are each group's reach % of the audience (or the raw count — see Display Mode); age/gender shares run 0–100%.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Sorting",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " — click a column header to sort ascending or descending (e.g., rank screens by their share of 25–34s); click again to reverse. The little arrow marks the active sort.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The slicers",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "11pt",
+                      "color": "#0a7fa8"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Gender",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " — show Male or Female only.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Display Mode",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " — switch the values between count and %.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Movement",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " — All / Pedestrians / Non-pedestrians; set on the Overview tab and shared here.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
