@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "c82e6101443209fdc623",
+  "name": "7ba61062aed45d0e1c8f",
   "position": {
-    "x": 21.120498678441017,
-    "y": 154.88365697523412,
-    "z": 4000,
-    "height": 94.338227430369884,
-    "width": 823.69944845919974,
-    "tabOrder": 4000
+    "x": 843.44916344916351,
+    "y": 250.39897039897039,
+    "z": 9720,
+    "height": 112.02059202059202,
+    "width": 406.34920634920638,
+    "tabOrder": 9720
   },
   "visual": {
     "visualType": "textbox",
@@ -19,10 +19,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "How to read this",
+                    "value": "Why one segment at a time?",
                     "textStyle": {
                       "fontWeight": "bold",
-                      "fontSize": "11pt",
+                      "fontSize": "10pt",
                       "color": "#0a7fa8"
                     }
                   }
@@ -31,22 +31,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "The value is a brand-affinity index where 100 = the national average. 150 means this screen's audience is 1.5× more likely than the average person in Ireland to have an affinity for the selected category; below 100 means less likely.",
+                    "value": "Brand-affinity profiles the audience along a single dimension — by movement (Pedestrians / Non-pedestrians) or by visitation (Residents / Workers / Transient), never both crossed. A mix like Pedestrians + Workers has no data behind it, so the Segment slicer stays single-select. Pick All for the whole audience.",
                     "textStyle": {
-                      "fontSize": "9pt",
+                      "fontSize": "8pt",
                       "color": "#333333"
-                    }
-                  }
-                ]
-              },
-              {
-                "textRuns": [
-                  {
-                    "value": "It reflects how concentrated the audience is toward the category — not a headcount.",
-                    "textStyle": {
-                      "fontStyle": "italic",
-                      "fontSize": "9pt",
-                      "color": "#888888"
                     }
                   }
                 ]
@@ -102,6 +90,5 @@
         }
       ]
     }
-  },
-  "isHidden": true
+  }
 }
