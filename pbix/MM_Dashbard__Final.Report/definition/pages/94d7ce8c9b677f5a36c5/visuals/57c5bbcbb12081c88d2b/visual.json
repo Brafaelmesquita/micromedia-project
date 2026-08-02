@@ -115,7 +115,7 @@
                     }
                   },
                   {
-                    "value": " — the screen's daily audience size (footfall).",
+                    "value": " — the screen's daily audience size ([EXTRAPOLATED_USERS_2]).",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#333333"
