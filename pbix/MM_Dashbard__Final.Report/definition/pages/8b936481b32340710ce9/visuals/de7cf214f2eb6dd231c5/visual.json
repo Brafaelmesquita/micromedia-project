@@ -1,19 +1,19 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "1d30c4f87ac51e29b6d7",
+  "name": "de7cf214f2eb6dd231c5",
   "position": {
-    "x": 23.789364997418691,
-    "y": 173.36247505233752,
-    "z": 8000,
-    "height": 79.297883324728971,
-    "width": 130.84150748580279,
-    "tabOrder": 8000
+    "x": 20.866580866580868,
+    "y": 164.73616473616474,
+    "z": 1000,
+    "height": 454.67181467181467,
+    "width": 650.15873015873012,
+    "tabOrder": 1000
   },
   "visual": {
-    "visualType": "slicer",
+    "visualType": "pivotTable",
     "query": {
       "queryState": {
-        "Values": {
+        "Rows": {
           "projections": [
             {
               "field": {
@@ -23,109 +23,164 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "SITE_ID"
+                  "Property": "Site Label"
                 }
               },
-              "queryRef": "Master_Sites.SITE_ID",
-              "nativeQueryRef": "SITE_ID",
+              "queryRef": "Master_Sites.Site Label",
+              "nativeQueryRef": "Site Label",
               "active": true
             }
           ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Segment share"
+                }
+              },
+              "queryRef": "_Measures.Segment share",
+              "nativeQueryRef": "Segment share",
+              "displayName": "Audience share"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Total Population"
+                }
+              },
+              "queryRef": "_Measures.Total Population",
+              "nativeQueryRef": "Total Population",
+              "displayName": "Total population"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Reach potential"
+                }
+              },
+              "queryRef": "_Measures.Reach potential",
+              "nativeQueryRef": "Reach potential",
+              "displayName": "Reach potential"
+            }
+          ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Measures"
+                  }
+                },
+                "Property": "Segment share"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
       }
     },
     "objects": {
-      "data": [
-        {
-          "properties": {
-            "mode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Dropdown'"
-                }
-              }
-            },
-            "isInvertedSelectionMode": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            }
-          }
-        }
-      ],
       "general": [
         {
           "properties": {
-            "selfFilterEnabled": {
+            "layout": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "selfFilter": {
-              "filter": {
-                "Version": 2,
-                "From": [
-                  {
-                    "Name": "m",
-                    "Entity": "Master_Sites",
-                    "Type": 0
-                  }
-                ],
-                "Where": [
-                  {
-                    "Condition": {
-                      "Contains": {
-                        "Left": {
-                          "Column": {
-                            "Expression": {
-                              "SourceRef": {
-                                "Source": "m"
-                              }
-                            },
-                            "Property": "SITE_ID"
-                          }
-                        },
-                        "Right": {
-                          "Literal": {
-                            "Value": "'50150'"
-                          }
-                        }
-                      }
-                    },
-                    "Annotations": {
-                      "PowerBI.MParameterBehavior": 1
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        }
-      ],
-      "selection": [
-        {
-          "properties": {
-            "selectAllCheckboxEnabled": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "'Compact'"
                 }
               }
             }
           }
         }
       ],
-      "header": [
+      "subTotals": [
         {
           "properties": {
-            "show": {
+            "rowSubtotals": {
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            },
+            "columnSubtotals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "valuesOnRow": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontFamily": {
+              "expr": {
+                "Literal": {
+                  "Value": "'''Segoe UI Semibold'', wf_segoe-ui_semibold, helvetica, arial, sans-serif'"
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            },
+            "alignment": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Center'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
                 }
               }
             }
@@ -147,7 +202,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Site'"
+                  "Value": "'Top screens by segment — audience share'"
                 }
               }
             },
@@ -158,34 +213,21 @@
                 }
               }
             },
-            "bold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
             "fontColor": {
               "solid": {
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#23B5E8'"
+                      "Value": "'#29B6E8'"
                     }
                   }
                 }
               }
-            }
-          }
-        }
-      ],
-      "visualHeader": [
-        {
-          "properties": {
-            "show": {
+            },
+            "bold": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             }
@@ -213,17 +255,12 @@
         }
       ]
     },
-    "syncGroup": {
-      "groupName": "SITE_ID",
-      "fieldChanges": true,
-      "filterChanges": true
-    },
     "drillFilterOtherVisuals": true
   },
   "filterConfig": {
     "filters": [
       {
-        "name": "7cdae19027c8699a1d30",
+        "name": "4c6584f62b613fd3",
         "field": {
           "Column": {
             "Expression": {
@@ -278,23 +315,8 @@
             }
           ]
         },
-        "objects": {
-          "general": [
-            {
-              "properties": {
-                "isInvertedSelectionMode": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "true"
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
+        "howCreated": "User"
       }
     ]
-  },
-  "isHidden": true
+  }
 }

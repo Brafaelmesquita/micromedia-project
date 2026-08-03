@@ -231,7 +231,8 @@ table _Measures
 			        DISTINCTCOUNT ( Footfall[SITE_ID] ),
 			        Footfall[HasValidSite] = TRUE (),
 			        Footfall[IS_GRAND_TOTAL] = 1,
-			        Footfall[HOUR] = 25
+			        Footfall[HOUR] = 25,
+			        REMOVEFILTERS ( dim_Hour )
 			    )
 			VAR MinDate  = CALCULATE ( MIN ( Footfall[DATE] ), Footfall[HasValidSite] = TRUE () )
 			VAR MaxDate  = CALCULATE ( MAX ( Footfall[DATE] ), Footfall[HasValidSite] = TRUE () )
@@ -1228,6 +1229,37 @@ table _Measures
 		formatString: 0
 		displayFolder: Brand Affinity
 		lineageTag: d3a10113-1111-4aaa-8bbb-000000000113
+
+	/// Estimated people of the selected class segment reachable at a screen:
+	/// daily audience (Total Population) x the segment's audience share (Class %).
+	measure 'Reach potential' = [Total Population] * [Segment share]
+		formatString: #,0
+		displayFolder: Demographics
+		lineageTag: d3a10401-1111-4aaa-8bbb-000000000401
+
+	/// Share of the audience in the SELECTED segment, robust to a mismatched Breakdown
+	/// slicer: it follows the chosen segment and normalises within that segment's own
+	/// breakdown, so switching Breakdown never blanks the table.
+	measure 'Segment share' =
+			VAR seg = CALCULATE ( SELECTEDVALUE ( Demographics_ClassLong[SEGMENT] ), REMOVEFILTERS ( Demographics_ClassLong[BREAKDOWN] ) )
+			VAR bd =
+			    CALCULATE (
+			        SELECTEDVALUE ( Demographics_ClassLong[BREAKDOWN] ),
+			        REMOVEFILTERS ( Demographics_ClassLong ),
+			        Demographics_ClassLong[SEGMENT] = seg
+			    )
+			RETURN
+			    DIVIDE (
+			        CALCULATE ( [Class Audience (Hourly)], REMOVEFILTERS ( Demographics_ClassLong[BREAKDOWN] ) ),
+			        CALCULATE (
+			            [Class Audience (Hourly)],
+			            REMOVEFILTERS ( Demographics_ClassLong[SEGMENT], Demographics_ClassLong[BREAKDOWN] ),
+			            Demographics_ClassLong[BREAKDOWN] = bd
+			        )
+			    )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Demographics
+		lineageTag: d3a10501-1111-4aaa-8bbb-000000000501
 
 	partition _Measures = m
 		mode: import

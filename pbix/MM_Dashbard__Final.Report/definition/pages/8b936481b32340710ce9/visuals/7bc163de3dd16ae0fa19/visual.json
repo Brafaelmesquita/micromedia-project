@@ -1,0 +1,216 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "7bc163de3dd16ae0fa19",
+  "position": {
+    "x": 682,
+    "y": 165,
+    "z": 12000,
+    "height": 450,
+    "width": 248,
+    "tabOrder": 12000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "How to read this",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#0A7FA8",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The table",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#0A7FA8",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Audience share",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " — % of the screen's audience in the selected segment.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Total population",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " — the screen's daily audience size.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Reach potential",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " — people of that segment reachable: population × share.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Click a column header to sort ascending / descending.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The slicers",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#0A7FA8",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Segment",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " — one slicer grouped by classification (Social Grade / Occupation / Industry). Expand a group and pick a segment; the table ranks screens by that segment's share.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

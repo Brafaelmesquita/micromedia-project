@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "4f64907e6a4d19be3b70",
+  "name": "6607b5b55a1075ce0fb1",
   "position": {
-    "x": 24,
-    "y": 275,
-    "z": 11000,
-    "height": 78,
-    "width": 227,
-    "tabOrder": 11000
+    "x": 935,
+    "y": 165.0,
+    "z": 2000,
+    "height": 500.0,
+    "width": 330,
+    "tabOrder": 2000
   },
   "visual": {
     "visualType": "slicer",
@@ -20,66 +20,36 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Calendar"
+                      "Entity": "Demographics_ClassLong"
                     }
                   },
-                  "Property": "Date"
+                  "Property": "BREAKDOWN"
                 }
               },
-              "queryRef": "Calendar.Date",
-              "nativeQueryRef": "Date",
+              "queryRef": "Demographics_ClassLong.BREAKDOWN",
+              "nativeQueryRef": "BREAKDOWN",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Demographics_ClassLong"
+                    }
+                  },
+                  "Property": "SEGMENT"
+                }
+              },
+              "queryRef": "Demographics_ClassLong.SEGMENT",
+              "nativeQueryRef": "SEGMENT",
               "active": true
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Column": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "Calendar"
-                  }
-                },
-                "Property": "Date"
-              }
-            },
-            "direction": "Ascending"
-          }
-        ],
-        "isDefaultSort": true
       }
     },
     "objects": {
-      "data": [
-        {
-          "properties": {
-            "startDate": {
-              "expr": {
-                "Literal": {
-                  "Value": "datetime'2026-03-18T00:00:00'"
-                }
-              }
-            },
-            "endDate": {
-              "expr": {
-                "Literal": {
-                  "Value": "datetime'2026-03-31T00:00:00'"
-                }
-              }
-            },
-            "mode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Between'"
-                }
-              }
-            }
-          }
-        }
-      ],
       "general": [
         {
           "properties": {
@@ -95,55 +65,36 @@
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "c",
-                    "Entity": "Calendar",
+                    "Name": "t",
+                    "Entity": "Demographics_ClassLong",
                     "Type": 0
                   }
                 ],
                 "Where": [
                   {
                     "Condition": {
-                      "And": {
-                        "Left": {
-                          "Comparison": {
-                            "ComparisonKind": 2,
-                            "Left": {
-                              "Column": {
-                                "Expression": {
-                                  "SourceRef": {
-                                    "Source": "c"
-                                  }
-                                },
-                                "Property": "Date"
-                              }
-                            },
-                            "Right": {
-                              "Literal": {
-                                "Value": "datetime'2026-03-18T00:00:00'"
-                              }
+                      "In": {
+                        "Expressions": [
+                          {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Source": "t"
+                                }
+                              },
+                              "Property": "SEGMENT"
                             }
                           }
-                        },
-                        "Right": {
-                          "Comparison": {
-                            "ComparisonKind": 3,
-                            "Left": {
-                              "Column": {
-                                "Expression": {
-                                  "SourceRef": {
-                                    "Source": "c"
-                                  }
-                                },
-                                "Property": "Date"
-                              }
-                            },
-                            "Right": {
+                        ],
+                        "Values": [
+                          [
+                            {
                               "Literal": {
-                                "Value": "datetime'2026-04-01T00:00:00'"
+                                "Value": "'A - Employers & managers'"
                               }
                             }
-                          }
-                        }
+                          ]
+                        ]
                       }
                     }
                   }
@@ -156,10 +107,17 @@
       "selection": [
         {
           "properties": {
-            "selectAllCheckboxEnabled": {
+            "strictSingleSelect": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "selectAllCheckboxEnabled": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             }
@@ -178,22 +136,22 @@
             }
           }
         }
-      ]
-    },
-    "visualContainerObjects": {
-      "visualHeader": [
+      ],
+      "data": [
         {
           "properties": {
-            "show": {
+            "mode": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "'Dropdown'"
                 }
               }
             }
           }
         }
-      ],
+      ]
+    },
+    "visualContainerObjects": {
       "title": [
         {
           "properties": {
@@ -207,7 +165,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'Month'"
+                  "Value": "'Segment  (expand a breakdown)'"
                 }
               }
             },
@@ -259,13 +217,6 @@
           }
         }
       ]
-    },
-    "syncGroup": {
-      "groupName": "Date",
-      "fieldChanges": true,
-      "filterChanges": true
-    },
-    "drillFilterOtherVisuals": true
-  },
-  "isHidden": true
+    }
+  }
 }
