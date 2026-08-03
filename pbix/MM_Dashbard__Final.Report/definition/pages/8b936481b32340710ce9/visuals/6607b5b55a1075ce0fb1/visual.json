@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "6607b5b55a1075ce0fb1",
   "position": {
-    "x": 935,
-    "y": 165.0,
+    "x": 934.60317460317458,
+    "y": 164.73616473616474,
     "z": 2000,
-    "height": 500.0,
-    "width": 330,
+    "height": 137.2801372801373,
+    "width": 319.58815958815961,
     "tabOrder": 2000
   },
   "visual": {
@@ -49,6 +49,64 @@
         }
       }
     },
+    "expansionStates": [
+      {
+        "roles": [
+          "Values"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "Demographics_ClassLong.BREAKDOWN"
+            ],
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Demographics_ClassLong"
+                    }
+                  },
+                  "Property": "BREAKDOWN"
+                }
+              }
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "Demographics_ClassLong.SEGMENT"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {
+          "children": [
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'Social Grade'"
+                  }
+                }
+              ],
+              "isToggled": true
+            },
+            {
+              "identityValues": [
+                {
+                  "Literal": {
+                    "Value": "'Industry'"
+                  }
+                }
+              ],
+              "isToggled": true
+            }
+          ]
+        }
+      }
+    ],
     "objects": {
       "general": [
         {
@@ -65,7 +123,7 @@
                 "Version": 2,
                 "From": [
                   {
-                    "Name": "t",
+                    "Name": "d",
                     "Entity": "Demographics_ClassLong",
                     "Type": 0
                   }
@@ -79,7 +137,17 @@
                             "Column": {
                               "Expression": {
                                 "SourceRef": {
-                                  "Source": "t"
+                                  "Source": "d"
+                                }
+                              },
+                              "Property": "BREAKDOWN"
+                            }
+                          },
+                          {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Source": "d"
                                 }
                               },
                               "Property": "SEGMENT"
@@ -90,10 +158,97 @@
                           [
                             {
                               "Literal": {
-                                "Value": "'A - Employers & managers'"
+                                "Value": "'Occupation'"
+                              }
+                            },
+                            {
+                              "Literal": {
+                                "Value": "'Associate professional & technical'"
                               }
                             }
                           ]
+                        ]
+                      }
+                    },
+                    "Annotations": {
+                      "filterExpressionMetadata": {
+                        "expressions": [
+                          {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Demographics_ClassLong"
+                                }
+                              },
+                              "Property": "BREAKDOWN"
+                            }
+                          },
+                          {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Demographics_ClassLong"
+                                }
+                              },
+                              "Property": "SEGMENT"
+                            }
+                          }
+                        ],
+                        "decomposedIdentities": {
+                          "values": [
+                            [
+                              {
+                                "0": [
+                                  {
+                                    "Literal": {
+                                      "Value": "'Occupation'"
+                                    }
+                                  }
+                                ]
+                              },
+                              {
+                                "1": [
+                                  {
+                                    "Literal": {
+                                      "Value": "'Associate professional & technical'"
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          ],
+                          "columns": [
+                            {
+                              "value": {
+                                "Column": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Demographics_ClassLong"
+                                    }
+                                  },
+                                  "Property": "BREAKDOWN"
+                                }
+                              }
+                            },
+                            {
+                              "value": {
+                                "Column": {
+                                  "Expression": {
+                                    "SourceRef": {
+                                      "Entity": "Demographics_ClassLong"
+                                    }
+                                  },
+                                  "Property": "SEGMENT"
+                                }
+                              }
+                            }
+                          ]
+                        },
+                        "valueMap": [
+                          {
+                            "0": "Occupation",
+                            "1": "Associate professional & technical"
+                          }
                         ]
                       }
                     }
