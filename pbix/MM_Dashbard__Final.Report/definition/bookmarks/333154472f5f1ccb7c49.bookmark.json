@@ -25,61 +25,6 @@
               "objects": {}
             }
           },
-          "a9019336da888ca2ca11": {
-            "filters": {
-              "byExpr": [
-                {
-                  "name": "2396a78b53390727eee7",
-                  "type": "Advanced",
-                  "expression": {
-                    "Measure": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "_Measures"
-                        }
-                      },
-                      "Property": "Total Population (Hourly)"
-                    }
-                  },
-                  "howCreated": 0
-                },
-                {
-                  "name": "b0b59291096c6add0663",
-                  "type": "Advanced",
-                  "expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Master_Sites"
-                        }
-                      },
-                      "Property": "Longitude_loco"
-                    }
-                  },
-                  "howCreated": 0
-                },
-                {
-                  "name": "0f10ca1f572c2c1521b5",
-                  "type": "Advanced",
-                  "expression": {
-                    "Column": {
-                      "Expression": {
-                        "SourceRef": {
-                          "Entity": "Master_Sites"
-                        }
-                      },
-                      "Property": "Latitude_loco"
-                    }
-                  },
-                  "howCreated": 0
-                }
-              ]
-            },
-            "singleVisual": {
-              "visualType": "azureMap",
-              "objects": {}
-            }
-          },
           "ba70c914daad613ddc52": {
             "singleVisual": {
               "visualType": "image",

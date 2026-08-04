@@ -5,7 +5,7 @@
     "x": 21.120498678441017,
     "y": 154.88365697523412,
     "z": 4000,
-    "height": 94.338227430369884,
+    "height": 120,
     "width": 823.69944845919974,
     "tabOrder": 4000
   },
@@ -21,9 +21,9 @@
                   {
                     "value": "How to read this",
                     "textStyle": {
-                      "fontWeight": "bold",
-                      "fontSize": "11pt",
-                      "color": "#0a7fa8"
+                      "fontSize": "12pt",
+                      "color": "#0a7fa8",
+                      "fontWeight": "bold"
                     }
                   }
                 ]
@@ -36,6 +36,13 @@
                       "fontSize": "9pt",
                       "color": "#333333"
                     }
+                  },
+                  {
+                    "value": " Source: Brand_Affinity[BRAND_AFFINITY_INDEX], population-weighted average (IS_DEFAULT=1).",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
+                    }
                   }
                 ]
               },
@@ -44,9 +51,8 @@
                   {
                     "value": "It reflects how concentrated the audience is toward the category — not a headcount.",
                     "textStyle": {
-                      "fontStyle": "italic",
                       "fontSize": "9pt",
-                      "color": "#888888"
+                      "color": "#333333"
                     }
                   }
                 ]

@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "57a51aebef21d9cd8fbb",
   "position": {
-    "x": 914.83483483483485,
-    "y": 321.78464178464179,
+    "x": 904.950664950665,
+    "y": 337.16001716001716,
     "z": 9800,
-    "height": 384.38438438438442,
-    "width": 352.53539253539253,
+    "height": 363.51780351780354,
+    "width": 364.61604461604463,
     "tabOrder": 9800
   },
   "visual": {
@@ -61,10 +61,25 @@
               {
                 "textRuns": [
                   {
-                    "value": "Columns show the audience Population and its make-up: Gender (Male / Female) and Age bands (Under 18, 18–24, 25–34, 35–44, 45–54, 55–64, 65+).",
+                    "value": "Population",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " — the audience size at that screen/hour.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Source: Footfall[EXTRAPOLATED_USERS_2] (hourly grand total).",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
                     }
                   }
                 ]
@@ -72,7 +87,33 @@
               {
                 "textRuns": [
                   {
-                    "value": "Values are each group's reach % of the audience (or the raw count — see Display Mode); age/gender shares run 0–100%.",
+                    "value": "Gender & Age",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " — each group's reach of that audience — Gender (Male / Female) and Age bands (Under 18, 18–24, 25–34, 35–44, 45–54, 55–64, 65+).",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Source: Demographics_AgeLong[REACH_PCT]; group = Σ(REACH_PCT/100 × hour population); share = group ÷ total.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Values are each group's reach % (or the raw count — see Display Mode); age/gender shares run 0–100%.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#333333"
@@ -91,7 +132,7 @@
                     }
                   },
                   {
-                    "value": " — click a column header to sort ascending or descending (e.g., rank screens by their share of 25–34s); click again to reverse. The little arrow marks the active sort.",
+                    "value": " — click a column header to sort ascending or descending (e.g. rank screens by their share of 25–34s); click again to reverse. The arrow marks the active sort.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#333333"

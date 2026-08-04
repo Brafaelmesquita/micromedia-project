@@ -5,7 +5,7 @@
     "x": 585.36250536250543,
     "y": 247.10424710424712,
     "z": 7000,
-    "height": 196.5851565851566,
+    "height": 195.48691548691548,
     "width": 685.30244530244534,
     "tabOrder": 7000
   },
@@ -38,7 +38,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "Cards show the daily average; the line chart the day-by-day trend; the table the breakdown by screen.",
+                    "value": "Cards show the daily average (mean across the days in range); the line chart the day-by-day trend; the table the breakdown by screen.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#333333"
@@ -81,6 +81,13 @@
                       "fontSize": "9pt",
                       "color": "#333333"
                     }
+                  },
+                  {
+                    "value": " Source: Footfall[EXTRAPOLATED_USERS_2], daily grand total (IS_GRAND_TOTAL=1, HOUR=25).",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
+                    }
                   }
                 ]
               },
@@ -99,6 +106,13 @@
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Source: Footfall[EXTRAPOLATED_NUMBER_OF_USERS].",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
                     }
                   }
                 ]
@@ -119,6 +133,13 @@
                       "fontSize": "9pt",
                       "color": "#333333"
                     }
+                  },
+                  {
+                    "value": " Source: Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS].",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
+                    }
                   }
                 ]
               },
@@ -133,10 +154,17 @@
                     }
                   },
                   {
-                    "value": " — Exposure ÷ Population — how much of the passing audience actually looks.",
+                    "value": " — how much of the passing audience actually looks.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Calc: Exposure ÷ Population.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
                     }
                   }
                 ]
@@ -250,10 +278,10 @@
               {
                 "textRuns": [
                   {
-                    "value": "Movement and Visitation scale every number to the chosen audience share.",
+                    "value": "Movement and Visitation scale every number by an audience share split from EXTRAPOLATED_USERS_2 by Movement Group / VISITATION_MODALITY.",
                     "textStyle": {
-                      "fontSize": "9pt",
-                      "color": "#333333"
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
                     }
                   }
                 ]

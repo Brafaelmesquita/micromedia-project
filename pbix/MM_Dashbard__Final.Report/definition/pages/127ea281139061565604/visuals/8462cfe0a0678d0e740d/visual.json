@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
-  "name": "a9019336da888ca2ca11",
+  "name": "8462cfe0a0678d0e740d",
   "position": {
-    "x": 7.6876876876876876,
-    "y": 160.34320034320035,
-    "z": 3000,
-    "height": 550.21879021879022,
-    "width": 1259.6825396825398,
-    "tabOrder": 3000
+    "x": 0,
+    "y": 164.73616473616474,
+    "z": 14001,
+    "height": 537.039897039897,
+    "width": 1267.3702273702274,
+    "tabOrder": 14001
   },
   "visual": {
     "visualType": "azureMap",
@@ -67,68 +67,37 @@
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "isDefaultSort": true
       }
     },
     "objects": {
       "mapControls": [
         {
           "properties": {
-            "defaultStyle": {
+            "zoom": {
               "expr": {
                 "Literal": {
-                  "Value": "'grayscale_dark'"
-                }
-              }
-            },
-            "showStylePicker": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "showNavigationControls": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "showSelectionControl": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
+                  "Value": "11.66D"
                 }
               }
             },
             "centerLatitude": {
               "expr": {
                 "Literal": {
-                  "Value": "53.339279895663054D"
+                  "Value": "53.36324630287592D"
                 }
               }
             },
             "centerLongitude": {
               "expr": {
                 "Literal": {
-                  "Value": "-6.230299450790331D"
+                  "Value": "-6.311949320317012D"
                 }
               }
             },
-            "zoom": {
+            "defaultStyle": {
               "expr": {
                 "Literal": {
-                  "Value": "12.59D"
-                }
-              }
-            },
-            "autoZoom": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
+                  "Value": "'grayscale_dark'"
                 }
               }
             }
@@ -307,47 +276,6 @@
           }
         }
       ],
-      "heatMapLayer": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "heatMapRadius": {
-              "expr": {
-                "Literal": {
-                  "Value": "100D"
-                }
-              }
-            },
-            "heatMapUseSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "heatMapIntensity": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
-                }
-              }
-            },
-            "heatMapRadiusUnit": {
-              "expr": {
-                "Literal": {
-                  "Value": "'meters'"
-                }
-              }
-            }
-          }
-        }
-      ],
       "legend": [
         {
           "properties": {
@@ -421,20 +349,13 @@
       ]
     },
     "visualContainerObjects": {
-      "border": [
+      "visualTooltip": [
         {
           "properties": {
-            "show": {
+            "section": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "radius": {
-              "expr": {
-                "Literal": {
-                  "Value": "10D"
+                  "Value": "'9c93bc47e1c8dc443406'"
                 }
               }
             }
@@ -475,17 +396,31 @@
                   }
                 }
               }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
             }
           }
         }
       ],
-      "visualTooltip": [
+      "border": [
         {
           "properties": {
-            "section": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "'9c93bc47e1c8dc443406'"
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
                 }
               }
             }

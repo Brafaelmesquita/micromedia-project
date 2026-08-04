@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "7bc163de3dd16ae0fa19",
   "position": {
-    "x": 682,
-    "y": 165,
+    "x": 682.007722007722,
+    "y": 164.73616473616474,
     "z": 12000,
-    "height": 450,
-    "width": 248,
+    "height": 442.59116259116263,
+    "width": 244.90776490776491,
     "tabOrder": 12000
   },
   "visual": {
@@ -21,9 +21,9 @@
                   {
                     "value": "How to read this",
                     "textStyle": {
+                      "fontWeight": "bold",
                       "fontSize": "12pt",
-                      "color": "#0A7FA8",
-                      "fontWeight": "bold"
+                      "color": "#0a7fa8"
                     }
                   }
                 ]
@@ -31,11 +31,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "color": "#333333"
-                    }
+                    "value": ""
                   }
                 ]
               },
@@ -44,9 +40,9 @@
                   {
                     "value": "The table",
                     "textStyle": {
+                      "fontWeight": "bold",
                       "fontSize": "11pt",
-                      "color": "#0A7FA8",
-                      "fontWeight": "bold"
+                      "color": "#0a7fa8"
                     }
                   }
                 ]
@@ -56,9 +52,9 @@
                   {
                     "value": "Audience share",
                     "textStyle": {
+                      "fontWeight": "bold",
                       "fontSize": "9pt",
-                      "color": "#333333",
-                      "fontWeight": "bold"
+                      "color": "#333333"
                     }
                   },
                   {
@@ -66,6 +62,13 @@
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Source: Demographics_ClassLong[REACH_PCT] applied to Footfall[EXTRAPOLATED_USERS_2]; segment audience ÷ breakdown total.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
                     }
                   }
                 ]
@@ -75,9 +78,9 @@
                   {
                     "value": "Total population",
                     "textStyle": {
+                      "fontWeight": "bold",
                       "fontSize": "9pt",
-                      "color": "#333333",
-                      "fontWeight": "bold"
+                      "color": "#333333"
                     }
                   },
                   {
@@ -85,6 +88,13 @@
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Source: Footfall[EXTRAPOLATED_USERS_2].",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
                     }
                   }
                 ]
@@ -94,16 +104,23 @@
                   {
                     "value": "Reach potential",
                     "textStyle": {
+                      "fontWeight": "bold",
                       "fontSize": "9pt",
-                      "color": "#333333",
-                      "fontWeight": "bold"
+                      "color": "#333333"
                     }
                   },
                   {
-                    "value": " — people of that segment reachable: population × share.",
+                    "value": " — people of that segment reachable.",
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Calc: Total population × Audience share.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
                     }
                   }
                 ]
@@ -122,11 +139,7 @@
               {
                 "textRuns": [
                   {
-                    "value": "",
-                    "textStyle": {
-                      "fontSize": "9pt",
-                      "color": "#333333"
-                    }
+                    "value": ""
                   }
                 ]
               },
@@ -135,9 +148,9 @@
                   {
                     "value": "The slicers",
                     "textStyle": {
+                      "fontWeight": "bold",
                       "fontSize": "11pt",
-                      "color": "#0A7FA8",
-                      "fontWeight": "bold"
+                      "color": "#0a7fa8"
                     }
                   }
                 ]
@@ -147,9 +160,9 @@
                   {
                     "value": "Segment",
                     "textStyle": {
+                      "fontWeight": "bold",
                       "fontSize": "9pt",
-                      "color": "#333333",
-                      "fontWeight": "bold"
+                      "color": "#333333"
                     }
                   },
                   {

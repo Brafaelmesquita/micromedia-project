@@ -5,8 +5,8 @@
     "x": 20.866580866580868,
     "y": 154.85199485199485,
     "z": 9700,
-    "height": 205.37108537108537,
-    "width": 809.40368940368944,
+    "height": 207.56756756756758,
+    "width": 802.81424281424279,
     "tabOrder": 9700
   },
   "visual": {
@@ -54,6 +54,13 @@
                     "textStyle": {
                       "fontSize": "9pt",
                       "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Source: Brand_Affinity[BRAND_AFFINITY_INDEX], population-weighted average (IS_DEFAULT=1).",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
                     }
                   }
                 ]
