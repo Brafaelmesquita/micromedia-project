@@ -50,6 +50,13 @@ Transformations applied to every file:
     to produce reliable affinity scores. They carry no audience signal
     (verified: all three metrics are zero on exactly the same set of rows)
     and would distort Power BI averages and category rankings if kept.
+  * Redundant catchment RADIUS collapsed (NEW in v1.4.0) -- from May 2026
+    Locomizer briefly shipped both catchment radii (50 m + 183 m) per screen,
+    duplicating every row. The two radii are byte-identical on all three
+    metrics (verified: max abs diff = 0), so one row per
+    (CODE, YEAR_MONTH, HOUR, MOVEMENT_MODALITY, VISITATION_MODALITY,
+    BRAND_AFFINITY_CATEGORY_NAME) is kept. Single-radius months are untouched.
+    See collapse_redundant_radius() and the v1.4.0 changelog entry.
   * Explicit column dtypes on load -- avoids pandas type inference, cuts
     memory usage significantly and speeds up read_csv on the 390K-row files.
   * Low-cardinality string columns stored as 'category' -- BRAND_AFFINITY_
@@ -95,6 +102,33 @@ Usage:
   Drop new monthly CSVs into INPUT_DIR and re-run -- no code changes needed.
 
 Version history:
+  v1.4.0  2026-09-04  FIX: collapse redundant catchment RADIUS (row-doubling).
+                      In May 2026 Locomizer shipped BOTH catchment radii
+                      (50 m + 183 m) for every screen -- 259 screens, every row
+                      duplicated (820,512 rows vs ~408,672 in adjacent months);
+                      before and after May each screen carries a single radius
+                      (Mar/Apr/Jun/Jul 2026 and all of 2025). The two radii are
+                      BYTE-IDENTICAL on all three metrics (INDEX / DWELL_TIME /
+                      PROPORTION) -- normalised characteristics, so catchment
+                      size does not change them -- verified on the May 2026
+                      export: 410,256 (CODE,HOUR,MOVEMENT,VISITATION,CATEGORY)
+                      keys, max abs diff = 0. The duplicate row therefore carries
+                      no signal and only doubles row counts (and any SUM/COUNT);
+                      the INDEX, being averaged, was numerically robust, but
+                      shipping doubled rows is still wrong. New
+                      collapse_redundant_radius() keeps ONE row per
+                      (CODE, YEAR_MONTH, HOUR, MOVEMENT_MODALITY,
+                      VISITATION_MODALITY, BRAND_AFFINITY_CATEGORY_NAME),
+                      retaining the smallest available radius (lossless -- the
+                      values are identical). Trigger: only >1-radius groups are
+                      touched, so single-radius months pass through untouched.
+                      Mirrors process_demographics.py v1.7.0; unlike
+                      process_footfall.py the master is NOT consulted (footfall's
+                      radii DIFFER ~4.3x and must pick the canonical one; here
+                      they are identical, so either is correct). Runs after the
+                      zero-row filter so IS_DEFAULT, the modality-shape report and
+                      the export all reflect the de-duplicated data. RADIUS column
+                      kept as-is (no dashboard measure uses it).
   v1.3.0  2026-07-26  FEATURE: canonical SITE_ID column. Micromedia is migrating
                       screen codes from the legacy MM ID scheme to NEW MM ID, and
                       Locomizer delivers monthly exports under either scheme. A new
@@ -166,7 +200,7 @@ import pandas as pd
 
 from site_id_crosswalk import Crosswalk
 
-__version__ = "1.3.0"
+__version__ = "1.4.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -374,6 +408,72 @@ def build_year_month_column(df):
         + df["MONTH"].astype(str).str.zfill(2)
     )
     df.drop(columns=["YEAR", "MONTH"], inplace=True)
+    return df
+
+
+def collapse_redundant_radius(df):
+    """
+    Collapse Locomizer's duplicate catchment RADIUS (NEW in v1.4.0).
+
+    In May 2026 Locomizer shipped every screen's Brand Affinity profile at TWO
+    catchment radii (50 m and 183 m); before and after May each screen carries a
+    single radius. The three affinity metrics (BRAND_AFFINITY_INDEX,
+    BRAND_AFFINITY_DWELL_TIME, PROPORTION_OF_TARGET_USERS) are byte-for-byte
+    identical across the two radii -- they are normalised characteristics of the
+    audience, so catchment size does not change them (verified on the May 2026
+    export: 410,256 (CODE, HOUR, MOVEMENT_MODALITY, VISITATION_MODALITY,
+    BRAND_AFFINITY_CATEGORY_NAME) keys, max abs diff = 0). The second radius
+    therefore carries no information and only doubles the row count (820,512 vs
+    ~408,672 in adjacent months), inflating any SUM/COUNT.
+
+    We keep ONE row per
+      (CODE, YEAR_MONTH, HOUR, MOVEMENT_MODALITY, VISITATION_MODALITY,
+       BRAND_AFFINITY_CATEGORY_NAME),
+    retaining the smallest available radius for determinism (groups with both
+    radii keep 50 m; groups carrying only one radius keep it -- nothing is
+    dropped). Because the values are identical the choice is lossless. RADIUS is
+    not used by any dashboard measure, so the column is kept as-is and only the
+    duplicate rows are removed.
+
+    Trigger: only groups carrying >1 radius are affected, so single-radius months
+    (all of 2025, and Mar/Apr/Jun/Jul 2026) pass through untouched.
+
+    Unlike process_footfall.py, the master `viewing.radius` is NOT consulted:
+    footfall's two radii hold DIFFERENT audience counts (a 183 m catchment ~4.3x
+    a 50 m one) so it must pick each screen's canonical radius, whereas here the
+    radii are identical and either one is correct. This mirrors
+    process_demographics.py v1.7.0.
+
+    Must run AFTER build_hour_column and build_year_month_column so HOUR and
+    YEAR_MONTH exist for the key.
+    """
+    key = ["CODE", "YEAR_MONTH", "HOUR",
+           "MOVEMENT_MODALITY", "VISITATION_MODALITY",
+           "BRAND_AFFINITY_CATEGORY_NAME"]
+    missing = [c for c in key + ["RADIUS"] if c not in df.columns]
+    if missing:
+        raise ValueError(
+            f"collapse_redundant_radius needs columns {missing}. "
+            f"Run it after build_hour_column and build_year_month_column."
+        )
+
+    before   = len(df)
+    dup_keys = int((df.groupby(key, observed=True)["RADIUS"].transform("nunique") > 1).sum())
+
+    df = (
+        df.sort_values("RADIUS", kind="stable")
+          .drop_duplicates(subset=key, keep="first")
+          .reset_index(drop=True)
+    )
+
+    removed = before - len(df)
+    # Post-condition: every key must now be unique.
+    assert not df.duplicated(subset=key).any(), \
+        "collapse_redundant_radius: duplicate keys remain after collapse."
+
+    print(f"  [RADIUS] Collapsed redundant catchment radius: "
+          f"{removed:,} duplicate row(s) removed "
+          f"({dup_keys:,} rows were in 2-radius groups)  ->  {len(df):,} rows remain.")
     return df
 
 
@@ -647,6 +747,17 @@ for filepath in brand_affinity_files:
               f"for this period.")
     else:
         print(f"  [SCREENS] All {len(screens_after)} screens retained at least one row. OK")
+
+    # -- 2i2: Collapse redundant catchment RADIUS (NEW in v1.4.0) --------------
+    # From May 2026 Locomizer briefly shipped both catchment radii (50 m + 183 m)
+    # per screen, duplicating every row. The two radii are byte-identical on all
+    # three affinity metrics (verified: max abs diff = 0 on the May 2026 export),
+    # so the duplicate carries no signal and only doubles the row count. Keep one
+    # row per (CODE, YEAR_MONTH, HOUR, MOVEMENT_MODALITY, VISITATION_MODALITY,
+    # BRAND_AFFINITY_CATEGORY_NAME). Runs BEFORE IS_DEFAULT / the shape report /
+    # export so every downstream count reflects the de-duplicated data. Single-
+    # radius months pass through untouched (trigger: >1 radius in a group).
+    df = collapse_redundant_radius(df)
 
     # -- 2j: Add IS_DEFAULT helper column --------------------------------------
     # IS_DEFAULT = 1 marks rows where MOVEMENT_MODALITY='All' AND
