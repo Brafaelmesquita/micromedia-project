@@ -19,7 +19,9 @@ Transformations
         IS_GRAND_TOTAL = 1 AND HOUR = 25  -> daily / monthly unique audience
         IS_GRAND_TOTAL = 1 AND HOUR < 25  -> hourly unique audience
         IS_GRAND_TOTAL = 0                -> segment breakdowns
-  * No rows are removed. HOUR=25 sentinels are PRESERVED (see v3.1 changelog).
+  * Non-canonical RADIUS rows are REMOVED from May 2026 onward (see "Radius
+    canonicalisation" below). HOUR=25 sentinels and (All, All) rows are still
+    PRESERVED.
 
 Power BI usage
 --------------
@@ -58,6 +60,35 @@ daily count. Keeping it is mandatory for the dashboard's day-level KPIs.
 
 Full reproducible audit: docs/footfall_methodology/
 
+Radius canonicalisation (v3.6.0+)
+---------------------------------
+From May 2026 Locomizer ships BOTH catchment radii (50 m and 183 m) for every
+screen; before May each screen had a single canonical radius (Apr 2026: 106 at
+183, 143 at 50). Keeping both double-counts audience, so the non-canonical row
+is REMOVED. Each screen's canonical radius is the master's `viewing.radius`
+(Locomizer Master V3 - Azimuth.xlsx), validated vs Apr 2026: 244 screens in
+common, 0 disagreements.
+
+  * One radius per screen (pre-May)  -> file untouched, master not consulted.
+  * Duplicated radii (May+)          -> keep the row matching the master; drop
+                                        the other.
+  * CODE absent from the master      -> no known canonical radius; rows DROPPED
+                                        and the CODE signalled per file and in
+                                        the run summary (14 such screens in
+                                        May 2026 against the current master).
+
+The duplicate is removed at source, so downstream Power BI measures are
+unchanged: IS_GRAND_TOTAL = 1 AND HOUR = 25 again returns one row per screen.
+
+The step runs EARLY (before DATE/CASE/FLAG/SITE_ID) so every downstream count —
+IS_GRAND_TOTAL, the SITE_ID mapping, the run summary — reflects the canonical,
+de-duplicated data rather than the doubled input (see v3.6.1).
+
+NOTE: the radius-orphan set is defined against the Azimuth master and is
+independent of the SITE_ID crosswalk orphans (a different master may back each).
+The radius join uses the raw CODE; if code-scheme migration ever orphans a
+screen that SITE_ID would resolve, switch the lookup key to SITE_ID.
+
 Data model
 ----------
 DISPLAY NAME, LATITUDE, LONGITUDE are dropped. The Master Sites dimension
@@ -83,6 +114,40 @@ Usage
 
 Changelog
 ---------
+  v3.6.1  2026-09-04  FIXES found on the first multi-month runs of the v3.6.0
+                      radius step (both were report/heuristic issues — no
+                      exported Parquet from v3.6.0 was wrong on the audience
+                      numbers themselves):
+                      (1) ORDER: radius canonicalisation now runs BEFORE the
+                          DATE/CASE/FLAG/SITE_ID steps (was after SITE_ID). With
+                          both radii still present at the flag step, IS_GRAND_TOTAL
+                          counted each screen under both radii, inflating the
+                          REPORTED daily/hourly grand totals ~2x (May 2026:
+                          15,424 -> 7,080 daily). The exported rows were already
+                          canonical; only the printed/summary counts were wrong.
+                          Running the step early makes every downstream count
+                          reflect the de-duplicated data.
+                      (2) TRUNCATION GUARD: check_excel_truncation() now fires
+                          only on an EXACT hit of Excel's 1,048,576-row limit,
+                          not `>=`. A file ABOVE the limit was never opened in
+                          Excel (pandas read it whole), so the old `>=` test
+                          false-positived on every duplicated-radius month (e.g.
+                          May 2026 at 1.38M raw rows). Refines the v3.3.0 guard;
+                          a genuinely truncated file (exactly at the limit) is
+                          still caught.
+  v3.6.0  2026-09-04  FEATURE: radius canonicalisation. From May 2026 Locomizer
+                      ships both catchment radii (50 + 183) per screen, doubling
+                      audience. New step keeps each screen's canonical radius
+                      (master `viewing.radius`) and REMOVES the duplicate;
+                      orphan CODEs absent from the master are DROPPED and
+                      signalled per file and in the run summary. First step that
+                      removes rows for the radius dimension — supersedes the
+                      v3.1 "no rows removed" note for radius only. Pre-May files
+                      are untouched (one radius per screen). Validated vs Apr
+                      2026 (244 screens, 0 disagreements); May 2026 = 257 screens
+                      across both radii, 14 orphans vs the current master.
+                      Downstream Power BI measures need NO change (dedup at
+                      source).
   v3.5.0  2026-07-26  FEATURE: canonical SITE_ID column. Micromedia is migrating
                       screen codes from the legacy MM ID scheme to NEW MM ID, and
                       Locomizer delivers monthly exports under either scheme. A
@@ -146,7 +211,7 @@ import pandas as pd
 
 from site_id_crosswalk import Crosswalk
 
-__version__ = "3.5.0"
+__version__ = "3.6.1"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -162,6 +227,15 @@ OUTPUT_FORMAT = "parquet"
 # If the master site list is absent, SITE_ID mirrors CODE so the run still
 # succeeds — the join simply falls back to raw CODE for this file.
 CROSSWALK, CROSSWALK_MSG = Crosswalk.load_or_none()
+
+# Master Sites list — source of truth for each screen's canonical catchment
+# RADIUS (column `viewing.radius`). Consulted only from May 2026, when Locomizer
+# began shipping BOTH radii (50 + 183) per screen. Adjust the filename here if
+# the copy in data/raw/sites/ is named differently (spaces vs underscores).
+MASTER_PATH       = os.path.join(BASE_DIR, "..", "data", "raw", "sites",
+                                 "Locomizer Master V3 - Azimuth.xlsx")
+MASTER_CODE_COL   = "Custom ID"
+MASTER_RADIUS_COL = "viewing.radius"
 
 # Sentinel value used by Locomizer to flag the all-day-total row.
 # Kept for clarity in the IS_GRAND_TOTAL semantics; not used as a filter.
@@ -288,9 +362,15 @@ def check_excel_truncation(n_rows_raw):
     """
     Warn if the file looks truncated at Excel's worksheet limit (2^20 rows).
     Returns True when a likely truncation is detected.
+
+    A file opened + re-saved in Excel is capped at EXACTLY 1,048,576 lines, so
+    only a raw count sitting on that boundary is suspicious. A file ABOVE the
+    limit was never through Excel (pandas read it whole) — a plain `>=` would
+    false-positive on every legitimately large export (e.g. May 2026 at 1.38M
+    rows once both radii ship).
     """
-    if n_rows_raw >= EXCEL_ROW_LIMIT - 1:
-        print(f"  ⚠️  [TRUNCATION] {n_rows_raw:,} rows ≈ Excel's {EXCEL_ROW_LIMIT:,}-row "
+    if n_rows_raw in (EXCEL_ROW_LIMIT, EXCEL_ROW_LIMIT - 1):
+        print(f"  ⚠️  [TRUNCATION] {n_rows_raw:,} rows = Excel's {EXCEL_ROW_LIMIT:,}-row "
               f"limit.")
         print(f"       This CSV was almost certainly opened + saved in Excel, which "
               f"DROPS every row past the limit.")
@@ -389,6 +469,86 @@ def add_site_id(df):
     return df
 
 
+def load_radius_lookup(master_path):
+    """
+    Build {CODE -> canonical RADIUS (int)} from the Master Sites list
+    (column `viewing.radius`).
+
+    `viewing.radius` is each screen's canonical catchment radius, validated
+    against Apr 2026 footfall (244 screens in common, 0 disagreements). The
+    Custom ID (float, e.g. 50001.0) is normalised to the string "50001" to
+    match the footfall CODE.
+
+    Returns None if the file is absent — callers decide whether that is fatal
+    for a given file (it is only fatal for a file that actually has duplicated
+    radii). Raises on duplicate Custom IDs, which would fan-out the join and
+    inflate the fact table.
+    """
+    if not os.path.exists(master_path):
+        return None
+
+    m = pd.read_excel(master_path).dropna(subset=[MASTER_CODE_COL, MASTER_RADIUS_COL])
+    m["_CODE"] = m[MASTER_CODE_COL].astype(int).astype(str).str.strip()
+
+    dupes = m["_CODE"][m["_CODE"].duplicated()].unique().tolist()
+    if dupes:
+        raise ValueError(f"Duplicate Custom IDs in master radius list: {dupes}")
+
+    return dict(zip(m["_CODE"], m[MASTER_RADIUS_COL].astype(int)))
+
+
+def remove_non_canonical_radius(df, radius_lookup, filename):
+    """
+    Keep only each screen's canonical-radius rows; drop the duplicated other
+    radius. From May 2026 Locomizer ships BOTH radii (50 + 183) for every
+    screen, which double-counts audience.
+
+    Trigger: only files where at least one screen carries >1 radius are touched.
+    Pre-May files (one radius per screen) pass through UNCHANGED and never
+    consult the master.
+
+    Orphans: a CODE absent from the master has no known canonical radius. Per
+    project decision its rows are DROPPED and the CODE reported (both per file
+    and in the end-of-run summary).
+
+    Returns (df_out, info). Raises ValueError when radii are duplicated but no
+    master lookup is available — better to fail this file loudly than emit a
+    doubled or silently-emptied table.
+    """
+    info = {"radius_applied": False, "removed_dupes": 0, "removed_orphans": 0,
+            "orphan_codes": [], "canon_absent_codes": []}
+
+    radii_per_code = df.groupby("CODE")["RADIUS"].nunique()
+    if (radii_per_code <= 1).all():
+        return df, info                                   # pre-May: nothing to do
+
+    if radius_lookup is None:
+        raise ValueError(
+            "Multiple radii present but master radius lookup is unavailable — "
+            "cannot determine the canonical radius. Check MASTER_PATH."
+        )
+
+    info["radius_applied"] = True
+    canon     = df["CODE"].map(radius_lookup)             # NaN for orphan CODEs
+    is_orphan = canon.isna()
+    keep      = (~is_orphan) & (df["RADIUS"] == canon)    # canonical rows only
+
+    info["orphan_codes"]    = sorted(df.loc[is_orphan, "CODE"].dropna().unique().tolist())
+    info["removed_orphans"] = int(is_orphan.sum())
+    info["removed_dupes"]   = int(((~is_orphan) & (~keep)).sum())
+
+    # Known screens whose canonical radius did NOT ship this month (they would
+    # vanish). Impossible in May 2026 (every screen has both radii) but flagged
+    # so a future month never drops one silently.
+    present = df.groupby("CODE")["RADIUS"].agg(lambda s: set(s.unique()))
+    info["canon_absent_codes"] = sorted(
+        c for c in present.index
+        if c in radius_lookup and radius_lookup[c] not in present[c]
+    )
+
+    return df.loc[keep].copy(), info
+
+
 def apply_column_order(df, label):
     """Reorder columns to COLS_ORDER; append any unexpected extras at the end."""
     ordered  = [c for c in COLS_ORDER if c in df.columns]
@@ -444,6 +604,28 @@ print(f"{'='*56}\n")
 
 
 # %% ---------------------------------------------------------------------------
+# Step 1.5 — Load canonical radius lookup (used from May 2026 onward)
+# ---------------------------------------------------------------------------
+
+try:
+    RADIUS_LOOKUP = load_radius_lookup(MASTER_PATH)
+except Exception as e:
+    print(f"⚠️  [MASTER] Radius lookup failed to load ({e}).")
+    print(f"           Files with duplicated radii will error individually.")
+    RADIUS_LOOKUP = None
+
+if RADIUS_LOOKUP is None:
+    print(f"[MASTER] Radius lookup NOT loaded (file absent at:\n"
+          f"         {MASTER_PATH}).")
+    print(f"         Pre-May files still process; May+ files with both radii will "
+          f"raise until the master is found.")
+else:
+    print(f"[MASTER] Radius lookup ready — {len(RADIUS_LOOKUP):,} screens with a "
+          f"canonical radius.")
+print(f"{'='*56}\n")
+
+
+# %% ---------------------------------------------------------------------------
 # Step 2 — Per-file processing loop
 # ---------------------------------------------------------------------------
 
@@ -483,6 +665,35 @@ for filepath in footfall_files:
         print(f"  ⚠️  Nulls in key filter columns: {null_hits}")
     else:
         print(f"  [NULLS]  No nulls in key filter columns. ✅")
+
+    # 2b2 — Radius canonicalisation (May 2026+). Runs BEFORE date/flag/site_id so
+    # every downstream count (IS_GRAND_TOTAL, SITE_ID, summary) reflects the
+    # canonical, de-duplicated data. Removes the duplicated non-canonical radius
+    # so each screen keeps only its master `viewing.radius`. Pre-May files (one
+    # radius per screen) pass through untouched. Orphan CODEs (absent from the
+    # master) are dropped and signalled here and in the final summary.
+    try:
+        df, radius_info = remove_non_canonical_radius(df, RADIUS_LOOKUP, filename)
+    except Exception as e:
+        print(f"  ❌ RADIUS STEP FAILED: {e}")
+        global_summary.append({"file": filename, "status": "RADIUS ERROR", "error": str(e)})
+        print()
+        continue
+
+    if radius_info["radius_applied"]:
+        n_removed = radius_info["removed_dupes"] + radius_info["removed_orphans"]
+        print(f"  [RADIUS] Canonical filter applied — {n_removed:,} row(s) removed "
+              f"({radius_info['removed_dupes']:,} duplicate radius, "
+              f"{radius_info['removed_orphans']:,} orphan).")
+        if radius_info["orphan_codes"]:
+            print(f"  ⚠️  [RADIUS-ORPHAN] {len(radius_info['orphan_codes'])} CODE(s) "
+                  f"absent from master — DROPPED: {radius_info['orphan_codes']}")
+        if radius_info["canon_absent_codes"]:
+            print(f"  ⚠️  [RADIUS] {len(radius_info['canon_absent_codes'])} screen(s) "
+                  f"dropped — canonical radius missing this month: "
+                  f"{radius_info['canon_absent_codes']}")
+    else:
+        print(f"  [RADIUS] Single radius per screen — no canonicalisation needed.")
 
     # 2c — Build DATE
     df = build_date_column(df)
@@ -532,6 +743,11 @@ for filepath in footfall_files:
             "date_min":       str(df["DATE"].min()),
             "date_max":       str(df["DATE"].max()),
             "screens":        df["CODE"].nunique(),
+            "radius_applied": radius_info["radius_applied"],
+            "removed_dupes":  radius_info["removed_dupes"],
+            "removed_orphans":radius_info["removed_orphans"],
+            "orphan_codes":   radius_info["orphan_codes"],
+            "canon_absent":   radius_info["canon_absent_codes"],
             "size_kb":        round(size_kb, 1),
             "elapsed_s":      round(elapsed, 1),
         })
@@ -585,6 +801,25 @@ if dq_notes:
     print(f"  {'-'*46}")
     for line in dq_notes:
         print(line)
+
+# Radius canonicalisation — screens dropped for lack of a canonical radius.
+radius_orphans = [(s.get("output", s["file"]), s.get("orphan_codes", []))
+                  for s in global_summary
+                  if s.get("status") == "OK" and s.get("orphan_codes")]
+radius_absent  = [(s.get("output", s["file"]), s.get("canon_absent", []))
+                  for s in global_summary
+                  if s.get("status") == "OK" and s.get("canon_absent")]
+
+if radius_orphans or radius_absent:
+    print(f"\n  {'RADIUS — DROPPED SCREENS (SIGNALLED)':<46}")
+    print(f"  {'-'*46}")
+    for fname, codes in radius_orphans:
+        print(f"  • {fname}: {len(codes)} orphan CODE(s) not in master — dropped:")
+        print(f"      {codes}")
+    for fname, codes in radius_absent:
+        print(f"  • {fname}: {len(codes)} screen(s) with canonical radius absent — dropped:")
+        print(f"      {codes}")
+    print(f"  → Add these screens to the master, or confirm they are expected.")
 
 print(f"\n  Files OK      : {ok_count} / {len(footfall_files)}")
 print(f"  Output folder : {OUTPUT_DIR}")
