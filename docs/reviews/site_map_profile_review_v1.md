@@ -1,130 +1,130 @@
-# Review profissional — Site Map & Site Profile Card
+# Professional review — Site Map & Site Profile Card
 
-**Versão:** v1
-**Data:** 28 Jul 2026
-**Autor:** Análise data / OOH
-**Escopo:** Tab *Site Map* ("Who you'll reach") + card *Site Profile Card*.
-**Referências:** skill `micromedia-ooh`, `references/visual_identity.md`, `references/report_templates.md`, dados em `data/processed/`.
+**Version:** v1
+**Date:** 28 Jul 2026
+**Author:** Data / OOH analysis
+**Scope:** *Site Map* tab ("Who you'll reach") + *Site Profile Card*.
+**References:** `micromedia-ooh` skill, `references/visual_identity.md`, `references/report_templates.md`, data in `data/processed/`.
 
-> Objetivo: olhar de profissional de dados + planejamento OOH. O que falta, o que está errado, e o que **não** repetir do que já existe nas tabs Home / Overview / Demographics / Audience Segments.
-
----
-
-## 0. Resumo executivo
-
-Duas visões com propósitos distintos e um problema em comum: **nenhuma das duas declara métrica nem período no próprio visual, e o número-título do card está errado por ~4 ordens de grandeza.**
-
-- **Site Map** funciona como visão de *cobertura de rede* (WHERE), mas hoje entrega um mapa sem legenda, uma lista "Top Screens" **sem métrica** e uma grade de horas **morta** (WHEN não codificado).
-- **Site Profile Card** é a **única visão screen-level** do dashboard — é aí que está seu valor e é aí que ele está mais incompleto. Hoje mostra 3 coisas (um número, um donut de idade, uma barra de gênero) e nenhuma delas contextualiza *aquele* screen.
-
-Prioridade máxima: corrigir o headline **"3bn"** (item 1). É o tipo de erro que, num pré-campanha, destrói credibilidade na frente do cliente.
+> Goal: a data-professional + OOH-planning lens. What's missing, what's wrong, and what **not** to repeat from what already exists in the Home / Overview / Demographics / Audience Segments tabs.
 
 ---
 
-## 1. 🔴 CRÍTICO — o headline "Total Footfall 3bn" está errado
+## 0. Executive summary
 
-**O que aparece:** card com "33 RPM Record Store" selecionado → **Total Footfall 3bn**.
+Two views with distinct purposes and one shared problem: **neither one states a metric or a period on the visual itself, and the card's headline number is wrong by ~4 orders of magnitude.**
 
-**Verificação nos dados** (screen 33 RPM = `CODE 50426`, Urban, **Cork** — Mar/2026, regra correta `IS_GRAND_TOTAL = 1 AND HOUR = 25`):
+- **Site Map** works as a *network-coverage* view (WHERE), but today it delivers a map with no legend, a "Top Screens" list **with no metric**, and a **dead** hour grid (WHEN not encoded).
+- **Site Profile Card** is the dashboard's **only screen-level view** — that's where its value is and where it is most incomplete. Today it shows three things (a number, an age donut, a gender bar) and none of them puts *that* screen in context.
 
-| Métrica | Valor correto (Mar/2026) |
+Top priority: fix the **"3bn"** headline (item 1). It's the kind of error that, in a pre-campaign, destroys credibility in front of the client.
+
+---
+
+## 1. 🔴 CRITICAL — the "Total Footfall 3bn" headline is wrong
+
+**What shows:** card with "33 RPM Record Store" selected → **Total Footfall 3bn**.
+
+**Check against the data** (screen 33 RPM = `CODE 50426`, Urban, **Cork** — Mar 2026, correct rule `IS_GRAND_TOTAL = 1 AND HOUR = 25`):
+
+| Metric | Correct value (Mar 2026) |
 |---|---|
-| Total Population (`EXTRAPOLATED_USERS_2`) | **≈ 481.638** |
-| PaS (`EXTRAPOLATED_NUMBER_OF_USERS`) | ≈ 214.061 |
-| **OTS / impressões** (`EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS`) | ≈ 84.217 |
+| Total Population (`EXTRAPOLATED_USERS_2`) | **≈ 481,638** |
+| PaS (`EXTRAPOLATED_NUMBER_OF_USERS`) | ≈ 214,061 |
+| **OTS / impressions** (`EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS`) | ≈ 84,217 |
 
-Ou seja: o valor real de um mês para esse screen é da ordem de **centenas de milhares**, não bilhões. **"3bn" está ~4 ordens de grandeza acima** — e não bate com nenhuma soma plausível *daquele* screen (mesmo somando ingenuamente todas as 4.628 linhas do screen no mês dá 3,9M; somando os 17 meses dá ~0,1bn). O único lugar onde "bilhões" aparece é no **total da rede inteira** (≈1,85bn no período todo, correto; ≈15,7bn se somado errado).
+In other words: the real one-month value for this screen is in the **hundreds of thousands**, not billions. **"3bn" is ~4 orders of magnitude too high** — and it does not match any plausible sum for *that* screen (even naively summing all 4,628 rows of the screen in the month gives 3.9M; summing the 17 months gives ~0.1bn). The only place "billions" appears is in the **whole-network total** (≈1.85bn over the entire period, correct; ≈15.7bn if summed wrong).
 
-**Diagnóstico provável (dois bugs sobrepostos):**
-1. **O slicer de screen não está ligado ao KPI** — o card mostra um número de rede, não do screen selecionado. Sintoma clássico de *Edit interactions* / relacionamento faltando.
-2. **A medida soma linhas em vez de filtrar** `IS_GRAND_TOTAL = 1 AND HOUR = 25` — exatamente o overcount de 8× que a skill alerta.
+**Likely diagnosis (two overlapping bugs):**
+1. **The screen slicer is not wired to the KPI** — the card shows a network-level number, not the selected screen's. Classic symptom of a missing *Edit interactions* / relationship.
+2. **The measure sums rows instead of filtering** `IS_GRAND_TOTAL = 1 AND HOUR = 25` — exactly the 8× overcount the skill warns about.
 
-**Ação:** amarrar o slicer ao KPI e reescrever a medida sobre o grão dedup. Depois validar: 33 RPM / Mar-2026 deve dar **~482k** (Total Population) e **~84k** (OTS). E rotular a métrica explicitamente — "Total Footfall" é ambíguo; para cliente, impressões = **OTS**.
-
----
-
-## 2. Tab *Site Map* — achados
-
-### 2.1 "Top Screens" é uma lista sem métrica
-Hoje é só `CODE – Display Name`, sem valor e sem ordenação visível. "Top" por quê? Um planejador não consegue ler a lista. **Adicionar a métrica de ranking** (OTS ou Total Population) ao lado de cada screen, **ordenado desc**, com data-bar em cyan. Incluir City + Network ajuda a ler o mix. É o mesmo conteúdo do item 4 (tabela) do template de post-campanha — reaproveitar.
-
-### 2.2 A grade de horas (00:00–23:00) está morta
-São 24 caixas cinzas sem dado. Não comunica nada. Duas saídas, ambas melhores:
-- **Slicer de hora funcional** — com estado ativo/selecionado (cyan) que **filtra o mapa e o Top Screens**; ou
-- **Codificar intensidade** — sombrear cada hora pelo `MM_CYAN_SCALE` (a skill já define o hour-bar intensity), virando um "quando dá pra alcançar" de fato.
-Lembrete de regra: para visão horária use `IS_GRAND_TOTAL = 1 AND HOUR < 25` e **nunca** inclua `HOUR = 25`.
-
-### 2.3 O mapa não tem legenda nem semântica de OOH
-- **Sem legenda de tamanho/cor da bolha.** O que o raio significa? (deve ser ∝ `EXTRAPOLATED_USERS_2`, cor pelo cyan scale — skill). Sem legenda, o mapa é decorativo.
-- **Sem diferenciação por Network** (Urban / Campus / Lifestyle / Large Format). Planejador quer ver o mix de rede no espaço. A própria skill sinaliza que faltam as cores de badge de network — resolver derivando do cyan ramp e documentar.
-- **Tooltip** deve trazer: nome, city, network, footfall mensal (hoje não confirmado).
-- **Só mostra Dublin.** São 249 sites, mas a rede tem Cork, Limerick, Sligo, Galway (o próprio 33 RPM é Cork). Ou o mapa não faz auto-fit nacional, ou a seleção está enviesada para Dublin. Precisa de **visão nacional + drill por cidade**.
-- **Catchment não usado:** existe `docs/site_radius_circles.geojson` (círculos de raio por site) que **não está no mapa**. Catchment/isócrona é ouro em OOH ("quem vive/trabalha a X do screen") e é um diferencial real frente às outras tabs.
-
-### 2.4 Filtros
-Só Gender e Age no topo. Faltam, para uma visão de rede: **Network, City, Date range e Time of day** (o README promete todos esses). E o card lateral não reflete visualmente os filtros ativos (a skill pede filtro ativo como pill cyan).
+**Action:** wire the slicer to the KPI and rewrite the measure over the dedup grain. Then validate: 33 RPM / Mar 2026 should give **~482k** (Total Population) and **~84k** (OTS). And label the metric explicitly — "Total Footfall" is ambiguous; for a client, impressions = **OTS**.
 
 ---
 
-## 3. Card *Site Profile Card* — o que falta
+## 2. *Site Map* tab — findings
 
-Este é o ponto mais importante da sua pergunta. O card é a **única visão de um único screen** — é o "fact sheet" de uma tela. É onde um comprador de mídia decide *aquele* ponto. Justamente por isso ele **não deve replicar** o donut de idade das tabs de rede; o valor dele é **contexto físico + comparação com a rede + timing + fit de marca**. Hoje faltam quase todos esses blocos:
+### 2.1 "Top Screens" is a list with no metric
+Today it's just `CODE – Display Name`, with no value and no visible sort order. "Top" by what? A planner can't read the list. **Add the ranking metric** (OTS or Total Population) next to each screen, **sorted desc**, with a cyan data bar. Including City + Network helps read the mix. It's the same content as item 4 (table) of the post-campaign template — reuse it.
 
-1. **Ficha física do screen (ausente).** Display Name, CODE, Address, City, **Network**, `asset.setting` (indoor / street.facing / outdoor), **azimuth / direção que a tela aponta**, lat/long e um mini-mapa (ou foto). Sem isso, é impossível avaliar um único ponto. Tudo já existe no master site list.
-2. **Os 3 KPIs de cabeçalho** (a skill exige): **Total Population, PaS, OTS** — não um único "footfall" ambíguo. OTS é a métrica de impressões porque considera o azimute.
-3. **Busiest hours DAQUELE screen** (curva horária) — o "WHEN" no nível da tela. É diferente do agregado de rede.
-4. **Heatmap hora × dia-da-semana** do screen (a skill já especifica o visual) — mostra a melhor janela de veiculação.
-5. **Brand affinity top categorias do screen (ausente e essencial).** É o "por que essa tela serve à marca X". Barras horizontais de índice, linha de referência em 100, top 8. Sem isso o card não vende.
-6. **Visitation mix (residents / workers / transient)** do screen — decisivo (uma record store atrai transient vs local?). Sempre como **% do total**, nunca soma absoluta (overcount 40–50%).
-7. **Tendência temporal** do screen — está crescendo ou caindo mês a mês?
-8. **Benchmark vs rede.** "9,8% de 18–24" não diz nada isolado. O card deveria mostrar **índice do screen vs mediana da rede** ("over-indexa 18–24 em +X%"). Aqui está o diferencial analítico real frente à tab Demographics — e a média da rede deve ser **ponderada por `EXTRAPOLATED_USERS_2`**, nunca média simples (skill).
-9. **Flag de suficiência de painel.** Se o painel do screen for pequeno no período, dizer explicitamente — "reportar zero num screen ativo é pior que reportar lacuna" (skill).
+### 2.2 The hour grid (00:00–23:00) is dead
+It's 24 grey boxes with no data. Communicates nothing. Two better outcomes:
+- **A functional hour slicer** — with an active/selected state (cyan) that **filters the map and Top Screens**; or
+- **Encode intensity** — shade each hour by `MM_CYAN_SCALE` (the skill already defines the hour-bar intensity), turning it into an actual "when you can reach them".
+Rule reminder: for the hourly view use `IS_GRAND_TOTAL = 1 AND HOUR < 25` and **never** include `HOUR = 25`.
 
----
+### 2.3 The map has no legend or OOH semantics
+- **No size/colour legend for the bubble.** What does the radius mean? (should be ∝ `EXTRAPOLATED_USERS_2`, colour by the cyan scale — skill). Without a legend, the map is decorative.
+- **No differentiation by Network** (Urban / Campus / Lifestyle / Large Format). A planner wants to see the network mix in space. The skill itself flags that the network badge colours are missing — resolve by deriving them from the cyan ramp and document it.
+- **Tooltip** should carry: name, city, network, monthly footfall (not confirmed today).
+- **Only shows Dublin.** There are 249 sites, but the network has Cork, Limerick, Sligo, Galway (33 RPM itself is Cork). Either the map doesn't auto-fit nationally, or the selection is biased to Dublin. It needs a **national view + drill by city**.
+- **Catchment unused:** `docs/site_radius_circles.geojson` exists (per-site radius circles) and is **not on the map**. Catchment/isochrone is gold in OOH ("who lives/works within X of the screen") and a real differentiator versus the other tabs.
 
-## 4. Conformidade com a identidade visual (`visual_identity.md`)
-
-- 🔴 **Donut de idade em arco-íris.** Usa ~7 cores distintas (azul, navy, laranja, roxo, magenta, violeta, amarelo). Viola frontalmente a regra: *"cyan é o único acento; nunca introduzir vermelho, verde, amarelo ou roxo; máximo três cores; preferir rampa monocromática cyan."* Idade deve ser **barras em cyan** (a spec diz barras para idade, donut para gênero — aqui está **invertido**), ou, se donut, rampa cyan.
-- 🔴 **Coral fora de lugar.** O laranja/coral (`#E05A3A`) é reservado a **under-index e warnings**. Está sendo usado numa fatia de idade e na barra de gênero (feminino). Gênero deve ser donut: masculino `#29B6E8`, feminino `#0A7FA8`.
-- **KPI:** "3bn" deveria ser cyan sobre card preto, com label 10px uppercase — e sobretudo **com a métrica e o período nomeados**.
-- **Caption obrigatória ausente:** todo visual deve declarar métrica + período. Nem o card nem o mapa fazem isso.
+### 2.4 Filters
+Only Gender and Age at the top. For a network view, these are missing: **Network, City, Date range and Time of day** (the README promises all of them). And the side card does not visually reflect the active filters (the skill asks for the active filter as a cyan pill).
 
 ---
 
-## 5. O que **não** repetir (anti-redundância)
+## 3. *Site Profile Card* — what's missing
 
-- **Idade/gênero de rede** já vivem em Overview / Demographics. No card, só faz sentido **no nível do screen e com benchmark vs rede** — senão vira um donut menor e pior da tab Demographics.
-- **Social grade / ocupação / indústria** já estão na Demographics; não recriar no card — no máximo um resumo com índice.
-- **Curva horária agregada** de rede provavelmente já existe; no Site Map/card ela deve ser **por screen / por seleção**, não o agregado.
-- Antes de somar qualquer coisa nesses visuais, aplicar a regra de grão (`IS_GRAND_TOTAL`, `HOUR = 25`) — vale para o KPI do card e para o ranking do Top Screens.
+This is the most important point of your question. The card is the **only single-screen view** — it's a screen's "fact sheet". It's where a media buyer decides on *that* point. Precisely for that reason it **should not replicate** the age donut from the network tabs; its value is **physical context + comparison to the network + timing + brand fit**. Today almost all of those blocks are missing:
 
----
-
-## 6. Priorização sugerida
-
-**P1 — corrige erro factual (fazer já)**
-1. Bug do "3bn": ligar slicer ao KPI + reescrever medida no grão dedup; validar 33 RPM = ~482k / OTS ~84k.
-2. Nomear métrica + período em card e mapa (caption).
-3. Top Screens: adicionar métrica + ordenação.
-
-**P2 — completa o valor das visões**
-4. Site Profile Card: ficha física do screen + 3 KPIs (Total Pop / PaS / OTS).
-5. Card: brand affinity + visitation mix do screen.
-6. Card: benchmark vs mediana da rede (ponderada).
-7. Mapa: legenda, network mix, tooltip padrão, visão nacional.
-8. Grade de horas: virar slicer funcional **ou** heatmap de intensidade.
-
-**P3 — diferenciais / polimento**
-9. Catchment circles (`site_radius_circles.geojson`) no mapa.
-10. Conformidade visual: donut idade → barras cyan; remover coral fora de warning; gênero → donut cyan.
-11. Trend por screen + flag de painel insuficiente.
-12. Export "one-pager do screen" (card → PDF ligado ao `report_templates.md`).
+1. **Physical screen sheet (absent).** Display Name, CODE, Address, City, **Network**, `asset.setting` (indoor / street.facing / outdoor), **azimuth / direction the screen faces**, lat/long and a mini-map (or photo). Without this it's impossible to assess a single point. It all already exists in the master site list.
+2. **The 3 header KPIs** (the skill requires): **Total Population, PaS, OTS** — not a single ambiguous "footfall". OTS is the impressions metric because it accounts for the azimuth.
+3. **Busiest hours FOR THAT screen** (hourly curve) — the "WHEN" at the screen level. Different from the network aggregate.
+4. **Hour × day-of-week heatmap** for the screen (the skill already specifies the visual) — shows the best play window.
+5. **Brand affinity top categories for the screen (absent and essential).** It's the "why this screen serves brand X". Horizontal index bars, reference line at 100, top 8. Without it, the card doesn't sell.
+6. **Visitation mix (residents / workers / transient)** for the screen — decisive (does a record store draw transient vs local?). Always as **% of total**, never an absolute sum (40–50% overcount).
+7. **Time trend** for the screen — is it growing or falling month over month?
+8. **Benchmark vs the network.** "9.8% for 18–24" says nothing on its own. The card should show the **screen's index vs the network median** ("over-indexes 18–24 by +X%"). This is the real analytical differentiator versus the Demographics tab — and the network average must be **weighted by `EXTRAPOLATED_USERS_2`**, never a plain mean (skill).
+9. **Panel-sufficiency flag.** If the screen's panel is small in the period, say so explicitly — "reporting zero on an active screen is worse than reporting a gap" (skill).
 
 ---
 
-## 7. Versionamento
+## 4. Visual-identity compliance (`visual_identity.md`)
 
-Este documento é **v1**. Próximas revisões: incrementar (`_v2`, `_v3`) e manter o histórico. Recomendo commit no git do projeto para rastreabilidade (mensagem sugerida: `docs: review v1 Site Map + Site Profile Card`).
+- 🔴 **Rainbow age donut.** Uses ~7 distinct colours (blue, navy, orange, purple, magenta, violet, yellow). Directly violates the rule: *"cyan is the only accent; never introduce red, green, yellow or purple; at most three colours; prefer a monochrome cyan ramp."* Age should be **cyan bars** (the spec says bars for age, donut for gender — here it's **inverted**), or, if a donut, a cyan ramp.
+- 🔴 **Coral out of place.** The orange/coral (`#E05A3A`) is reserved for **under-index and warnings**. It's being used on an age slice and on the gender bar (female). Gender should be a donut: male `#29B6E8`, female `#0A7FA8`.
+- **KPI:** "3bn" should be cyan on a black card, with a 10px uppercase label — and above all **with the metric and period named**.
+- **Mandatory caption absent:** every visual must state metric + period. Neither the card nor the map does.
+
+---
+
+## 5. What **not** to repeat (anti-redundancy)
+
+- **Network age/gender** already live in Overview / Demographics. On the card, it only makes sense **at the screen level and with a benchmark vs the network** — otherwise it's just a smaller, worse donut than the Demographics tab.
+- **Social grade / occupation / industry** are already in Demographics; don't recreate them on the card — at most a summary with an index.
+- **The aggregate hourly curve** for the network probably already exists; on the Site Map/card it should be **per screen / per selection**, not the aggregate.
+- Before summing anything in these visuals, apply the grain rule (`IS_GRAND_TOTAL`, `HOUR = 25`) — it applies to the card KPI and to the Top Screens ranking.
+
+---
+
+## 6. Suggested prioritisation
+
+**P1 — fixes a factual error (do now)**
+1. The "3bn" bug: wire the slicer to the KPI + rewrite the measure at the dedup grain; validate 33 RPM = ~482k / OTS ~84k.
+2. Name the metric + period on the card and map (caption).
+3. Top Screens: add a metric + sort order.
+
+**P2 — completes the value of the views**
+4. Site Profile Card: physical screen sheet + 3 KPIs (Total Pop / PaS / OTS).
+5. Card: brand affinity + visitation mix for the screen.
+6. Card: benchmark vs the network median (weighted).
+7. Map: legend, network mix, standard tooltip, national view.
+8. Hour grid: turn it into a functional slicer **or** an intensity heatmap.
+
+**P3 — differentiators / polish**
+9. Catchment circles (`site_radius_circles.geojson`) on the map.
+10. Visual compliance: age donut → cyan bars; remove coral outside warnings; gender → cyan donut.
+11. Per-screen trend + insufficient-panel flag.
+12. "Screen one-pager" export (card → PDF tied to `report_templates.md`).
+
+---
+
+## 7. Versioning
+
+This document is **v1**. Future revisions: increment (`_v2`, `_v3`) and keep the history. I recommend committing it to the project git for traceability (suggested message: `docs: review v1 Site Map + Site Profile Card`).
 
 *Audience data provided by Locomizer. Processed and presented by Micromedia.*
 **Micromedia — Look to the Light**
