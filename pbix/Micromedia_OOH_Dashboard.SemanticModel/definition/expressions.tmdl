@@ -1,3 +1,8 @@
+expression DataFolder = "C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: d34c6870-1d63-4478-bffb-f273eee407d3
+
+	annotation PBI_ResultType = Text
+
 expression Parameter1 = #"Sample File" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File", Type="Binary", IsParameterQueryRequired=true]
 	lineageTag: a98fd39c-2c68-4e12-9853-30699b34257e
 	queryGroup: 'Transform File from master_sites\Helper Queries'
@@ -6,7 +11,7 @@ expression Parameter1 = #"Sample File" meta [IsParameterQuery=true, BinaryIdenti
 
 expression 'Sample File' =
 		let
-		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed\sites"),
+		    Source = Folder.Files(DataFolder & "\sites"),
 		    Navigation1 = Source{[Name="master_sites_unified.csv"]}[Content]
 		in
 		    Navigation1
@@ -49,7 +54,7 @@ expression Parameter2 = #"Sample File (2)" meta [IsParameterQuery=true, BinaryId
 
 expression 'Sample File (2)' =
 		let
-		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed\footfall"),
+		    Source = Folder.Files(DataFolder & "\footfall"),
 		    Navigation1 = Source{0}[Content]
 		in
 		    Navigation1
@@ -90,7 +95,7 @@ expression Parameter3 = #"Sample File (3)" meta [IsParameterQuery=true, BinaryId
 
 expression 'Sample File (3)' =
 		let
-		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed\demographics\clean"),
+		    Source = Folder.Files(DataFolder & "\demographics\clean"),
 		    Navigation1 = Source{0}[Content]
 		in
 		    Navigation1
@@ -131,7 +136,7 @@ expression Parameter4 = #"Sample File (4)" meta [IsParameterQuery=true, BinaryId
 
 expression 'Sample File (4)' =
 		let
-		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed\demographics\age_long"),
+		    Source = Folder.Files(DataFolder & "\demographics\age_long"),
 		    Navigation1 = Source{0}[Content]
 		in
 		    Navigation1
@@ -172,7 +177,7 @@ expression Parameter5 = #"Sample File (5)" meta [IsParameterQuery=true, BinaryId
 
 expression 'Sample File (5)' =
 		let
-		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed\demographics\age_long"),
+		    Source = Folder.Files(DataFolder & "\demographics\age_long"),
 		    Navigation1 = Source{0}[Content]
 		in
 		    Navigation1
@@ -213,7 +218,7 @@ expression Parameter6 = #"Sample File (6)" meta [IsParameterQuery=true, BinaryId
 
 expression 'Sample File (6)' =
 		let
-		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed\demographics\age_long"),
+		    Source = Folder.Files(DataFolder & "\demographics\age_long"),
 		    Navigation1 = Source{0}[Content]
 		in
 		    Navigation1
@@ -254,7 +259,7 @@ expression Parameter7 = #"Sample File (7)" meta [IsParameterQuery=true, BinaryId
 
 expression 'Sample File (7)' =
 		let
-		    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed\brand_affinity"),
+		    Source = Folder.Files(DataFolder & "\brand_affinity"),
 		    Navigation1 = Source{0}[Content]
 		in
 		    Navigation1

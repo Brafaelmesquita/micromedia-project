@@ -138,7 +138,7 @@ table Brand_Affinity
 		mode: import
 		source =
 				let
-				    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed\brand_affinity"),
+				    Source = Folder.Files(DataFolder & "\brand_affinity"),
 				    #"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),
 				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File (7)", each #"Transform File (7)"([Content])),
 				    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),

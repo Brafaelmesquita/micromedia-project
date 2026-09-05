@@ -1,18 +1,34 @@
-# Normalize all text files to LF in the repository.
-# Git compares the normalized (LF) version, so Power BI / editors re-saving
-# PBIP files with CRLF no longer show up as spurious "modified" churn.
-* text=auto eol=lf
+# ---------------------------------------------------------------------------
+# Line-ending policy
+# ---------------------------------------------------------------------------
+# Without this file, Power BI Desktop rewrites its project files with CRLF
+# every time the project is opened. Git then reports them as modified even
+# though the content is identical, which blocks branch switching and produces
+# noisy diffs. Pinning the end-of-line per file type removes that churn.
+#
+# Rule of thumb: the repository always stores LF; the working tree gets the
+# ending each tool expects.
 
-# Binary assets — never normalize or diff as text.
-*.png   binary
-*.jpg   binary
-*.jpeg  binary
-*.gif   binary
-*.ico   binary
-*.pdf   binary
-*.xlsx  binary
-*.xls   binary
-*.xlsm  binary
-*.pbix  binary
-*.parquet binary
-*.abf   binary
+# Default: let Git detect text files and normalise them to LF in the repo.
+* text=auto
+
+# Power BI project files (PBIP / TMDL / report JSON).
+# Power BI writes CRLF, so the working tree must keep CRLF.
+pbix/**    text eol=crlf
+
+# Source and documentation stay LF, which is what Python, SQL tooling and
+# GitHub rendering expect.
+*.py       text eol=lf
+*.sql      text eol=lf
+*.md       text eol=lf
+.gitignore text eol=lf
+
+# Binary assets: never convert, never diff as text.
+*.parquet  binary
+*.xlsx     binary
+*.xls      binary
+*.pbix     binary
+*.png      binary
+*.jpg      binary
+*.jpeg     binary
+*.pdf      binary
