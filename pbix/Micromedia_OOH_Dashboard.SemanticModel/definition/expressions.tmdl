@@ -1,8 +1,3 @@
-expression DataFolder = "C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
-	lineageTag: d34c6870-1d63-4478-bffb-f273eee407d3
-
-	annotation PBI_ResultType = Text
-
 expression Parameter1 = #"Sample File" meta [IsParameterQuery=true, BinaryIdentifier=#"Sample File", Type="Binary", IsParameterQueryRequired=true]
 	lineageTag: a98fd39c-2c68-4e12-9853-30699b34257e
 	queryGroup: 'Transform File from master_sites\Helper Queries'
@@ -291,4 +286,9 @@ expression 'Transform File (7)' =
 	queryGroup: 'Transform File from brand_affinity\Helper Queries'
 
 	annotation PBI_ResultType = Function
+
+expression DataFolder = "C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: d34c6870-1d63-4478-bffb-f273eee407d3
+
+	annotation PBI_ResultType = Text
 

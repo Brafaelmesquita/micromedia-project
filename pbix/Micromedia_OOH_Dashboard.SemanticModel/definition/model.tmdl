@@ -65,7 +65,7 @@ queryGroup 'Transform File from brand_affinity\Helper Queries'
 
 annotation __PBI_TimeIntelligenceEnabled = 1
 
-annotation PBI_QueryOrder = ["Master_Sites","Sample File","Parameter1","Transform Sample File","Transform File","Footfall","Sample File (2)","Parameter2","Transform Sample File (2)","Transform File (2)","Demographics","Sample File (3)","Parameter3","Transform Sample File (3)","Transform File (3)","Sample File (4)","Parameter4","Transform Sample File (4)","Transform File (4)","Sample File (5)","Parameter5","Transform Sample File (5)","Transform File (5)","Demographics_AgeLong","Sample File (6)","Parameter6","Transform Sample File (6)","Transform File (6)","Brand_Affinity","Sample File (7)","Parameter7","Transform Sample File (7)","Transform File (7)","_Measures","Demographics_ClassLong"]
+annotation PBI_QueryOrder = ["Master_Sites","Sample File","Parameter1","Transform Sample File","Transform File","Footfall","Sample File (2)","Parameter2","Transform Sample File (2)","Transform File (2)","Demographics","Sample File (3)","Parameter3","Transform Sample File (3)","Transform File (3)","Sample File (4)","Parameter4","Transform Sample File (4)","Transform File (4)","Sample File (5)","Parameter5","Transform Sample File (5)","Transform File (5)","Demographics_AgeLong","Sample File (6)","Parameter6","Transform Sample File (6)","Transform File (6)","Brand_Affinity","Sample File (7)","Parameter7","Transform Sample File (7)","Transform File (7)","_Measures","Demographics_ClassLong","DataFolder"]
 
 annotation PBI_ProTooling = ["DaxQueryView_Desktop","DevMode"]
 
