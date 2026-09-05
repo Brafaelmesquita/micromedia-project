@@ -130,7 +130,7 @@ table Demographics_AgeLong
 		mode: import
 		source =
 				let
-				    Source = Folder.Files("C:\Users\brafa\Documents\data-analyst\MicroMedia\micromedia-project\data\processed\demographics\age_long"),
+				    Source = Folder.Files(DataFolder & "\demographics\age_long"),
 				    #"Filtered Hidden Files1" = Table.SelectRows(Source, each [Attributes]?[Hidden]? <> true),
 				    #"Invoke Custom Function1" = Table.AddColumn(#"Filtered Hidden Files1", "Transform File (6)", each #"Transform File (6)"([Content])),
 				    #"Renamed Columns1" = Table.RenameColumns(#"Invoke Custom Function1", {"Name", "Source.Name"}),
