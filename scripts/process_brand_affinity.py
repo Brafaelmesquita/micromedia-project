@@ -70,7 +70,7 @@ Output format:
   Set OUTPUT_FORMAT = "csv"     for Excel / legacy compatibility.
 
 Power BI tip (Parquet):
-  Use "Get Data -> Folder" in Power BI and point it at OUTPUT_CLEAN_DIR.
+  Use "Get Data -> Folder" in Power BI and point it at OUTPUT_DIR (data/processed/brand_affinity).
   Power BI auto-combines all Parquet files that share the same schema,
   so adding a new month requires zero changes to the .pbix file.
 
@@ -102,6 +102,12 @@ Usage:
   Drop new monthly CSVs into INPUT_DIR and re-run -- no code changes needed.
 
 Version history:
+  v1.5.0  2026-09-05  Output location simplified: cleaned Parquet files are now
+                      written directly into data/processed/brand_affinity/ instead
+                      of a nested "clean" subfolder. OUTPUT_CLEAN_DIR now equals
+                      OUTPUT_DIR (variable name kept so the rest of the pipeline is
+                      unchanged). Point Power BI's "Get Data -> Folder" at
+                      data/processed/brand_affinity.
   v1.4.0  2026-09-04  FIX: collapse redundant catchment RADIUS (row-doubling).
                       In May 2026 Locomizer shipped BOTH catchment radii
                       (50 m + 183 m) for every screen -- 259 screens, every row
@@ -200,14 +206,14 @@ import pandas as pd
 
 from site_id_crosswalk import Crosswalk
 
-__version__ = "1.4.0"
+__version__ = "1.5.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # -- Folders -------------------------------------------------------------------
 INPUT_DIR        = os.path.join(BASE_DIR, "..", "data", "raw", "brand_affinity")
 OUTPUT_DIR       = os.path.join(BASE_DIR, "..", "data", "processed", "brand_affinity")
-OUTPUT_CLEAN_DIR = os.path.join(OUTPUT_DIR, "clean")
+OUTPUT_CLEAN_DIR = OUTPUT_DIR   # grava direto em brand_affinity/ (sem subpasta "clean")
 os.makedirs(OUTPUT_CLEAN_DIR, exist_ok=True)
 
 # Canonical SITE_ID crosswalk (built by build_master_sites.py). Loaded once.
@@ -872,7 +878,7 @@ for s in global_summary:
 print(f"  {'-'*130}")
 print(f"  {'TOTAL':<50} {'':>8}  {total_raw:>8,}  {total_zero:>7,}  {total_clean:>8,}")
 print(f"\n  Files OK      : {ok_count} / {len(brand_affinity_files)}")
-print(f"  Clean folder  : {OUTPUT_CLEAN_DIR}")
+print(f"  Output folder : {OUTPUT_CLEAN_DIR}")
 print(f"  Output format : {OUTPUT_FORMAT.upper()}")
 print(f"{'='*56}")
 print("Process finished.")
