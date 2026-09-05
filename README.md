@@ -243,6 +243,15 @@ app link, not the `.pbix`/`.pbip`.
 
 Python (pandas, pyarrow) · Parquet · Power BI (PBIP, DAX, Power Query / M) · git.
 
+## Development
+
+Built with AI assistance (Claude), across the pipeline code and the
+documentation — the commit trailers record where. What is not delegated is the
+judgement: every data rule encoded here was measured against the real Locomizer
+exports before it was written down. The figures quoted above are those
+measurements, and [`docs/footfall_methodology/`](docs/footfall_methodology/) is
+the reproducible SQL audit behind them.
+
 ## Versioning
 
 Versioned with git. The `.pbip` format stores the report and semantic model as
