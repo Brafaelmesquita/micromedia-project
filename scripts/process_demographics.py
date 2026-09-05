@@ -72,6 +72,20 @@ Usage:
   Drop new monthly CSVs into INPUT_DIR and re-run -- no code changes needed.
 
 Version history:
+  v1.8.0  2026-07-26  FEATURE: canonical SITE_ID column. Micromedia is migrating
+                      screen codes from the legacy MM ID scheme to NEW MM ID, and
+                      Locomizer delivers monthly exports under either scheme. A new
+                      SITE_ID column (from scripts/site_id_crosswalk.py, built by
+                      build_master_sites.py) maps every screen onto one canonical
+                      key. Demographics resolves by id AND by display name: its
+                      feed has no CODE column, so CODE is the 5-char prefix of
+                      DISPLAY NAME, which Locomizer sometimes ships without the
+                      numeric prefix (yielding e.g. "Dorse" instead of "50319").
+                      The name fallback recovers those. CODE is preserved as the
+                      raw extracted value; unresolved screens keep SITE_ID = CODE
+                      and are logged. SITE_ID flows into the clean, age_long and
+                      class_long outputs. DOWNSTREAM NOTE: the Power BI
+                      relationships now join *.SITE_ID -> Master_Sites.SITE_ID.
   v1.7.0  2026-07-24  FIX: collapse redundant catchment RADIUS (audience 2x bug).
                       (1) Locomizer exports each demographic profile at TWO
                           catchment radii (50 m and 183 m) for ~6.5% of
@@ -144,9 +158,17 @@ import glob
 
 import pandas as pd
 
-__version__ = "1.7.0"
+from site_id_crosswalk import Crosswalk
+
+__version__ = "1.8.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Canonical SITE_ID crosswalk (built by build_master_sites.py). Loaded once.
+# Demographics is the one feed that resolves by display name as well as by id,
+# because its export carries no CODE column and occasionally omits the 5-digit
+# prefix. If the master site list is absent, SITE_ID mirrors CODE.
+CROSSWALK, CROSSWALK_MSG = Crosswalk.load_or_none()
 
 # -- Folders -------------------------------------------------------------------
 INPUT_DIR           = os.path.join(BASE_DIR, "..", "data", "raw", "demographics")
@@ -322,8 +344,43 @@ def validate_schema(df, filename):
 
 
 def extract_code(df):
-    """Extract the first CODE_LENGTH characters from DISPLAY NAME as CODE."""
+    """Extract the first CODE_LENGTH characters from DISPLAY NAME as CODE.
+
+    DISPLAY NAME is intentionally KEPT here so add_site_id() can fall back to
+    name matching for rows whose feed omitted the numeric prefix; add_site_id()
+    drops DISPLAY NAME once SITE_ID has been resolved.
+    """
     df["CODE"] = df["DISPLAY NAME"].str[:CODE_LENGTH].str.strip()
+    return df
+
+
+def add_site_id(df):
+    """Stamp a canonical SITE_ID via id crosswalk, then display-name fallback.
+
+    The demographics feed carries no CODE column, so CODE is the 5-char prefix
+    of DISPLAY NAME. When Locomizer omits the numeric prefix the prefix is junk
+    (e.g. 'Dorse'); resolving by DISPLAY NAME recovers the real screen. Rows that
+    resolve by neither keep SITE_ID = CODE and are logged. DISPLAY NAME is
+    dropped afterwards — the master site list remains the single source of names.
+    """
+    if CROSSWALK is None:
+        df["SITE_ID"] = df["CODE"].astype("string")
+        df.drop(columns=["DISPLAY NAME"], inplace=True)
+        print(f"  [SITE_ID] SKIPPED — {CROSSWALK_MSG}")
+        return df
+
+    df["SITE_ID"], matched, method = CROSSWALK.resolve_with_name(
+        df["CODE"], df["DISPLAY NAME"]
+    )
+    by_name = df.loc[method == "name", "DISPLAY NAME"].nunique()
+    orphans = sorted(df.loc[~matched, "CODE"].dropna().unique().tolist())
+    n_screens = df["CODE"].nunique()
+    print(f"  [SITE_ID] {n_screens - len(orphans)}/{n_screens} screens mapped "
+          f"({by_name} recovered by display-name fallback).")
+    if orphans:
+        print(f"  [ORPHAN]  {len(orphans)} screen(s) not in master site list "
+              f"(kept as-is): {orphans[:10]}"
+              + (" ..." if len(orphans) > 10 else ""))
     df.drop(columns=["DISPLAY NAME"], inplace=True)
     return df
 
@@ -416,6 +473,7 @@ def build_column_order(df):
     """Return df with columns in a logical order."""
     priority = [
         "CODE",
+        "SITE_ID",
         "YEAR_MONTH",
         "HOUR",
         "RADIUS",
@@ -482,7 +540,7 @@ def build_age_long_format(df_wide):
     Raises ValueError if any age column prefix is not in AGE_BRACKET_MAP --
     signals that Locomizer added a new age bracket to the schema.
     """
-    id_cols = ["CODE", "YEAR_MONTH", "HOUR", "RADIUS",
+    id_cols = ["CODE", "SITE_ID", "YEAR_MONTH", "HOUR", "RADIUS",
                "MOVEMENT_MODALITY", "SOURCE_FILE"]
 
     # Sanity-check id columns are all present
@@ -553,7 +611,7 @@ def build_age_long_format(df_wide):
 
     # Final column order
     df_long = df_long[[
-        "CODE", "YEAR_MONTH", "HOUR", "RADIUS",
+        "CODE", "SITE_ID", "YEAR_MONTH", "HOUR", "RADIUS",
         "MOVEMENT_MODALITY", "AGE_BRACKET", "GENDER",
         "REACH_PCT", "SOURCE_FILE",
     ]]
@@ -674,13 +732,16 @@ for filepath in demographics_files:
 
     if invalid_display_names:
         invalid_count = df[~df["CODE"].str.match(CODE_PATTERN)]["CODE"].nunique()
-        print(f"  WARNING  {invalid_count} screen(s) with INVALID CODE (will NOT join to site list):")
+        print(f"  WARNING  {invalid_count} screen(s) with INVALID CODE "
+              f"(display-name fallback will attempt to recover these):")
         for name in invalid_display_names:
             extracted = name[:CODE_LENGTH].strip()
             print(f"       DISPLAY NAME: '{name}'  ->  CODE: '{extracted}'")
-        print(f"       Action required: map these screens manually to their 5-digit site codes.")
     else:
         print(f"  [CODE]   All CODEs are valid 5-digit codes. OK")
+
+    # -- 2c2: Canonical SITE_ID (id crosswalk + display-name fallback) ---------
+    df = add_site_id(df)
 
     # -- 2d: Normalise modality casing -----------------------------------------
     df = standardize_modality_casing(df, MODALITY_COLS)

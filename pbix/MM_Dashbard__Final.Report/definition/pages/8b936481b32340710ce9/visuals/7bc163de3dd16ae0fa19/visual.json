@@ -1,0 +1,229 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "7bc163de3dd16ae0fa19",
+  "position": {
+    "x": 682.007722007722,
+    "y": 164.73616473616474,
+    "z": 12000,
+    "height": 442.59116259116263,
+    "width": 244.90776490776491,
+    "tabOrder": 12000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "How to read this",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "12pt",
+                      "color": "#0a7fa8"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The table",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "11pt",
+                      "color": "#0a7fa8"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Audience share",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " — % of the screen's audience in the selected segment.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Source: Demographics_ClassLong[REACH_PCT] applied to Footfall[EXTRAPOLATED_USERS_2]; segment audience ÷ breakdown total.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Total population",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " — the screen's daily audience size.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Source: Footfall[EXTRAPOLATED_USERS_2].",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Reach potential",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " — people of that segment reachable.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Calc: Total population × Audience share.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Click a column header to sort ascending / descending.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The slicers",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "11pt",
+                      "color": "#0a7fa8"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Segment",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " — one slicer grouped by classification (Social Grade / Occupation / Industry). Expand a group and pick a segment; the table ranks screens by that segment's share.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

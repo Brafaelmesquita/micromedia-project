@@ -3,9 +3,9 @@
   "name": "0a42a81ca2a603a4e502",
   "position": {
     "x": 0,
-    "y": 33.333333333333336,
+    "y": 28,
     "z": 0,
-    "height": 176,
+    "height": 166,
     "width": 320,
     "tabOrder": 0
   },
@@ -78,12 +78,284 @@
                 "color": {
                   "expr": {
                     "Literal": {
+                      "Value": "'#A8E4F5'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Demographics_AgeLong"
+                          }
+                        },
+                        "Property": "AGE_BRACKET"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'Under 18'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#7FD3EF'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Demographics_AgeLong"
+                          }
+                        },
+                        "Property": "AGE_BRACKET"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'18-24'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#52C1E9'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Demographics_AgeLong"
+                          }
+                        },
+                        "Property": "AGE_BRACKET"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'25-34'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
                       "Value": "'#29B6E8'"
                     }
                   }
                 }
               }
             }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Demographics_AgeLong"
+                          }
+                        },
+                        "Property": "AGE_BRACKET"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'35-44'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1D97C6'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Demographics_AgeLong"
+                          }
+                        },
+                        "Property": "AGE_BRACKET"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'45-54'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#0A7FA8'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Demographics_AgeLong"
+                          }
+                        },
+                        "Property": "AGE_BRACKET"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'55-64'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#00566E'"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "selector": {
+            "data": [
+              {
+                "scopeId": {
+                  "Comparison": {
+                    "ComparisonKind": 0,
+                    "Left": {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Entity": "Demographics_AgeLong"
+                          }
+                        },
+                        "Property": "AGE_BRACKET"
+                      }
+                    },
+                    "Right": {
+                      "Literal": {
+                        "Value": "'65+'"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
           }
         }
       ],
@@ -97,6 +369,13 @@
                 }
               }
             },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'RightCenter'"
+                }
+              }
+            },
             "showTitle": {
               "expr": {
                 "Literal": {
@@ -107,14 +386,7 @@
             "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "position": {
-              "expr": {
-                "Literal": {
-                  "Value": "'RightCenter'"
+                  "Value": "7D"
                 }
               }
             }
@@ -124,17 +396,10 @@
       "labels": [
         {
           "properties": {
-            "fontSize": {
+            "show": {
               "expr": {
                 "Literal": {
-                  "Value": "8D"
-                }
-              }
-            },
-            "labelDisplayUnits": {
-              "expr": {
-                "Literal": {
-                  "Value": "1D"
+                  "Value": "true"
                 }
               }
             },
@@ -151,6 +416,27 @@
                   "Value": "1L"
                 }
               }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "labelDisplayUnits": {
+              "expr": {
+                "Literal": {
+                  "Value": "1000D"
+                }
+              }
+            },
+            "position": {
+              "expr": {
+                "Literal": {
+                  "Value": "'preferOutside'"
+                }
+              }
             }
           }
         }
@@ -161,7 +447,7 @@
             "innerRadiusRatio": {
               "expr": {
                 "Literal": {
-                  "Value": "85L"
+                  "Value": "72L"
                 }
               }
             }
@@ -255,6 +541,19 @@
               "expr": {
                 "Literal": {
                   "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "lockAspect": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }

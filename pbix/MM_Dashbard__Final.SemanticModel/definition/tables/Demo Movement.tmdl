@@ -1,0 +1,43 @@
+table 'Demo Movement'
+	lineageTag: 4934f755-0def-4885-b0bb-5de42d7c6224
+
+	column 'Audience movement'
+		lineageTag: 6e3d36bd-2968-4021-bf2c-e055d9427824
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Audience movement]
+		sortByColumn: Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column MovementKey
+		lineageTag: 971a162d-10cc-4f73-a84a-4e32997448f4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MovementKey]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort
+		formatString: 0
+		lineageTag: 698d9366-eae0-447e-8a56-dc217f5fbbf1
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sort]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Demo Movement' = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Audience movement", STRING, "MovementKey", STRING, "Sort", INTEGER,
+				    {
+				        { "All movement", "All", 1 },
+				        { "Pedestrians", "Pedestrians", 2 },
+				        { "Vehicular (non-pedestrian)", "Non_Pedestrians", 3 }
+				    }
+				)
+
+	annotation PBI_Id = 9b94223d47314769b330ea8d75973ef9
+

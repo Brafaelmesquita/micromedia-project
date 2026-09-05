@@ -1,0 +1,301 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "name": "57c5bbcbb12081c88d2b",
+  "position": {
+    "x": 665.295708370892,
+    "y": 169.66800605014285,
+    "z": 6000,
+    "height": 410,
+    "width": 447.0505553603349,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "How to read this tab",
+                    "textStyle": {
+                      "fontSize": "12pt",
+                      "color": "#0a7fa8",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The table",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#0a7fa8",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Site",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " — the screen.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Affinity index",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " — how much this screen's audience over-indexes for the selected category vs the national average (100 = average; 150 = 1.5× more likely).",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Source: Brand_Affinity[BRAND_AFFINITY_INDEX], population-weighted average (IS_DEFAULT=1).",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "% affine",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " — share of the audience with affinity for the category (~100% for the All segment; varies once you pick a segment).",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Source: Brand_Affinity[PROPORTION_OF_TARGET_USERS].",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Total population",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " — the screen's daily audience size.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Source: Footfall[EXTRAPOLATED_USERS_2].",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Affine potential",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " — a ranking metric blending size and concentration (not a headcount).",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  },
+                  {
+                    "value": " Calc: Total population × index ÷ 100.",
+                    "textStyle": {
+                      "fontSize": "8pt",
+                      "color": "#6a6a6a"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "The slicers",
+                    "textStyle": {
+                      "fontSize": "11pt",
+                      "color": "#0a7fa8",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Category",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " — (set on the Affinity explorer tab) picks the category the screens are ranked for; shared with this tab, so changing it there updates this table.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Segment",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " — (set on the Affinity explorer tab) picks the audience segment (All, Pedestrians, Workers…); also shared with this tab.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Daypart",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333",
+                      "fontWeight": "bold"
+                    }
+                  },
+                  {
+                    "value": " — (top right of this page) narrows the index to a time of day: Morning 06–11, Midday 12–14, Afternoon 15–17, Evening 18–22, Late 23–05.",
+                    "textStyle": {
+                      "fontSize": "9pt",
+                      "color": "#333333"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FFFFFF'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

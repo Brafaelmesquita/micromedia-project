@@ -110,7 +110,7 @@ table Brand_Affinity
 			
 			SWITCH (
 			    TRUE (),
-			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Colleges, Universities, Professional Schools, and Junior Colleges", "Colleges & universities",
+			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Colleges, Universities, Professional Schools, and Junior Colleges", "Students",
 			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Museums and Art Galleries", "Museums & galleries",
 			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "HEALTHY AUDIENCE", "Healthy audience",
 			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Radio, Television, Consumer Electronics, and Music Stores", "Radio, TV & electronics",
@@ -118,10 +118,19 @@ table Brand_Affinity
 			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Eating Places/Restaurants", "Restaurants",
 			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Drinks_Out", "Drinks out",
 			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Bank", "Banks",
+			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] = "Grocery stores", "Grocery shopping",
 			    Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME]
 			)
 		lineageTag: ee1048b9-29ef-49c6-8a4e-2e868bb3b2b8
 		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column SITE_ID
+		dataType: string
+		lineageTag: a7c3e1b2-4d5f-4a6b-9c8d-1e2f3a4b5c6d
+		summarizeBy: none
+		sourceColumn: SITE_ID
 
 		annotation SummarizationSetBy = Automatic
 
@@ -136,7 +145,7 @@ table Brand_Affinity
 				    #"Removed Other Columns1" = Table.SelectColumns(#"Renamed Columns1", {"Source.Name", "Transform File (7)"}),
 				    #"Expanded Table Column1" = Table.ExpandTableColumn(#"Removed Other Columns1", "Transform File (7)", Table.ColumnNames(#"Transform File (7)"(#"Sample File (7)"))),
 				    #"Removed Columns" = Table.RemoveColumns(#"Expanded Table Column1",{"Source.Name"}),
-				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"CODE", type text}, {"YEAR_MONTH", type text}, {"HOUR", Int64.Type}, {"RADIUS", Int64.Type}, {"MOVEMENT_MODALITY", type text}, {"VISITATION_MODALITY", type text}, {"IS_DEFAULT", Int64.Type}, {"BRAND_AFFINITY_CATEGORY_NAME", type text}, {"BRAND_AFFINITY_INDEX", type number}, {"BRAND_AFFINITY_DWELL_TIME", type number}, {"PROPORTION_OF_TARGET_USERS", type number}, {"SOURCE_FILE", type text}})
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"CODE", type text}, {"SITE_ID", type text}, {"YEAR_MONTH", type text}, {"HOUR", Int64.Type}, {"RADIUS", Int64.Type}, {"MOVEMENT_MODALITY", type text}, {"VISITATION_MODALITY", type text}, {"IS_DEFAULT", Int64.Type}, {"BRAND_AFFINITY_CATEGORY_NAME", type text}, {"BRAND_AFFINITY_INDEX", type number}, {"BRAND_AFFINITY_DWELL_TIME", type number}, {"PROPORTION_OF_TARGET_USERS", type number}, {"SOURCE_FILE", type text}})
 				in
 				    #"Changed Type1"
 

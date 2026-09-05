@@ -23,11 +23,11 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "Display Name"
+                  "Property": "Site Label"
                 }
               },
-              "queryRef": "Master_Sites.Display Name",
-              "nativeQueryRef": "Display Name",
+              "queryRef": "Master_Sites.Site Label",
+              "nativeQueryRef": "Site Label",
               "active": true
             }
           ]
@@ -42,6 +42,13 @@
               "expr": {
                 "Literal": {
                   "Value": "'Dropdown'"
+                }
+              }
+            },
+            "isInvertedSelectionMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -271,6 +278,7 @@
             }
           ]
         },
+        "howCreated": "User",
         "objects": {
           "general": [
             {

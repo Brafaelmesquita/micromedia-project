@@ -47,6 +47,7 @@ Usage
 
 import os
 import re
+import csv
 
 import pandas as pd
 
@@ -71,15 +72,31 @@ MONTH_ABBR = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
 # A file already in the target convention: YYYY_MM_Mon_...
 ALREADY_STD_RE = re.compile(r"^\d{4}_\d{2}_[A-Za-z]{3}_")
 
+def sniff_dialect(filepath):
+    """
+    Return (encoding, delimiter) for a Locomizer CSV. Some exports ship
+    comma/UTF-8, others TAB/UTF-8-SIG (and a few ';'). Falls back to comma.
+    """
+    for enc in ("utf-8-sig", "utf-16", "latin-1"):
+        try:
+            with open(filepath, "r", encoding=enc, newline="") as fh:
+                sample = fh.read(8192)
+        except (UnicodeError, UnicodeDecodeError):
+            continue
+        if not sample.strip():
+            continue
+        try:
+            delim = csv.Sniffer().sniff(sample, delimiters=",;\t|").delimiter
+        except csv.Error:
+            delim = max(",;\t|", key=sample.splitlines()[0].count)
+        return enc, delim
+    return "utf-8", ","
 
 def read_period(filepath):
-    """
-    Return (year, month) read from the file's own MONTH/YEAR columns, using the
-    modal value so a few stray rows can't skew it. Returns None if the columns
-    are missing or unreadable (caller then skips the file).
-    """
+    """(year, month) from the file's own MONTH/YEAR columns, dialect-aware."""
+    enc, delim = sniff_dialect(filepath)
     try:
-        df = pd.read_csv(filepath, usecols=["YEAR", "MONTH"])
+        df = pd.read_csv(filepath, sep=delim, encoding=enc, usecols=["YEAR", "MONTH"])
     except (ValueError, KeyError, pd.errors.ParserError):
         return None
 
@@ -132,10 +149,34 @@ def rename_one_folder(folder, suffix):
             skipped_exists += 1
             continue
 
-        print(f"  [{'PLAN ' if DRY_RUN else 'RENAME'}] {fname}  ->  {new_name}")
+        src = os.path.join(folder, fname)
+        enc, delim = sniff_dialect(src)
+        with open(src, "rb") as fh:
+            has_bom = fh.read(3) == b"\xef\xbb\xbf"
+        canonical = (delim == "," and enc == "utf-8-sig" and not has_bom)
+        action = "RENAME" if canonical else "TRANSCODE"
+        note   = "" if canonical else f"  ({delim!r}/{enc}{'+BOM' if has_bom else ''} -> ','/utf-8)"
+
+        print(f"  [{'PLAN ' if DRY_RUN else action}] {fname}  ->  {new_name}{note}")
         planned += 1
-        if not DRY_RUN:
-            os.rename(os.path.join(folder, fname), target)
+        if DRY_RUN:
+            continue
+
+        if canonical:
+            os.rename(src, target)
+        else:
+            # Stream-transcode (TAB/other -> comma/UTF-8) with the csv module:
+            # constant memory, exact values, correct re-quoting. Write to a
+            # .partial file and only atomically swap into place on success, so an
+            # interrupted run can never leave a truncated *.csv in the glob path.
+            tmp = target + ".partial"
+            with open(src, "r", encoding=enc, newline="") as fin, \
+                 open(tmp, "w", encoding="utf-8", newline="") as fout:
+                writer = csv.writer(fout)
+                for row in csv.reader(fin, delimiter=delim):
+                    writer.writerow(row)
+            os.replace(tmp, target)                       # atomic promote
+            os.remove(src) 
 
     return planned, skipped_std, skipped_exists, skipped_unreadable
 

@@ -40,5 +40,42 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "cc11dd22ee33ff440001",
+      "target": "4e9680c520ee13944f97",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cc11dd22ee33ff440001",
+      "target": "cfea152e7cda03a20ea1",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cc11dd22ee33ff440001",
+      "target": "96a4846c7fba070810ee",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cc11dd22ee33ff440001",
+      "target": "ee55ff6600aa11bb22cc",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cc11dd22ee33ff440001",
+      "target": "cc11dd22ee33ff440003",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cc11dd22ee33ff440001",
+      "target": "cc11dd22ee33ff440004",
+      "type": "NoFilter"
+    },
+    {
+      "source": "cc11dd22ee33ff440001",
+      "target": "cc11dd22ee33ff440002",
+      "type": "NoFilter"
+    }
+  ]
 }

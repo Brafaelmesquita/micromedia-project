@@ -1,0 +1,22 @@
+table 'Top categories'
+	lineageTag: d3a10201-1111-4aaa-8bbb-000000000201
+
+	measure 'Top categories Value' = SELECTEDVALUE ( 'Top categories'[Top categories], 3 )
+		formatString: 0
+		lineageTag: d3a10203-1111-4aaa-8bbb-000000000203
+
+	column 'Top categories'
+		formatString: 0
+		lineageTag: d3a10202-1111-4aaa-8bbb-000000000202
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Top categories]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Top categories' = calculated
+		mode: import
+		source = SELECTCOLUMNS ( GENERATESERIES ( 1, 5, 1 ), "Top categories", [Value] )
+
+	annotation PBI_Id = a1b2c3d4e5f6071829300a1b2c3d4e5f
+

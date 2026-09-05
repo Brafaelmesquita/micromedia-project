@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "8ef4db2a31313c119b81",
   "position": {
-    "x": 525.02886299267072,
-    "y": 267.32972726093465,
+    "x": 198.78163878163878,
+    "y": 247.10424710424712,
     "z": 6000,
-    "height": 84.682074676237221,
-    "width": 200.24820011674919,
+    "height": 90.055770055770054,
+    "width": 180.11154011154011,
     "tabOrder": 5000
   },
   "visual": {
@@ -23,10 +23,10 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Avg Daily PaS"
+                  "Property": "Avg Daily PaS (mv+vis)"
                 }
               },
-              "queryRef": "_Measures.Avg Daily PaS",
+              "queryRef": "_Measures.Avg Daily PaS (mv+vis)",
               "nativeQueryRef": "Avg Daily PaS"
             }
           ]
@@ -136,7 +136,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'AVG Daily Footfall'"
+                  "Value": "'AVG Daily Mobile'"
                 }
               }
             },

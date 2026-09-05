@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
   "name": "b58411edc06a4aa6c79e",
   "position": {
-    "x": 584.80444511707344,
-    "y": 367.61983006507688,
+    "x": 587.55898755898761,
+    "y": 452.47533247533249,
     "z": 5000,
-    "height": 339.72455840702224,
-    "width": 670.48277949538408,
+    "height": 255.8901758901759,
+    "width": 683.10596310596316,
     "tabOrder": 7000
   },
   "visual": {
@@ -42,12 +42,12 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Total Population"
+                  "Property": "Population (mv+vis)"
                 }
               },
-              "queryRef": "_Measures.Total Population",
-              "nativeQueryRef": "Total Footfall",
-              "displayName": "Total Footfall"
+              "queryRef": "_Measures.Population (mv+vis)",
+              "nativeQueryRef": "Population",
+              "displayName": "Population"
             },
             {
               "field": {
@@ -57,12 +57,12 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "PaS"
+                  "Property": "PaS (mv+vis)"
                 }
               },
-              "queryRef": "_Measures.PaS",
-              "nativeQueryRef": "Footfall",
-              "displayName": "Footfall"
+              "queryRef": "_Measures.PaS (mv+vis)",
+              "nativeQueryRef": "Mobile",
+              "displayName": "Mobile"
             },
             {
               "field": {
@@ -72,12 +72,27 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "OTS"
+                  "Property": "OTS (mv+vis)"
                 }
               },
-              "queryRef": "_Measures.OTS",
-              "nativeQueryRef": "Impressions",
-              "displayName": "Impressions"
+              "queryRef": "_Measures.OTS (mv+vis)",
+              "nativeQueryRef": "Exposure",
+              "displayName": "Exposure"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Capture Rate (mv+vis)"
+                }
+              },
+              "queryRef": "_Measures.Capture Rate (mv+vis)",
+              "nativeQueryRef": "Capture Rate",
+              "displayName": "Capture Rate"
             }
           ]
         }
@@ -92,7 +107,7 @@
                     "Entity": "_Measures"
                   }
                 },
-                "Property": "OTS"
+                "Property": "Capture Rate (mv+vis)"
               }
             },
             "direction": "Descending"
@@ -144,6 +159,17 @@
           "selector": {
             "id": "Row"
           }
+        },
+        {
+          "properties": {
+            "rowSubtotals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
         }
       ],
       "grid": [
@@ -176,6 +202,22 @@
                 }
               }
             }
+          }
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "308.19502910950393D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Master_Sites.Site Label"
           }
         }
       ]

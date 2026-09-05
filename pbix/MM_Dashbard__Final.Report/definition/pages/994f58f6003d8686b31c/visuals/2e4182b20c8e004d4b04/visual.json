@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.8.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.11.0/schema.json",
   "name": "2e4182b20c8e004d4b04",
   "position": {
-    "x": 23.910232849761098,
-    "y": 367.61983006507688,
+    "x": 23.511615343057809,
+    "y": 367.88762830902215,
     "z": 3000,
-    "height": 339.72455840702224,
-    "width": 550.93161524657864,
+    "height": 340.22690437601295,
+    "width": 542.15018908698,
     "tabOrder": 3000
   },
   "visual": {
@@ -42,12 +42,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "Total Population (Hourly)"
+                  "Property": "Total Population"
                 }
               },
-              "queryRef": "_Measures.Total Population (Hourly)",
-              "nativeQueryRef": "Total Footfall",
-              "displayName": "Total Footfall"
+              "queryRef": "_Measures.Total Population",
+              "nativeQueryRef": "Total Population"
             },
             {
               "field": {
@@ -57,12 +56,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "PaS (Hourly)"
+                  "Property": "PaS"
                 }
               },
-              "queryRef": "_Measures.PaS (Hourly)",
-              "nativeQueryRef": "Footfall",
-              "displayName": "Footfall"
+              "queryRef": "_Measures.PaS",
+              "nativeQueryRef": "PaS"
             },
             {
               "field": {
@@ -72,12 +70,11 @@
                       "Entity": "_Measures"
                     }
                   },
-                  "Property": "OTS (Hourly)"
+                  "Property": "OTS"
                 }
               },
-              "queryRef": "_Measures.OTS (Hourly)",
-              "nativeQueryRef": "Impressions",
-              "displayName": "Impressions"
+              "queryRef": "_Measures.OTS",
+              "nativeQueryRef": "OTS"
             }
           ]
         }
@@ -181,62 +178,6 @@
                 }
               }
             }
-          }
-        }
-      ],
-      "dataPoint": [
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#29B6E8'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.Total Population (Hourly)"
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#0A7FA8'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.PaS (Hourly)"
-          }
-        },
-        {
-          "properties": {
-            "fill": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#003D52'"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "selector": {
-            "metadata": "_Measures.OTS (Hourly)"
           }
         }
       ],

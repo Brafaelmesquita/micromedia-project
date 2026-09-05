@@ -1,0 +1,44 @@
+table 'Demo Visitation'
+	lineageTag: ecec1539-2ddc-4a42-a9a6-b5a6ee3627c0
+
+	column Visitation
+		lineageTag: ca993e69-a093-4877-8d71-d57b34ec05c4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Visitation]
+		sortByColumn: Sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column VisKey
+		lineageTag: 9a8b7525-6b03-49d7-a1a4-14f478727a5e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [VisKey]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort
+		formatString: 0
+		lineageTag: 505e423d-c469-4fa0-87f5-14bbdcc8cfb2
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sort]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Demo Visitation' = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "Visitation", STRING, "VisKey", STRING, "Sort", INTEGER,
+				    {
+				        { "All visitors", "All", 1 },
+				        { "Residents", "Residents", 2 },
+				        { "Workers", "Workers", 3 },
+				        { "Transient visitors", "Transient", 4 }
+				    }
+				)
+
+	annotation PBI_Id = d2a2d540799d4dd4bfb1f843cee7c6ee
+

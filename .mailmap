@@ -1,0 +1,6 @@
+# Canonical author identity.
+# The same person (same e-mail) committed under three name spellings. This maps
+# them to one display name across the whole history — honoured by git log,
+# shortlog, blame and GitHub — without rewriting any commit.
+Rafael de Mesquita Carvalho <brafael.mesquita@gmail.com> Rafael Carvalho <brafael.mesquita@gmail.com>
+Rafael de Mesquita Carvalho <brafael.mesquita@gmail.com> Rafael Mesquita <brafael.mesquita@gmail.com>

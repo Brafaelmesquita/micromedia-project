@@ -291,9 +291,17 @@ table Master_Sites
 
 		annotation SummarizationSetBy = Automatic
 
-	column 'Site Label' = Master_Sites[MM ID] & " - " & Master_Sites[Display Name]
+	column 'Site Label' = Master_Sites[SITE_ID] & " - " & Master_Sites[Display Name]
 		lineageTag: a159db78-3c66-4e76-834b-5e6d65d8ea7e
 		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column SITE_ID
+		dataType: string
+		lineageTag: 49ef27a1-b68c-4825-a2dd-33582862aedc
+		summarizeBy: none
+		sourceColumn: SITE_ID
 
 		annotation SummarizationSetBy = Automatic
 

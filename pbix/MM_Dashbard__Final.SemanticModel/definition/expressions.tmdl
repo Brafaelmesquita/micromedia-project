@@ -17,7 +17,7 @@ expression 'Sample File' =
 
 expression 'Transform Sample File' =
 		let
-		    Source = Csv.Document(Parameter1,[Delimiter=",", Columns=34, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Parameter1,[Delimiter=",", Columns=35, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"
@@ -29,7 +29,7 @@ expression 'Transform Sample File' =
 expression 'Transform File' =
 		let
 		    Source = (Parameter1 as binary) => let
-		    Source = Csv.Document(Parameter1,[Delimiter=",", Columns=34, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+		    Source = Csv.Document(Parameter1,[Delimiter=",", Columns=35, Encoding=65001, QuoteStyle=QuoteStyle.None]),
 		    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
 		in
 		    #"Promoted Headers"

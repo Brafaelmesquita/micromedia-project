@@ -13,6 +13,8 @@ table _Measures
 		displayFolder: KPIs\Base
 		lineageTag: fff3dce4-db9e-4175-8f3e-6e72c06ddeec
 
+		annotation PBI_FormatHint = {"isDecimal":true}
+
 	measure OTS =
 			
 			CALCULATE(
@@ -26,6 +28,8 @@ table _Measures
 		lineageTag: 79b86f31-77d7-4674-81c4-2c970d29fae4
 		dataCategory: Uncategorized
 
+		annotation PBI_FormatHint = {"isDecimal":true}
+
 	measure 'Total Population' =
 			
 			CALCULATE(
@@ -37,6 +41,8 @@ table _Measures
 		formatString: #,0
 		displayFolder: KPIs\Base
 		lineageTag: fa2e2818-1a2d-4fd7-a6bb-6a0269b9cd7a
+
+		annotation PBI_FormatHint = {"isDecimal":true}
 
 	measure 'OTS by Movement' =
 			
@@ -144,23 +150,35 @@ table _Measures
 		lineageTag: c8f94d63-c789-4916-988f-920de6bb2f16
 
 	measure 'Age Audience (Hourly)' =
-			
+			VAR _mv = SELECTEDVALUE ( 'Demo Movement'[MovementKey], "All" )
+			RETURN
 			SUMX (
-			    FILTER ( Demographics_AgeLong, Demographics_AgeLong[MOVEMENT_MODALITY] = "All" ),
-			    VAR _code = Demographics_AgeLong[CODE]
+			    FILTER ( Demographics_AgeLong, Demographics_AgeLong[MOVEMENT_MODALITY] = _mv ),
+			    VAR _code = Demographics_AgeLong[SITE_ID]
 			    VAR _ym   = Demographics_AgeLong[YEAR_MONTH]
 			    VAR _hr   = Demographics_AgeLong[HOUR]
 			    VAR _pct  = DIVIDE ( Demographics_AgeLong[REACH_PCT], 100 )
-			    RETURN
-			        _pct *
+			    VAR _tot  =
 			        CALCULATE (
 			            SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
-			            Footfall[CODE]           = _code,
-			            Footfall[YEAR_MONTH]     = _ym,
-			            Footfall[HOUR]           = _hr,
-			            Footfall[IS_GRAND_TOTAL] = 1,
-			            Footfall[HasValidSite] = TRUE ()
+			            Footfall[SITE_ID] = _code, Footfall[YEAR_MONTH] = _ym, Footfall[HOUR] = _hr,
+			            Footfall[IS_GRAND_TOTAL] = 1, Footfall[HasValidSite] = TRUE ()
 			        )
+			    VAR _ped =
+			        CALCULATE (
+			            SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			            Footfall[SITE_ID] = _code, Footfall[YEAR_MONTH] = _ym, Footfall[HOUR] = _hr,
+			            Footfall[IS_GRAND_TOTAL] = 0, Footfall[VISITATION_MODALITY] = "All", Footfall[Movement Group] = "Pedestrians"
+			        )
+			    VAR _non =
+			        CALCULATE (
+			            SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			            Footfall[SITE_ID] = _code, Footfall[YEAR_MONTH] = _ym, Footfall[HOUR] = _hr,
+			            Footfall[IS_GRAND_TOTAL] = 0, Footfall[VISITATION_MODALITY] = "All", Footfall[Movement Group] = "Non_Pedestrians"
+			        )
+			    VAR _sh  = DIVIDE ( _ped, _ped + _non )
+			    VAR _pop = SWITCH ( _mv, "Pedestrians", _tot * _sh, "Non_Pedestrians", _tot * ( 1 - _sh ), _tot )
+			    RETURN _pct * _pop
 			)
 		formatString: #,0
 		displayFolder: Age&Gender
@@ -170,7 +188,7 @@ table _Measures
 			
 			SUMX (
 			    FILTER ( Demographics_AgeLong, Demographics_AgeLong[MOVEMENT_MODALITY] = "All" ),
-			    VAR _code = Demographics_AgeLong[CODE]
+			    VAR _code = Demographics_AgeLong[SITE_ID]
 			    VAR _ym   = Demographics_AgeLong[YEAR_MONTH]
 			    VAR _hr   = Demographics_AgeLong[HOUR]
 			    VAR _pct  = DIVIDE ( Demographics_AgeLong[REACH_PCT], 100 )
@@ -178,7 +196,7 @@ table _Measures
 			        _pct *
 			        CALCULATE (
 			            SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED] ),
-			            Footfall[CODE]           = _code,
+			            Footfall[SITE_ID]           = _code,
 			            Footfall[YEAR_MONTH]     = _ym,
 			            Footfall[HOUR]           = _hr,
 			            Footfall[IS_GRAND_TOTAL] = 1
@@ -208,7 +226,14 @@ table _Measures
 
 	measure 'Header Title' =
 			
-			VAR NSites   = DISTINCTCOUNT ( Master_Sites[MM ID] )
+			VAR NSites =
+			    CALCULATE (
+			        DISTINCTCOUNT ( Footfall[SITE_ID] ),
+			        Footfall[HasValidSite] = TRUE (),
+			        Footfall[IS_GRAND_TOTAL] = 1,
+			        Footfall[HOUR] = 25,
+			        REMOVEFILTERS ( dim_Hour )
+			    )
 			VAR MinDate  = CALCULATE ( MIN ( Footfall[DATE] ), Footfall[HasValidSite] = TRUE () )
 			VAR MaxDate  = CALCULATE ( MAX ( Footfall[DATE] ), Footfall[HasValidSite] = TRUE () )
 			VAR NoData   = ISBLANK ( MinDate )
@@ -442,7 +467,7 @@ table _Measures
 		displayFolder: Footfall QA\Dwell Time
 		lineageTag: 30246b75-a3d8-4ff0-9a05-2d683e4180b3
 
-	measure 'Sites selected' = DISTINCTCOUNT(Footfall[CODE])
+	measure 'Sites selected' = DISTINCTCOUNT(Footfall[SITE_ID])
 		formatString: 0
 		displayFolder: Titles
 		lineageTag: e6364c6d-d4d8-41c8-9fdc-86b4da501342
@@ -450,21 +475,21 @@ table _Measures
 	measure 'Avg Daily Total Population' =
 			
 			AVERAGEX ( VALUES ( 'Calendar'[Date] ), [Total Population] )
-		formatString: 0
+		formatString: 0.0
 		displayFolder: KPIs\AVG
 		lineageTag: bd2b995e-9a84-4a7c-a76f-d6c383a9db57
 
 	measure 'Avg Daily PaS' =
 			
 			AVERAGEX ( VALUES ( 'Calendar'[Date] ), [PaS] )
-		formatString: 0
+		formatString: 0.0
 		displayFolder: KPIs\AVG
 		lineageTag: e6b2cc0f-2171-4368-920e-f13bc3327e54
 
 	measure 'Avg Daily OTS' =
 			
 			AVERAGEX ( VALUES ( 'Calendar'[Date] ), [OTS] )
-		formatString: 0
+		formatString: 0.0
 		displayFolder: KPIs\AVG
 		lineageTag: 4a776ea4-1cf0-40ab-9ccd-c68fb2d3bdc6
 
@@ -587,7 +612,8 @@ table _Measures
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Avg Brand Affinity Index' = AVERAGE ( Brand_Affinity[BRAND_AFFINITY_INDEX] )
+	measure 'Avg Brand Affinity Index' = CALCULATE ( AVERAGE ( Brand_Affinity[BRAND_AFFINITY_INDEX] ), Brand_Affinity[IS_DEFAULT] = 1 )
+		formatString: 0
 		displayFolder: Modality
 		lineageTag: 898bba54-e4fd-49fb-b214-88a566d2c748
 
@@ -601,14 +627,14 @@ table _Measures
 			        Demographics_ClassLong[MOVEMENT_MODALITY] = "All"
 			            && Demographics_ClassLong[HasValidSite] = TRUE ()
 			    ),
-			    VAR _code = Demographics_ClassLong[CODE]
+			    VAR _code = Demographics_ClassLong[SITE_ID]
 			    VAR _ym   = Demographics_ClassLong[YEAR_MONTH_KEY]
 			    VAR _hr   = Demographics_ClassLong[HOUR]
 			    RETURN
 			        ( Demographics_ClassLong[REACH_PCT] / 100 )
 			        * CALCULATE (
 			            SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
-			            Footfall[CODE] = _code,
+			            Footfall[SITE_ID] = _code,
 			            Footfall[YEAR_MONTH] = _ym,
 			            Footfall[HOUR] = _hr,
 			            Footfall[IS_GRAND_TOTAL] = 1,
@@ -634,12 +660,12 @@ table _Measures
 	measure 'Site Header' =
 			
 			VAR SiteName = SELECTEDVALUE ( Master_Sites[Display Name] )
-			VAR SiteID   = SELECTEDVALUE ( Master_Sites[MM ID] )
+			VAR SiteID   = SELECTEDVALUE ( Master_Sites[SITE_ID] )
 			RETURN
 			    IF (
 			        ISBLANK ( SiteName ),
 			        "Multiple sites",
-			        SiteName & " - MM ID " & SiteID
+			        SiteName & " - Site ID " & SiteID
 			    )
 		displayFolder: Titles
 		lineageTag: 27445238-20cc-42d9-9371-4af099f2895e
@@ -652,7 +678,7 @@ table _Measures
 	measure 'Total Screens' =
 			
 			CALCULATE(
-			    DISTINCTCOUNT( Footfall[CODE] ),
+			    DISTINCTCOUNT( Footfall[SITE_ID] ),
 			    Footfall[IS_GRAND_TOTAL] = 1,
 			    Footfall[HOUR] = 25
 			)
@@ -660,17 +686,17 @@ table _Measures
 		displayFolder: Footfall QA
 		lineageTag: d9851998-dd38-4840-9d19-b8dc0159d1ae
 
-	measure 'Median Exposure (screen)' = MEDIANX( VALUES( Footfall[CODE] ), [Exposure Ratio] )
+	measure 'Median Exposure (screen)' = MEDIANX( VALUES( Footfall[SITE_ID] ), [Exposure Ratio] )
 		formatString: 0.0%;-0.0%;0.0%
 		displayFolder: Footfall QA
 		lineageTag: 77182f5f-075d-4f37-a346-55312b554872
 
-	measure 'P25 Exposure' = PERCENTILEX.INC( VALUES( Footfall[CODE] ), [Exposure Ratio], 0.25 )
+	measure 'P25 Exposure' = PERCENTILEX.INC( VALUES( Footfall[SITE_ID] ), [Exposure Ratio], 0.25 )
 		formatString: 0.0%;-0.0%;0.0%
 		displayFolder: Footfall QA
 		lineageTag: 209b031c-008e-47d2-8ee9-43d31126be48
 
-	measure 'P75 Exposure' = PERCENTILEX.INC( VALUES( Footfall[CODE] ), [Exposure Ratio], 0.75 )
+	measure 'P75 Exposure' = PERCENTILEX.INC( VALUES( Footfall[SITE_ID] ), [Exposure Ratio], 0.75 )
 		formatString: 0.0%;-0.0%;0.0%
 		displayFolder: Footfall QA
 		lineageTag: b5da6c96-e399-411c-930d-5863b18b152f
@@ -756,6 +782,484 @@ table _Measures
 			```
 		formatString: 0
 		lineageTag: c3844f4e-5bef-4439-a17d-35105153599c
+
+	measure 'Population by Hour' =
+			
+			CALCULATE (
+			    SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			    Footfall[IS_GRAND_TOTAL] = 1,
+			    Footfall[HasValidSite] = TRUE ()
+			)
+		displayFolder: KPIs\By Hour
+		lineageTag: c68f0a92-76dd-4688-8187-9f778e199e7e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Peak Hour Colour' =
+			
+			VAR N = 3
+			VAR Rnk =
+			    RANKX (
+			        FILTER ( ALL ( Footfall[HOUR] ), Footfall[HOUR] < 25 ),
+			        [Population by Hour],
+			        , DESC
+			    )
+			RETURN
+			    IF ( Rnk <= N, "#0A7FA8", "#A8E4F5" )
+		displayFolder: Titles
+		lineageTag: 08625612-7f44-435e-a5e4-5c5665485dcf
+
+	measure 'Median Brand Affinity Index' =
+			
+			CALCULATE ( MEDIAN ( Brand_Affinity[BRAND_AFFINITY_INDEX] ), Brand_Affinity[IS_DEFAULT] = 1 )
+		lineageTag: c7a302db-0297-4c33-8bff-dcb61faa1485
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Affinity Index (weighted)' =
+			
+			VAR T =
+			    ADDCOLUMNS (
+			        VALUES ( Brand_Affinity[SITE_ID] ),
+			        "Idx", CALCULATE ( AVERAGE ( Brand_Affinity[BRAND_AFFINITY_INDEX] ), Brand_Affinity[IS_DEFAULT] = 1 ),
+			        "W",
+			            VAR c = Brand_Affinity[SITE_ID]
+			            RETURN
+			                CALCULATE (
+			                    SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			                    Footfall[SITE_ID] = c,
+			                    Footfall[IS_GRAND_TOTAL] = 1,
+			                    Footfall[HOUR] = 25,
+			                    Footfall[HasValidSite] = TRUE (),
+			                    REMOVEFILTERS ( dim_Hour )
+			                )
+			    )
+			RETURN
+			    DIVIDE (
+			        SUMX ( FILTER ( T, NOT ISBLANK ( [Idx] ) ), [Idx] * [W] ),
+			        SUMX ( FILTER ( T, NOT ISBLANK ( [Idx] ) ), [W] )
+			    )
+		formatString: 0
+		lineageTag: af339790-9ced-492a-bb78-c7416e4a271b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Capture Rate' = DIVIDE ( [OTS], [Total Population] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: KPIs\Rates
+		lineageTag: 1a1ff569-cf23-4f8d-b461-43c874f3ec7a
+
+	measure 'Weighted Age Reach %' = ```
+			
+			        DIVIDE ( [Age Audience (Hourly)], CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong ) ) ) * 100
+			```
+		displayFolder: Age&Gender
+		lineageTag: 7cde8d39-3d5f-412d-b7bc-9aa8c6eda28a
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Weighted Gender %' = ```
+			
+			        DIVIDE ( [Age Audience (Hourly)], CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong ) ) ) * 100
+			```
+		lineageTag: f92343d8-47ba-4341-aa74-965a83fe0761
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Population (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			RETURN
+			IF (
+			    _mode = "Share of audience (%)",
+			    DIVIDE ( [Movement Population (Hourly)], CALCULATE ( [Movement Population (Hourly)], REMOVEFILTERS ( Master_Sites ) ) ),
+			    [Movement Population (Hourly)]
+			)
+		displayFolder: Age&Gender\Display
+		lineageTag: 3f71c65c-77b0-4c00-ba7f-97c51e4d173a
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure 'Male (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [Male #], _tot ), [Male #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: e98ceebe-adbb-4c3f-a4de-9524ba0ab3aa
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure 'Female (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [Female #], _tot ), [Female #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: bb9966c6-a824-47b2-acc0-ab41aa453353
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure 'Under 18 (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [Under 18 #], _tot ), [Under 18 #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: ba720511-0477-4093-b411-2a6c8ffe5949
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure '18-24 (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [18-24 #], _tot ), [18-24 #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: 5f691161-e370-4691-9cd8-e19cfb7d1f6e
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure '25-34 (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [25-34 #], _tot ), [25-34 #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: 2e20687d-aab8-451f-831c-3011ac4b8f83
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure '35-44 (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [35-44 #], _tot ), [35-44 #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: d86d02b0-f1a9-4b52-b4ae-2f990e54aa64
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure '45-54 (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [45-54 #], _tot ), [45-54 #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: 844dd8b0-13de-456f-b5f4-2b28e60dbd0b
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure '55-64 (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [55-64 #], _tot ), [55-64 #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: 26bce3f6-0903-4e8a-9be1-df67823d986a
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure '65+ (disp)' =
+			VAR _mode = SELECTEDVALUE ( 'Display Mode'[Display Mode], "Audience (count)" )
+			VAR _tot = CALCULATE ( [Age Audience (Hourly)], REMOVEFILTERS ( Demographics_AgeLong[AGE_BRACKET] ), REMOVEFILTERS ( Demographics_AgeLong[GENDER] ) )
+			RETURN
+			IF ( _mode = "Share of audience (%)", DIVIDE ( [65+ #], _tot ), [65+ #] )
+		displayFolder: Age&Gender\Display
+		lineageTag: 3cad8e8b-849f-4e87-aa97-d8e51d310d4f
+
+		formatStringDefinition =
+				IF (
+				    SELECTEDVALUE ( 'Display Mode'[Display Mode] ) = "Share of audience (%)",
+				    "0.0%",
+				    "#,##0"
+				)
+
+	measure 'Movement Population (Hourly)' =
+			VAR _mv = SELECTEDVALUE ( 'Demo Movement'[MovementKey], "All" )
+			RETURN
+			IF (
+			    _mv = "All",
+			    [Total Population (Hourly)],
+			    SUMX (
+			        SUMMARIZE (
+			            FILTER ( Footfall, Footfall[IS_GRAND_TOTAL] = 1 && Footfall[HOUR] <> 25 && Footfall[HasValidSite] = TRUE () ),
+			            Footfall[SITE_ID], Footfall[YEAR_MONTH], Footfall[HOUR]
+			        ),
+			        VAR _tot = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 1 )
+			        VAR _ped = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 0, Footfall[VISITATION_MODALITY] = "All", Footfall[Movement Group] = "Pedestrians" )
+			        VAR _non = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 0, Footfall[VISITATION_MODALITY] = "All", Footfall[Movement Group] = "Non_Pedestrians" )
+			        VAR _sh  = DIVIDE ( _ped, _ped + _non )
+			        RETURN _tot * IF ( _mv = "Pedestrians", _sh, 1 - _sh )
+			    )
+			)
+		formatString: #,0
+		displayFolder: Age&Gender\Display
+		lineageTag: 28d0e1ec-141b-45c9-b862-e441ab6336a1
+
+	measure '_Mov Share' =
+			VAR _k = SELECTEDVALUE ( 'Demo Movement'[MovementKey], "All" )
+			VAR _ped = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 0, Footfall[HOUR] = 25, Footfall[VISITATION_MODALITY] = "All", Footfall[Movement Group] = "Pedestrians", Footfall[HasValidSite] = TRUE () )
+			VAR _non = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 0, Footfall[HOUR] = 25, Footfall[VISITATION_MODALITY] = "All", Footfall[Movement Group] = "Non_Pedestrians", Footfall[HasValidSite] = TRUE () )
+			RETURN
+			SWITCH ( _k, "Pedestrians", DIVIDE ( _ped, _ped + _non ), "Non_Pedestrians", DIVIDE ( _non, _ped + _non ), 1 )
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: 1b86db8c-6aa3-4af0-8e06-61e8ba6ad26d
+
+	measure '_Vis Share' =
+			VAR _k = SELECTEDVALUE ( 'Demo Visitation'[VisKey], "All" )
+			VAR _sel = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 0, Footfall[HOUR] = 25, Footfall[MOVEMENT_MODALITY] = "All", Footfall[VISITATION_MODALITY] = _k, Footfall[HasValidSite] = TRUE () )
+			VAR _all = CALCULATE ( SUM ( Footfall[EXTRAPOLATED_USERS_2] ), Footfall[IS_GRAND_TOTAL] = 0, Footfall[HOUR] = 25, Footfall[MOVEMENT_MODALITY] = "All", Footfall[VISITATION_MODALITY] IN { "Residents", "Workers", "Transient" }, Footfall[HasValidSite] = TRUE () )
+			RETURN
+			IF ( _k = "All", 1, DIVIDE ( _sel, _all ) )
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: 297d9009-7d37-4fbb-a0da-49eb40350f45
+
+	measure 'Population (mv+vis)' = [Total Population] * [_Mov Share] * [_Vis Share]
+		formatString: #,0
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: 0f19dfcc-9170-4585-8784-e250a3d96841
+
+	measure 'PaS (mv+vis)' = [PaS] * [_Mov Share] * [_Vis Share]
+		formatString: #,0
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: 9a70700c-f4cd-4dd7-8302-ba363ec15627
+
+	measure 'OTS (mv+vis)' = [OTS] * [_Mov Share] * [_Vis Share]
+		formatString: #,0
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: 0ce05ae5-27fb-4e5c-990d-d0a31ea755cd
+
+	measure 'Capture Rate (mv+vis)' = DIVIDE ( [OTS (mv+vis)], [Population (mv+vis)] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: a18f616c-9def-4b43-abd3-a6dda51047c0
+
+	measure 'Avg Daily Population (mv+vis)' = AVERAGEX ( VALUES ( 'Calendar'[Date] ), [Population (mv+vis)] )
+		formatString: 0.0
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: 1e4b1ef2-1d1c-4717-94c4-62c67894e0ea
+
+	measure 'Avg Daily PaS (mv+vis)' = AVERAGEX ( VALUES ( 'Calendar'[Date] ), [PaS (mv+vis)] )
+		formatString: 0.0
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: c09cfb16-af2d-45f7-8e70-30f65900d17a
+
+	measure 'Avg Daily OTS (mv+vis)' = AVERAGEX ( VALUES ( 'Calendar'[Date] ), [OTS (mv+vis)] )
+		formatString: 0.0
+		displayFolder: KPIs\Segment (mov+vis)
+		lineageTag: a9be8464-5925-4f1a-8564-e1c5a10e05cc
+
+	/// Population-weighted share of the audience with positive affinity to the
+	/// category in context (0-100). Weighted by hourly Footfall population, IS_DEFAULT = 1.
+	measure 'Affinity Reach %' =
+			VAR _num =
+			    SUMX (
+			        FILTER ( Brand_Affinity, Brand_Affinity[IS_DEFAULT] = 1 ),
+			        VAR _code = Brand_Affinity[SITE_ID]
+			        VAR _ym   = Brand_Affinity[YEAR_MONTH]
+			        VAR _hr   = Brand_Affinity[HOUR]
+			        VAR _pop =
+			            CALCULATE (
+			                SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			                Footfall[SITE_ID] = _code, Footfall[YEAR_MONTH] = _ym, Footfall[HOUR] = _hr,
+			                Footfall[IS_GRAND_TOTAL] = 1, Footfall[HasValidSite] = TRUE ()
+			            )
+			        RETURN Brand_Affinity[PROPORTION_OF_TARGET_USERS] * _pop
+			    )
+			VAR _den =
+			    SUMX (
+			        FILTER ( Brand_Affinity, Brand_Affinity[IS_DEFAULT] = 1 ),
+			        VAR _code = Brand_Affinity[SITE_ID]
+			        VAR _ym   = Brand_Affinity[YEAR_MONTH]
+			        VAR _hr   = Brand_Affinity[HOUR]
+			        RETURN
+			            CALCULATE (
+			                SUM ( Footfall[EXTRAPOLATED_USERS_2] ),
+			                Footfall[SITE_ID] = _code, Footfall[YEAR_MONTH] = _ym, Footfall[HOUR] = _hr,
+			                Footfall[IS_GRAND_TOTAL] = 1, Footfall[HasValidSite] = TRUE ()
+			            )
+			    )
+			RETURN DIVIDE ( _num, _den )
+		formatString: 0.0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10002-1111-4aaa-8bbb-000000000002
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Estimated unique people reachable with affinity to the selected category:
+	/// weighted reach share x deduplicated Total Population (HOUR = 25). Avoids the
+	/// hourly overcount of summing hours. Uses a single category in context.
+	measure 'Affine Reach (Population)' = DIVIDE ( [Affinity Reach %], 100 ) * [Total Population]
+		formatString: #,0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10003-1111-4aaa-8bbb-000000000003
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Affine impressions: audience with affinity to the category, expressed as
+	/// weighted eye-contacts (OTS). Mirrors 'Age Impressions (OTS)'. Hourly-summed,
+	/// which is correct for impressions. Uses a single category in context.
+	measure 'Affine Audience (OTS)' =
+			SUMX (
+			    FILTER ( Brand_Affinity, Brand_Affinity[IS_DEFAULT] = 1 ),
+			    VAR _code = Brand_Affinity[SITE_ID]
+			    VAR _ym   = Brand_Affinity[YEAR_MONTH]
+			    VAR _hr   = Brand_Affinity[HOUR]
+			    VAR _pct  = DIVIDE ( Brand_Affinity[PROPORTION_OF_TARGET_USERS], 100 )
+			    RETURN
+			        _pct *
+			        CALCULATE (
+			            SUM ( Footfall[EXTRAPOLATED_NUMBER_OF_EYE_CONTACTS_WEIGHTED] ),
+			            Footfall[SITE_ID] = _code, Footfall[YEAR_MONTH] = _ym, Footfall[HOUR] = _hr,
+			            Footfall[IS_GRAND_TOTAL] = 1
+			        )
+			)
+		formatString: #,0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10004-1111-4aaa-8bbb-000000000004
+
+		annotation PBI_FormatHint = {"isDecimal":true}
+
+	/// Count of categories whose population-weighted index over-indexes (> 110)
+	/// for the current screen/period selection.
+	measure 'Categories Over-Index' =
+			SUMX (
+			    VALUES ( Brand_Affinity[BRAND_AFFINITY_CATEGORY_NAME] ),
+			    IF ( [Affinity Index (weighted)] > 110, 1, 0 )
+			)
+		formatString: 0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10005-1111-4aaa-8bbb-000000000005
+
+	/// Strongest-affinity category (by population-weighted index) in the current selection.
+	measure 'Top Affinity Category' =
+			VAR _t =
+			    TOPN ( 1, VALUES ( Brand_Affinity[Brand Category (short)] ), [Affinity Index (weighted)], DESC )
+			RETURN CONCATENATEX ( _t, Brand_Affinity[Brand Category (short)] )
+		displayFolder: Brand Affinity
+		lineageTag: d3a10006-1111-4aaa-8bbb-000000000006
+
+	/// Screen's daily audience size (Total Population), robust to the daypart slicer
+	/// (ignores dim_Hour so it never conflicts with the HOUR = 25 sentinel).
+	measure 'Screen Population' = CALCULATE ( [Total Population], REMOVEFILTERS ( dim_Hour ) )
+		formatString: #,0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10110-1111-4aaa-8bbb-000000000110
+
+	/// Ranking metric combining volume and concentration: daily audience x affinity
+	/// index / 100. Not a literal headcount — validate interpretation before client use.
+	measure 'Affine potential' = [Screen Population] * DIVIDE ( [Avg Brand Affinity Index (seg)], 100 )
+		formatString: #,0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10111-1111-4aaa-8bbb-000000000111
+
+	/// Affinity index for the selected audience segment (Segment slicer). Segment=All
+	/// -> All+All (same as base). Movement segments force visitation=All and vice versa.
+	measure 'Avg Brand Affinity Index (seg)' =
+			VAR s = SELECTEDVALUE ( Segment[Segment], "All" )
+			VAR mv = IF ( s = "Pedestrians" || s = "Non_Pedestrians", s, "All" )
+			VAR vs = IF ( s = "Residents" || s = "Workers" || s = "Transient", s, "All" )
+			RETURN
+			    CALCULATE (
+			        AVERAGE ( Brand_Affinity[BRAND_AFFINITY_INDEX] ),
+			        Brand_Affinity[MOVEMENT_MODALITY] = mv,
+			        Brand_Affinity[VISITATION_MODALITY] = vs
+			    )
+		formatString: 0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10112-1111-4aaa-8bbb-000000000112
+
+	/// % of the audience affine to the category, for the selected segment. Only varies
+	/// meaningfully outside All+All (where it is ~100%).
+	measure 'Proportion of Target (seg)' =
+			VAR s = SELECTEDVALUE ( Segment[Segment], "All" )
+			VAR mv = IF ( s = "Pedestrians" || s = "Non_Pedestrians", s, "All" )
+			VAR vs = IF ( s = "Residents" || s = "Workers" || s = "Transient", s, "All" )
+			RETURN
+			    CALCULATE (
+			        AVERAGE ( Brand_Affinity[PROPORTION_OF_TARGET_USERS] ),
+			        Brand_Affinity[MOVEMENT_MODALITY] = mv,
+			        Brand_Affinity[VISITATION_MODALITY] = vs
+			    )
+		formatString: 0
+		displayFolder: Brand Affinity
+		lineageTag: d3a10113-1111-4aaa-8bbb-000000000113
+
+	/// Estimated people of the selected class segment reachable at a screen:
+	/// daily audience (Total Population) x the segment's audience share (Class %).
+	measure 'Reach potential' = [Total Population] * [Segment share]
+		formatString: #,0
+		displayFolder: Demographics
+		lineageTag: d3a10401-1111-4aaa-8bbb-000000000401
+
+	/// Share of the audience in the SELECTED segment, robust to a mismatched Breakdown
+	/// slicer: it follows the chosen segment and normalises within that segment's own
+	/// breakdown, so switching Breakdown never blanks the table.
+	measure 'Segment share' =
+			VAR seg = CALCULATE ( SELECTEDVALUE ( Demographics_ClassLong[SEGMENT] ), REMOVEFILTERS ( Demographics_ClassLong[BREAKDOWN] ) )
+			VAR bd =
+			    CALCULATE (
+			        SELECTEDVALUE ( Demographics_ClassLong[BREAKDOWN] ),
+			        REMOVEFILTERS ( Demographics_ClassLong ),
+			        Demographics_ClassLong[SEGMENT] = seg
+			    )
+			RETURN
+			    DIVIDE (
+			        CALCULATE ( [Class Audience (Hourly)], REMOVEFILTERS ( Demographics_ClassLong[BREAKDOWN] ) ),
+			        CALCULATE (
+			            [Class Audience (Hourly)],
+			            REMOVEFILTERS ( Demographics_ClassLong[SEGMENT], Demographics_ClassLong[BREAKDOWN] ),
+			            Demographics_ClassLong[BREAKDOWN] = bd
+			        )
+			    )
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Demographics
+		lineageTag: d3a10501-1111-4aaa-8bbb-000000000501
 
 	partition _Measures = m
 		mode: import

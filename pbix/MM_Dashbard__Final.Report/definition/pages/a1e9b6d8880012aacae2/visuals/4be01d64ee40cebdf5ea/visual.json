@@ -23,11 +23,11 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "MM ID"
+                  "Property": "SITE_ID"
                 }
               },
-              "queryRef": "Master_Sites.MM ID",
-              "nativeQueryRef": "MM ID",
+              "queryRef": "Master_Sites.SITE_ID",
+              "nativeQueryRef": "SITE_ID",
               "active": true
             }
           ]
@@ -80,7 +80,7 @@
                                   "Source": "m"
                                 }
                               },
-                              "Property": "MM ID"
+                              "Property": "SITE_ID"
                             }
                           }
                         ],
@@ -155,7 +155,7 @@
                                 "Source": "m"
                               }
                             },
-                            "Property": "MM ID"
+                            "Property": "SITE_ID"
                           }
                         },
                         "Right": {
@@ -295,7 +295,7 @@
                 "Entity": "Master_Sites"
               }
             },
-            "Property": "MM ID"
+            "Property": "SITE_ID"
           }
         },
         "type": "Categorical",

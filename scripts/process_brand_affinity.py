@@ -50,6 +50,13 @@ Transformations applied to every file:
     to produce reliable affinity scores. They carry no audience signal
     (verified: all three metrics are zero on exactly the same set of rows)
     and would distort Power BI averages and category rankings if kept.
+  * Redundant catchment RADIUS collapsed (NEW in v1.4.0) -- from May 2026
+    Locomizer briefly shipped both catchment radii (50 m + 183 m) per screen,
+    duplicating every row. The two radii are byte-identical on all three
+    metrics (verified: max abs diff = 0), so one row per
+    (CODE, YEAR_MONTH, HOUR, MOVEMENT_MODALITY, VISITATION_MODALITY,
+    BRAND_AFFINITY_CATEGORY_NAME) is kept. Single-radius months are untouched.
+    See collapse_redundant_radius() and the v1.4.0 changelog entry.
   * Explicit column dtypes on load -- avoids pandas type inference, cuts
     memory usage significantly and speeds up read_csv on the 390K-row files.
   * Low-cardinality string columns stored as 'category' -- BRAND_AFFINITY_
@@ -95,6 +102,46 @@ Usage:
   Drop new monthly CSVs into INPUT_DIR and re-run -- no code changes needed.
 
 Version history:
+  v1.4.0  2026-09-04  FIX: collapse redundant catchment RADIUS (row-doubling).
+                      In May 2026 Locomizer shipped BOTH catchment radii
+                      (50 m + 183 m) for every screen -- 259 screens, every row
+                      duplicated (820,512 rows vs ~408,672 in adjacent months);
+                      before and after May each screen carries a single radius
+                      (Mar/Apr/Jun/Jul 2026 and all of 2025). The two radii are
+                      BYTE-IDENTICAL on all three metrics (INDEX / DWELL_TIME /
+                      PROPORTION) -- normalised characteristics, so catchment
+                      size does not change them -- verified on the May 2026
+                      export: 410,256 (CODE,HOUR,MOVEMENT,VISITATION,CATEGORY)
+                      keys, max abs diff = 0. The duplicate row therefore carries
+                      no signal and only doubles row counts (and any SUM/COUNT);
+                      the INDEX, being averaged, was numerically robust, but
+                      shipping doubled rows is still wrong. New
+                      collapse_redundant_radius() keeps ONE row per
+                      (CODE, YEAR_MONTH, HOUR, MOVEMENT_MODALITY,
+                      VISITATION_MODALITY, BRAND_AFFINITY_CATEGORY_NAME),
+                      retaining the smallest available radius (lossless -- the
+                      values are identical). Trigger: only >1-radius groups are
+                      touched, so single-radius months pass through untouched.
+                      Mirrors process_demographics.py v1.7.0; unlike
+                      process_footfall.py the master is NOT consulted (footfall's
+                      radii DIFFER ~4.3x and must pick the canonical one; here
+                      they are identical, so either is correct). Runs after the
+                      zero-row filter so IS_DEFAULT, the modality-shape report and
+                      the export all reflect the de-duplicated data. RADIUS column
+                      kept as-is (no dashboard measure uses it).
+  v1.3.0  2026-07-26  FEATURE: canonical SITE_ID column. Micromedia is migrating
+                      screen codes from the legacy MM ID scheme to NEW MM ID, and
+                      Locomizer delivers monthly exports under either scheme. A new
+                      SITE_ID column (from scripts/site_id_crosswalk.py, built by
+                      build_master_sites.py) maps every CODE — old or new — onto
+                      one canonical key, so the Power BI join no longer drops
+                      whichever scheme a file used. CODE is preserved as the raw
+                      as-delivered value. Codes absent from the master site list
+                      are left unmapped (SITE_ID = CODE) and logged as orphans.
+                      Resolution runs on the string CODE, so it sits AFTER the
+                      int32 -> str conversion and BEFORE column reordering.
+                      DOWNSTREAM NOTE: the Power BI relationship now joins
+                      Brand_Affinity.SITE_ID -> Master_Sites.SITE_ID.
   v1.2.0  2026-05-14  Power BI cross-dataset alignment:
                       (1) CODE column converted from int32 -> str before export.
                           The int32 type is preserved during the sanity check
@@ -151,7 +198,9 @@ import glob
 
 import pandas as pd
 
-__version__ = "1.2.0"
+from site_id_crosswalk import Crosswalk
+
+__version__ = "1.4.0"
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -160,6 +209,11 @@ INPUT_DIR        = os.path.join(BASE_DIR, "..", "data", "raw", "brand_affinity")
 OUTPUT_DIR       = os.path.join(BASE_DIR, "..", "data", "processed", "brand_affinity")
 OUTPUT_CLEAN_DIR = os.path.join(OUTPUT_DIR, "clean")
 os.makedirs(OUTPUT_CLEAN_DIR, exist_ok=True)
+
+# Canonical SITE_ID crosswalk (built by build_master_sites.py). Loaded once.
+# If the master site list is absent, SITE_ID mirrors CODE so the run still
+# succeeds.
+CROSSWALK, CROSSWALK_MSG = Crosswalk.load_or_none()
 
 # -- Output format -------------------------------------------------------------
 # "parquet" -> recommended for Power BI (smaller, faster, type-safe)
@@ -357,6 +411,72 @@ def build_year_month_column(df):
     return df
 
 
+def collapse_redundant_radius(df):
+    """
+    Collapse Locomizer's duplicate catchment RADIUS (NEW in v1.4.0).
+
+    In May 2026 Locomizer shipped every screen's Brand Affinity profile at TWO
+    catchment radii (50 m and 183 m); before and after May each screen carries a
+    single radius. The three affinity metrics (BRAND_AFFINITY_INDEX,
+    BRAND_AFFINITY_DWELL_TIME, PROPORTION_OF_TARGET_USERS) are byte-for-byte
+    identical across the two radii -- they are normalised characteristics of the
+    audience, so catchment size does not change them (verified on the May 2026
+    export: 410,256 (CODE, HOUR, MOVEMENT_MODALITY, VISITATION_MODALITY,
+    BRAND_AFFINITY_CATEGORY_NAME) keys, max abs diff = 0). The second radius
+    therefore carries no information and only doubles the row count (820,512 vs
+    ~408,672 in adjacent months), inflating any SUM/COUNT.
+
+    We keep ONE row per
+      (CODE, YEAR_MONTH, HOUR, MOVEMENT_MODALITY, VISITATION_MODALITY,
+       BRAND_AFFINITY_CATEGORY_NAME),
+    retaining the smallest available radius for determinism (groups with both
+    radii keep 50 m; groups carrying only one radius keep it -- nothing is
+    dropped). Because the values are identical the choice is lossless. RADIUS is
+    not used by any dashboard measure, so the column is kept as-is and only the
+    duplicate rows are removed.
+
+    Trigger: only groups carrying >1 radius are affected, so single-radius months
+    (all of 2025, and Mar/Apr/Jun/Jul 2026) pass through untouched.
+
+    Unlike process_footfall.py, the master `viewing.radius` is NOT consulted:
+    footfall's two radii hold DIFFERENT audience counts (a 183 m catchment ~4.3x
+    a 50 m one) so it must pick each screen's canonical radius, whereas here the
+    radii are identical and either one is correct. This mirrors
+    process_demographics.py v1.7.0.
+
+    Must run AFTER build_hour_column and build_year_month_column so HOUR and
+    YEAR_MONTH exist for the key.
+    """
+    key = ["CODE", "YEAR_MONTH", "HOUR",
+           "MOVEMENT_MODALITY", "VISITATION_MODALITY",
+           "BRAND_AFFINITY_CATEGORY_NAME"]
+    missing = [c for c in key + ["RADIUS"] if c not in df.columns]
+    if missing:
+        raise ValueError(
+            f"collapse_redundant_radius needs columns {missing}. "
+            f"Run it after build_hour_column and build_year_month_column."
+        )
+
+    before   = len(df)
+    dup_keys = int((df.groupby(key, observed=True)["RADIUS"].transform("nunique") > 1).sum())
+
+    df = (
+        df.sort_values("RADIUS", kind="stable")
+          .drop_duplicates(subset=key, keep="first")
+          .reset_index(drop=True)
+    )
+
+    removed = before - len(df)
+    # Post-condition: every key must now be unique.
+    assert not df.duplicated(subset=key).any(), \
+        "collapse_redundant_radius: duplicate keys remain after collapse."
+
+    print(f"  [RADIUS] Collapsed redundant catchment radius: "
+          f"{removed:,} duplicate row(s) removed "
+          f"({dup_keys:,} rows were in 2-radius groups)  ->  {len(df):,} rows remain.")
+    return df
+
+
 def drop_columns(df, cols):
     """Drop a list of columns, ignoring any that are not present."""
     present = [c for c in cols if c in df.columns]
@@ -386,14 +506,39 @@ def filter_zero_rows(df):
     return df, n_removed
 
 
+def add_site_id(df):
+    """Stamp a canonical SITE_ID on every row via the id crosswalk.
+
+    Unmatched CODEs (screens absent from the master site list) keep SITE_ID =
+    CODE and are logged as orphans rather than dropped. Expects CODE as string.
+    """
+    if CROSSWALK is None:
+        df["SITE_ID"] = df["CODE"].astype("string")
+        print(f"  [SITE_ID] SKIPPED — {CROSSWALK_MSG}")
+        return df
+
+    df["SITE_ID"], matched = CROSSWALK.resolve_ids(df["CODE"])
+    remapped = int((matched & (df["SITE_ID"] != df["CODE"].astype("string"))).sum())
+    orphan_codes = sorted(df.loc[~matched, "CODE"].dropna().unique().tolist())
+    n_screens = df["CODE"].nunique()
+    print(f"  [SITE_ID] {n_screens - len(orphan_codes)}/{n_screens} screens "
+          f"mapped to SITE_ID ({remapped:,} rows re-keyed to a NEW MM ID).")
+    if orphan_codes:
+        print(f"  [ORPHAN]  {len(orphan_codes)} CODE(s) not in master site list "
+              f"(kept as-is): {orphan_codes[:10]}"
+              + (" ..." if len(orphan_codes) > 10 else ""))
+    return df
+
+
 def build_column_order(df):
     """
     Return df with columns in a logical order:
-      CODE -> time -> segment -> category -> metrics -> SOURCE_FILE.
+      CODE -> SITE_ID -> time -> segment -> category -> metrics -> SOURCE_FILE.
     Any unexpected columns are appended at the end.
     """
     priority = [
-        "CODE",                          # identifier (joins to site list)
+        "CODE",                          # raw as-delivered identifier
+        "SITE_ID",                       # canonical key (joins to site list)
         "YEAR_MONTH",                    # time period (YYYY-MM)
         "HOUR",                          # time of day (0-23)
         "RADIUS",                        # viewshed radius
@@ -603,6 +748,17 @@ for filepath in brand_affinity_files:
     else:
         print(f"  [SCREENS] All {len(screens_after)} screens retained at least one row. OK")
 
+    # -- 2i2: Collapse redundant catchment RADIUS (NEW in v1.4.0) --------------
+    # From May 2026 Locomizer briefly shipped both catchment radii (50 m + 183 m)
+    # per screen, duplicating every row. The two radii are byte-identical on all
+    # three affinity metrics (verified: max abs diff = 0 on the May 2026 export),
+    # so the duplicate carries no signal and only doubles the row count. Keep one
+    # row per (CODE, YEAR_MONTH, HOUR, MOVEMENT_MODALITY, VISITATION_MODALITY,
+    # BRAND_AFFINITY_CATEGORY_NAME). Runs BEFORE IS_DEFAULT / the shape report /
+    # export so every downstream count reflects the de-duplicated data. Single-
+    # radius months pass through untouched (trigger: >1 radius in a group).
+    df = collapse_redundant_radius(df)
+
     # -- 2j: Add IS_DEFAULT helper column --------------------------------------
     # IS_DEFAULT = 1 marks rows where MOVEMENT_MODALITY='All' AND
     # VISITATION_MODALITY='All'. This is the "overall audience" view --
@@ -633,21 +789,24 @@ for filepath in brand_affinity_files:
           f"{df['BRAND_AFFINITY_CATEGORY_NAME'].nunique()} categories x "
           f"{df['CODE'].nunique()} screens")
 
-    # -- 2l: Column reordering -------------------------------------------------
-    df = build_column_order(df)
-    print(f"  [ORDER]  Columns reordered. Final width: {len(df.columns)} columns.")
-
-    # -- 2m: Convert CODE int32 -> str (final dtype for Power BI join) ---------
+    # -- 2l: Convert CODE int32 -> str (final dtype for Power BI join) ---------
     # Brand Affinity loads CODE as int32 so the 5-digit range sanity check in
-    # step 2d works on a numeric type. Just before export, we convert to str
-    # so the published Parquet has the same join-key dtype as Footfall (str)
-    # and Demographics (str) -- one consistent column type across all three
-    # fact tables means a single relationship-type setting in the Power BI
-    # data model. Done last to keep the dtype lean during all in-memory work.
+    # step 2d works on a numeric type. We convert to str before the SITE_ID
+    # crosswalk (string keys) and export, so the published Parquet has the same
+    # join-key dtype as Footfall (str) and Demographics (str) -- one consistent
+    # column type across all three fact tables means a single relationship-type
+    # setting in the Power BI data model.
     df["CODE"] = df["CODE"].astype(str)
     print(f"  [CODE]   Converted int32 -> str. Sample: '{df['CODE'].iloc[0]}'")
 
-    # -- 2n: Export ------------------------------------------------------------
+    # -- 2m: Canonical SITE_ID (crosswalk old/new codes -> one key) ------------
+    df = add_site_id(df)
+
+    # -- 2n: Column reordering -------------------------------------------------
+    df = build_column_order(df)
+    print(f"  [ORDER]  Columns reordered. Final width: {len(df.columns)} columns.")
+
+    # -- 2o: Export ------------------------------------------------------------
     try:
         path_clean = export_file(df, stem, OUTPUT_FORMAT)
         size_kb, _ = file_info(path_clean)

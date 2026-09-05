@@ -4,10 +4,10 @@
   "position": {
     "x": 237.674278155814,
     "y": 173.34918816076797,
-    "z": 8000,
+    "z": 7000,
     "height": 79.700776165870323,
     "width": 439.35052861436014,
-    "tabOrder": 8000
+    "tabOrder": 7000
   },
   "visual": {
     "visualType": "slicer",
@@ -23,11 +23,11 @@
                       "Entity": "Master_Sites"
                     }
                   },
-                  "Property": "Display Name"
+                  "Property": "Site Label"
                 }
               },
-              "queryRef": "Master_Sites.Display Name",
-              "nativeQueryRef": "Display Name",
+              "queryRef": "Master_Sites.Site Label",
+              "nativeQueryRef": "Site Label",
               "active": true
             }
           ]
@@ -42,6 +42,13 @@
               "expr": {
                 "Literal": {
                   "Value": "'Dropdown'"
+                }
+              }
+            },
+            "isInvertedSelectionMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             }
@@ -271,6 +278,7 @@
             }
           ]
         },
+        "howCreated": "User",
         "objects": {
           "general": [
             {

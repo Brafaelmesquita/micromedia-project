@@ -85,10 +85,18 @@ table Demographics_ClassLong
 
 		annotation SummarizationSetBy = Automatic
 
-	column HasValidSite = NOT ISBLANK ( RELATED ( Master_Sites[MM ID] ) )
+	column HasValidSite = NOT ISBLANK ( RELATED ( Master_Sites[SITE_ID] ) )
 		formatString: """TRUE"";""TRUE"";""FALSE"""
 		lineageTag: 2d57c2e0-d30a-4af1-90b9-fa7b19c7670e
 		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column SITE_ID
+		dataType: string
+		lineageTag: 634aece8-1172-479a-a6c4-008b65425cb6
+		summarizeBy: none
+		sourceColumn: SITE_ID
 
 		annotation SummarizationSetBy = Automatic
 
@@ -97,7 +105,7 @@ table Demographics_ClassLong
 		source =
 				let
 				    Source    = Demographics,
-				    KeyCols   = {"CODE", "YEAR_MONTH", "HOUR", "MOVEMENT_MODALITY", "RADIUS"},
+				    KeyCols   = {"CODE", "SITE_ID", "YEAR_MONTH", "HOUR", "MOVEMENT_MODALITY", "RADIUS"},
 				    ClassCols = List.Select(
 				        Table.ColumnNames(Source),
 				        each Text.StartsWith(_, "T9_2_")

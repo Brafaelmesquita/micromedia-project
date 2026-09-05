@@ -1,18 +1,14 @@
 relationship 26bd2553-a14b-76b3-1cac-f08e644958f5
-	fromColumn: Footfall.CODE
-	toColumn: Master_Sites.'MM ID'
+	fromColumn: Footfall.SITE_ID
+	toColumn: Master_Sites.SITE_ID
 
 relationship 2bcad28d-6276-fd5f-803e-8acb2f7d025c
-	fromColumn: Demographics.CODE
-	toColumn: Master_Sites.'MM ID'
+	fromColumn: Demographics.SITE_ID
+	toColumn: Master_Sites.SITE_ID
 
 relationship 0cb2b336-8b35-62a1-d4cc-185cd6b506f2
-	fromColumn: Demographics_AgeLong.CODE
-	toColumn: Master_Sites.'MM ID'
-
-relationship bcd1ab04-59f6-1f3a-91a6-c2c15874cca3
-	fromColumn: Brand_Affinity.CODE
-	toColumn: Master_Sites.'MM ID'
+	fromColumn: Demographics_AgeLong.SITE_ID
+	toColumn: Master_Sites.SITE_ID
 
 relationship 538cfbe2-fcbd-e1c5-59f4-d3d5d6171c0d
 	fromColumn: Footfall.DATE
@@ -43,8 +39,8 @@ relationship ae6c5f95-2c4a-62b7-c709-b7e3ecbddb88
 	toColumn: dim_Visitation.VisitationModality
 
 relationship e23b7756-f2d6-3f99-f511-bd01efcdf03d
-	fromColumn: Demographics_ClassLong.CODE
-	toColumn: Master_Sites.'MM ID'
+	fromColumn: Demographics_ClassLong.SITE_ID
+	toColumn: Master_Sites.SITE_ID
 
 relationship 6897aeeb-04a7-af9c-6998-a6556a1b61d0
 	fromColumn: Demographics_ClassLong.HOUR
@@ -71,5 +67,14 @@ relationship aa37b710-a092-7a2d-266a-dc3afbbd848e
 relationship 55209656-52e4-a1c0-a52c-e70f066d5565
 	toCardinality: many
 	fromColumn: Demographics_AgeLong.YEAR_MONTH
+	toColumn: Calendar.YEAR_MONTH
+
+relationship b1d2e3f4-a5b6-47c8-9d0e-1f2a3b4c5d6e
+	fromColumn: Brand_Affinity.SITE_ID
+	toColumn: Master_Sites.SITE_ID
+
+relationship c2e3f4a5-b6c7-48d9-0e1f-2a3b4c5d6e7f
+	toCardinality: many
+	fromColumn: Brand_Affinity.YEAR_MONTH
 	toColumn: Calendar.YEAR_MONTH
 
